@@ -43,4 +43,5 @@
 # Visual Studio extras
 *.vs
 
-
+# Ignore everything inside the folder build.
+build/
