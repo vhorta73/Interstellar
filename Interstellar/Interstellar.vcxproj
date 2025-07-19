@@ -110,10 +110,14 @@
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpp20</LanguageStandard>
       <LanguageStandard_C>stdc17</LanguageStandard_C>
+      <AdditionalIncludeDirectories>$(VULKAN_SDK)\Include;C:\Users\ADMIN\Desktop\GAMES2\Interstellar\Interstellar\Interstellar\engine\include;C:\Users\ADMIN\Desktop\GAMES2\Interstellar\Interstellar\Interstellar\game\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
+      <OutputFile>$(OutDir)$(TargetName)$(TargetExt)</OutputFile>
+      <AdditionalLibraryDirectories>$(VULKAN_SDK)\Lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>vulkan-1.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -126,15 +130,25 @@
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpp20</LanguageStandard>
       <LanguageStandard_C>stdc17</LanguageStandard_C>
+      <AdditionalIncludeDirectories>$(VULKAN_SDK)\Include;C:\Users\ADMIN\Desktop\GAMES2\Interstellar\Interstellar\Interstellar\engine\include;C:\Users\ADMIN\Desktop\GAMES2\Interstellar\Interstellar\Interstellar\game\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
+      <OutputFile>$(OutDir)$(TargetName)$(TargetExt)</OutputFile>
+      <AdditionalLibraryDirectories>$(VULKAN_SDK)\Lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>vulkan-1.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="engine\include\Graphics\LayerSelect.hpp" />
-    <ClInclude Include="engine\include\Graphics\Vulkan\VulkanLayerSelector.cpp" />
+    <ClInclude Include="engine\include\Graphics\Vulkan\Selectors\LayerSelectior.h" />
+    <ClInclude Include="engine\include\Graphics\Vulkan\VulkanSelector.hpp" />
+    <ClInclude Include="engine\src\Graphics\Vulkan\VulkanLayerSelector.cpp" />
+    <ClInclude Include="engine\include\Graphics\Vulkan\VulkanInstance.hpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="game\src\Gameplay\Intersetllar.cpp" />
+    <ClCompile Include="engine\src\Graphics\Vulkan\VulkanInstance.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

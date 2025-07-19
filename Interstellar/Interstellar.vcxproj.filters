@@ -15,11 +15,25 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="engine\include\Graphics\LayerSelect.hpp">
+    <ClInclude Include="engine\include\Graphics\Vulkan\VulkanSelector.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="engine\include\Graphics\Vulkan\VulkanLayerSelector.cpp">
+    <ClInclude Include="engine\src\Graphics\Vulkan\VulkanLayerSelector.cpp">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="engine\include\Graphics\Vulkan\VulkanInstance.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="engine\include\Graphics\Vulkan\Selectors\LayerSelectior.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="game\src\Gameplay\Intersetllar.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="engine\src\Graphics\Vulkan\VulkanInstance.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>
