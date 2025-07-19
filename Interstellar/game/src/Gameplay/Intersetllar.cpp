@@ -9,6 +9,6 @@ int main(int argc, char* argv[]) {
     std::cout << "Selected Layer: " << layer.layerName << "\n";
     std::cout << "Selected Extension: " << extension.extensionName << "\n";
     std::cout << "Combo leys: " << clayer.layerName << " + " << cextension.extensionName << "\n";
-    std::cin.get();
+
     return 0;
 }
