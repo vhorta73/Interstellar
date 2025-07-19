@@ -1,8 +1,7 @@
-#include "pch.h"                // precompiled header, includes TestTools
+#include "pch.h"
 #include "CppUnitTest.h"
 #include <vector>
 #include "VulkanSelectorTestHelpers.hpp"
-#include "Graphics/Vulkan/Selectors/VulkanSelector.hpp"
 
 using namespace Microsoft::VisualStudio::CppUnitTestFramework;
 

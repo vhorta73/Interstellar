@@ -33,9 +33,6 @@
     <ClCompile Include="pch.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="MyClassTest.cpp">
-      <Filter>Interstellar\Engine</Filter>
-    </ClCompile>
     <ClCompile Include="VulkanLayerSelectorTest.cpp">
       <Filter>Interstellar\Graphics\Vulkan\Selectors</Filter>
     </ClCompile>
