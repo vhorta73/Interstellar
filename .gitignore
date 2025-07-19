@@ -39,3 +39,46 @@
 
 # debug information files
 *.dwo
+
+# Visual Studio build outputs
+[Bb]uild/
+[Bb]in/
+[Rr]elease/
+[Dd]ebug/
+
+# VS intermediate files
+*.obj
+*.o
+*.lib
+*.dll
+*.exe
+*.pdb
+
+# MSBuild file‑tracking logs
+*.tlog/
+*.lastbuildstate
+
+# Visual Studio caches & user files
+*.suo
+*.user
+*.userosscache
+*.sln.docstates
+*.VC.db
+.vs/
+
+# Test outputs
+**/Tests/**/[Bb]uild/
+**/Tests/**/[Oo]bj/
+
+# Third‑party headers / libraries (if you vendored them but prefer submodules or vcpkg)
+#third_party/**/build/
+
+# CMake files (if you re‑generate)
+CMakeFiles/
+CMakeCache.txt
+
+# Ignore everything inside the folder build.
+build/
+
+# Vulkan
+*.gfxr
