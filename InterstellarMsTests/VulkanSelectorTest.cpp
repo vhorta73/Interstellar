@@ -5,9 +5,9 @@
 
 using namespace Microsoft::VisualStudio::CppUnitTestFramework;
 
-namespace VulkanLayerSelectorTest
+namespace VulkanSelectorTest
 {
-    TEST_CLASS(ComboTableTests)
+    TEST_CLASS(VulkanSelectorWithPreferencesTest)
     {
     public:
         TEST_METHOD(LayerFirst_PicksTopPair)
