@@ -3,9 +3,8 @@
 
 using namespace Microsoft::VisualStudio::CppUnitTestFramework;
 
-namespace InterstellarMsTests
-{
-    TEST_CLASS(MyClassTest)
+namespace InterstellarMsTests {
+    TEST_CLASS(InterstellarGraphicsVulkan)
     {
     public:
         TEST_METHOD(TestSeed)

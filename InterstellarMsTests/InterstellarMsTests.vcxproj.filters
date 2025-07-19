@@ -13,8 +13,17 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
-    <Filter Include="Engine">
+    <Filter Include="Interstellar">
+      <UniqueIdentifier>{eaa2a7d6-46c4-43d6-851f-16e91d1565f0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Interstellar\Engine">
       <UniqueIdentifier>{5a7511bc-4d55-48c7-9cca-57d4a93c0037}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Interstellar\Graphics">
+      <UniqueIdentifier>{51153270-83a2-4db9-8174-4d9f7f8f1207}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Interstellar\Graphics\Vulkan">
+      <UniqueIdentifier>{5d3a508a-7194-47cf-8e41-06522831e7cf}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -22,7 +31,10 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="MyClassTest.cpp">
-      <Filter>Engine</Filter>
+      <Filter>Interstellar\Engine</Filter>
+    </ClCompile>
+    <ClCompile Include="VulkanLayerSelectorTest.cpp">
+      <Filter>Interstellar\Graphics\Vulkan</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
