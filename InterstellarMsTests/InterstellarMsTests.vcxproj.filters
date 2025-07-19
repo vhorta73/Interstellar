@@ -25,6 +25,9 @@
     <Filter Include="Interstellar\Graphics\Vulkan">
       <UniqueIdentifier>{5d3a508a-7194-47cf-8e41-06522831e7cf}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Interstellar\Graphics\Vulkan\Selectors">
+      <UniqueIdentifier>{2c61907e-d686-4b5a-a645-f4c70b145fc1}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="pch.cpp">
@@ -34,11 +37,14 @@
       <Filter>Interstellar\Engine</Filter>
     </ClCompile>
     <ClCompile Include="VulkanLayerSelectorTest.cpp">
-      <Filter>Interstellar\Graphics\Vulkan</Filter>
+      <Filter>Interstellar\Graphics\Vulkan\Selectors</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="pch.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="VulkanSelectorTestHelpers.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

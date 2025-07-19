@@ -8,10 +8,7 @@ namespace InterstellarMsTests
     TEST_CLASS(MyClassTest)
     {
     public:
-        TEST_METHOD(TestSeed)
-        {
-            Assert::AreEqual(7, 7);
-            Assert::AreNotEqual(7, 8);
-        }
+
+        TEST_METHOD(TestSeed) { Assert::IsTrue(true); }
     };
-}
+};
