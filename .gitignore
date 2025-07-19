@@ -77,7 +77,8 @@
 CMakeFiles/
 CMakeCache.txt
 
-
 # Ignore everything inside the folder build.
 build/
 
+# Vulkan
+*.gfxr

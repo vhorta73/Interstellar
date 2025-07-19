@@ -15,16 +15,10 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="engine\include\Graphics\Vulkan\VulkanSelector.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="engine\src\Graphics\Vulkan\VulkanLayerSelector.cpp">
+    <ClInclude Include="engine\include\Graphics\Vulkan\Selectors\VulkanSelector.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="engine\include\Graphics\Vulkan\VulkanInstance.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="engine\include\Graphics\Vulkan\Selectors\LayerSelectior.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
