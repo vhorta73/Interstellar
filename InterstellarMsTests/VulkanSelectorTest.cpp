@@ -4,6 +4,7 @@
 #include "VulkanSelectorTestHelpers.hpp"
 
 using namespace Microsoft::VisualStudio::CppUnitTestFramework;
+using namespace TestHelpers;
 
 namespace VulkanSelectorTest
 {
@@ -21,7 +22,7 @@ namespace VulkanSelectorTest
                 "VK_KHR_surface"
             };
 
-            auto layerExtensionPair = TestHelpers::ComputePreferredCombo(layers, exts);
+            auto layerExtensionPair = ComputePreferredCombo(layers, exts);
             Assert::AreEqual(std::string("VK_LAYER_KHRONOS_validation"), layerExtensionPair.first);
             Assert::AreEqual(std::string("VK_EXT_debug_utils"), layerExtensionPair.second);
         }
@@ -37,7 +38,7 @@ namespace VulkanSelectorTest
                 "VK_KHR_surface"
             };
 
-            auto layerExtensionPair = TestHelpers::ComputePreferredCombo(layers, exts);
+            auto layerExtensionPair = ComputePreferredCombo(layers, exts);
             Assert::AreEqual(std::string("VK_LAYER_KHRONOS_validation"), layerExtensionPair.first);
             Assert::AreEqual(std::string("VK_EXT_debug_report"), layerExtensionPair.second);
         }
@@ -53,7 +54,7 @@ namespace VulkanSelectorTest
                 "VK_EXT_unknown"   // not in any table
             };
 
-            auto layerExtensionPair = TestHelpers::ComputePreferredCombo(layers, exts);
+            auto layerExtensionPair = ComputePreferredCombo(layers, exts);
             Assert::AreEqual(std::string("VK_LAYER_KHRONOS_validation"), layerExtensionPair.first);
             // fallback picks first in exts vector
             Assert::AreEqual(std::string("VK_KHR_surface"), layerExtensionPair.second);
@@ -70,7 +71,7 @@ namespace VulkanSelectorTest
                 "VK_KHR_surface"
             };
 
-            auto layerExtensionPair = TestHelpers::ComputePreferredCombo(layers, exts);
+            auto layerExtensionPair = ComputePreferredCombo(layers, exts);
             const std::string layerName = layerExtensionPair.first;
             const auto& extPrefs = layerExtensionPair.second;
 
@@ -88,7 +89,7 @@ namespace VulkanSelectorTest
                 "EXT_X", "EXT_Y"
             };
 
-            auto layerExtensionPair = TestHelpers::ComputePreferredCombo(layers, exts);
+            auto layerExtensionPair = ComputePreferredCombo(layers, exts);
             // picks first of each list
             Assert::AreEqual(std::string("LAYER_A"), layerExtensionPair.first);
             Assert::AreEqual(std::string("EXT_X"), layerExtensionPair.second);
