@@ -1,44 +1,44 @@
-//#include <iostream>
-//#include "Interstellar/Graphics/Vulkan/Selectors/VulkanSelector.hpp"
-//#include <vulkan/vulkan.h>  
-//
-//int main(int argc, char* argv[]) {
-//    std::cout << "Starting Interstellar...\n";
-//    auto [ layer, extension] = Interstellar::Graphics::Vulkan::Selectors::SelectLayerAndExtensionCombo();
-//    std::cout << "Selected Layer: " << layer.layerName << "\n";
-//    std::cout << "Selected Extension: " << extension.extensionName << "\n";
-//
-//
-//    //VkInstance instance = createVulkanInstance(layers, exts);
-//    //if (instance == VK_NULL_HANDLE) {
-//        //return EXIT_FAILURE;
-//    //}
-//
-//    return 0;
-//}
-
-
-
-//#include "Core/GameGraphicsBuilder.hpp"
-//#include "Core/Window.hpp"
-//#include "Core/ILogging.hpp"
-//#include "Core/IGame.hpp"
-//#include "Vulkan/VulkanBuilderImpl.hpp"
-//#include "MyGame/MyGame.hpp"          // your concrete game class
 #include <exception>
 #include <iostream>
-//
-//using namespace Interstellar::Graphics::Core;
-//using namespace Interstellar::Platform;
-//using namespace Interstellar::Game;
-//
-int main(int argc, char** argv)
+#include <memory>
+#include <spdlog/spdlog.h>
+#include "Interstellar/Config/AppConfig.hpp"
+#include "Interstellar/Config/JsonImpl/UserInfoConfig.hpp"
+
+int main(int argc, char* argv[])
 {
-        std::cout << "Starting Interstellar...\n";
-        try
+    std::cout << "Starting Interstellar...\n";
+    try
     {
-//        // 1) Parse command-line / config
-//        AppConfig config = AppConfig::LoadFromArgs(argc, argv);
+        // 1) Parse command-line / config
+        std::cout << "AppConfig - Loading...\n";
+        auto appConfig = AppConfig::New();
+        //appConfig->save(new UserInfoConfig{ "Test", 35 });
+        auto info = appConfig->load<UserInfoConfig>();
+        std::cout << "Loaded user info: "
+                  << "Name=" << info->Name
+                  << ", Age=" << info->Age
+            << "\n";
+        std::cout << "AppConfig - Loaded.\n";
+        //std::cout << "Loaded config: "
+                  //<< "LogLevel=" << static_cast<int>(config->logLevel)
+                  //<< ", Window=" << config->windowTitle
+                  //<< "(" << config->windowWidth << "x" << config->windowHeight << ")"
+                  //<< ", LogFile=" << (config->logFilePath.empty() ? "none" : config->logFilePath)
+            //<< "\n";
+
+        //auto config = AppConfig::LoadFromArgs(argc, argv);
+        //std::cout << "AppConfig - Loaded.\n";
+        //std::cout << "Loaded config: "
+                  //<< "LogLevel=" << static_cast<int>(config.logLevel)
+                  //<< ", Window=" << config.windowTitle
+                  //<< "(" << config.windowWidth << "x" << config.windowHeight << ")"
+                  //<< ", LogFile=" << (config.logFilePath.empty() ? "none" : config.logFilePath)
+            //<< "\n";
+
+        //Logging::Init(config);
+        //spdlog::info("Starting Interstellar Engine ({}, {}x{})",
+            //config.windowTitle, config.windowWidth, config.windowHeight);
 //
 //        // 2) Initialize logging (console, file, verbosity)
 //        Logging::Init(config.logLevel, config.logFilePath);
@@ -76,13 +76,13 @@ int main(int argc, char** argv)
 //        }
 //
 //        game->Shutdown();
-//        LOG_INFO("Shutting down cleanly");
+        SPDLOG_INFO("Shutting down cleanly");
         return 0;
     }
     catch (const std::exception& e)
     {
         // Catch-all: log and return error
-//        LOG_CRITICAL("Fatal error: {}", e.what());
+        SPDLOG_CRITICAL("Fatal error: {}", e.what());
         return -1;
     }
 }

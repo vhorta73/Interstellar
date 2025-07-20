@@ -1,0 +1,6 @@
+{
+  "logLevel": "debug",
+  "windowWidth": 190,
+  "windowHeight": 180,
+  "enableVulkanValidation": true
+}
