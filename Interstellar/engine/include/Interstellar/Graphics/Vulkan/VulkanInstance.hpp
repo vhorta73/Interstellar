@@ -5,7 +5,7 @@
 #include <stdexcept>
 #include <cstring>
 
-namespace Graphics::Vulkan {
+namespace Interstellar::Graphics::Vulkan {
     class VulkanInstance {
 
     public:

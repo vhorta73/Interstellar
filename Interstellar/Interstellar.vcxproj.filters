@@ -15,15 +15,15 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="engine\include\Graphics\Vulkan\Selectors\VulkanSelector.hpp">
+    <ClInclude Include="engine\include\Interstellar\Graphics\Vulkan\Selectors\VulkanSelector.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="engine\include\Graphics\Vulkan\VulkanInstance.hpp">
+    <ClInclude Include="engine\include\Interstellar\Graphics\Vulkan\VulkanInstance.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="game\src\Gameplay\Intersetllar.cpp">
+    <ClCompile Include="game\src\Interstellar.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="engine\src\Graphics\Vulkan\VulkanInstance.cpp">

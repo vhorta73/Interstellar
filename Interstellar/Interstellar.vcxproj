@@ -141,11 +141,11 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="engine\include\Graphics\Vulkan\Selectors\VulkanSelector.hpp" />
-    <ClInclude Include="engine\include\Graphics\Vulkan\VulkanInstance.hpp" />
+    <ClInclude Include="engine\include\Interstellar\Graphics\Vulkan\Selectors\VulkanSelector.hpp" />
+    <ClInclude Include="engine\include\Interstellar\Graphics\Vulkan\VulkanInstance.hpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="game\src\Gameplay\Intersetllar.cpp" />
+    <ClCompile Include="game\src\Interstellar.cpp" />
     <ClCompile Include="engine\src\Graphics\Vulkan\VulkanInstance.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

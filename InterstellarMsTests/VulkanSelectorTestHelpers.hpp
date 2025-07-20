@@ -3,7 +3,7 @@
 #include <vector>
 #include <utility>
 #include <algorithm>
-#include "Graphics/Vulkan/Selectors/VulkanSelector.hpp"
+#include "Interstellar/Graphics/Vulkan/Selectors/VulkanSelector.hpp"
 
 namespace TestHelpers {
 
@@ -13,7 +13,7 @@ namespace TestHelpers {
             const std::vector<std::string>& availableLayers,
             const std::vector<std::string>& availableExts)
     {
-        using namespace Graphics::Vulkan::Selectors;
+        using namespace Interstellar::Graphics::Vulkan::Selectors;
 
         // 1) Layer first table
         for (auto const& combo : PreferredLayerExtensionCombos()) {
