@@ -149,6 +149,8 @@
     <ClInclude Include="engine\include\Interstellar\Config\JsonConfigBase.hpp" />
     <ClInclude Include="engine\include\Interstellar\Config\JsonManager.hpp" />
     <ClInclude Include="engine\include\Interstellar\Core\Logging.hpp" />
+    <ClInclude Include="engine\include\Interstellar\Core\LogLevel.hpp" />
+    <ClInclude Include="engine\include\Interstellar\Core\LogLevelUtils.hpp" />
     <ClInclude Include="engine\include\Interstellar\Graphics\Vulkan\Selectors\VulkanSelector.hpp" />
     <ClInclude Include="engine\include\Interstellar\Graphics\Vulkan\VulkanInstance.hpp" />
     <ClInclude Include="game\include\Interstellar\Interstellar.hpp" />

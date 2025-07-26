@@ -1,11 +1,13 @@
 #include <iostream>
 
 #include "Interstellar/Interstellar.hpp"
-
-//using namespace Interstellar::Core;
+#include "Interstellar/Core/Logging.hpp"
 
 int main() {
 
+    // Prepare a generic logger.
+    auto genericLogger = Interstellar::Core::Logger();
+    
     // Create the game instance.
     Interstellar::Game game;
 
@@ -14,7 +16,8 @@ int main() {
         game.loadConfig();
     }
     catch (const std::exception& e) {
-        std::cerr << "LoadConfig failed with: " << e.what();
+        genericLogger.LogError(std::string("LoadConfig: ") + e.what());
+        return 1;
     }
 
     // Build all game components.
@@ -22,7 +25,8 @@ int main() {
         game.buildComponents();
     }
     catch (const std::exception& e) {
-        std::cerr << "Build Components failed wiht: " << e.what();
+        genericLogger.LogError(std::string("BuildComponents: ") + e.what());
+        return 1;
     }
 
     // Play
@@ -30,7 +34,7 @@ int main() {
         game.start();
     }
     catch (const std::exception& e) {
-        std::cerr << "Game start failed with: " << e.what();
+        genericLogger.LogError(std::string("Game start: ") + e.what());
     }
 
     return 0;

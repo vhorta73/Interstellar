@@ -2,11 +2,10 @@
 
 #include <string>
 
+#include "Interstellar/Core/LogLevelUtils.hpp"
+
 namespace Interstellar::Core
 {
-    /// Verbosity levels for logging
-    enum class LogLevel { Trace, Debug, Info, Warn, Error, Critical };
-
     /// Holds all startup configuration, loaded from a JSON file and overridden by CLI.
     struct AppConfig
     {

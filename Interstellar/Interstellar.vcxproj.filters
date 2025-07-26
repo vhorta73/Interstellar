@@ -42,6 +42,12 @@
     <ClInclude Include="game\include\Interstellar\Interstellar.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="engine\include\Interstellar\Core\LogLevel.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="engine\include\Interstellar\Core\LogLevelUtils.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="engine\src\Graphics\Vulkan\VulkanInstance.cpp">
