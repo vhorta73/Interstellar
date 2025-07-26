@@ -13,17 +13,22 @@ namespace Interstellar {
 
     void Game::loadConfig() {
         std::cout << "Loading config...\n";
-        // Load your config here
+        // Load your config here.
     }
 
     void Game::buildComponents() {
         std::cout << "Building components...\n";
-        // Setup systems
+        // Setup systems.
     }
 
     void Game::start() {
         std::cout << "Game started!\n";
-        // Main loop
+        // Main loop.
+    }
+
+    void Game::shutdown() {
+        std::cout << "Game shutting down!\n";
+        // Shutting down.
     }
 
 }

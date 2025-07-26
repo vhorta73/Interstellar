@@ -6,7 +6,7 @@
 int main() {
 
     // Prepare a generic logger.
-    auto genericLogger = Interstellar::Core::Logger();
+    const auto genericLogger = Interstellar::Core::Logger();
     
     // Create the game instance.
     Interstellar::Game game;
@@ -16,8 +16,8 @@ int main() {
         game.loadConfig();
     }
     catch (const std::exception& e) {
-        genericLogger.LogError(std::string("LoadConfig: ") + e.what());
-        return 1;
+        genericLogger.LogCritical(std::string("LoadConfig: ") + e.what());
+        return 1; // Config error.
     }
 
     // Build all game components.
@@ -25,8 +25,8 @@ int main() {
         game.buildComponents();
     }
     catch (const std::exception& e) {
-        genericLogger.LogError(std::string("BuildComponents: ") + e.what());
-        return 1;
+        genericLogger.LogCritical(std::string("BuildComponents: ") + e.what());
+        return 2; // Building error.
     }
 
     // Play
@@ -34,8 +34,16 @@ int main() {
         game.start();
     }
     catch (const std::exception& e) {
-        genericLogger.LogError(std::string("Game start: ") + e.what());
-        return 1;
+        genericLogger.LogCritical(std::string("Game start: ") + e.what());
+        return 3; // Starting error.
+    }
+
+    try {
+        game.shutdown();
+    }
+    catch (const std::exception& e) {
+        genericLogger.LogCritical(std::string("Game shutdown: ") + e.what());
+        return 4; // Shutdown error.
     }
 
     return 0;
