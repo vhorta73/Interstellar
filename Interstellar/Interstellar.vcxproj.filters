@@ -15,19 +15,55 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="engine\include\Graphics\Vulkan\Selectors\VulkanSelector.hpp">
+    <ClInclude Include="engine\include\Interstellar\Graphics\Vulkan\Selectors\VulkanSelector.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="engine\include\Graphics\Vulkan\VulkanInstance.hpp">
+    <ClInclude Include="engine\include\Interstellar\Graphics\Vulkan\VulkanInstance.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="engine\include\Interstellar\Core\AppConfig.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="engine\include\Interstellar\Core\Logging.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="engine\include\Interstellar\Config\IJsonConfig.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="engine\include\Interstellar\Config\JsonConfigBase.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="engine\include\Interstellar\Config\JsonManager.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="engine\include\Interstellar\Config\AppConfig.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="engine\include\Interstellar\Config\IConfigStorage.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="game\src\Gameplay\Intersetllar.cpp">
+    <ClCompile Include="game\src\Interstellar.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="engine\src\Graphics\Vulkan\VulkanInstance.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="engine\src\Core\AppConfig.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="engine\src\Core\Logging.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="engine\include\Interstellar\Config\JsonImpl\UserInfoConfig.hpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="engine\include\Interstellar\Config\Storage\FileSystem.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="assets\config\InterstellarConfig.json" />
   </ItemGroup>
 </Project>

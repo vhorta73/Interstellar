@@ -1,6 +1,6 @@
-#include "Graphics/Vulkan/VulkanInstance.hpp"
+#include "Interstellar/Graphics/Vulkan/VulkanInstance.hpp"
 
-namespace Graphics::Vulkan {
+namespace Interstellar::Graphics::Vulkan {
 
     inline VulkanInstance::VulkanInstance(
         const char* appName,

@@ -1,7 +1,7 @@
 #include "pch.h"
 #include "CppUnitTest.h"
 #include <vector>
-#include "VulkanSelectorTestHelpers.hpp"
+#include "Helpers/VulkanSelectorTestHelpers.hpp"
 
 using namespace Microsoft::VisualStudio::CppUnitTestFramework;
 using namespace TestHelpers;

@@ -30,18 +30,21 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="pch.cpp">
+    <ClCompile Include="include\pch.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="VulkanSelectorTest.cpp">
+    <ClCompile Include="src\Interstellar\Graphics\Vulkan\Selectors\VulkanSelectorTest.cpp">
       <Filter>Interstellar\Graphics\Vulkan\Selectors</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Interstellar\Config\ConfigAppTest.cpp">
+      <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="pch.h">
+    <ClInclude Include="include\pch.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="VulkanSelectorTestHelpers.hpp">
+    <ClInclude Include="include\Helpers\VulkanSelectorTestHelpers.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

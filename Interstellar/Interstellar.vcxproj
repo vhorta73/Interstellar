@@ -110,7 +110,8 @@
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpp20</LanguageStandard>
       <LanguageStandard_C>stdc17</LanguageStandard_C>
-      <AdditionalIncludeDirectories>$(VULKAN_SDK)\Include;C:\Users\ADMIN\Desktop\GAMES2\Interstellar\Interstellar\Interstellar\engine\include;C:\Users\ADMIN\Desktop\GAMES2\Interstellar\Interstellar\Interstellar\game\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(VULKAN_SDK)\Include;$(SolutionDir)engine\include;$(SolutionDir)game\include;$(SolutionDir)engine\src;$(SolutionDir)game\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalOptions>/utf-8 %(AdditionalOptions)</AdditionalOptions>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -130,7 +131,8 @@
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpp20</LanguageStandard>
       <LanguageStandard_C>stdc17</LanguageStandard_C>
-      <AdditionalIncludeDirectories>$(VULKAN_SDK)\Include;C:\Users\ADMIN\Desktop\GAMES2\Interstellar\Interstellar\Interstellar\engine\include;C:\Users\ADMIN\Desktop\GAMES2\Interstellar\Interstellar\Interstellar\game\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(VULKAN_SDK)\Include;$(SolutionDir)engine\include;$(SolutionDir)game\include;$(SolutionDir)engine\src;$(SolutionDir)game\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalOptions>/utf-8 %(AdditionalOptions)</AdditionalOptions>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -141,12 +143,26 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="engine\include\Graphics\Vulkan\Selectors\VulkanSelector.hpp" />
-    <ClInclude Include="engine\include\Graphics\Vulkan\VulkanInstance.hpp" />
+    <ClInclude Include="engine\include\Interstellar\Config\AppConfig.hpp" />
+    <ClInclude Include="engine\include\Interstellar\Config\IConfigStorage.hpp" />
+    <ClInclude Include="engine\include\Interstellar\Config\IJsonConfig.hpp" />
+    <ClInclude Include="engine\include\Interstellar\Config\JsonConfigBase.hpp" />
+    <ClInclude Include="engine\include\Interstellar\Config\JsonManager.hpp" />
+    <ClInclude Include="engine\include\Interstellar\Core\AppConfig.hpp" />
+    <ClInclude Include="engine\include\Interstellar\Core\Logging.hpp" />
+    <ClInclude Include="engine\include\Interstellar\Graphics\Vulkan\Selectors\VulkanSelector.hpp" />
+    <ClInclude Include="engine\include\Interstellar\Graphics\Vulkan\VulkanInstance.hpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="game\src\Gameplay\Intersetllar.cpp" />
+    <ClCompile Include="engine\include\Interstellar\Config\Storage\FileSystem.cpp" />
+    <ClCompile Include="engine\src\Core\AppConfig.cpp" />
+    <ClCompile Include="engine\src\Core\Logging.cpp" />
+    <ClCompile Include="engine\include\Interstellar\Config\JsonImpl\UserInfoConfig.hpp" />
+    <ClCompile Include="game\src\Interstellar.cpp" />
     <ClCompile Include="engine\src\Graphics\Vulkan\VulkanInstance.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="assets\config\InterstellarConfig.json" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
