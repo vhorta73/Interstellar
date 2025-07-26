@@ -35,6 +35,7 @@ int main() {
     }
     catch (const std::exception& e) {
         genericLogger.LogError(std::string("Game start: ") + e.what());
+        return 1;
     }
 
     return 0;

@@ -24,18 +24,23 @@ namespace Interstellar::Core {
 
     // Accepts any of the Logging available constants.
     Logger::Logger(const std::string& loggerName) {
-        auto consoleSink = std::make_shared<spdlog::sinks::stdout_color_sink_mt>();
-        consoleSink->set_level(spdlog::level::info);
+        m_Logger = spdlog::get(loggerName);
 
-        m_Logger = std::make_shared<spdlog::logger>(loggerName, consoleSink);
-        m_Logger->set_level(spdlog::level::info);
-
-        spdlog::register_logger(m_Logger);
-        spdlog::set_default_logger(m_Logger);
-        spdlog::flush_on(spdlog::level::err);
         if (!m_Logger) {
-            throw std::runtime_error("Logger with name '" + loggerName + "' not found.");
+            auto consoleSink = std::make_shared<spdlog::sinks::stdout_color_sink_mt>();
+            consoleSink->set_level(spdlog::level::info);
+
+            m_Logger = std::make_shared<spdlog::logger>(loggerName, consoleSink);
+            m_Logger->set_level(spdlog::level::info);
+            spdlog::register_logger(m_Logger);
         }
+
+        // Only set default if this is the generic logger
+        if (loggerName == GENERIC_LOG) {
+            spdlog::set_default_logger(m_Logger);
+        }
+
+        spdlog::flush_on(spdlog::level::err);
     }
 
     // Convenience wrappers
@@ -44,5 +49,4 @@ namespace Interstellar::Core {
     void Logger::LogError(const std::string& msg) { m_Logger->error(msg); }
     void Logger::LogDebug(const std::string& msg) { m_Logger->debug(msg); }
     void Logger::LogCritical(const std::string& msg) { m_Logger->critical(msg); }
-
 }
