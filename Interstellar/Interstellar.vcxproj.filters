@@ -21,9 +21,6 @@
     <ClInclude Include="engine\include\Interstellar\Graphics\Vulkan\VulkanInstance.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="engine\include\Interstellar\Core\AppConfig.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="engine\include\Interstellar\Core\Logging.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -42,11 +39,11 @@
     <ClInclude Include="engine\include\Interstellar\Config\IConfigStorage.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="game\include\Interstellar\Interstellar.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="game\src\Interstellar.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="engine\src\Graphics\Vulkan\VulkanInstance.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -60,6 +57,12 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="engine\include\Interstellar\Config\Storage\FileSystem.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="game\src\main.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="game\src\Interstellar\Interstellar.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

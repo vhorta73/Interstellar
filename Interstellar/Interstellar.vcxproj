@@ -148,17 +148,18 @@
     <ClInclude Include="engine\include\Interstellar\Config\IJsonConfig.hpp" />
     <ClInclude Include="engine\include\Interstellar\Config\JsonConfigBase.hpp" />
     <ClInclude Include="engine\include\Interstellar\Config\JsonManager.hpp" />
-    <ClInclude Include="engine\include\Interstellar\Core\AppConfig.hpp" />
     <ClInclude Include="engine\include\Interstellar\Core\Logging.hpp" />
     <ClInclude Include="engine\include\Interstellar\Graphics\Vulkan\Selectors\VulkanSelector.hpp" />
     <ClInclude Include="engine\include\Interstellar\Graphics\Vulkan\VulkanInstance.hpp" />
+    <ClInclude Include="game\include\Interstellar\Interstellar.hpp" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="engine\include\Interstellar\Config\Storage\FileSystem.cpp" />
     <ClCompile Include="engine\src\Core\AppConfig.cpp" />
     <ClCompile Include="engine\src\Core\Logging.cpp" />
     <ClCompile Include="engine\include\Interstellar\Config\JsonImpl\UserInfoConfig.hpp" />
-    <ClCompile Include="game\src\Interstellar.cpp" />
+    <ClCompile Include="game\src\Interstellar\Interstellar.cpp" />
+    <ClCompile Include="game\src\main.cpp" />
     <ClCompile Include="engine\src\Graphics\Vulkan\VulkanInstance.cpp" />
   </ItemGroup>
   <ItemGroup>

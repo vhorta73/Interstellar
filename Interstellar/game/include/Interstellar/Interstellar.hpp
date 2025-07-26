@@ -21,8 +21,5 @@ namespace Interstellar {
         Game(const Game&) = delete;
         Game& operator=(const Game&) = delete;
 
-    private:
-        struct Implementation;
-        std::unique_ptr<Implementation> implementation;
     };
 }

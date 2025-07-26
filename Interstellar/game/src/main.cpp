@@ -2,7 +2,7 @@
 
 #include "Interstellar/Interstellar.hpp"
 
-using namespace Interstellar::Core;
+//using namespace Interstellar::Core;
 
 int main() {
 
@@ -10,13 +10,28 @@ int main() {
     Interstellar::Game game;
 
     // Load game configuration: e.g., window settings, controls etc.
-    game.loadConfig();
+    try {
+        game.loadConfig();
+    }
+    catch (const std::exception& e) {
+        std::cerr << "LoadConfig failed with: " << e.what();
+    }
 
     // Build all game components.
-    game.buildComponents();
+    try {
+        game.buildComponents();
+    }
+    catch (const std::exception& e) {
+        std::cerr << "Build Components failed wiht: " << e.what();
+    }
 
     // Play
-    game.start();
+    try {
+        game.start();
+    }
+    catch (const std::exception& e) {
+        std::cerr << "Game start failed with: " << e.what();
+    }
 
     return 0;
 }
