@@ -18,11 +18,11 @@ namespace Interstellar {
         // Start the game logic here
         void start();
 
+        // Game shutdown logic here
+        void shutdown();
+
         Game(const Game&) = delete;
         Game& operator=(const Game&) = delete;
 
-    private:
-        struct Implementation;
-        std::unique_ptr<Implementation> implementation;
     };
 }

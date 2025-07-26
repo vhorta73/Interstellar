@@ -1,48 +1,58 @@
-#pragma once
-
 #include "Interstellar/Core/Logging.hpp"
-#include <spdlog/spdlog.h> 
+
+#include <spdlog/spdlog.h>
 #include <spdlog/sinks/stdout_color_sinks.h>
-#include <spdlog/sinks/basic_file_sink.h>
+#include "Interstellar/Core/LogLevel.hpp"
 
 namespace Interstellar::Core {
 
-    spdlog::level::level_enum ToSpdLevel(LogLevel lvl)
-    {
+    static spdlog::level::level_enum ToSpdLevel(LogLevel lvl) {
+        using enum spdlog::level::level_enum;
         switch (lvl) {
-        case LogLevel::Trace:    return spdlog::level::trace;
-        case LogLevel::Debug:    return spdlog::level::debug;
-        case LogLevel::Info:     return spdlog::level::info;
-        case LogLevel::Warn:     return spdlog::level::warn;
-        case LogLevel::Error:    return spdlog::level::err;
-        case LogLevel::Critical: return spdlog::level::critical;
-        default:                 return spdlog::level::info;
+        case LogLevel::Critical: return critical;
+        case LogLevel::Error:    return err;
+        case LogLevel::Warn:     return warn;
+        case LogLevel::Info:     return info;
+        case LogLevel::Debug:    return debug;
+        case LogLevel::Trace:    return trace;
+        default:                 return info;
         }
     }
 
-    void Init(AppConfig const& cfg)
-    {
-        std::vector<spdlog::sink_ptr> sinks;
+    // Default Logger instantiation with GENERIC_LOG.
+    Logger::Logger() : Logger(LOG_GENERIC, LogLevel::Warn) {}
 
-        // Console sink with color
-        auto consoleSink = std::make_shared<spdlog::sinks::stdout_color_sink_mt>();
-        consoleSink->set_level(ToSpdLevel(cfg.logLevel));
-        sinks.push_back(consoleSink);
+    Logger::Logger(const std::string& loggerName) : Logger(loggerName, LogLevel::Warn) {}
 
-        // Optional file sink
-        if (!cfg.logFilePath.empty()) {
-            auto fileSink = std::make_shared<spdlog::sinks::basic_file_sink_mt>(
-                cfg.logFilePath, /*truncate=*/false);
-            fileSink->set_level(ToSpdLevel(cfg.logLevel));
-            sinks.push_back(fileSink);
+    Logger::Logger(LogLevel level) : Logger(LOG_GENERIC, level) {}
+
+    // Accepts any of the Logging available constants.
+    Logger::Logger(const std::string& loggerName, LogLevel level) {
+        auto spdLevel = ToSpdLevel(level);
+        m_Logger = spdlog::get(loggerName);
+
+        if (!m_Logger) {
+            auto consoleSink = std::make_shared<spdlog::sinks::stdout_color_sink_mt>();
+            consoleSink->set_level(spdLevel);
+
+            m_Logger = std::make_shared<spdlog::logger>(loggerName, consoleSink);
+            m_Logger->set_level(spdLevel);
+            spdlog::register_logger(m_Logger);
         }
 
-        // Create a default logger combining sinks
-        auto logger = std::make_shared<spdlog::logger>("interstellar", begin(sinks), end(sinks));
-        logger->set_level(ToSpdLevel(cfg.logLevel));
-        spdlog::set_default_logger(logger);
+        // Only set default if this is the generic logger
+        if (loggerName == LOG_GENERIC) {
+            spdlog::set_default_logger(m_Logger);
+        }
 
-        // Optional: flush every message of Error or higher
         spdlog::flush_on(spdlog::level::err);
     }
+
+    // Convenience wrappers
+    void Logger::LogCritical(const std::string& msg) const { m_Logger->critical(msg); }
+    void Logger::LogError(const std::string& msg) const { m_Logger->error(msg); }
+    void Logger::LogWarn(const std::string& msg) const { m_Logger->warn(msg); }
+    void Logger::LogDebug(const std::string& msg) const { m_Logger->debug(msg); }
+    void Logger::LogInfo(const std::string& msg) const { m_Logger->info(msg); }
+    void Logger::LogTrace(const std::string& msg) const { m_Logger->trace(msg); }
 }

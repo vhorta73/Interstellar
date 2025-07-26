@@ -8,24 +8,8 @@
 #include <map>
 #include <algorithm>
 
+#include "Interstellar/Core/LogLevelUtils.hpp"
 namespace Interstellar::Core {
-    // Helper to map string -> LogLevel
-    LogLevel ParseLogLevel(const std::string& s) {
-        static const std::map<std::string, LogLevel> lookup = {
-            {"trace",    LogLevel::Trace},
-            {"debug",    LogLevel::Debug},
-            {"info",     LogLevel::Info},
-            {"warn",     LogLevel::Warn},
-            {"error",    LogLevel::Error},
-            {"critical", LogLevel::Critical}
-        };
-        std::string lower = s;
-        std::transform(lower.begin(), lower.end(), lower.begin(), ::tolower);
-        auto it = lookup.find(lower);
-        if (it == lookup.end())
-            throw std::runtime_error("Unknown log level: " + s);
-        return it->second;
-    }
 
     AppConfig AppConfig::LoadFromArgs(int argc, char** argv)
     {
