@@ -159,6 +159,12 @@
     <ClInclude Include="engine\include\Interstellar\Graphics\Core\ITexture.hpp" />
     <ClInclude Include="engine\include\Interstellar\Graphics\Vulkan\Selectors\VulkanSelector.hpp" />
     <ClInclude Include="engine\include\Interstellar\Graphics\Vulkan\VulkanInstance.hpp" />
+    <ClInclude Include="engine\src\Graphics\OpenGL\OpenGLGraphics.hpp" />
+    <ClInclude Include="engine\src\Graphics\OpenGL\OpenGLMesh.hpp" />
+    <ClInclude Include="engine\src\Graphics\OpenGL\OpenGLPipeline.hpp" />
+    <ClInclude Include="engine\src\Graphics\OpenGL\OpenGLShader.hpp" />
+    <ClInclude Include="engine\src\Graphics\OpenGL\OpenGLTexture.hpp" />
+    <ClInclude Include="engine\src\Graphics\OpenGL\stb\stb_image.hpp" />
     <ClInclude Include="game\include\Interstellar\Interstellar.hpp" />
   </ItemGroup>
   <ItemGroup>
@@ -166,6 +172,12 @@
     <ClCompile Include="engine\src\Core\AppConfig.cpp" />
     <ClCompile Include="engine\src\Core\Logging.cpp" />
     <ClCompile Include="engine\include\Interstellar\Config\JsonImpl\UserInfoConfig.hpp" />
+    <ClCompile Include="engine\src\Graphics\OpenGL\OpenGLGraphics.cpp" />
+    <ClCompile Include="engine\src\Graphics\OpenGL\OpenGLMesh.cpp" />
+    <ClCompile Include="engine\src\Graphics\OpenGL\OpenGLPipeline.cpp" />
+    <ClCompile Include="engine\src\Graphics\OpenGL\OpenGLShader.cpp" />
+    <ClCompile Include="engine\src\Graphics\OpenGL\OpenGLTexture.cpp" />
+    <ClCompile Include="engine\src\Graphics\OpenGL\stb\stb_image.cpp" />
     <ClCompile Include="game\src\Interstellar\Interstellar.cpp" />
     <ClCompile Include="game\src\main.cpp" />
     <ClCompile Include="engine\src\Graphics\Vulkan\VulkanInstance.cpp" />

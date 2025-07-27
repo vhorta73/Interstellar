@@ -1,8 +1,13 @@
 #include "Interstellar/Core/Logging.hpp"
-
+#include "Interstellar/Core/LogLevel.hpp"
 #include <spdlog/spdlog.h>
 #include <spdlog/sinks/stdout_color_sinks.h>
-#include "Interstellar/Core/LogLevel.hpp"
+
+// Set global flush policy before any logger is used
+static const auto _flushPolicy = []() {
+    spdlog::flush_on(spdlog::level::err);
+    return 0;
+    }();
 
 namespace Interstellar::Core {
 
@@ -19,12 +24,18 @@ namespace Interstellar::Core {
         }
     }
 
+    static LogLevel GetDefaultLevelForLogger(const std::string& loggerName) {
+        if (loggerName == LOG_GRAPHIC)  return LogLevel::Info;
+        if (loggerName == LOG_CONFIG)   return LogLevel::Debug;
+        if (loggerName == LOG_GENERIC)  return LogLevel::Critical;
+
+        return LogLevel::Info; // fallback
+    }
+
     // Default Logger instantiation with GENERIC_LOG.
-    Logger::Logger() : Logger(LOG_GENERIC, LogLevel::Warn) {}
-
-    Logger::Logger(const std::string& loggerName) : Logger(loggerName, LogLevel::Warn) {}
-
-    Logger::Logger(LogLevel level) : Logger(LOG_GENERIC, level) {}
+    Logger::Logger()                                              : Logger(LOG_GENERIC, GetDefaultLevelForLogger(LOG_GENERIC)) {}
+    Logger::Logger(LogLevel level)                                : Logger(LOG_GENERIC, level) {}
+    Logger::Logger(const std::string& loggerName)                 : Logger(loggerName, GetDefaultLevelForLogger(loggerName)) {}
 
     // Accepts any of the Logging available constants.
     Logger::Logger(const std::string& loggerName, LogLevel level) {
@@ -33,8 +44,6 @@ namespace Interstellar::Core {
 
         if (!m_Logger) {
             auto consoleSink = std::make_shared<spdlog::sinks::stdout_color_sink_mt>();
-            consoleSink->set_level(spdLevel);
-
             m_Logger = std::make_shared<spdlog::logger>(loggerName, consoleSink);
             m_Logger->set_level(spdLevel);
             spdlog::register_logger(m_Logger);
@@ -44,8 +53,6 @@ namespace Interstellar::Core {
         if (loggerName == LOG_GENERIC) {
             spdlog::set_default_logger(m_Logger);
         }
-
-        spdlog::flush_on(spdlog::level::err);
     }
 
     // Convenience wrappers
