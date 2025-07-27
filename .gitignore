@@ -82,3 +82,5 @@ build/
 
 # Vulkan
 *.gfxr
+
+Interstellar/assets/temp/*
