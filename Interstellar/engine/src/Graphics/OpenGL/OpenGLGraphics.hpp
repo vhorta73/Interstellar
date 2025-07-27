@@ -1,22 +1,21 @@
 #pragma once
 
 #include "Interstellar/Graphics/Core/IGraphics.hpp"
+#include <glad/glad.h>
 #include <GLFW/glfw3.h>
-#include <memory>
 
 namespace Interstellar::Graphics::OpenGL {
 
     class OpenGLGraphics : public Core::IGraphics {
     public:
-        OpenGLGraphics();
-        ~OpenGLGraphics();
+        explicit OpenGLGraphics();
+        ~OpenGLGraphics() override;
 
-        bool Initialize(void* windowHandle, uint32_t width, uint32_t height, bool vsync) override;
+        bool Initialize(uint32_t width, uint32_t height, bool vsync) override;
         void Shutdown() override;
 
         void BeginFrame() override;
         void EndFrame() override;
-
         void Resize(uint32_t width, uint32_t height) override;
 
         std::shared_ptr<Core::IMesh> CreateMesh(const void* vertexData, size_t vertexSize,
@@ -30,6 +29,8 @@ namespace Interstellar::Graphics::OpenGL {
 
         std::string GetRendererName() const override;
         Core::GraphicsAPI GetAPI() const override;
+
+        bool ShouldClose() const override;
 
     private:
         GLFWwindow* m_Window = nullptr;

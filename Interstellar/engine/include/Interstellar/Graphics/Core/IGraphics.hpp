@@ -23,7 +23,7 @@ namespace Interstellar::Graphics::Core {
     public:
         virtual ~IGraphics() = default;
 
-        virtual bool Initialize(void* windowHandle, uint32_t width, uint32_t height, bool vsync) = 0;
+        virtual bool Initialize(uint32_t width, uint32_t height, bool vsync) = 0;
         virtual void Shutdown() = 0;
 
         virtual void BeginFrame() = 0;
@@ -44,6 +44,8 @@ namespace Interstellar::Graphics::Core {
 
         virtual std::string GetRendererName() const = 0;
         virtual GraphicsAPI GetAPI() const = 0;
+
+        virtual bool ShouldClose() const = 0;
     };
 
 }
