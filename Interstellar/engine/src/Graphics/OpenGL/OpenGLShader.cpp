@@ -7,6 +7,7 @@
 
 using namespace Interstellar::Graphics;
 using namespace Interstellar::Graphics::OpenGL;
+
 static const Interstellar::Core::Logger s_Logger(Interstellar::Core::LOG_GRAPHIC);
 
 OpenGLShader::OpenGLShader(const std::string& name, const std::string& vertexPath, const std::string& fragmentPath)
@@ -15,21 +16,17 @@ OpenGLShader::OpenGLShader(const std::string& name, const std::string& vertexPat
 }
 
 OpenGLShader::~OpenGLShader() {
-    if (m_ProgramID)
+    if (m_ProgramID != 0) {
         glDeleteProgram(m_ProgramID);
+        m_ProgramID = 0;
+    }
 }
 
-const std::string& OpenGLShader::GetName() const {
-    return m_Name;
-}
+const std::string& OpenGLShader::GetName() const { return m_Name; }
 
-std::vector<std::string> OpenGLShader::GetAvailableStages() const {
-    return { "Vertex", "Fragment" };
-}
+std::vector<std::string> OpenGLShader::GetAvailableStages() const { return { "Vertex", "Fragment" }; }
 
-bool OpenGLShader::IsValid() const {
-    return m_Valid;
-}
+bool OpenGLShader::IsValid() const { return m_Valid; }
 
 void* OpenGLShader::GetNativeHandle() const {
     return reinterpret_cast<void*>(static_cast<uintptr_t>(m_ProgramID));
@@ -54,12 +51,14 @@ bool OpenGLShader::LoadAndCompile(const std::string& vertexPath, const std::stri
     glAttachShader(m_ProgramID, fragmentShader);
     glLinkProgram(m_ProgramID);
 
-    int success;
+    int success = 0;
     glGetProgramiv(m_ProgramID, GL_LINK_STATUS, &success);
+
     if (!success) {
-        char log[512];
-        glGetProgramInfoLog(m_ProgramID, 512, nullptr, log);
-        s_Logger.LogError("Program linking failed: {}", log);
+        char log[1024];
+        glGetProgramInfoLog(m_ProgramID, sizeof(log), nullptr, log);
+        s_Logger.LogError("Shader program link failed for '{}': {}", m_Name, log);
+
         glDeleteShader(vertexShader);
         glDeleteShader(fragmentShader);
         glDeleteProgram(m_ProgramID);
@@ -78,11 +77,12 @@ unsigned int OpenGLShader::CompileShader(unsigned int type, const std::string& s
     glShaderSource(shader, 1, &src, nullptr);
     glCompileShader(shader);
 
-    int success;
+    int success = 0;
     glGetShaderiv(shader, GL_COMPILE_STATUS, &success);
+
     if (!success) {
-        char log[512];
-        glGetShaderInfoLog(shader, 512, nullptr, log);
+        char log[1024];
+        glGetShaderInfoLog(shader, sizeof(log), nullptr, log);
 
         const char* typeStr = (type == GL_VERTEX_SHADER)
             ? "Vertex"
@@ -90,7 +90,8 @@ unsigned int OpenGLShader::CompileShader(unsigned int type, const std::string& s
                 ? "Fragment"
                 : "Unknown";
 
-        s_Logger.LogError("{} shader compilation failed: {}", typeStr, log);
+        s_Logger.LogError("{} shader compilation failed for '{}' : {}", typeStr, m_Name, log);
+        glDeleteShader(shader);
         return 0;
     }
     s_Logger.LogDebug("Shader '{}' compiled and linked successfully.", m_Name);
@@ -100,7 +101,7 @@ unsigned int OpenGLShader::CompileShader(unsigned int type, const std::string& s
 std::string OpenGLShader::LoadFile(const std::string& path) {
     std::ifstream file(path);
     if (!file.is_open()) {
-        s_Logger.LogError("Failed to open file: {}", path);
+        s_Logger.LogError("Failed to open shader file: {}", path);
         return {};
     }
     std::stringstream ss;

@@ -19,16 +19,16 @@ namespace Interstellar::Graphics::OpenGL {
         ~OpenGLShader();
 
         /// Returns the user-defined name of the shader.
-        const std::string& GetName() const override;
+        [[nodiscard]] const std::string& GetName() const override;
 
         /// Returns a list of available shader stages (e.g., "vertex", "fragment").
-        std::vector<std::string> GetAvailableStages() const override;
+        [[nodiscard]] std::vector<std::string> GetAvailableStages() const override;
 
         /// Checks if the shader compiled and linked successfully.
-        bool IsValid() const override;
+        [[nodiscard]] bool IsValid() const override;
 
         /// Returns the native OpenGL program ID.
-        void* GetNativeHandle() const override;
+        [[nodiscard]] void* GetNativeHandle() const override;
 
     private:
         unsigned int m_ProgramID = 0;

@@ -17,13 +17,13 @@ namespace Interstellar::Graphics::OpenGL {
         ~OpenGLPipeline();
 
         /// Returns the shader associated with this pipeline.
-        std::shared_ptr<Core::IShader> GetShader() const override;
+        [[nodiscard]] std::shared_ptr<Core::IShader> GetShader() const override;
 
         /// Retrieves a pipeline option by name.
-        Core::PipelineOptionValue GetOption(const std::string& name) const override;
+        [[nodiscard]] Core::PipelineOptionValue GetOption(const std::string& name) const override;
 
         /// Returns the native OpenGL handle.
-        void* GetNativeHandle() const override;
+        [[nodiscard]] void* GetNativeHandle() const override;
 
     private:
         std::shared_ptr<Core::IShader> m_Shader;

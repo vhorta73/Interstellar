@@ -5,13 +5,14 @@
 #include "OpenGLTexture.hpp"
 #include "Interstellar/Core/Logging.hpp"
 
-//#include <iostream>
 #include <glad/glad.h>
+#include <GLFW/glfw3.h>
 
 using namespace Interstellar::Graphics;
 using namespace Interstellar::Graphics::OpenGL;
 
 static constexpr const char* ShaderBasePath = "assets/shaders/";
+
 static const Interstellar::Core::Logger s_Logger(Interstellar::Core::LOG_GRAPHIC);
 
 OpenGLGraphics::OpenGLGraphics() = default;
@@ -45,6 +46,8 @@ bool OpenGLGraphics::Initialize(uint32_t width, uint32_t height, bool vsync) {
 
     m_Vsync = vsync;
     glfwSwapInterval(vsync ? 1 : 0);
+
+    glEnable(GL_DEPTH_TEST); // Enables Z-buffering.
 
     s_Logger.LogInfo("Renderer: {}", reinterpret_cast<const char*>(glGetString(GL_RENDERER)));
     s_Logger.LogInfo("Version: {}", reinterpret_cast<const char*>(glGetString(GL_VERSION)));
@@ -86,7 +89,7 @@ Core::GraphicsAPI OpenGLGraphics::GetAPI() const {
 
 std::shared_ptr<Core::IMesh> OpenGLGraphics::CreateMesh(const void* vertexData, size_t vertexSize,
     const void* indexData, size_t indexSize) {
-    return std::make_shared<Interstellar::Graphics::OpenGL::OpenGLMesh>(vertexData, vertexSize, indexData, indexSize);
+    return std::make_shared<OpenGLMesh>(vertexData, vertexSize, indexData, indexSize);
 }
 std::shared_ptr<Core::ITexture> OpenGLGraphics::CreateTexture(const std::string& path) {
     return std::make_shared<OpenGLTexture>(path);
@@ -113,8 +116,13 @@ void OpenGLGraphics::SubmitMesh(std::shared_ptr<Core::IMesh> mesh, std::shared_p
     glUseProgram(programID);
 
     // Tell shader to use texture unit 0
-    glUniform1i(glGetUniformLocation(programID, "u_Texture"), 0);
-
+    GLint textureUniformLoc = glGetUniformLocation(programID, "u_Texture");
+    if (textureUniformLoc >= 0) {
+        glUniform1i(textureUniformLoc, 0);
+    }
+    else {
+        s_Logger.LogWarn("Shader '{}' is missing uniform 'u_Texture'.", glShader->GetName());
+    }
     glMesh->Bind();
     glDrawElements(GL_TRIANGLES, static_cast<GLsizei>(glMesh->GetIndexCount()), GL_UNSIGNED_INT, 0);
 }

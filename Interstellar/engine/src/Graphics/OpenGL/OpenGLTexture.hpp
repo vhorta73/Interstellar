@@ -13,22 +13,22 @@ namespace Interstellar::Graphics::OpenGL {
         explicit OpenGLTexture(const std::string& path);
 
         /// Releases the texture from GPU memory.
-        ~OpenGLTexture();
+        ~OpenGLTexture() override;
 
         /// Returns the width of the texture in pixels.
-        uint32_t GetWidth() const override;
+        [[nodiscard]] uint32_t GetWidth() const override;
 
         /// Returns the height of the texture in pixels.
-        uint32_t GetHeight() const override;
+        [[nodiscard]] uint32_t GetHeight() const override;
 
         /// Returns the format of the texture (e.g., "RGBA").
-        std::string GetFormat() const override;
+        [[nodiscard]] std::string GetFormat() const override;
 
         /// Returns the name of the texture (usually the filename).
-        const std::string& GetName() const override;
+        [[nodiscard]] const std::string& GetName() const override;
 
         /// Returns the OpenGL texture ID.
-        void* GetNativeHandle() const override;
+        [[nodiscard]] void* GetNativeHandle() const override;
 
     private:
         unsigned int m_TextureID = 0;

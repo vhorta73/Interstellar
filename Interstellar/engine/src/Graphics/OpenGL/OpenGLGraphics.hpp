@@ -1,8 +1,8 @@
 #pragma once
 
 #include "Interstellar/Graphics/Core/IGraphics.hpp"
-#include <glad/glad.h>
-#include <GLFW/glfw3.h>
+
+struct GLFWwindow; // Forward declare to avoid including GLFW in header.
 
 namespace Interstellar::Graphics::OpenGL {
 
@@ -18,19 +18,23 @@ namespace Interstellar::Graphics::OpenGL {
         void EndFrame() override;
         void Resize(uint32_t width, uint32_t height) override;
 
-        std::shared_ptr<Core::IMesh> CreateMesh(const void* vertexData, size_t vertexSize,
-            const void* indexData, size_t indexSize) override;
+        [[nodiscard]] std::shared_ptr<Core::IMesh> CreateMesh(
+            const void* vertexData, size_t vertexSize,
+            const void* indexData, size_t indexSize
+        ) override;
 
-        std::shared_ptr<Core::ITexture> CreateTexture(const std::string& path) override;
-        std::shared_ptr<Core::IShader> CreateShader(const std::string& path) override;
-        std::shared_ptr<Core::IRenderPipeline> CreatePipeline(std::shared_ptr<Core::IShader> shader) override;
+        [[nodiscard]] std::shared_ptr<Core::ITexture> CreateTexture(const std::string& path) override;
+        [[nodiscard]] std::shared_ptr<Core::IShader> CreateShader(const std::string& name) override;
+        [[nodiscard]] std::shared_ptr<Core::IRenderPipeline> CreatePipeline(std::shared_ptr<Core::IShader> shader) override;
 
-        void SubmitMesh(std::shared_ptr<Core::IMesh> mesh, std::shared_ptr<Core::IRenderPipeline> pipeline) override;
+        void SubmitMesh(
+            std::shared_ptr<Core::IMesh> mesh,
+            std::shared_ptr<Core::IRenderPipeline> pipeline
+        ) override;
 
-        std::string GetRendererName() const override;
-        Core::GraphicsAPI GetAPI() const override;
-
-        bool ShouldClose() const override;
+        [[nodiscard]] std::string GetRendererName() const override;
+        [[nodiscard]] Core::GraphicsAPI GetAPI() const override;
+        [[nodiscard]] bool ShouldClose() const override;
 
     private:
         GLFWwindow* m_Window = nullptr;

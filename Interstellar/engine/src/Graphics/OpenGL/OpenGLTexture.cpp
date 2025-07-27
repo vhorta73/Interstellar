@@ -5,13 +5,14 @@
 #include "Interstellar/Core/Logging.hpp"
 
 using namespace Interstellar::Graphics::OpenGL;
+
 static const Interstellar::Core::Logger s_Logger(Interstellar::Core::LOG_GRAPHIC);
 
 OpenGLTexture::OpenGLTexture(const std::string& path)
     : m_Name(path)
 {
-    int width, height, channels;
-    stbi_set_flip_vertically_on_load(true); // Flip image for OpenGL convention
+    int width = 0, height = 0, channels = 0;
+    stbi_set_flip_vertically_on_load(true); // Flip vertically to match OpenGL's bottom-left origin
     unsigned char* data = stbi_load(path.c_str(), &width, &height, &channels, 0);
 
     if (!data) {
@@ -22,22 +23,12 @@ OpenGLTexture::OpenGLTexture(const std::string& path)
     m_Width = static_cast<uint32_t>(width);
     m_Height = static_cast<uint32_t>(height);
 
-    GLenum format;
-    if (channels == 4) {
-        format = GL_RGBA;
-        m_Format = "RGBA";
-    }
-    else if (channels == 3) {
-        format = GL_RGB;
-        m_Format = "RGB";
-    }
-    else if (channels == 1) {
-        format = GL_RED;
-        m_Format = "RED";
-    }
-    else {
-        format = GL_RGB;
-        m_Format = "Unknown";
+    GLenum format = GL_RGB;
+    switch (channels) {
+        case 4: format = GL_RGBA; m_Format = "RGBA";    break;
+        case 3: format = GL_RGB;  m_Format = "RGB";     break;
+        case 1: format = GL_RED;  m_Format = "RED";     break;
+        default:                  m_Format = "Unknown"; break;
     }
 
     glGenTextures(1, &m_TextureID);
@@ -55,7 +46,7 @@ OpenGLTexture::OpenGLTexture(const std::string& path)
     glBindTexture(GL_TEXTURE_2D, 0);
     stbi_image_free(data);
 
-    s_Logger.LogInfo("Loaded texture '{}': {}x{}, format = {}", path, m_Width, m_Height, m_Format);
+    s_Logger.LogInfo("Loaded texture '{}': {}x{}, format = {}", m_Name, m_Width, m_Height, m_Format);
 }
 
 OpenGLTexture::~OpenGLTexture() {
@@ -65,22 +56,8 @@ OpenGLTexture::~OpenGLTexture() {
     }
 }
 
-uint32_t OpenGLTexture::GetWidth() const {
-    return m_Width;
-}
-
-uint32_t OpenGLTexture::GetHeight() const {
-    return m_Height;
-}
-
-std::string OpenGLTexture::GetFormat() const {
-    return m_Format;
-}
-
-const std::string& OpenGLTexture::GetName() const {
-    return m_Name;
-}
-
-void* OpenGLTexture::GetNativeHandle() const {
-    return reinterpret_cast<void*>(static_cast<uintptr_t>(m_TextureID));
-}
+uint32_t OpenGLTexture::GetWidth() const { return m_Width; }
+uint32_t OpenGLTexture::GetHeight() const { return m_Height; }
+std::string OpenGLTexture::GetFormat() const { return m_Format; }
+const std::string& OpenGLTexture::GetName() const { return m_Name; }
+void* OpenGLTexture::GetNativeHandle() const { return reinterpret_cast<void*>(static_cast<uintptr_t>(m_TextureID)); }
