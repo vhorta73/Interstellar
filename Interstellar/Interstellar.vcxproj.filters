@@ -48,6 +48,24 @@
     <ClInclude Include="engine\include\Interstellar\Core\LogLevelUtils.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="engine\include\Interstellar\Graphics\Core\IGraphics.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="engine\include\Interstellar\Graphics\Core\IGraphicsAdvanced.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="engine\include\Interstellar\Graphics\Core\IMesh.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="engine\include\Interstellar\Graphics\Core\ITexture.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="engine\include\Interstellar\Graphics\Core\IShader.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="engine\include\Interstellar\Graphics\Core\IRenderPipeline.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="engine\src\Graphics\Vulkan\VulkanInstance.cpp">
