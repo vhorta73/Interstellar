@@ -33,6 +33,17 @@ namespace Interstellar::Graphics::Core {
         virtual std::string_view GetDebugName() const = 0;
 
         /**
+        * @brief Optionally sets a debug name for the mesh.
+        *
+        * Implementations may ignore this if not supported.
+        *
+        * @param name Debug label for the mesh.
+        * @return True if the name was set successfully, and false otherwise or not supported.
+        * @since 1.0
+        */
+        virtual bool SetDebugName(std::string name) { return false; } // not supported by default
+
+        /**
         * @brief Gets the total number of vertices in the mesh.
         * 
         * This value is typically used in rendering calculations, buffer allocations,
