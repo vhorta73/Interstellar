@@ -35,6 +35,19 @@ namespace Interstellar::Graphics::OpenGL {
         ~OpenGLTexture() override;
 
         /**
+        * @brief Returns the native texture target identifier.
+        *
+        * This allows backend-specific systems (e.g., OpenGL) to distinguish texture types
+        * such as `GL_TEXTURE_2D`, `GL_TEXTURE_CUBE_MAP`, etc.
+        *
+        * For non-OpenGL backends, this may return 0 or another appropriate placeholder.
+        *
+        * @return A numeric identifier representing the texture target.
+        * @since 1.0
+        */
+        virtual uint32_t GetTextureTarget() const = 0;
+
+        /**
          * @brief Returns the width of the texture in pixels.
          *
          * @return Texture width in pixels.
