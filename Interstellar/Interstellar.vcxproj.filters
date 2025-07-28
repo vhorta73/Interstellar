@@ -51,9 +51,6 @@
     <ClInclude Include="engine\include\Interstellar\Graphics\Core\IGraphics.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="engine\include\Interstellar\Graphics\Core\IGraphicsAdvanced.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="engine\include\Interstellar\Graphics\Core\IMesh.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
