@@ -152,7 +152,6 @@
     <ClInclude Include="engine\include\Interstellar\Core\LogLevel.hpp" />
     <ClInclude Include="engine\include\Interstellar\Core\LogLevelUtils.hpp" />
     <ClInclude Include="engine\include\Interstellar\Graphics\Core\IGraphics.hpp" />
-    <ClInclude Include="engine\include\Interstellar\Graphics\Core\IGraphicsAdvanced.hpp" />
     <ClInclude Include="engine\include\Interstellar\Graphics\Core\IMesh.hpp" />
     <ClInclude Include="engine\include\Interstellar\Graphics\Core\IRenderPipeline.hpp" />
     <ClInclude Include="engine\include\Interstellar\Graphics\Core\IShader.hpp" />
