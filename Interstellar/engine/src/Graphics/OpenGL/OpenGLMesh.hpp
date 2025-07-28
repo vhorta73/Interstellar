@@ -5,8 +5,14 @@
 #include "Interstellar/Graphics/Core/IMesh.hpp"
 
 namespace Interstellar::Graphics::OpenGL {
-
-    /// Represents a mesh stored in OpenGL buffers (VAO/VBO/EBO)
+    /**
+    * @class OpenGLMesh
+    * @brief Concrete implementation of IMesh for the OpenGL backend.
+    *
+    * Stores vertex and index data using OpenGL VAO, VBO, and EBO.
+    *
+    * @since 1.0
+    */
     class OpenGLMesh : public Core::IMesh {
     public:
         /**
@@ -36,12 +42,15 @@ namespace Interstellar::Graphics::OpenGL {
         std::string_view GetDebugName() const override;
 
         /**
-        * @brief Sets the debug name of the mesh.
-        *
-        * @param name The new debug name string.
-        * @since 1.0
-        */
-        void SetDebugName(std::string name) override;
+         * @brief Sets the debug name of the mesh.
+         * This implementation always returns @a true since OpenGLMesh supports debug names.
+         *
+         * @param name The new debug name string.
+         * @return True if the debug name was set successfully.
+         * @since 1.0
+         */
+        bool SetDebugName(std::string name) override;
+
 
         /**
         * @brief Returns the number of vertices.
