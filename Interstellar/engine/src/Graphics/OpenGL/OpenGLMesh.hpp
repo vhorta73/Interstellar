@@ -5,52 +5,81 @@
 #include "Interstellar/Graphics/Core/IMesh.hpp"
 
 namespace Interstellar::Graphics::OpenGL {
-
-    /// Represents a mesh stored in OpenGL buffers (VAO/VBO/EBO)
+    /**
+    * @class OpenGLMesh
+    * @brief Concrete implementation of IMesh for the OpenGL backend.
+    *
+    * Stores vertex and index data using OpenGL VAO, VBO, and EBO.
+    *
+    * @since 1.0
+    */
     class OpenGLMesh : public Core::IMesh {
     public:
-        /// <summary>
-        /// Creates a mesh given raw vertex and index data.
-        /// </summary>
-        /// <param name="vertexData"></param>
-        /// <param name="vertexSize"></param>
-        /// <param name="indexData"></param>
-        /// <param name="indexSize"></param>
+        /**
+        * @brief Creates a mesh given raw vertex and index data.
+        * @param vertexData Pointer to the raw vertex data.
+        * @param vertexSize Size in bytes of the vertex buffer.
+        * @param indexData Pointer to the raw index buffer.
+        * @param indexSize Size in bytes of the index buffer.
+        * 
+        * @since 1.0
+        */
         OpenGLMesh(const void* vertexData, size_t vertexSize,
             const void* indexData, size_t indexSize);
 
-        /// <summary>
-        /// Cleans up OpenGL resources.
-        /// </summary>
+        /**
+        * @brief Cleans up OpenGL resources.
+        */
         ~OpenGLMesh();
 
-        /// <summary>
-        /// Returns the debug name of the mesh.
-        /// </summary>
-        /// <returns>A string view of the debug name.</returns>
+        /**
+        * @brief Returns the debug name of the mesh.
+        *
+        * @return A string view of the debug name.
+        * @since 1.0
+        * @see SetDebugName()
+        */
         std::string_view GetDebugName() const override;
 
-        /// <summary>
-        /// Returns the number of vertices.
-        /// </summary>
-        /// <returns>Total vertex count.</returns>
+        /**
+         * @brief Sets the debug name of the mesh.
+         * This implementation always returns @a true since OpenGLMesh supports debug names.
+         *
+         * @param name The new debug name string.
+         * @return True if the debug name was set successfully.
+         * @since 1.0
+         */
+        bool SetDebugName(std::string name) override;
+
+
+        /**
+        * @brief Returns the number of vertices.
+        * @return Total vertex count.
+        * @since 1.0
+        */
         size_t GetVertexCount() const override;
 
-        /// <summary>
-        /// Returns the number of indices.
-        /// </summary>
-        /// <returns>The total count of indices as a size_t value.</returns>
+        /**
+        * @brief Returns the number of indices.
+        * 
+        * @return The total count of indices as a size_t value.
+        * @since 1.0
+        */
         size_t GetIndexCount() const override;
 
-        /// <summary>
-        /// Returns the native OpenGL handle (VAO).
-        /// </summary>
-        /// <returns>Pointer to the OpenGL VAO.</returns>
+        /**
+        * @brief Returns the native OpenGL handle (VAO).
+        * 
+        * @return Pointer to the OpenGL VAO.
+        * @since 1.0
+        */
         void* GetNativeHandle() const override;
 
-        /// <summary>
-        /// Bind the mesh for rendering.
-        /// </summary>
+        /**
+        * @brief Bind the mesh for rendering.
+        * @since 1.0
+        * @see GetNativeHandle()
+        */
         void Bind() const;
 
     private:

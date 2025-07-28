@@ -6,28 +6,69 @@
 
 namespace Interstellar::Graphics::OpenGL {
 
-    /// Represents an OpenGL shader program composed of vertex and fragment shaders.
+    /**
+     * @class OpenGLShader
+     * @brief Represents an OpenGL shader program composed of vertex and fragment stages.
+     *
+     * This class implements the IShader interface using OpenGL's shader compilation and program linking.
+     * It supports reflection for active stages and debug naming, and provides access to the native OpenGL handle.
+     *
+     * @since 1.0
+     */
     class OpenGLShader : public Core::IShader {
     public:
-        /// Constructs a shader with provided source file paths.
-        /// @param name A debug/display name.
-        /// @param vertexPath Path to the vertex shader source.
-        /// @param fragmentPath Path to the fragment shader source.
+        /**
+         * @brief Constructs an OpenGL shader with source paths for vertex and fragment stages.
+         *
+         * @param name A debug/display name.
+         * @param vertexPath Path to the vertex shader source file.
+         * @param fragmentPath Path to the fragment shader source file.
+         *
+         * @since 1.0
+         */
         OpenGLShader(const std::string& name, const std::string& vertexPath, const std::string& fragmentPath);
 
-        /// Releases OpenGL shader resources.
+        /**
+         * @brief Destructor. Releases OpenGL shader resources.
+         *
+         * @since 1.0
+         */
         ~OpenGLShader();
 
-        /// Returns the user-defined name of the shader.
+        /**
+         * @brief Returns the debug or display name of the shader.
+         *
+         * @return Reference to the internal shader name.
+         * @since 1.0
+         */
         [[nodiscard]] const std::string& GetName() const override;
 
-        /// Returns a list of available shader stages (e.g., "vertex", "fragment").
+        /**
+         * @brief Returns the available shader stages in this program.
+         *
+         * Typically includes "vertex" and "fragment" stages.
+         *
+         * @return A vector of stage names present in this shader.
+         * @since 1.0
+         */
         [[nodiscard]] std::vector<std::string> GetAvailableStages() const override;
 
-        /// Checks if the shader compiled and linked successfully.
+        /**
+         * @brief Indicates whether the shader program compiled and linked successfully.
+         *
+         * @return true if the shader is valid and ready to use.
+         * @since 1.0
+         */
         [[nodiscard]] bool IsValid() const override;
 
-        /// Returns the native OpenGL program ID.
+        /**
+         * @brief Returns the native OpenGL shader program handle.
+         *
+         * This is returned as a void pointer but can be cast to GLuint* by advanced users.
+         *
+         * @return Pointer to the OpenGL program ID.
+         * @since 1.0
+         */
         [[nodiscard]] void* GetNativeHandle() const override;
 
     private:
@@ -35,13 +76,31 @@ namespace Interstellar::Graphics::OpenGL {
         std::string m_Name;
         bool m_Valid = false;
 
-        /// Loads and compiles shaders from files and links the program.
+        /**
+         * @brief Loads shader sources from file, compiles them, and links into a program.
+         *
+         * @param vertexPath Path to vertex shader.
+         * @param fragmentPath Path to fragment shader.
+         * @return true if compilation and linking succeeded.
+         */
         bool LoadAndCompile(const std::string& vertexPath, const std::string& fragmentPath);
 
-        /// Compiles an individual shader from source.
+        /**
+         * @brief Compiles a single OpenGL shader stage from source.
+         *
+         * @param type GL_VERTEX_SHADER or GL_FRAGMENT_SHADER.
+         * @param source GLSL source code as a string.
+         * @return Compiled shader ID (GLuint).
+         */
         unsigned int CompileShader(unsigned int type, const std::string& source);
 
-        /// Loads shader source from file.
+        /**
+         * @brief Loads a shader source file into a string.
+         *
+         * @param path Filesystem path to the shader source.
+         * @return Shader source as a string.
+         */
         std::string LoadFile(const std::string& path);
     };
+
 }
