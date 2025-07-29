@@ -2,6 +2,7 @@
 
 #include "Interstellar/Graphics/Core/ITexture.hpp"
 #include <string>
+#include <glad/glad.h>
 
 namespace Interstellar::Graphics::OpenGL {
 
@@ -33,6 +34,15 @@ namespace Interstellar::Graphics::OpenGL {
          * @since 1.0
          */
         ~OpenGLTexture() override;
+
+        /**
+         * @brief Returns the OpenGL texture target (e.g., GL_TEXTURE_2D).
+         * This is used internally for OpenGL binding.
+         *
+         * @return GLenum representing the OpenGL texture target.
+         */
+        [[nodiscard]] GLenum GetTextureTarget() const;
+
 
         /**
          * @brief Returns the width of the texture in pixels.

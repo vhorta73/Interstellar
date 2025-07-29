@@ -6,9 +6,19 @@
 namespace Interstellar::Core {
 
     inline constexpr const char* LOG_GENERIC = "Interstellar";
+    inline constexpr const char* LOG_INIT    = "Initialisation";
     inline constexpr const char* LOG_CONFIG  = "Config";
     inline constexpr const char* LOG_GRAPHIC = "Graphic";
 
+    /**
+    * @class Logger
+    * @brief A lightweight wrapper around spdlog for unified engine logging.
+    *
+    * Provides structured, categorized logging with optional format support.
+    * Defaults to console output but can be extended to other sinks.
+    *
+    * @since 1.0
+    */
     class Logger {
     public:
         Logger();
@@ -55,6 +65,11 @@ namespace Interstellar::Core {
             m_Logger->trace(fmt, std::forward<Args>(args)...);
         }
 
+        /**
+        * @brief Access to the internal spdlog logger instance.
+        * @return A shared pointer to the underlying spdlog logger.
+        */
+        std::shared_ptr<spdlog::logger> GetSpdLogger() const { return m_Logger; }
 
     private:
         std::shared_ptr<spdlog::logger> m_Logger;

@@ -2,6 +2,10 @@
 
 #include "Interstellar/Graphics/Core/IGraphics.hpp"
 
+/**
+ * @class GLFWwindow
+ * @brief Forward declaration of GLFW's window type to avoid header dependency.
+ */
 struct GLFWwindow; // Forward declare to avoid including GLFW in header.
 
 namespace Interstellar::Graphics::OpenGL {
@@ -52,10 +56,12 @@ namespace Interstellar::Graphics::OpenGL {
 
         /**
          * @brief Begins rendering a new frame.
+         * 
          * Clears buffers and prepares OpenGL state.
          *
          * @since 1.0
          * @see EndFrame()
+         * @see SubmitMesh()
          */
         void BeginFrame() override;
 
@@ -102,10 +108,13 @@ namespace Interstellar::Graphics::OpenGL {
 
         /**
          * @brief Loads and compiles a shader program.
+         * 
+         *  Note: Currently hardcoded to use 'triangle.vert' and 'triangle.frag' under 'assets/shaders/'.
          *
          * @param name Logical name or file path identifier.
          * @return A shared pointer to the shader.
          * @since 1.0
+         * @see CreatePipeline()
          */
         [[nodiscard]] std::shared_ptr<Core::IShader> CreateShader(const std::string& name) override;
 
@@ -159,8 +168,8 @@ namespace Interstellar::Graphics::OpenGL {
         [[nodiscard]] bool ShouldClose() const override;
 
     private:
-        GLFWwindow* m_Window = nullptr;
-        bool m_Vsync = true;
+        GLFWwindow* m_Window = nullptr; ///< Native GLFW window pointer.
+        bool m_Vsync = true;            ///< Tracks if vertical sync is enabled.
     };
 
 }

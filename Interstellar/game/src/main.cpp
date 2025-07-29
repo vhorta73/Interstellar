@@ -7,25 +7,31 @@
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
 
-static const Interstellar::Core::Logger s_Logger(Interstellar::Core::LOG_GRAPHIC);
+namespace {
+    constexpr auto LOG_CATEGORY = Interstellar::Core::LOG_INIT;
+    constexpr const char* TEXTURE_PATH = "assets/textures/texture_01.png";
 
-// Vertex layout: position (x, y, z), UV (u, v)
-float vertices[] = {
-    -0.5f, -0.5f, 0.0f,   0.0f, 0.0f,
-     0.5f, -0.5f, 0.0f,   1.0f, 0.0f,
-     0.0f,  0.5f, 0.0f,   0.5f, 1.0f,
-};
+    // Vertex layout: position (x, y, z), UV (u, v)
+    constexpr float vertices[] = {
+        -0.5f, -0.5f, 0.0f,   0.0f, 0.0f,
+        0.5f, -0.5f, 0.0f,   1.0f, 0.0f,
+        0.0f,  0.5f, 0.0f,   0.5f, 1.0f,
+    };
 
-unsigned int indices[] = { 0, 1, 2 };
+    unsigned int indices[] = { 0, 1, 2 };
+}
 
 int main() {
 
+    const auto s_Logger = Interstellar::Core::Logger(LOG_CATEGORY);
+
+    //Interstellar::Core::Logger s_Logger(LOG_CATEGORY);
     // ==== TEMPORARY TEST CODE ====
     constexpr int windowWidth = 1200;
     constexpr int windowHeight = 860;
 
     auto graphics = std::make_unique<Interstellar::Graphics::OpenGL::OpenGLGraphics>();
-    if (!graphics->Initialize(windowWidth, windowHeight, false)) {
+    if (!graphics->Initialise(windowWidth, windowHeight, false)) {
         std::cerr << "[Error] Failed to initialise OpenGL graphics backend.\n";
         return -1;
     }
@@ -33,10 +39,13 @@ int main() {
     auto shader = graphics->CreateShader("TriangleShader");
     auto mesh = graphics->CreateMesh(vertices, sizeof(vertices), indices, sizeof(indices));
     auto pipeline = graphics->CreatePipeline(shader);
-    auto texture = graphics->CreateTexture("assets/textures/texture_01.png");
+    auto texture = graphics->CreateTexture(TEXTURE_PATH);
 
     if (!shader || !mesh || !pipeline || !texture) {
-        s_Logger.LogCritical("One or more graphics resources failed to initialize.");
+        if (!shader)   s_Logger.LogError("Shader failed to compile or load.");
+        if (!mesh)     s_Logger.LogError("Mesh failed to initialize.");
+        if (!pipeline) s_Logger.LogError("Pipeline creation failed.");
+        if (!texture)  s_Logger.LogError("Texture loading failed.");
         return -2;
     }
 

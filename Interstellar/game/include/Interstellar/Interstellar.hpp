@@ -4,25 +4,47 @@
 
 namespace Interstellar {
 
+    /**
+     * @brief Central class for managing the game lifecycle.
+     *
+     * Responsible for loading configuration, building components,
+     * starting the main game loop, and shutting down gracefully.
+     */
     class Game {
     public:
+        /**
+         * @brief Constructs the game instance.
+         */
         Game();
+
+        /**
+         * @brief Cleans up all game resources and components.
+         */
         ~Game();
 
-        // Load configuration logic here
+        /**
+         * @brief Loads game configuration (from files or defaults).
+         */
         void loadConfig();
 
-        // Build game components logic here
+        /**
+         * @brief Builds core systems and gameplay components.
+         */
         void buildComponents();
 
-        // Start the game logic here
+        /**
+         * @brief Starts the main game loop or runtime logic.
+         */
         void start();
 
-        // Game shutdown logic here
+        /**
+         * @brief Shuts down the game and cleans up resources.
+         */
         void shutdown();
 
-        Game(const Game&) = delete;
-        Game& operator=(const Game&) = delete;
 
+        Game(const Game&) = delete;
+
+        Game& operator = (const Game&) = delete;
     };
 }
