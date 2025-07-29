@@ -12,16 +12,32 @@ using namespace Interstellar::Graphics;
 using namespace Interstellar::Graphics::OpenGL;
 
 static constexpr const char* ShaderBasePath = "assets/shaders/";
-
 static const Interstellar::Core::Logger s_Logger(Interstellar::Core::LOG_GRAPHIC);
 
+/**
+ * @brief Constructs the OpenGLGraphics system.
+ */
 OpenGLGraphics::OpenGLGraphics() = default;
 
+/**
+ * @brief Destructor. Ensures clean shutdown of OpenGL and GLFW resources.
+ */
 OpenGLGraphics::~OpenGLGraphics() {
     Shutdown();
 }
 
-bool OpenGLGraphics::Initialize(uint32_t width, uint32_t height, bool vsync) {
+/**
+ * @brief Initializes the OpenGL context and GLFW window.
+ *
+ * Sets the context version, loads OpenGL functions via GLAD,
+ * enables depth testing, and logs renderer information.
+ *
+ * @param width Initial window width.
+ * @param height Initial window height.
+ * @param vsync Whether to enable vertical sync.
+ * @return true on successful initialization.
+ */
+bool OpenGLGraphics::Initialise(uint32_t width, uint32_t height, bool vsync) {
     if (!glfwInit()) {
         s_Logger.LogError("Failed to initialize GLFW.");
         return false;
@@ -45,69 +61,132 @@ bool OpenGLGraphics::Initialize(uint32_t width, uint32_t height, bool vsync) {
     }
 
     m_Vsync = vsync;
-    glfwSwapInterval(vsync ? 1 : 0);
+    glfwSwapInterval(vsync ? 1 : 0); // Enable or disable vsync
 
-    glEnable(GL_DEPTH_TEST); // Enables Z-buffering.
+    glEnable(GL_DEPTH_TEST); // Enable depth testing
 
     s_Logger.LogInfo("Renderer: {}", reinterpret_cast<const char*>(glGetString(GL_RENDERER)));
     s_Logger.LogInfo("Version: {}", reinterpret_cast<const char*>(glGetString(GL_VERSION)));
 
     glViewport(0, 0, width, height);
-
     return true;
 }
 
+/**
+ * @brief Cleans up the OpenGL context and destroys the GLFW window.
+ */
 void OpenGLGraphics::Shutdown() {
     if (m_Window) {
-      glfwDestroyWindow(m_Window);
-      m_Window = nullptr;
+        glfwDestroyWindow(m_Window);
+        m_Window = nullptr;
     }
     glfwTerminate();
 }
 
+/**
+ * @brief Begins a new frame by clearing the color and depth buffers.
+ */
 void OpenGLGraphics::BeginFrame() {
     glClearColor(0.1f, 0.1f, 0.2f, 1.0f);
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 }
 
+/**
+ * @brief Ends the current frame by swapping buffers and polling events.
+ */
 void OpenGLGraphics::EndFrame() {
     glfwSwapBuffers(m_Window);
     glfwPollEvents();
 }
 
+/**
+ * @brief Resizes the OpenGL viewport.
+ *
+ * @param width New width in pixels.
+ * @param height New height in pixels.
+ */
 void OpenGLGraphics::Resize(uint32_t width, uint32_t height) {
     glViewport(0, 0, width, height);
 }
 
+/**
+ * @brief Returns the name of the current OpenGL renderer.
+ * @return Renderer name as a string.
+ */
 std::string OpenGLGraphics::GetRendererName() const {
     return reinterpret_cast<const char*>(glGetString(GL_RENDERER));
 }
 
+/**
+ * @brief Returns the currently used graphics API.
+ * @return Core::GraphicsAPI::OpenGL
+ */
 Core::GraphicsAPI OpenGLGraphics::GetAPI() const {
     return Core::GraphicsAPI::OpenGL;
 }
 
-std::shared_ptr<Core::IMesh> OpenGLGraphics::CreateMesh(const void* vertexData, size_t vertexSize,
-    const void* indexData, size_t indexSize) {
+/**
+ * @brief Creates a new OpenGLMesh from raw vertex and index data.
+ *
+ * @param vertexData Pointer to vertex buffer.
+ * @param vertexSize Size of vertex buffer in bytes.
+ * @param indexData Pointer to index buffer.
+ * @param indexSize Size of index buffer in bytes.
+ * @return Shared pointer to created IMesh.
+ */
+std::shared_ptr<Core::IMesh> OpenGLGraphics::CreateMesh(
+    const void* vertexData, size_t vertexSize,
+    const void* indexData, size_t indexSize)
+{
     return std::make_shared<OpenGLMesh>(vertexData, vertexSize, indexData, indexSize);
 }
+
+/**
+ * @brief Loads a texture from the given path into OpenGL.
+ * @param path Filesystem path to the image.
+ * @return Shared pointer to the created ITexture.
+ */
 std::shared_ptr<Core::ITexture> OpenGLGraphics::CreateTexture(const std::string& path) {
     return std::make_shared<OpenGLTexture>(path);
 }
 
-// TODO: Not hardcode these shaders.
+/**
+ * @brief Loads a shader from disk with hardcoded paths.
+ *
+ * @param name Debug name for the shader.
+ * @return Shared pointer to the created IShader.
+ * @todo Refactor to support dynamic shader loading paths.
+ */
 std::shared_ptr<Core::IShader> OpenGLGraphics::CreateShader(const std::string& name) {
-    return std::make_shared<OpenGLShader>(name,
+    return std::make_shared<OpenGLShader>(
+        name,
         std::string(ShaderBasePath) + "triangle.vert",
-        std::string(ShaderBasePath )+ "triangle.frag"
+        std::string(ShaderBasePath) + "triangle.frag"
     );
 }
 
+/**
+ * @brief Creates a render pipeline with the specified shader.
+ * @param shader The shader to use for the pipeline.
+ * @return Shared pointer to the created IRenderPipeline.
+ */
 std::shared_ptr<Core::IRenderPipeline> OpenGLGraphics::CreatePipeline(std::shared_ptr<Core::IShader> shader) {
     return std::make_shared<OpenGLPipeline>(shader);
 }
 
-void OpenGLGraphics::SubmitMesh(std::shared_ptr<Core::IMesh> mesh, std::shared_ptr<Core::IRenderPipeline> pipeline) {
+/**
+ * @brief Submits a mesh to be drawn using the given pipeline.
+ *
+ * This binds the shader, sets up texture unit 0 (if applicable),
+ * binds the mesh, and issues the draw call.
+ *
+ * @param mesh Mesh to render.
+ * @param pipeline Associated render pipeline.
+ */
+void OpenGLGraphics::SubmitMesh(
+    std::shared_ptr<Core::IMesh> mesh,
+    std::shared_ptr<Core::IRenderPipeline> pipeline)
+{
     auto glMesh = std::static_pointer_cast<OpenGLMesh>(mesh);
     auto oglPipeline = std::static_pointer_cast<OpenGLPipeline>(pipeline);
     auto glShader = std::static_pointer_cast<OpenGLShader>(pipeline->GetShader());
@@ -115,7 +194,7 @@ void OpenGLGraphics::SubmitMesh(std::shared_ptr<Core::IMesh> mesh, std::shared_p
     unsigned int programID = reinterpret_cast<uintptr_t>(glShader->GetNativeHandle());
     glUseProgram(programID);
 
-    // Tell shader to use texture unit 0
+    // Set texture sampler uniform (texture unit 0)
     GLint textureUniformLoc = glGetUniformLocation(programID, "u_Texture");
     if (textureUniformLoc >= 0) {
         glUniform1i(textureUniformLoc, 0);
@@ -123,10 +202,15 @@ void OpenGLGraphics::SubmitMesh(std::shared_ptr<Core::IMesh> mesh, std::shared_p
     else {
         s_Logger.LogWarn("Shader '{}' is missing uniform 'u_Texture'.", glShader->GetName());
     }
+
     glMesh->Bind();
     glDrawElements(GL_TRIANGLES, static_cast<GLsizei>(glMesh->GetIndexCount()), GL_UNSIGNED_INT, 0);
 }
 
+/**
+ * @brief Checks whether the GLFW window should close.
+ * @return true if the window is closing.
+ */
 bool OpenGLGraphics::ShouldClose() const {
     return glfwWindowShouldClose(m_Window);
 }
