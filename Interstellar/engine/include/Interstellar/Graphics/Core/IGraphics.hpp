@@ -127,7 +127,7 @@ namespace Interstellar::Graphics::Core {
         * @see SubmitMesh()
         * @see @c IMesh
         */
-        virtual std::shared_ptr<IMesh> CreateMesh(const void* vertexData, size_t vertexSize,
+        [[nodiscard]] virtual std::shared_ptr<IMesh> CreateMesh(const void* vertexData, size_t vertexSize,
             const void* indexData, size_t indexSize) = 0;
 
         /**
@@ -140,12 +140,12 @@ namespace Interstellar::Graphics::Core {
         * @since 1.0
         * @see @c ITexture
         */
-        virtual std::shared_ptr<ITexture> CreateTexture(const std::string& path) = 0;
+        [[nodiscard]] virtual std::shared_ptr<ITexture> CreateTexture(const std::string& path) = 0;
 
         /**
         * @brief Creates a shader from a file path.
         * 
-        * @param path Path to the shader file.
+        * @param path Base name or identifier used to locate vertex/fragment shader source files.
         * 
         * @return A shared pointer to an @c IShader instance.
         *
@@ -153,7 +153,7 @@ namespace Interstellar::Graphics::Core {
         * @see @c IShader
         * @see CreatePipeline()
         */
-        virtual std::shared_ptr<IShader> CreateShader(const std::string& path) = 0;
+        [[nodiscard]] virtual std::shared_ptr<IShader> CreateShader(const std::string& path) = 0;
 
         /**
         * @brief Creates a render pipeline using the provided shader.
@@ -167,13 +167,13 @@ namespace Interstellar::Graphics::Core {
         * @see CreateShader()
         * @see SubmitMesh()
         */
-        virtual std::shared_ptr<IRenderPipeline> CreatePipeline(std::shared_ptr<IShader> shader) = 0;
+        [[nodiscard]] virtual std::shared_ptr<IRenderPipeline> CreatePipeline(std::shared_ptr<IShader> shader) = 0;
 
         /**
         * @brief Submits a mesh for rendering using the specified pipeline.
         * 
-        * @param mesh The @c IMesh to render.
-        * @param pipeline The @c IRenderPipeline to use for rendering the @c IMesh.
+        * @param mesh The @c IMesh to render. Must be created with CreateMesh().
+        * @param pipeline The @c IRenderPipeline to use for rendering the @c IMesh (includes shader and bindings).
         * 
         * @since 1.0
         * @see CreateMesh()
@@ -191,7 +191,7 @@ namespace Interstellar::Graphics::Core {
         * @since 1.0
         * @see GetAPI()
         */
-        virtual std::string GetRendererName() const = 0;
+        [[nodiscard]] virtual std::string GetRendererName() const = 0;
 
         /**
         * @brief Gets the version of the graphics API being used.
@@ -202,7 +202,7 @@ namespace Interstellar::Graphics::Core {
         * @see @c GraphicsAPI
         * @see GetRendererName()
         */
-        virtual GraphicsAPI GetAPI() const = 0;
+        [[nodiscard]] virtual GraphicsAPI GetAPI() const = 0;
 
         /**
         * @brief Checks if the graphics window should close.
@@ -213,7 +213,17 @@ namespace Interstellar::Graphics::Core {
         * @see Initialise()
         * @see Shutdown()
         */
-        virtual bool ShouldClose() const = 0;
+        [[nodiscard]] virtual bool ShouldClose() const = 0;
+
+        /**
+        * @brief Returns a pointer to the native window handle (e.g., GLFWwindow*).
+        * 
+        * @return Pointer to native window (opaque void* to allow cross-platform use).
+        * 
+        * @since 1.0
+        */
+        [[nodiscard]] virtual void* GetNativeWindow() const = 0;
+
     };
 
 }
