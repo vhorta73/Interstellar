@@ -7,7 +7,7 @@
 static const auto _flushPolicy = []() {
     spdlog::flush_on(spdlog::level::err);
     return 0;
-    }();
+}();
 
 namespace Interstellar::Core {
 
@@ -28,6 +28,7 @@ namespace Interstellar::Core {
         if (loggerName == LOG_GRAPHIC)  return LogLevel::Info;
         if (loggerName == LOG_CONFIG)   return LogLevel::Debug;
         if (loggerName == LOG_GENERIC)  return LogLevel::Critical;
+        if (loggerName == LOG_INIT)     return LogLevel::Info;
 
         return LogLevel::Info; // fallback
     }
