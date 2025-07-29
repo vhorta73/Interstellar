@@ -84,3 +84,4 @@ build/
 *.gfxr
 
 Interstellar/assets/temp/*
+Interstellar/logs
