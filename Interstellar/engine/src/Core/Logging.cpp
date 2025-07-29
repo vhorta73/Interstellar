@@ -1,11 +1,16 @@
 #include "Interstellar/Core/Logging.hpp"
 #include "Interstellar/Core/LogLevel.hpp"
+
 #include <spdlog/spdlog.h>
 #include <spdlog/sinks/stdout_color_sinks.h>
+#include <spdlog/sinks/daily_file_sink.h>
+
+#include <filesystem>
 
 // Set global flush policy before any logger is used
 static const auto _flushPolicy = []() {
     spdlog::flush_on(spdlog::level::err);
+    spdlog::set_pattern("[%Y-%m-%d %H:%M:%S] [%n] [%^%l%$] %v"); // Format: [date time] [logger] [LEVEL] message
     return 0;
 }();
 
@@ -44,9 +49,17 @@ namespace Interstellar::Core {
         m_Logger = spdlog::get(loggerName);
 
         if (!m_Logger) {
+            std::filesystem::create_directories("logs");
+
             auto consoleSink = std::make_shared<spdlog::sinks::stdout_color_sink_mt>();
-            m_Logger = std::make_shared<spdlog::logger>(loggerName, consoleSink);
+            auto fileSink = std::make_shared<spdlog::sinks::daily_file_sink_mt>(
+                "logs/" + loggerName + ".log", 0, 0  // Rotate at 00:00
+            );
+
+            std::vector<spdlog::sink_ptr> sinks{ consoleSink, fileSink };
+            m_Logger = std::make_shared<spdlog::logger>(loggerName, sinks.begin(), sinks.end());
             m_Logger->set_level(spdLevel);
+            m_Logger->flush_on(spdlog::level::err);
             spdlog::register_logger(m_Logger);
         }
 
