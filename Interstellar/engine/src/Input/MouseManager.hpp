@@ -6,9 +6,11 @@
 namespace Interstellar::Input {
 
     /**
+    * @ingroup EngineInterfaces
      * @brief Concrete mouse input handler for GLFW-based systems.
      *
      * Tracks position, button states, and dragging behavior.
+     * Coordinates are in window space (origin top-left; Y increases downwards).
      *
      * @since 1.0
      */
@@ -57,7 +59,7 @@ namespace Interstellar::Input {
 
         /**
          * @brief Returns true if the mouse is currently dragging.
-         * Dragging is defined as holding the left button and moving the mouse.
+         * Dragging is defined as holding the left button while moving the cursos across frames.
          * @since 1.0
          */
         bool IsDragging() const override;

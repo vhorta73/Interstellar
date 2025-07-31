@@ -1,0 +1,10 @@
+/**
+ * @page game_api Game API Documentation
+ *
+ * This section describes the public-facing APIs available to game developers.
+ * 
+ * Topics include:
+ * - Input Interfaces
+ * - Graphics Abstractions
+ * - Configuration Files
+ */

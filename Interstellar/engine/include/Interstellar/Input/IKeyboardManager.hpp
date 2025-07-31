@@ -5,10 +5,11 @@
 namespace Interstellar::Input {
 
     /**
+     * @ingroup GameInterfaces
      * @brief Interface for managing keyboard input.
      *
-     * Provides methods for current and historical key states,
-     * supporting both real-time and edge-triggered input detection.
+     * Provides methods for querying both real-time (held) and edge-triggered (pressed/released)
+     * key states. Designed for high-level game logic to remain agnostic to platform input details.
      *
      * @since 1.0
      */
@@ -18,30 +19,53 @@ namespace Interstellar::Input {
 
         /**
          * @brief Checks if a specific key is currently being held down.
-         * 
-         * @param key The key code (e.g., GLFW_KEY_W).
-         * @return True if the key is down, false otherwise.
+         *
+         * @param key The platform-specific key code (e.g., GLFW_KEY_W).
+         * @return True if the key is held down; false otherwise.
          * @since 1.0
+         * 
+         * @todo Replace raw `int` key codes with an engine-defined `KeyCode` enum
+         *       to decouple game logic from platform-specific input backends.
          */
         virtual bool IsKeyDown(int key) const = 0;
 
         /**
-         * @brief Checks if the key was pressed (transitioned from up to down) this frame.
+         * @brief Checks if the given key is currently not held down.
          *
-         * This is useful to single-action input (e.g., jump, confirm).
-         *
-         * @param key The key code.
-         * @return True if the key was just pressed this frame.
+         * @param key The platform-specific key code (e.g., GLFW_KEY_W).
+         * @return True if the key is up; false otherwise.
          * @since 1.0
+         * 
+         * @todo Replace raw `int` key codes with an engine-defined `KeyCode` enum
+         *       to decouple game logic from platform-specific input backends.
+         */
+        virtual bool IsKeyUp(int key) const {
+            return !IsKeyDown(key);
+        }
+
+        /**
+         * @brief Checks if a key was pressed (transitioned from up to down) during this frame.
+         *
+         * Use this for one-time actions like jumping, confirming, or firing.
+         *
+         * @param key The platform-specific key code.
+         * @return True if the key was pressed this frame.
+         * @since 1.0
+         * 
+         * @todo Replace raw `int` key codes with an engine-defined `KeyCode` enum
+         *       to decouple game logic from platform-specific input backends.
          */
         virtual bool WasKeyPressed(int key) const = 0;
 
         /**
-         * @brief Checks if the key was released (transitioned from down to up) this frame.
+         * @brief Checks if a key was released (transitioned from down to up) during this frame.
          *
-         * @param key The key code.
-         * @return True if the key was just released this frame.
+         * @param key The platform-specific key code.
+         * @return True if the key was released this frame.
          * @since 1.0
+         * 
+         * @todo Replace raw `int` key codes with an engine-defined `KeyCode` enum
+         *       to decouple game logic from platform-specific input backends.
          */
         virtual bool WasKeyReleased(int key) const = 0;
     };

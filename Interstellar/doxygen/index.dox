@@ -1,0 +1,14 @@
+ /**
+ * @mainpage Interstellar Documentation
+ * 
+ * Welcome to Interstellar.
+ * 
+ * Navigate using the Modules list to explore subsystems:
+ * - [Game Api](game_api.html)
+ * - Graphics System
+ * - Configuration System
+ * 
+ * ## Getting Started
+ * - [Game Interfaces](group___game_interface.html)
+ * Each system includes public interfaces, engine extensions, and backend implementations.
+ */

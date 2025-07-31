@@ -5,9 +5,11 @@
 namespace Interstellar::Input {
 
     /**
+     * @ingroup GameInterfaces
      * @brief Interface for managing mouse input.
      *
      * Provides methods for tracking position, button states, and dragging logic.
+     * Coordinates are typically in screen space (origin at top-left).
      *
      * @since 1.0
      */
@@ -34,7 +36,8 @@ namespace Interstellar::Input {
         /**
          * @brief Checks if a specific mouse button is currently pressed.
          * 
-         * @param button The button index (e.g., 0 = left, 1 = right, 2 = middle).
+         * @param button The button index (e.g., 0 = left, 1 = right, 2 = middle). Platform-specific constants like GLFW_MOUSE_BUTTON_... may be used.
+
          * @return True if the button is pressed, false otherwise.
          * @since 1.0
          */
@@ -43,7 +46,8 @@ namespace Interstellar::Input {
         /**
          * @brief Checks if the user is currently dragging.
          * 
-         * A drag usually means the user is holding a button and moving the mouse.
+         * A drag usually means the user is holding a button (commonly the left button)
+         * and moving the mouse.
          * 
          * @return True if dragging, false otherwise.
          * @since 1.0

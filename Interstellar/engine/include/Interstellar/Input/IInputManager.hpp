@@ -8,6 +8,7 @@ namespace Interstellar::Input {
     class IKeyboardManager;
 
     /**
+     * @ingroup GameInterfaces
      * @brief Interface for accessing different input device managers.
      *
      * This interface abstracts away input handling (mouse, keyboard, etc.)
@@ -22,7 +23,7 @@ namespace Interstellar::Input {
         /**
          * @brief Returns the manager responsible for mouse input.
          * 
-         * @return Reference to the mouse manager.
+         * @return Reference to the mouse manager. Owned by the input manager; valid while the input manager is alive.
          * @since 1.0
          */
         virtual IMouseManager& GetMouseManager() = 0;
@@ -30,7 +31,7 @@ namespace Interstellar::Input {
         /**
          * @brief Returns the manager responsible for keyboard input.
          * 
-         * @return Reference to the keyboard manager.
+         * @return Reference to the keyboard manager. Owned by the input manager; valid while the input manager is alive.
          * @since 1.0
          */
         virtual IKeyboardManager& GetKeyboardManager() = 0;
@@ -38,7 +39,7 @@ namespace Interstellar::Input {
         /**
          * @brief Factory method to create a platform specific input manager.
          *
-         * @param window A pointer to a native windowing handle (e.g., GLFWindow*).
+         * @param window A pointer to the platform-specific window (e.g., GLFWwindow*, SDL_Window*, HWND).
          * @return A unique pointer to the created input manager instance.
          * 
          * @note It is the caller's responsibility to cast the `void*` appropriately.
@@ -47,13 +48,12 @@ namespace Interstellar::Input {
         [[nodiscard]] static std::unique_ptr<IInputManager> Create(void* window);
 
         /**
-        * @brief Updates all input managers (mouse, keyboard, etc).
-        *
-        * Should be called once per frame.
-        *
-        * @since 1.0
-        */
+         * @brief Updates all input managers (mouse, keyboard, etc).
+         *
+         * Should be called once per frame.
+         *
+         * @since 1.0
+         */
         virtual void Update() = 0;
-
     };
 }

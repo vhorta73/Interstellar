@@ -1,0 +1,27 @@
+/**
+ * @file
+ * @brief Doxygen group definitions for the Input subsystem.
+ */
+
+/**
+ * @defgroup InputSystem Input System
+ * @brief Core module for handling user input (mouse, keyboard, etc.).
+ */
+
+/**
+ * @defgroup GameInterfaces Game Interfaces
+ * @ingroup InputSystem
+ * @brief Public interfaces exposed to game logic.
+ */
+
+/**
+ * @defgroup EngineInterfaces Engine Interfaces
+ * @ingroup InputSystem
+ * @brief Internal abstract extensions of the public interfaces.
+ */
+
+/**
+ * @defgroup PlatformImplementations Platform Implementations
+ * @ingroup InputSystem
+ * @brief Concrete input backends for specific platforms (GLFW, SDL, etc.).
+ */

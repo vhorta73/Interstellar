@@ -1,49 +1,69 @@
 #pragma once
 
-#include <memory>
+#include "Interstellar/Input/IInputManager.hpp"
+#include "Interstellar/Input/IMouseManager.hpp"
+#include "Interstellar/Input/IKeyboardManager.hpp"
 
 namespace Interstellar::Input {
 
-    class IMouseManager;
-    class IKeyboardManager;
-
     /**
-     * @brief Interface for accessing different input device managers.
+     * @ingroup EngineInterfaces
+     * @brief Extended input manager interface with internal-only features.
      *
-     * This interface abstracts away input handling (mouse, keyboard, etc.)
-     * to support flexible backends and clean separation of concerns.
+     * Adds features such as synthetic key injection and configuration reload
+     * that are only used within the engine's core systems.
      *
      * @since 1.0
      */
-    class IInputManager {
+    class InputManager : public IInputManager {
     public:
-        virtual ~IInputManager() = default;
+        virtual ~InputManager() = default;
 
         /**
-         * @brief Returns the manager responsible for mouse input.
+         * @brief Returns the mouse manager instance.
          *
-         * @return Reference to the mouse manager.
+         * @return Reference to the active mouse manager.
          * @since 1.0
          */
-        virtual IMouseManager& GetMouseManager() = 0;
+        IMouseManager& GetMouseManager() override = 0;
 
         /**
-         * @brief Returns the manager responsible for keyboard input.
+         * @brief Returns the keyboard manager instance.
          *
-         * @return Reference to the keyboard manager.
+         * @return Reference to the active keyboard manager.
          * @since 1.0
          */
-        virtual IKeyboardManager& GetKeyboardManager() = 0;
+        IKeyboardManager& GetKeyboardManager() override = 0;
 
         /**
-         * @brief Factory method to create a platform-specific input manager.
+         * @brief Updates all managed input systems.
          *
-         * @param window A pointer to a native windowing handler (e.g., GLFWwindow*).
-         * @return A unique pointer to the created input manager instance.
-         *
-         * @note It is the caller's responsibility to cast the `void*` appropriately.
+         * Should be called once per frame during the main loop.
          * @since 1.0
          */
-        static std::unique_ptr<IInputManager> Create(void* window);
+        void Update() override = 0;
+
+        /**
+         * @brief Injects a synthetic key press into the input system.
+         *
+         * Used for testing, AI scripting, or simulated user input. The key code
+         * must match the input backend (e.g., GLFW key enums).
+         *
+         * @param key The key code to inject.
+         * @since 1.0
+         */
+        virtual void InjectSyntheticKeyPress(int key) = 0;
+
+        /**
+         * @brief Reloads input configuration settings at runtime.
+         *
+         * Useful for re-reading key bindings, sensitivity, or platform overrides
+         * from configuration files without restarting the game.
+         *
+         * @since 1.0
+         * @internal Used only by engine systems, not part of the public interface.
+         */
+        virtual void ReloadConfig() = 0;
     };
+
 }

@@ -167,6 +167,7 @@
     <ClInclude Include="engine\src\Graphics\OpenGL\OpenGLShader.hpp" />
     <ClInclude Include="engine\src\Graphics\OpenGL\OpenGLTexture.hpp" />
     <ClInclude Include="engine\src\Graphics\OpenGL\stb\stb_image.hpp" />
+    <ClInclude Include="engine\src\Input\GlfwInputManager.hpp" />
     <ClInclude Include="engine\src\Input\InputManager.hpp" />
     <ClInclude Include="engine\src\Input\KeyboardManager.hpp" />
     <ClInclude Include="engine\src\Input\MouseManager.hpp" />
@@ -174,7 +175,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="engine\include\Interstellar\Config\Storage\FileSystem.cpp" />
-    <ClCompile Include="engine\src\Input\InputManager.cpp" />
+    <ClCompile Include="engine\src\Input\GlfwInputManager.cpp" />
     <ClCompile Include="engine\src\Core\AppConfig.cpp" />
     <ClCompile Include="engine\src\Core\Logging.cpp" />
     <ClCompile Include="engine\include\Interstellar\Config\JsonImpl\UserInfoConfig.hpp" />
@@ -192,6 +193,9 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="assets\config\InterstellarConfig.json" />
+    <None Include="doxygen\game_api.dox" />
+    <None Include="doxygen\index.dox" />
+    <None Include="doxygen\Modules.dox" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

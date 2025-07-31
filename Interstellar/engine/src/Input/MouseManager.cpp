@@ -15,7 +15,7 @@ namespace Interstellar::Input {
 
         // Check if the left mouse button is pressed
         bool leftPressed = glfwGetMouseButton(m_Window, GLFW_MOUSE_BUTTON_LEFT) == GLFW_PRESS;
-        m_IsDragging = leftPressed;
+        m_IsDragging = leftPressed && (m_X != m_LastX || m_Y != m_LastY);
     }
 
     double MouseManager::GetX() const {
