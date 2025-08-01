@@ -3,7 +3,7 @@
 #include "Interstellar/Input/IMouseManager.hpp"
 #include <GLFW/glfw3.h>
 
-namespace Interstellar::Input {
+namespace Interstellar::Input::Mouse {
 
     /**
     * @ingroup EngineInterfaces
@@ -14,20 +14,20 @@ namespace Interstellar::Input {
      *
      * @since 1.0
      */
-    class MouseManager : public IMouseManager {
+    class GlfwMouseManager : public IMouseManager {
     public:
         /**
          * @brief Constructs the mouse manager with a GLFW window context.
          * @param window Pointer to the GLFW window to track input for.
          * @since 1.0
          */
-        explicit MouseManager(GLFWwindow* window);
+         GlfwMouseManager(GLFWwindow* window);
 
         /**
          * @brief Destructor.
          * @since 1.0
          */
-        ~MouseManager() override = default;
+        ~GlfwMouseManager() override = default;
 
         /**
          * @brief Call once per frame to update internal mouse state.
@@ -59,18 +59,24 @@ namespace Interstellar::Input {
 
         /**
          * @brief Returns true if the mouse is currently dragging.
-         * Dragging is defined as holding the left button while moving the cursos across frames.
+         * Dragging is defined as holding the left button while moving the cursors across frames.
          * @since 1.0
          */
         bool IsDragging() const override;
 
+        double GetScrollOffsetY() const override;
+        void ResetScrollOffset();
+
     private:
+        static void ScrollCallback(GLFWwindow* window, double xoffset, double yoffset);
+
         GLFWwindow* m_Window = nullptr;
         double m_X = 0.0;
         double m_Y = 0.0;
-        bool m_IsDragging = false;
         double m_LastX = 0.0;
         double m_LastY = 0.0;
+        bool m_IsDragging = false;
+        double m_ScrollOffsetY = 0.0;
     };
 
 }

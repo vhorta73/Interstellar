@@ -6,6 +6,18 @@
 /**
  * @defgroup InputSystem Input System
  * @brief Core module for handling user input (mouse, keyboard, etc.).
+ *
+ * The Input module abstracts paltform-specific input handling and exposes
+ * interfaces for querying device states. This includes real-time polling and
+ * frame-based state transition.
+ */
+
+ /**
+ * @defgroup KeyCodes KeyCode Definitions
+ * @ingroup Input
+ * @brief Enumerates platform-agnostic key identifiers.
+ *
+ * `KeyCode` allows consistent keyboard input across platforms.
  */
 
 /**

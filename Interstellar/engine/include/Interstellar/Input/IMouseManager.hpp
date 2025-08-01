@@ -23,7 +23,7 @@ namespace Interstellar::Input {
          * @return Mouse X position as a double.
          * @since 1.0
          */
-        virtual double GetX() const = 0;
+        [[nodiscard]] virtual double GetX() const = 0;
 
         /**
          * @brief Returns the current Y position of the mouse in screen coordinates.
@@ -31,7 +31,7 @@ namespace Interstellar::Input {
          * @return Mouse Y position as a double.
          * @since 1.0
          */
-        virtual double GetY() const = 0;
+        [[nodiscard]] virtual double GetY() const = 0;
 
         /**
          * @brief Checks if a specific mouse button is currently pressed.
@@ -41,7 +41,7 @@ namespace Interstellar::Input {
          * @return True if the button is pressed, false otherwise.
          * @since 1.0
          */
-        virtual bool IsButtonPressed(int button) const = 0;
+        [[nodiscard]] virtual bool IsButtonPressed(int button) const = 0;
 
         /**
          * @brief Checks if the user is currently dragging.
@@ -52,7 +52,16 @@ namespace Interstellar::Input {
          * @return True if dragging, false otherwise.
          * @since 1.0
          */
-        virtual bool IsDragging() const = 0;
+        [[nodiscard]] virtual bool IsDragging() const = 0;
+
+        /**
+        * @brief Returns the accumulated vertical scroll offset since the last update.
+        * @return Y-axis scroll offset (positive = scroll up, negative = down).
+        * 
+        * @since 1.0
+        */
+        [[nodiscard]] virtual double GetScrollOffsetY() const = 0;
+
     };
 
 }

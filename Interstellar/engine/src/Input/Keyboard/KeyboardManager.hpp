@@ -4,7 +4,7 @@
 #include <GLFW/glfw3.h>
 #include <unordered_map>
 
-namespace Interstellar::Input {
+namespace Interstellar::Input::Keyboard {
 
     /**
     * @ingroup EngineInterfaces

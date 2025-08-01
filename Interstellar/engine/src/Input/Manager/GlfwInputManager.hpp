@@ -1,12 +1,12 @@
 #pragma once
 
-#include "InputManager.hpp"
-#include "KeyboardManager.hpp"
-#include "MouseManager.hpp"
+#include "Input/InternalInputManager.hpp"
+#include "Input/Keyboard/KeyboardManager.hpp"
+#include "Input/Mouse/GlfwMouseManager.hpp"
 
 struct GLFWwindow;
 
-namespace Interstellar::Input {
+namespace Interstellar::Input::Manager {
 
     /**
      * @ingroup PlatformImplementations
@@ -17,7 +17,7 @@ namespace Interstellar::Input {
      *
      * @since 1.0
      */
-    class GlfwInputManager : public InputManager {
+    class GlfwInputManager : public InternalInputManager {
     public:
         explicit GlfwInputManager(GLFWwindow* window);
 
@@ -28,8 +28,8 @@ namespace Interstellar::Input {
         void ReloadConfig() override;
 
     private:
-        MouseManager m_Mouse;
-        KeyboardManager m_Keyboard;
+        Interstellar::Input::Mouse::GlfwMouseManager m_Mouse;
+        Keyboard::KeyboardManager m_Keyboard;
     };
 
 }

@@ -1,8 +1,6 @@
 #pragma once
 
 #include "Interstellar/Input/IInputManager.hpp"
-#include "Interstellar/Input/IMouseManager.hpp"
-#include "Interstellar/Input/IKeyboardManager.hpp"
 
 namespace Interstellar::Input {
 
@@ -15,33 +13,9 @@ namespace Interstellar::Input {
      *
      * @since 1.0
      */
-    class InputManager : public IInputManager {
+    class InternalInputManager : public IInputManager {
     public:
-        virtual ~InputManager() = default;
-
-        /**
-         * @brief Returns the mouse manager instance.
-         *
-         * @return Reference to the active mouse manager.
-         * @since 1.0
-         */
-        IMouseManager& GetMouseManager() override = 0;
-
-        /**
-         * @brief Returns the keyboard manager instance.
-         *
-         * @return Reference to the active keyboard manager.
-         * @since 1.0
-         */
-        IKeyboardManager& GetKeyboardManager() override = 0;
-
-        /**
-         * @brief Updates all managed input systems.
-         *
-         * Should be called once per frame during the main loop.
-         * @since 1.0
-         */
-        void Update() override = 0;
+        virtual ~InternalInputManager() = default;
 
         /**
          * @brief Injects a synthetic key press into the input system.

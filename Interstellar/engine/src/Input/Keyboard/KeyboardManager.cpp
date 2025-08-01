@@ -1,7 +1,7 @@
-#include "KeyboardManager.hpp"
+#include "Input/Keyboard/KeyboardManager.hpp"
 #include <GLFW/glfw3.h>
 
-namespace Interstellar::Input {
+namespace Interstellar::Input::Keyboard {
 
     KeyboardManager::KeyboardManager(GLFWwindow* window)
         : m_Window(window) {

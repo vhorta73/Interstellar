@@ -90,16 +90,25 @@
     <ClInclude Include="engine\include\Interstellar\Input\IKeyboardManager.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="engine\src\Input\InputManager.hpp">
+    <ClInclude Include="engine\src\Input\InternalInputManager.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="engine\src\Input\KeyboardManager.hpp">
+    <ClInclude Include="engine\src\Input\Keyboard\KeyboardManager.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="engine\src\Input\MouseManager.hpp">
+    <ClInclude Include="engine\src\Input\Mouse\GlfwMouseManager.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="engine\src\Input\GlfwInputManager.hpp">
+    <ClInclude Include="engine\src\Input\Manager\GlfwInputManager.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="engine\include\Interstellar\Input\KeyCode.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="engine\include\Interstellar\Input\KeyCodeTranslator\IKeyCodeTranslator.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="engine\src\Input\KeyCodeTranslator\GlfwKeyMap.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
@@ -143,13 +152,16 @@
     <ClCompile Include="engine\src\Graphics\OpenGL\stb\stb_image.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="engine\src\Input\GlfwInputManager.cpp">
+    <ClCompile Include="engine\src\Input\Manager\GlfwInputManager.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="engine\src\Input\KeyboardManager.cpp">
+    <ClCompile Include="engine\src\Input\Keyboard\KeyboardManager.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="engine\src\Input\MouseManager.cpp">
+    <ClCompile Include="engine\src\Input\Mouse\GlfwMouseManager.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="engine\src\Input\KeyCodeTranslator\GlfwKeyMap.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

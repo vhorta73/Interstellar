@@ -1,4 +1,5 @@
 #include <iostream>
+#include <algorithm>
 
 #include "Interstellar/Interstellar.hpp"
 #include "Interstellar/Graphics/Core/ITexture.hpp"
@@ -32,6 +33,7 @@ int main() {
     glm::vec2 triangleOffset = glm::vec2(0.0f);
     glm::vec2 dragStart = glm::vec2(0.0f);
     bool dragging = false;
+    float zoom = 1.0f; // Default zoom level
 
     const auto s_Logger = Interstellar::Core::Logger(LOG_CATEGORY);
 
@@ -84,6 +86,14 @@ int main() {
         }
         input->Update(); // Refresh input states
 
+        float scrollY = static_cast<float>(mouse.GetScrollOffsetY());
+        if (scrollY != 0.0f) {
+
+            float zoomDelta = scrollY * 0.5f;
+            zoom = zoomDelta;
+            zoom = std::clamp(zoom, 0.1f, 5000.0f);
+        }
+
         // Keyboard movement
         float moveSpeed = 0.5f * static_cast<float>(deltaTime);
         if (keyboard.IsKeyDown(GLFW_KEY_LEFT))  triangleOffset.x -= moveSpeed;
@@ -92,17 +102,19 @@ int main() {
         if (keyboard.IsKeyDown(GLFW_KEY_DOWN))  triangleOffset.y -= moveSpeed;
 
         // Mouse drag
-        if (mouse.IsDragging()) {
+        if (mouse.IsButtonPressed(GLFW_MOUSE_BUTTON_LEFT)) {
+            glm::vec2 current = glm::vec2(mouse.GetX(), mouse.GetY());
+
             if (!dragging) {
                 dragging = true;
-                dragStart = glm::vec2(mouse.GetX(), mouse.GetY());
+                dragStart = current;
             }
-            else {
-                glm::vec2 dragNow = glm::vec2(mouse.GetX(), mouse.GetY());
-                glm::vec2 delta = (dragNow - dragStart) / glm::vec2(windowWidth, windowHeight);
-                delta.y *= -1.0f; // Invert Y to match OpenGL's coordinate system
-                triangleOffset += delta * 2.0f; // convert screen to NDC
-                dragStart = dragNow;
+
+            if (mouse.IsDragging()) {
+                glm::vec2 delta = (current - dragStart) / glm::vec2(windowWidth, windowHeight);
+                delta.y *= -1.0f; // Invert Y for OpenGL
+                triangleOffset += delta * 2.0f;
+                dragStart = current;
             }
         }
         else {
@@ -134,6 +146,11 @@ int main() {
         if (offsetLoc >= 0) {
             glUniform2f(offsetLoc, triangleOffset.x, triangleOffset.y);
         }
+        GLint zoomLoc = glGetUniformLocation(programID, "u_Zoom");
+        if (zoomLoc >= 0) {
+            glUniform1f(zoomLoc, zoom);
+        }
+
 
         graphics->SubmitMesh(mesh, pipeline);
         graphics->EndFrame();
