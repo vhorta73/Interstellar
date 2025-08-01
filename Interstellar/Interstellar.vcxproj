@@ -148,6 +148,7 @@
     <ClInclude Include="engine\include\Interstellar\Config\IJsonConfig.hpp" />
     <ClInclude Include="engine\include\Interstellar\Config\JsonConfigBase.hpp" />
     <ClInclude Include="engine\include\Interstellar\Config\JsonManager.hpp" />
+    <ClInclude Include="engine\include\Interstellar\Input\IInputManager.hpp" />
     <ClInclude Include="engine\include\Interstellar\Core\Logging.hpp" />
     <ClInclude Include="engine\include\Interstellar\Core\LogLevel.hpp" />
     <ClInclude Include="engine\include\Interstellar\Core\LogLevelUtils.hpp" />
@@ -158,16 +159,26 @@
     <ClInclude Include="engine\include\Interstellar\Graphics\Core\ITexture.hpp" />
     <ClInclude Include="engine\include\Interstellar\Graphics\Vulkan\Selectors\VulkanSelector.hpp" />
     <ClInclude Include="engine\include\Interstellar\Graphics\Vulkan\VulkanInstance.hpp" />
+    <ClInclude Include="engine\include\Interstellar\Input\IKeyboardManager.hpp" />
+    <ClInclude Include="engine\include\Interstellar\Input\KeyCodeTranslator\IKeyCodeTranslator.hpp" />
+    <ClInclude Include="engine\include\Interstellar\Input\IMouseManager.hpp" />
+    <ClInclude Include="engine\include\Interstellar\Input\KeyCode.hpp" />
     <ClInclude Include="engine\src\Graphics\OpenGL\OpenGLGraphics.hpp" />
     <ClInclude Include="engine\src\Graphics\OpenGL\OpenGLMesh.hpp" />
     <ClInclude Include="engine\src\Graphics\OpenGL\OpenGLPipeline.hpp" />
     <ClInclude Include="engine\src\Graphics\OpenGL\OpenGLShader.hpp" />
     <ClInclude Include="engine\src\Graphics\OpenGL\OpenGLTexture.hpp" />
     <ClInclude Include="engine\src\Graphics\OpenGL\stb\stb_image.hpp" />
+    <ClInclude Include="engine\src\Input\KeyCodeTranslator\GlfwKeyMap.hpp" />
+    <ClInclude Include="engine\src\Input\Manager\GlfwInputManager.hpp" />
+    <ClInclude Include="engine\src\Input\InternalInputManager.hpp" />
+    <ClInclude Include="engine\src\Input\Keyboard\KeyboardManager.hpp" />
+    <ClInclude Include="engine\src\Input\Mouse\GlfwMouseManager.hpp" />
     <ClInclude Include="game\include\Interstellar\Interstellar.hpp" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="engine\include\Interstellar\Config\Storage\FileSystem.cpp" />
+    <ClCompile Include="engine\src\Input\Manager\GlfwInputManager.cpp" />
     <ClCompile Include="engine\src\Core\AppConfig.cpp" />
     <ClCompile Include="engine\src\Core\Logging.cpp" />
     <ClCompile Include="engine\include\Interstellar\Config\JsonImpl\UserInfoConfig.hpp" />
@@ -177,12 +188,18 @@
     <ClCompile Include="engine\src\Graphics\OpenGL\OpenGLShader.cpp" />
     <ClCompile Include="engine\src\Graphics\OpenGL\OpenGLTexture.cpp" />
     <ClCompile Include="engine\src\Graphics\OpenGL\stb\stb_image.cpp" />
+    <ClCompile Include="engine\src\Input\KeyCodeTranslator\GlfwKeyMap.cpp" />
+    <ClCompile Include="engine\src\Input\Keyboard\KeyboardManager.cpp" />
+    <ClCompile Include="engine\src\Input\Mouse\GlfwMouseManager.cpp" />
     <ClCompile Include="game\src\Interstellar\Interstellar.cpp" />
     <ClCompile Include="game\src\main.cpp" />
     <ClCompile Include="engine\src\Graphics\Vulkan\VulkanInstance.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="assets\config\InterstellarConfig.json" />
+    <None Include="doxygen\game_api.dox" />
+    <None Include="doxygen\index.dox" />
+    <None Include="doxygen\Modules.dox" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

@@ -1,0 +1,39 @@
+/**
+ * @file
+ * @brief Doxygen group definitions for the Input subsystem.
+ */
+
+/**
+ * @defgroup InputSystem Input System
+ * @brief Core module for handling user input (mouse, keyboard, etc.).
+ *
+ * The Input module abstracts paltform-specific input handling and exposes
+ * interfaces for querying device states. This includes real-time polling and
+ * frame-based state transition.
+ */
+
+ /**
+ * @defgroup KeyCodes KeyCode Definitions
+ * @ingroup Input
+ * @brief Enumerates platform-agnostic key identifiers.
+ *
+ * `KeyCode` allows consistent keyboard input across platforms.
+ */
+
+/**
+ * @defgroup GameInterfaces Game Interfaces
+ * @ingroup InputSystem
+ * @brief Public interfaces exposed to game logic.
+ */
+
+/**
+ * @defgroup EngineInterfaces Engine Interfaces
+ * @ingroup InputSystem
+ * @brief Internal abstract extensions of the public interfaces.
+ */
+
+/**
+ * @defgroup PlatformImplementations Platform Implementations
+ * @ingroup InputSystem
+ * @brief Concrete input backends for specific platforms (GLFW, SDL, etc.).
+ */

@@ -1,11 +1,19 @@
 #include <iostream>
+#include <algorithm>
 
 #include "Interstellar/Interstellar.hpp"
 #include "Interstellar/Graphics/Core/ITexture.hpp"
 #include "Interstellar/Core/Logging.hpp"
 #include "Graphics/OpenGL/OpenGLGraphics.hpp"
+#include "Interstellar/Input/IInputManager.hpp"
+#include "Interstellar/Input/IKeyboardManager.hpp"
+#include "Interstellar/Input/IMouseManager.hpp"
+#include "Interstellar/Graphics/Core/IShader.hpp"
+
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
+#include <glm/glm.hpp>
+
 
 namespace {
     constexpr auto LOG_CATEGORY = Interstellar::Core::LOG_INIT;
@@ -22,6 +30,10 @@ namespace {
 }
 
 int main() {
+    glm::vec2 triangleOffset = glm::vec2(0.0f);
+    glm::vec2 dragStart = glm::vec2(0.0f);
+    bool dragging = false;
+    float zoom = 1.0f; // Default zoom level
 
     const auto s_Logger = Interstellar::Core::Logger(LOG_CATEGORY);
 
@@ -35,6 +47,11 @@ int main() {
         std::cerr << "[Error] Failed to initialise OpenGL graphics backend.\n";
         return -1;
     }
+
+    auto window = static_cast<GLFWwindow*>(graphics->GetNativeWindow());
+    auto input = Interstellar::Input::IInputManager::Create(window);
+    auto& keyboard = input->GetKeyboardManager();
+    auto& mouse = input->GetMouseManager();
 
     auto shader = graphics->CreateShader("TriangleShader");
     auto mesh = graphics->CreateMesh(vertices, sizeof(vertices), indices, sizeof(indices));
@@ -67,7 +84,42 @@ int main() {
           s_Logger.LogDebug("FPS: {} | Avg: {} ",fps, fpsAvg);
           timeAccumulator = 0.0;
         }
+        input->Update(); // Refresh input states
 
+        float scrollY = static_cast<float>(mouse.GetScrollOffsetY());
+        if (scrollY != 0.0f) {
+
+            float zoomDelta = scrollY * 0.5f;
+            zoom = zoomDelta;
+            zoom = std::clamp(zoom, 0.1f, 5000.0f);
+        }
+
+        // Keyboard movement
+        float moveSpeed = 0.5f * static_cast<float>(deltaTime);
+        if (keyboard.IsKeyDown(GLFW_KEY_LEFT))  triangleOffset.x -= moveSpeed;
+        if (keyboard.IsKeyDown(GLFW_KEY_RIGHT)) triangleOffset.x += moveSpeed;
+        if (keyboard.IsKeyDown(GLFW_KEY_UP))    triangleOffset.y += moveSpeed;
+        if (keyboard.IsKeyDown(GLFW_KEY_DOWN))  triangleOffset.y -= moveSpeed;
+
+        // Mouse drag
+        if (mouse.IsButtonPressed(GLFW_MOUSE_BUTTON_LEFT)) {
+            glm::vec2 current = glm::vec2(mouse.GetX(), mouse.GetY());
+
+            if (!dragging) {
+                dragging = true;
+                dragStart = current;
+            }
+
+            if (mouse.IsDragging()) {
+                glm::vec2 delta = (current - dragStart) / glm::vec2(windowWidth, windowHeight);
+                delta.y *= -1.0f; // Invert Y for OpenGL
+                triangleOffset += delta * 2.0f;
+                dragStart = current;
+            }
+        }
+        else {
+            dragging = false;
+        }
         // Render
         graphics->BeginFrame();
 
@@ -79,12 +131,26 @@ int main() {
                 glBindTexture(GL_TEXTURE_2D, static_cast<GLuint>(reinterpret_cast<uintptr_t>(native)));
             }
             else {
-                s_Logger.LogWarn("Texture '{}' has no valid native handle!", texture->GetName());
+                s_Logger.LogWarn("Texture '{}' has no valid native handle!");// , texture->GetName());
             }
         }
         else {
             s_Logger.LogWarn("Texture was not created (nullptr).");
         }
+
+        // Send u_Offset to the shader
+        //auto glShader = std::static_pointer_cast<Interstellar::Graphics::OpenGL::OpenGLShader>(shader);
+        GLuint programID = static_cast<GLuint>(reinterpret_cast<uintptr_t>(shader->GetNativeHandle()));
+        glUseProgram(programID);
+        GLint offsetLoc = glGetUniformLocation(programID, "u_Offset");
+        if (offsetLoc >= 0) {
+            glUniform2f(offsetLoc, triangleOffset.x, triangleOffset.y);
+        }
+        GLint zoomLoc = glGetUniformLocation(programID, "u_Zoom");
+        if (zoomLoc >= 0) {
+            glUniform1f(zoomLoc, zoom);
+        }
+
 
         graphics->SubmitMesh(mesh, pipeline);
         graphics->EndFrame();

@@ -167,6 +167,14 @@ namespace Interstellar::Graphics::OpenGL {
          */
         [[nodiscard]] bool ShouldClose() const override;
 
+        /**
+         * @brief Gets the native window handle for platform-specific operations.
+         *
+         * @return Pointer to the native window (GLFWwindow*).
+         * @since 1.0
+         */
+        [[nodiscard]] void* GetNativeWindow() const override;
+
     private:
         GLFWwindow* m_Window = nullptr; ///< Native GLFW window pointer.
         bool m_Vsync = true;            ///< Tracks if vertical sync is enabled.

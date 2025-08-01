@@ -191,7 +191,7 @@ void OpenGLGraphics::SubmitMesh(
     auto oglPipeline = std::static_pointer_cast<OpenGLPipeline>(pipeline);
     auto glShader = std::static_pointer_cast<OpenGLShader>(pipeline->GetShader());
 
-    unsigned int programID = reinterpret_cast<uintptr_t>(glShader->GetNativeHandle());
+    unsigned int programID = reinterpret_cast<GLuint>(glShader->GetNativeHandle());
     glUseProgram(programID);
 
     // Set texture sampler uniform (texture unit 0)
@@ -213,4 +213,12 @@ void OpenGLGraphics::SubmitMesh(
  */
 bool OpenGLGraphics::ShouldClose() const {
     return glfwWindowShouldClose(m_Window);
+}
+
+/**
+ * @brief Returns the native window handle.
+ * @return Pointer to the GLFW window.
+ */
+void* OpenGLGraphics::GetNativeWindow() const {
+    return static_cast<void*>(m_Window);
 }
