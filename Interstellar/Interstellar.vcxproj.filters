@@ -111,6 +111,21 @@
     <ClInclude Include="engine\src\Input\KeyCodeTranslator\GlfwKeyMap.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="engine\include\Interstellar\Config\JsonImpl\ElementConfig.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="engine\include\Interstellar\Config\JsonImpl\ElementDatabase.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="engine\include\Interstellar\Data\IElementDatabase.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="engine\include\Interstellar\Data\ElementData.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="engine\include\Interstellar\Config\JsonImpl\UserInfoConfig.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="engine\src\Graphics\Vulkan\VulkanInstance.cpp">
@@ -120,9 +135,6 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="engine\src\Core\Logging.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="engine\include\Interstellar\Config\JsonImpl\UserInfoConfig.hpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="engine\include\Interstellar\Config\Storage\FileSystem.cpp">
@@ -162,6 +174,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="engine\src\Input\KeyCodeTranslator\GlfwKeyMap.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="engine\src\Config\JsonImpl\ElementDatabase.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

@@ -147,7 +147,12 @@
     <ClInclude Include="engine\include\Interstellar\Config\IConfigStorage.hpp" />
     <ClInclude Include="engine\include\Interstellar\Config\IJsonConfig.hpp" />
     <ClInclude Include="engine\include\Interstellar\Config\JsonConfigBase.hpp" />
+    <ClInclude Include="engine\include\Interstellar\Config\JsonImpl\ElementConfig.hpp" />
+    <ClInclude Include="engine\include\Interstellar\Config\JsonImpl\ElementDatabase.hpp" />
+    <ClInclude Include="engine\include\Interstellar\Config\JsonImpl\UserInfoConfig.hpp" />
     <ClInclude Include="engine\include\Interstellar\Config\JsonManager.hpp" />
+    <ClInclude Include="engine\include\Interstellar\Data\ElementData.hpp" />
+    <ClInclude Include="engine\include\Interstellar\Data\IElementDatabase.hpp" />
     <ClInclude Include="engine\include\Interstellar\Input\IInputManager.hpp" />
     <ClInclude Include="engine\include\Interstellar\Core\Logging.hpp" />
     <ClInclude Include="engine\include\Interstellar\Core\LogLevel.hpp" />
@@ -178,10 +183,10 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="engine\include\Interstellar\Config\Storage\FileSystem.cpp" />
+    <ClCompile Include="engine\src\Config\JsonImpl\ElementDatabase.cpp" />
     <ClCompile Include="engine\src\Input\Manager\GlfwInputManager.cpp" />
     <ClCompile Include="engine\src\Core\AppConfig.cpp" />
     <ClCompile Include="engine\src\Core\Logging.cpp" />
-    <ClCompile Include="engine\include\Interstellar\Config\JsonImpl\UserInfoConfig.hpp" />
     <ClCompile Include="engine\src\Graphics\OpenGL\OpenGLGraphics.cpp" />
     <ClCompile Include="engine\src\Graphics\OpenGL\OpenGLMesh.cpp" />
     <ClCompile Include="engine\src\Graphics\OpenGL\OpenGLPipeline.cpp" />

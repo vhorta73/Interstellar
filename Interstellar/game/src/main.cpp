@@ -14,7 +14,6 @@
 #include <GLFW/glfw3.h>
 #include <glm/glm.hpp>
 
-
 namespace {
     constexpr auto LOG_CATEGORY = Interstellar::Core::LOG_INIT;
     constexpr const char* TEXTURE_PATH = "assets/textures/texture_01.png";
@@ -29,6 +28,8 @@ namespace {
     unsigned int indices[] = { 0, 1, 2 };
 }
 
+#include "Interstellar/Config/JsonImpl/ElementDatabase.hpp"
+//#include "Interstellar/Data/ElementData.hpp"
 int main() {
     glm::vec2 triangleOffset = glm::vec2(0.0f);
     glm::vec2 dragStart = glm::vec2(0.0f);
@@ -36,6 +37,22 @@ int main() {
     float zoom = 1.0f; // Default zoom level
 
     const auto s_Logger = Interstellar::Core::Logger(LOG_CATEGORY);
+
+    s_Logger.LogInfo("Interstellar Engine Initialisation...");
+    Interstellar::Config::JsonImpl::ElementDatabase elementDb;
+    if (!elementDb.loadFromFile("assets/data/elements.json")) {
+        s_Logger.LogError("Failed to load element database from 'assets/data/elements.json'.");
+    }
+    else {
+        auto all = elementDb.all();
+        for (const auto& [symbol, e] : all) {
+            s_Logger.LogInfo("Element {}: {} ({}), mass={} stateAtSTP ?? ", 
+                symbol, 
+                e.name, e.symbol, e.atomicMass 
+            );
+        }
+    }
+
 
     //Interstellar::Core::Logger s_Logger(LOG_CATEGORY);
     // ==== TEMPORARY TEST CODE ====
@@ -162,7 +179,7 @@ int main() {
 
     // ==== GAME INIT (NOT YET REACHED) ====
     const auto genericLogger = Interstellar::Core::Logger();
-    
+
     Interstellar::Game game;
 
     try {
@@ -175,6 +192,8 @@ int main() {
         genericLogger.LogCritical(std::string("Game error: ") + e.what());
         return 99;
     }
+
+    s_Logger.LogInfo(std::string("Game closed with success."));
 
     return 0;
 }

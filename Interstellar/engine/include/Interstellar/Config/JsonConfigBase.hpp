@@ -1,5 +1,5 @@
 #pragma once
-#include "IJsonConfig.hpp"
+#include "Interstellar/Config/IJsonConfig.hpp"
 #include <map>
 #include <vector>
 #include <functional>
@@ -24,6 +24,8 @@ protected:
         for (auto& key : fieldOrder)
             if (j.contains(key))
                 setters.at(key)(j.at(key));
+
+        onParsed();
     }
 
 public:
@@ -32,6 +34,10 @@ public:
     JsonConfigBase(const std::map<std::string, nlohmann::json>& m)
         : JsonConfigBase(nlohmann::json(m)) {
     }
+
+    virtual ~JsonConfigBase() = default;
+
+    virtual void onParsed() {}
 
     nlohmann::json toJson() const override {
         nlohmann::json j;

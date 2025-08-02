@@ -178,6 +178,7 @@
     </ClCompile>
     <ClCompile Include="src\Interstellar\Config\ConfigAppTest.cpp" />
     <ClCompile Include="src\Interstellar\Core\LoggingTest.cpp" />
+    <ClCompile Include="src\Interstellar\Data\ElementDataTests.cpp" />
     <ClCompile Include="src\Interstellar\Graphics\Vulkan\Selectors\VulkanSelectorTest.cpp" />
   </ItemGroup>
   <ItemGroup>

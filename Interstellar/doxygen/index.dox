@@ -1,14 +1,25 @@
- /**
+/**
  * @mainpage Interstellar Documentation
- * 
- * Welcome to Interstellar.
- * 
- * Navigate using the Modules list to explore subsystems:
- * - [Game Api](game_api.html)
- * - Graphics System
- * - Configuration System
- * 
+ *
+ * Welcome to the **Interstellar Engine** documentation.
+ *
+ * This documentation covers all major systems in the engine,
+ * including input handling, graphics, configuration, and core gameplay interfaces.
+ *
  * ## Getting Started
- * - [Game Interfaces](group___game_interface.html)
- * Each system includes public interfaces, engine extensions, and backend implementations.
+ * Explore the main systems and interfaces:
+ * - @ref GameInterfaces "Game API"
+ * - @ref InputSystem "Input System"
+ * - @ref InterstellarData "Data Definitions"
+ * - @ref PlatformImplementations "Platform Backends"
+ * - @ref EngineInterfaces "Engine Extensions"
+ *
+ * Each system includes:
+ * - Public interfaces
+ * - Engine-specific extensions
+ * - Platform-specific implementations (e.g., GLFW, SDL)
+ *
+ * ## Navigation Tips
+ * Use the **Modules** tab in the sidebar to browse logical groupings.
+ * Use the **Classes** and **Files** tabs to dig into implementation details.
  */

@@ -7,14 +7,22 @@
  * @defgroup InputSystem Input System
  * @brief Core module for handling user input (mouse, keyboard, etc.).
  *
- * The Input module abstracts paltform-specific input handling and exposes
+ * The Input module abstracts platform-specific input handling and exposes
  * interfaces for querying device states. This includes real-time polling and
- * frame-based state transition.
+ * frame-based state transitions.
  */
 
- /**
+/**
+ * @defgroup InterstellarData Interstellar Data
+ * @brief Central data definitions used throughout the game (elements, systems, etc.).
+ *
+ * This module handles data like periodic elements, materials, and other
+ * structured definitions used by simulation and gameplay systems.
+ */
+
+/**
  * @defgroup KeyCodes KeyCode Definitions
- * @ingroup Input
+ * @ingroup InputSystem
  * @brief Enumerates platform-agnostic key identifiers.
  *
  * `KeyCode` allows consistent keyboard input across platforms.
@@ -23,7 +31,7 @@
 /**
  * @defgroup GameInterfaces Game Interfaces
  * @ingroup InputSystem
- * @brief Public interfaces exposed to game logic.
+ * @brief Public input interfaces exposed to game logic.
  */
 
 /**
