@@ -4,6 +4,7 @@
 
 #include "Interstellar/Config/JsonImpl/ElementConfig.hpp"
 
+#include <iostream>
 using namespace Microsoft::VisualStudio::CppUnitTestFramework;
 using namespace Interstellar::Config;
 using namespace Interstellar::Data;
@@ -23,8 +24,7 @@ namespace Microsoft::VisualStudio::CppUnitTestFramework {
 }
 
 namespace ElementDataTests {
-    //using Interstellar::Data::ElementData;
-    //using Interstellar::Data::ElementState;
+
     TEST_CLASS(ElementDataTests) {
 public:
 
@@ -68,7 +68,7 @@ public:
         Assert::AreEqual(ElementState::Plasma, parseState("plasma"));
         Assert::AreEqual(ElementState::Unknown, parseState("somethingElse"));
     }
-    
+
     TEST_METHOD(ToStringMatchesEnumValue) {
         Assert::AreEqual("solid", to_string(ElementState::Solid));
         Assert::AreEqual("liquid", to_string(ElementState::Liquid));
@@ -113,15 +113,110 @@ public:
         config.Radiation = 0.0f;
 
         nlohmann::json j = config.toJson();
+
         Assert::AreEqual("C", j["Symbol"].get<std::string>().c_str());
         Assert::AreEqual("Carbon", j["Name"].get<std::string>().c_str());
         Assert::AreEqual(6, j["AtomicNumber"].get<int>());
         Assert::AreEqual(12.011f, j["AtomicMass"].get<float>());
         Assert::AreEqual(2.267f, j["Density"].get<float>());
         Assert::AreEqual("solid", j["StateAtSTP"].get<std::string>().c_str());
-        Assert::AreEqual(3u, static_cast<unsigned>(j["DisplayColor"].size()));
+
+        const auto& color = j["DisplayColor"];
+        Assert::AreEqual(3u, static_cast<unsigned>(color.size()));
+        Assert::AreEqual(0.25f, color[0].get<float>());
+        Assert::AreEqual(0.25f, color[1].get<float>());
+        Assert::AreEqual(0.25f, color[2].get<float>());
+
         Assert::AreEqual(0.5f, j["Reactivity"].get<float>());
         Assert::AreEqual(0.0f, j["Radiation"].get<float>());
     }
+
+    TEST_METHOD(StateDetermination_SolidBelowMelting) {
+        ElementData element;
+        element.symbol = "Fe";
+        element.atomicNumber = 26;
+        element.atomicMass = 55.845f;
+        element.meltingPoint = 1811.0f;
+        element.boilingPoint = 3134.0f;
+
+        auto state = element.getState(300.0f, 0.1f); // Well below melting point
+        Assert::AreEqual(ElementState::Solid, state);
+    }
+
+    TEST_METHOD(StateDetermination_LiquidBetweenMeltingAndBoiling) {
+        ElementData element;
+        element.symbol = "Hg";
+        element.atomicNumber = 80;
+        element.atomicMass = 200.59f;
+        element.meltingPoint = 234.32f;
+        element.boilingPoint = 629.88f;
+
+        auto state = element.getState(300.0f);
+        Assert::AreEqual(ElementState::Liquid, state);
+    }
+
+    TEST_METHOD(StateDetermination_GasAboveBoiling) {
+        ElementData element;
+        element.symbol = "N";
+        element.atomicNumber = 7;
+        element.atomicMass = 14.007f;
+        element.meltingPoint = 63.15f;
+        element.boilingPoint = 77.36f;
+
+        auto state = element.getState(100.0f); // Above boiling
+        Assert::AreEqual(ElementState::Gas, state);
+    }
+
+    TEST_METHOD(StateDetermination_EdgeCase_MeltingExact) {
+        ElementData element;
+        element.symbol = "O";
+        element.atomicNumber = 8;
+        element.atomicMass = 15.999f;
+        element.meltingPoint = 54.36f;
+        element.boilingPoint = 90.20f;
+
+        auto state = element.getState(54.36f); // Exactly at melting point
+        Assert::AreEqual(ElementState::Liquid, state); // Assumes melting point inclusive
+    }
+
+    TEST_METHOD(StateDetermination_EdgeCase_BoilingExact) {
+        ElementData element;
+        element.symbol = "Ar";
+        element.atomicNumber = 18;
+        element.atomicMass = 39.948f;
+        element.meltingPoint = 83.80f;
+        element.boilingPoint = 87.30f;
+
+        auto state = element.getState(87.30f); // Exactly at boiling
+        std::cout << state << std::endl;
+        Assert::AreEqual(ElementState::Gas, state); // Assumes boiling point inclusive
+    }
+
+    TEST_METHOD(PhaseStateDetermination_Works) {
+        ElementData oxygen;
+        oxygen.symbol = "O";
+        oxygen.atomicNumber = 8;
+        oxygen.atomicMass = 15.999f;
+        oxygen.meltingPoint = 54.36f;      // K
+        oxygen.boilingPoint = 90.20f;      // K
+        oxygen.criticalPointTemp = 154.6f;
+        oxygen.criticalPointPressure = 49.8f;
+
+        Assert::AreEqual(ElementState::Solid, oxygen.getState(40.0f));
+        Assert::AreEqual(ElementState::Liquid, oxygen.getState(70.0f));
+        Assert::AreEqual(ElementState::Plasma, oxygen.getState(160.0f, 60.0f));
+        Assert::AreEqual(ElementState::Gas, oxygen.getState(100.0f, 1.0f));
+    }
+
+    TEST_METHOD(PhaseStateFallsBackToUnknownIfDataIsIncomplete) {
+        ElementData incomplete;
+        incomplete.meltingPoint = 0.0f;
+        incomplete.boilingPoint = 0.0f;
+        incomplete.criticalPointTemp = 0.0f;
+        incomplete.criticalPointPressure = 0.0f;
+
+        Assert::AreEqual(ElementState::Unknown, incomplete.getState(500.0f, 1.0f));
+    }
+
     };
 }

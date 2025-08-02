@@ -46,9 +46,10 @@ int main() {
     else {
         auto all = elementDb.all();
         for (const auto& [symbol, e] : all) {
-            s_Logger.LogInfo("Element {}: {} ({}), mass={} stateAtSTP ?? ", 
+            s_Logger.LogInfo("Element {}: {} ({}), mass={} abundance {} ", 
                 symbol, 
-                e.name, e.symbol, e.atomicMass 
+                e.name, e.symbol, e.atomicMass,
+                e.abundance
             );
         }
     }
