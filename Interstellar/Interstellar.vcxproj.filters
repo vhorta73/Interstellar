@@ -126,6 +126,9 @@
     <ClInclude Include="engine\include\Interstellar\Config\JsonImpl\UserInfoConfig.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="engine\include\Interstellar\Utils\StringUtils.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="engine\src\Graphics\Vulkan\VulkanInstance.cpp">
@@ -185,5 +188,6 @@
     <None Include="doxygen\Modules.dox" />
     <None Include="doxygen\index.dox" />
     <None Include="doxygen\game_api.dox" />
+    <None Include="assets\data\elements_all.json" />
   </ItemGroup>
 </Project>

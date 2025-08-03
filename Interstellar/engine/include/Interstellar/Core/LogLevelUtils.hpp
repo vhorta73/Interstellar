@@ -7,6 +7,12 @@
 
 #include "Interstellar/Core/LogLevel.hpp"
 
+// Add this include for fmt
+#include <fmt/format.h>
+
+// Add this include for glm::vec3
+#include <glm/vec3.hpp>
+
 /**
  * @file ParseLogLevel.hpp
  * @defgroup LogLevelUtils Log Level Utilities

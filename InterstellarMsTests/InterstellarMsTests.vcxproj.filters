@@ -45,9 +45,6 @@
     <ClCompile Include="..\Interstellar\engine\src\Core\Logging.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\Interstellar\Data\ElementDataTests.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\pch.h">

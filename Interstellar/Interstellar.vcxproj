@@ -168,6 +168,7 @@
     <ClInclude Include="engine\include\Interstellar\Input\KeyCodeTranslator\IKeyCodeTranslator.hpp" />
     <ClInclude Include="engine\include\Interstellar\Input\IMouseManager.hpp" />
     <ClInclude Include="engine\include\Interstellar\Input\KeyCode.hpp" />
+    <ClInclude Include="engine\include\Interstellar\Utils\StringUtils.hpp" />
     <ClInclude Include="engine\src\Graphics\OpenGL\OpenGLGraphics.hpp" />
     <ClInclude Include="engine\src\Graphics\OpenGL\OpenGLMesh.hpp" />
     <ClInclude Include="engine\src\Graphics\OpenGL\OpenGLPipeline.hpp" />
@@ -202,6 +203,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="assets\config\InterstellarConfig.json" />
+    <None Include="assets\data\elements_all.json" />
     <None Include="doxygen\game_api.dox" />
     <None Include="doxygen\index.dox" />
     <None Include="doxygen\Modules.dox" />
