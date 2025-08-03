@@ -2,6 +2,7 @@
 
 #include <string>
 #include <vector>
+#include <locale>
 #include <algorithm>
 #include <ostream>
 #include <glm/glm.hpp>
@@ -24,9 +25,10 @@ namespace Interstellar::Data {
 
     /**
      * @ingroup InterstellarData
-     * @brief Defines static and extended physical properties of a chemical element.
+     * @brief Holds physical, chemical, and rendering metadata for a single chemical element.
      *
-     * Can be used in simulation, chemistry, planetary formation, and rendering systems.
+     * Used in multiple subsystems including chemistry, simulation, and visualization.
+     * This is a lightweight, POD-like structure for runtime queries and rendering context.
      *
      * @since 1.0
      */
@@ -62,17 +64,27 @@ namespace Interstellar::Data {
         float radiation = 0.0f;    ///< Radiation level (0 = non-radioactive).
 
         // === Metadata ===
-        std::vector<std::string> commonCompounds;
+        std::vector<std::string> commonCompounds; ///< Examples: "H2O", "CO2", "NaCl"
 
-        // === Utility ===
-        bool isValid() const {
+        /// @brief Checks if the element has valid essential properties.
+        /// @return True if the element has valid symbol, atomic number, and mass.
+        [[nodiscard]] bool isValid() const noexcept {
             return !symbol.empty() && atomicNumber > 0 && atomicMass > 0.0f;
         }
 
         /**
-         * @brief Get the state of the element based on temperature (K) and pressure (atm).
+         * @brief Computes the physical state of the element at a given temperature and pressure.
+         *
+         * This approximation considers pressure influence on melting and boiling points
+         * and returns Plasma if supercritical conditions are met.
+         *
+         * @param temperatureK Temperature in Kelvin
+         * @param pressureAtm Pressure in atmospheres (default = 1.0)
+         * @return ElementState Resulting state under given conditions
+         * 
+         * @since 1.0
          */
-        ElementState getState(float temperatureK, float pressureAtm = 1.0f) const {
+        [[nodiscard]] ElementState getState(float temperatureK, float pressureAtm = 1.0f) const noexcept {
             if (meltingPoint <= 0.f || boilingPoint <= 0.f)
                 return ElementState::Unknown;
 
@@ -80,19 +92,19 @@ namespace Interstellar::Data {
             float adjustedBoiling = boilingPoint * std::pow(pressureAtm, 0.1f);
             float adjustedMelting = meltingPoint * std::pow(pressureAtm, 0.02f);
 
-            if (temperatureK < adjustedMelting )
+            if (temperatureK < adjustedMelting)
                 return ElementState::Solid;
 
             if (temperatureK < adjustedBoiling)
                 return ElementState::Liquid;
 
-            return (temperatureK >= adjustedBoiling && temperatureK >= adjustedMelting
-                && temperatureK >= criticalPointTemp
+            return (temperatureK >= criticalPointTemp
                 && pressureAtm > criticalPointPressure)
-                ? ElementState::Plasma // Plasma if above critical point
-                : ElementState::Gas;
+                ? ElementState::Gas
+                : ElementState::Plasma; // Plasma if above critical point
         }
 
+        /// @brief Compares all fields for equality.
         bool operator==(const ElementData& other) const = default;
     };
 
@@ -109,8 +121,12 @@ namespace Interstellar::Data {
 
     /// @brief Convert string to ElementState (case-insensitive)
     inline ElementState parseState(const std::string& s) {
-        std::string lower = s;
-        std::transform(lower.begin(), lower.end(), lower.begin(), ::tolower);
+        std::string lower = s; // Create a mutable copy.
+
+        std::locale loc;
+        std::transform(lower.begin(), lower.end(), lower.begin(),
+            [&loc](char c) { return std::tolower(c, loc); });
+
         if (lower == "solid")   return ElementState::Solid;
         if (lower == "liquid")  return ElementState::Liquid;
         if (lower == "gas")     return ElementState::Gas;
@@ -118,7 +134,8 @@ namespace Interstellar::Data {
         return ElementState::Unknown;
     }
 
-    /// @brief Stream output for ElementState
+    /// @ingroup InterstellarData
+    /// @brief Outputs a human-readable string for the given ElementState.
     inline std::ostream& operator<<(std::ostream& os, ElementState state) {
         return os << to_string(state);
     }

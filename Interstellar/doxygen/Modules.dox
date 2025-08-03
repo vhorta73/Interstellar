@@ -1,6 +1,34 @@
 /**
  * @file
- * @brief Doxygen group definitions for the Input subsystem.
+ * @brief Doxygen group definitions for all subsystems.
+ */
+
+/**
+ * @defgroup InterstellarCore Interstellar Core
+ * @brief Core engine utilities such as logging, diagnostics, and system initialization.
+ *
+ * This includes foundational systems like logging (`Logger`), core enums (`LogLevel`),
+ * and lifecycle hooks shared across all modules (data, config, input, rendering, etc.).
+ */
+
+/**
+ * @defgroup LogLevelUtils Log Level Utilities
+ * @ingroup InterstellarCore
+ * @brief Provides string parsing and formatting utilities for log levels.
+ */
+
+/**
+ * @defgroup LoggingSystem Logging System
+ * @ingroup InterstellarCore
+ * @brief Engine-wide logging interfaces and adaptive flushing mechanisms.
+ *
+ * Defines the `Logger` class, log categories, and adaptive flush strategies based on severity.
+ */
+
+/**
+ * @defgroup Initialization Initialization Utilities
+ * @ingroup InterstellarCore
+ * @brief Engine startup procedures and low-level bootstrap interfaces.
  */
 
 /**
@@ -10,14 +38,6 @@
  * The Input module abstracts platform-specific input handling and exposes
  * interfaces for querying device states. This includes real-time polling and
  * frame-based state transitions.
- */
-
-/**
- * @defgroup InterstellarData Interstellar Data
- * @brief Central data definitions used throughout the game (elements, systems, etc.).
- *
- * This module handles data like periodic elements, materials, and other
- * structured definitions used by simulation and gameplay systems.
  */
 
 /**
@@ -44,4 +64,37 @@
  * @defgroup PlatformImplementations Platform Implementations
  * @ingroup InputSystem
  * @brief Concrete input backends for specific platforms (GLFW, SDL, etc.).
+ */
+
+/**
+ * @defgroup InterstellarData Interstellar Data
+ * @brief Shared scientific, physical, and domain-specific game data.
+ *
+ * Includes definitions such as chemical elements, planetary constants,
+ * material properties, and any scientific reference information used in
+ * simulation or rendering.
+ */
+
+/**
+ * @defgroup InterstellarConfig Interstellar Config
+ * @brief Configuration framework for serializing/deserializing game data.
+ *
+ * This includes JSON-driven configuration management, file IO abstraction,
+ * editor serialization, and persistent modifiable settings (e.g., ElementConfig).
+ */
+
+/**
+ * @defgroup ConfigStorage Config Storage
+ * @ingroup InterstellarConfig
+ * @brief Abstract file system interfaces for reading and writing configs.
+ *
+ * Includes `IConfigStorage`, `FileSystem`, and related components.
+ */
+
+/**
+ * @defgroup JsonConfig Json Configuration
+ * @ingroup InterstellarConfig
+ * @brief Interfaces and utilities for JSON-based configuration objects.
+ *
+ * Includes `IJsonConfig`, `JsonConfigBase`, and helpers like `JsonManager` and `AppConfig`.
  */
