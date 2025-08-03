@@ -43,7 +43,7 @@ namespace Interstellar::Core {
      */
     class Logger {
     public:
-        /// Default constructor — creates a logger with default name and level.
+        /// Default constructor - creates a logger with default name and level.
         Logger();
 
         /// Destructor ensures pending log data is flushed.
