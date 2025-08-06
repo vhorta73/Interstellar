@@ -30,9 +30,6 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="include\pch.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="src\Interstellar\Graphics\Vulkan\Selectors\VulkanSelectorTest.cpp">
       <Filter>Interstellar\Graphics\Vulkan\Selectors</Filter>
     </ClCompile>
@@ -47,9 +44,6 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="include\pch.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="include\Helpers\VulkanSelectorTestHelpers.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>

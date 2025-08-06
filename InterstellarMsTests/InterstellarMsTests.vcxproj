@@ -170,19 +170,12 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="include\pch.cpp">
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
-    </ClCompile>
     <ClCompile Include="src\Interstellar\Config\ConfigAppTest.cpp" />
     <ClCompile Include="src\Interstellar\Core\LoggingTest.cpp" />
     <ClCompile Include="src\Interstellar\Data\ElementDataTests.cpp" />
     <ClCompile Include="src\Interstellar\Graphics\Vulkan\Selectors\VulkanSelectorTest.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="include\pch.h" />
     <ClInclude Include="include\Helpers\VulkanSelectorTestHelpers.hpp" />
   </ItemGroup>
   <ItemGroup>
