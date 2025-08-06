@@ -1,4 +1,4 @@
-#include "Input/Keyboard/KeyboardManager.hpp"
+#include "Interstellar/Input/Keyboard/KeyboardManager.hpp"
 #include <GLFW/glfw3.h>
 
 namespace Interstellar::Input::Keyboard {

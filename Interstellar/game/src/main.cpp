@@ -5,7 +5,7 @@
 #include "Interstellar/Interstellar.hpp"
 #include "Interstellar/Graphics/Core/ITexture.hpp"
 #include "Interstellar/Core/Logging.hpp"
-#include "Graphics/OpenGL/OpenGLGraphics.hpp"
+#include "Interstellar/Graphics/OpenGL/OpenGLGraphics.hpp"
 #include "Interstellar/Input/IInputManager.hpp"
 #include "Interstellar/Input/IKeyboardManager.hpp"
 #include "Interstellar/Input/IMouseManager.hpp"
@@ -29,9 +29,10 @@ namespace {
     unsigned int indices[] = { 0, 1, 2 };
 }
 
+#include "Interstellar/Config/JsonImpl/ElementConfig.hpp"
 #include "Interstellar/Config/JsonImpl/ElementDatabase.hpp"
 #include <string>
-//#include "Interstellar/Data/ElementData.hpp"
+#include "Interstellar/Data/ElementData.hpp"
 int main() {
     glm::vec2 triangleOffset = glm::vec2(0.0f);
     glm::vec2 dragStart = glm::vec2(0.0f);
@@ -49,7 +50,7 @@ int main() {
         s_Logger.LogInfo("Success loading elements from 'assets/data/elements_all.json'.");
         auto all = elementDb.all();
         for (const auto& [symbol, e] : all) {
-            if (true){//e.atomicNumber == 3) {
+            if (e.atomicNumber == 3) {
                 s_Logger.LogInfo("Symbol - {}", e.symbol);
                 s_Logger.LogInfo("Name - {}", e.name);
                 s_Logger.LogInfo("AtomicNumber - {}", e.atomicNumber);

@@ -1,7 +1,6 @@
 #include "Interstellar/Input/IInputManager.hpp"
 
-#include "Input/Manager/GlfwInputManager.hpp"
-#include "Input/Manager/GlfwInputManager.hpp"
+#include "Interstellar/Input/Manager/GlfwInputManager.hpp"
 
 namespace Interstellar::Input {
     namespace Manager {

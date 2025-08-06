@@ -1,4 +1,4 @@
-#include "Input/KeyCodeTranslator/GlfwKeyMap.hpp"
+#include "Interstellar/Input/KeyCodeTranslator/GlfwKeyMap.hpp"
 #include "Interstellar/Input/KeyCodeTranslator/IKeyCodeTranslator.hpp"
 
 #include <GLFW/glfw3.h>

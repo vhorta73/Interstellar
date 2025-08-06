@@ -42,7 +42,7 @@
     <ClCompile Include="src\Interstellar\Core\LoggingTest.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\Interstellar\engine\src\Core\Logging.cpp">
+    <ClCompile Include="src\Interstellar\Data\ElementDataTests.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

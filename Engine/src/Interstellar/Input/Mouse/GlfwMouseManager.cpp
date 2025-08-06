@@ -1,4 +1,4 @@
-#include "Input/Mouse/GlfwMouseManager.hpp"
+#include "Interstellar/Input/Mouse/GlfwMouseManager.hpp"
 #include <GLFW/glfw3.h>
 #include <iostream>
 

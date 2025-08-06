@@ -230,7 +230,7 @@ namespace Interstellar::Data {
                 //", Period: " + std::to_string(period) + ", Block: " + block;
 
         //}
-
+        
         };
 
     /// @brief Convert ElementState to lowercase string

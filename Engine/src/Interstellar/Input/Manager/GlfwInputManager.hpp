@@ -1,8 +1,8 @@
 #pragma once
 
-#include "Input/InternalInputManager.hpp"
-#include "Input/Keyboard/KeyboardManager.hpp"
-#include "Input/Mouse/GlfwMouseManager.hpp"
+#include "Interstellar/Input/InternalInputManager.hpp"
+#include "Interstellar/Input/Keyboard/KeyboardManager.hpp"
+#include "Interstellar/Input/Mouse/GlfwMouseManager.hpp"
 
 struct GLFWwindow;
 

@@ -1,194 +1,31 @@
-#pragma once
-
-#include "Interstellar/Config/JsonConfigBase.hpp"
-#include "Interstellar/Data/ElementData.hpp"
-#include <glm/glm.hpp>
-#include <vector>
-#include <string>
+#include <sstream>
 #include <regex>
-#include <iostream>
-#include "Interstellar/Utils/StringUtils.hpp"
 
-#include "Interstellar/Core/Logging.hpp"
+#include "Interstellar/Config/JsonImpl/ElementConfig.hpp"
 
-namespace Interstellar::Config {
-    
-    struct IntUnit {
-        std::optional<int> Value;
-        std::optional<std::string> Unit;
-    };
+using json = nlohmann::json;
 
-    struct FloatUnit {
-        std::optional<float> Value;
-        std::optional<std::string> Unit;
-    };
+namespace Interstellar::Config::JsonImpl {
 
-    struct ConfigCosmicAbundance {
-        float Value = 0.0f;
-        std::string Unit;
-    };
-
-    struct ConfigOrbital {
-        std::string Orbital;
-        int Electrons = 0;
-    };
-
-    struct ConfigElectronConfiguration {
-        std::string NobleGas;
-        std::string Display;
-        std::vector<ConfigOrbital> Orbitals;
-    };
-
-    struct ConfigIsotope {
-        std::string Name;
-        float MassNumber = 0.0f;
-        bool IsStable = false;
-        float NaturalAbundance = 0.0f;
-        std::optional<float> HalfLife;
-        std::optional<std::string> RadiationType;
-    };
-
-    struct PropertyWithUnit {
-        std::optional<float> Value;
-        std::string Unit;
-    };
-
-    struct TriplePoint {
-        PropertyWithUnit Temperature;
-        PropertyWithUnit Pressure;
-    };
-
-    struct PhysicalPropertiesBlock {
-        PropertyWithUnit Density;
-        PropertyWithUnit MeltingPoint;
-        PropertyWithUnit BoilingPoint;
-        TriplePoint TriplePoint;
-        PropertyWithUnit HeatCapacity;
-        PropertyWithUnit ThermalConductivity;
-        PropertyWithUnit EnthalpyOfFusion;
-        PropertyWithUnit EnthalpyOfVaporization;
-        PropertyWithUnit Entropy;
-    };
-
-    struct RangeEndpoint {
-        float Value = 0.0f;
-        std::string Unit;
-    };
-
-    struct Range {
-        RangeEndpoint Min;
-        RangeEndpoint Max;
-    };
-
-    struct StateRange {
-        Range Temperature;
-        Range Pressure;
-        std::string State;
-    };
-
-    struct ScalarProperty {
-        std::optional<float> Value;
-        std::string Unit;
-    };
-
-    struct IonizationEnergy {
-        ScalarProperty First;
-        // Extendable: Second, Third, etc.
-    };
-
-    struct OxidationState {
-        int State = 0;
-        bool Common = false;
-    };
-
-    struct Reactivity {
-        float Value = 0.0f;
-        std::string Scale;
-    };
-
-    struct ChemicalProperties {
-        ScalarProperty Electronegativity;
-        IonizationEnergy IonizationEnergy;
-        ScalarProperty ElectronAffinity;
-        ScalarProperty StandardReductionPotential;
-        Reactivity Reactivity;
-        std::vector<OxidationState> OxidationStates;
-        std::vector<std::string> Bonding;
-        std::vector<std::string> CommonCompounds;
-        std::vector<std::pair<std::string, std::string>> HybridizationExamples;
-    };
-
-    struct QuantumProperties {
-        IntUnit AtomicRadius;
-        IntUnit CovalentRadius;
-        IntUnit VanDerWaalsRadius;
-        std::string MagneticOrdering;
-        std::vector<float> SpinStates;
-        bool IsParamagnetic = false;
-        float NuclearSpin = 0.0f;
-    };
-
-    struct EnvironmentalSolubility {
-        std::optional<float> Value;
-        std::optional<std::string> Unit;
-    };
-
-    struct OxidationInAirInfo {
-        std::string Tendency;
-        bool Spontaneous = false;
-        bool RequiresSpark = false; // Optional
-    };
-
-    struct EnvironmentalProperties {
-        EnvironmentalSolubility SolubilityInWater;
-        OxidationInAirInfo OxidationInAir;
-        std::string Toxicity;
-        std::string BiologicalRole;
-        std::vector<std::string> Hazards;
-    };
-
-
-    inline auto s_Logger = Interstellar::Core::Logger("ElementConfig", Interstellar::Core::LogLevel::Info);
     /**
-     * @ingroup InterstellarConfig
-     * @brief JSON-based configuration class for deserializing chemical element data.
-     *
-     * This class allows parsing of extended periodic table data from configuration files.
-     * It is a bridge between JSON representation and runtime-ready ElementData.
-     *
-     * @since 1.0
+     * @brief Logger instance for ElementConfig operations.
      */
-    class ElementConfig : public JsonConfigBase {
-    public:
-        // === Identification ===
-        std::string Symbol;             ///< Atomic symbol (e.g. "H")
-        std::string Name;               ///< Full element name
-        int AtomicNumber = 0;           ///< Proton count
-        float AtomicMass = 0.f;
+    inline auto s_Logger = Interstellar::Core::Logger(Interstellar::Core::LOG_CONFIG);
 
-        // === Physical Properties ===
-        int Group = 0;
-        int Period = 0;
-        std::string Block;
-        std::string StandardState;
+    /**
+     * @brief Constructs the ElementConfig object and registers all JSON fields.
+     */
+    ElementConfig::ElementConfig() {
+        registerAllFields();
+    }
 
-        glm::vec3 Color = { 1.f, 1.f, 1.f };
-        ConfigCosmicAbundance CosmicAbundance;
-        ConfigElectronConfiguration ElectronConfiguration;
-        std::vector<int> ElectronShells;
-        int ValenceElectrons = 0;
-        std::vector<ConfigIsotope> Isotopes;
-        PhysicalPropertiesBlock PhysicalProperties;
-        std::vector<StateRange> StateRanges;
-        ChemicalProperties Chemical;
-        QuantumProperties Quantum;
-        EnvironmentalProperties EnvironmentalProp;
-
-
-        /**
-         * @brief Constructor that registers fields for JSON serialization/deserialization.
-         */
-        ElementConfig() {
+    /**
+    * @brief Populates all registered JSON fields for serialization/deserialization.
+    *
+    * This method is tightly coupled to the structure of ElementConfig and must be kept
+    * synchronized with both the JSON schema and the ElementData runtime model.
+    */
+    void ElementConfig::registerAllFields() {
             using json = nlohmann::json;
 
             // Identification
@@ -203,29 +40,29 @@ namespace Interstellar::Config {
             registerField("Block", [this]() { return Block; }, [this](const json& v) { Block = v.get<std::string>(); });
             registerField("StandardState", [this]() { return StandardState; }, [this](const json& v) { StandardState = v.get<std::string>(); });
             registerField("Color", [this]() { return std::vector<float>{ Color.r, Color.g, Color.b }; }, [this](const json& v) {
-                    auto vec = v.get<std::vector<float>>();
-                    if (vec.size() == 3)
-                        Color = glm::vec3(vec[0], vec[1], vec[2]);
+                auto vec = v.get<std::vector<float>>();
+                if (vec.size() == 3)
+                    Color = glm::vec3(vec[0], vec[1], vec[2]);
                 });
             registerField("CosmicAbundance", [this]() { return nlohmann::json{ { "Value", CosmicAbundance.Value }, { "Unit", CosmicAbundance.Unit } }; }, [this](const json& v) {
-                    if (v.contains("Value") and v["Value"].is_number())
-                        CosmicAbundance.Value = v["Value"].get<float>();
+                if (v.contains("Value") and v["Value"].is_number())
+                    CosmicAbundance.Value = v["Value"].get<float>();
 
-                    if (v.contains("Unit") && v["Unit"].is_string())
-                        CosmicAbundance.Unit = v["Unit"].get<std::string>();
+                if (v.contains("Unit") && v["Unit"].is_string())
+                    CosmicAbundance.Unit = v["Unit"].get<std::string>();
                 });
             registerField("ElectronConfiguration", [this]() { return ElectronConfiguration.Display; }, [this](const json& v) {
-                    if (v.is_string()) {
-                        ElectronConfiguration.Display = v.get<std::string>();
-                        auto temp = parseElectronConfiguration(ElectronConfiguration.Display);
-                        ElectronConfiguration.NobleGas = Interstellar::Utils::extractBracketContent(temp.NobleGas);
-                        ElectronConfiguration.Orbitals = temp.Orbitals;
+                if (v.is_string()) {
+                    ElectronConfiguration.Display = v.get<std::string>();
+                    auto temp = parseElectronConfiguration(ElectronConfiguration.Display);
+                    ElectronConfiguration.NobleGas = Interstellar::Utils::extractBracketContent(temp.NobleGas);
+                    ElectronConfiguration.Orbitals = temp.Orbitals;
 
-                    }
+                }
                 });
             registerField("ElectronShells", [this]() { return ElectronShells; }, [this](const json& v) {
-                    if (v.is_array())
-                        ElectronShells = v.get<std::vector<int>>();
+                if (v.is_array())
+                    ElectronShells = v.get<std::vector<int>>();
                 });
             registerField("ValenceElectrons", [this]() { return ValenceElectrons; }, [this](const json& v) { ValenceElectrons = v.is_number_integer() ? v.get<int>() : 0;  });
             registerField("Isotopes",
@@ -487,7 +324,7 @@ namespace Interstellar::Config {
                     }
                 });
 
-                
+
             registerField("QuantumProperties",
                 [this]() {
                     json out;
@@ -631,170 +468,192 @@ namespace Interstellar::Config {
             );
         }
 
-        /**
-         * @brief Converts this configuration to a runtime-safe ElementData structure.
-         *
-         * @return Fully constructed ElementData object.
-         */
-        [[nodiscard]] Interstellar::Data::ElementData toData() const {
-            Interstellar::Data::ElementData e;
-            e.symbol = Symbol;
-            e.name = Name;
-            e.atomicNumber = AtomicNumber;
-            e.atomicMass = AtomicMass;
-            e.group = Group;
-            e.period = Period;
-            e.block = Block;
-            e.standardState = StandardState;
-            e.colour = Color;
-            e.cosmicAbundance.unit = CosmicAbundance.Unit;
-            e.cosmicAbundance.value = CosmicAbundance.Value;
-            e.electronConfiguration.display = ElectronConfiguration.Display;
-            e.electronConfiguration.nobleGas = ElectronConfiguration.NobleGas;
-            for (const auto& orb : ElectronConfiguration.Orbitals) {
-                Interstellar::Data::ElementData::ElectronConfiguration::Orbital destOrb;
-                destOrb.orbital = orb.Orbital;
-                destOrb.electrons = orb.Electrons;
-                e.electronConfiguration.orbitals.push_back(destOrb);
-            };
-            e.electronShells = ElectronShells;
-            e.valenceElectrons = ValenceElectrons;
-            for (const auto& iso : Isotopes) {
-                Interstellar::Data::ElementData::Isotope destIso;
-                destIso.name = iso.Name;
-                destIso.massNumber = iso.MassNumber;
-                destIso.isStable = iso.IsStable;
-                destIso.naturalAbundance = iso.NaturalAbundance;
-                destIso.halfLife = iso.HalfLife;
-                destIso.radiationType = iso.RadiationType;
+    /**
+     * @brief Converts this configuration object to the runtime-ready ElementData structure.
+     *
+     * @return Fully populated ElementData instance.
+     */
+    Interstellar::Data::ElementData ElementConfig::toData() const {
+        Interstellar::Data::ElementData e;
 
-                e.isotopes.push_back(destIso);
-            };
+        // === Identification ===
+        e.symbol = Symbol;
+        e.name = Name;
+        e.atomicNumber = AtomicNumber;
+        e.atomicMass = AtomicMass;
+            
+        // === Periodic Table ===
+        e.group = Group;
+        e.period = Period;
+        e.block = Block;
+        e.standardState = StandardState;
+        e.colour = Color;
+            
+        // === Cosmic Abundance ===
+        e.cosmicAbundance.unit = CosmicAbundance.Unit;
+        e.cosmicAbundance.value = CosmicAbundance.Value;
+            
+        // === Electron Configuration ===
+        e.electronConfiguration.display = ElectronConfiguration.Display;
+        e.electronConfiguration.nobleGas = ElectronConfiguration.NobleGas;
+        for (const auto& orb : ElectronConfiguration.Orbitals) {
+            Interstellar::Data::ElementData::ElectronConfiguration::Orbital destOrb;
+            destOrb.orbital = orb.Orbital;
+            destOrb.electrons = orb.Electrons;
+            e.electronConfiguration.orbitals.push_back(destOrb);
+        };
+            
+        // === Shells and Valence ===
+        e.electronShells = ElectronShells;
+        e.valenceElectrons = ValenceElectrons;
+            
+        // === Isotopes ===
+        for (const auto& iso : Isotopes) {
+            Interstellar::Data::ElementData::Isotope destIso;
+            destIso.name = iso.Name;
+            destIso.massNumber = iso.MassNumber;
+            destIso.isStable = iso.IsStable;
+            destIso.naturalAbundance = iso.NaturalAbundance;
+            destIso.halfLife = iso.HalfLife;
+            destIso.radiationType = iso.RadiationType;
 
-            e.physicalProperties.density.value = PhysicalProperties.Density.Value;
-            e.physicalProperties.density.unit = PhysicalProperties.Density.Unit;
-            e.physicalProperties.meltingPoint.value = PhysicalProperties.MeltingPoint.Value;
-            e.physicalProperties.meltingPoint.unit = PhysicalProperties.MeltingPoint.Unit;
-            e.physicalProperties.boilingPoint.value = PhysicalProperties.BoilingPoint.Value;
-            e.physicalProperties.boilingPoint.unit = PhysicalProperties.BoilingPoint.Unit;
-            e.physicalProperties.triplePoint.temperature.value = PhysicalProperties.TriplePoint.Temperature.Value;
-            e.physicalProperties.triplePoint.temperature.unit = PhysicalProperties.TriplePoint.Temperature.Unit;
-            e.physicalProperties.heatCapacity.value = PhysicalProperties.HeatCapacity.Value;
-            e.physicalProperties.heatCapacity.unit = PhysicalProperties.HeatCapacity.Unit;
-            e.physicalProperties.thermalConductivity.value = PhysicalProperties.ThermalConductivity.Value;
-            e.physicalProperties.thermalConductivity.unit = PhysicalProperties.ThermalConductivity.Unit;
-            e.physicalProperties.enthalpyOfFusion.value = PhysicalProperties.EnthalpyOfFusion.Value;
-            e.physicalProperties.enthalpyOfFusion.unit = PhysicalProperties.EnthalpyOfFusion.Unit;
-            e.physicalProperties.enthalpyOfVaporization.value = PhysicalProperties.EnthalpyOfVaporization.Value;
-            e.physicalProperties.enthalpyOfVaporization.unit = PhysicalProperties.EnthalpyOfVaporization.Unit;
-            e.physicalProperties.entropy.value = PhysicalProperties.Entropy.Value;
-            e.physicalProperties.entropy.unit = PhysicalProperties.Entropy.Unit;
-
-            for (const auto& state: StateRanges) {
-                Interstellar::Data::ElementData::StateRange destState;
-                destState.temperature.min.value = state.Temperature.Min.Value;
-                destState.temperature.min.unit = state.Temperature.Min.Unit;
-                destState.temperature.max.value = state.Temperature.Max.Value;
-                destState.temperature.max.unit = state.Temperature.Max.Unit;
-                destState.pressure.min.value = state.Pressure.Min.Value;
-                destState.pressure.min.unit = state.Pressure.Min.Unit;
-                destState.pressure.max.value = state.Pressure.Max.Value;
-                destState.pressure.max.unit = state.Pressure.Max.Unit;
-                destState.state = state.State;
-
-                e.stateRanges.push_back(destState);
-            };
-
-            e.chemical.electronegativity.value = Chemical.Electronegativity.Value;
-            e.chemical.electronegativity.unit = Chemical.Electronegativity.Unit;
-            e.chemical.ionizationEnergy.first.value = Chemical.IonizationEnergy.First.Value;
-            e.chemical.ionizationEnergy.first.unit = Chemical.IonizationEnergy.First.Unit;
-            e.chemical.electronAffinity.value = Chemical.ElectronAffinity.Value;
-            e.chemical.electronAffinity.unit = Chemical.ElectronAffinity.Unit;
-            for (const auto& oxy : Chemical.OxidationStates) {
-                Interstellar::Data::ElementData::OxidationState destState;
-                destState.state = oxy.State;
-                destState.common = oxy.Common;
-                e.chemical.oxidationStates.push_back(destState);
-            }
-            e.chemical.standardReductionPotential.value = Chemical.StandardReductionPotential.Value;
-            e.chemical.standardReductionPotential.unit = Chemical.StandardReductionPotential.Unit;
-            e.chemical.reactivity.value = Chemical.Reactivity.Value;
-            e.chemical.reactivity.scale = Chemical.Reactivity.Scale;
-            for (const auto& bond : Chemical.Bonding) {
-                e.chemical.bonding.push_back(bond);
-            }
-            for (const auto& comp : Chemical.CommonCompounds) {
-                e.chemical.commonCompounds.push_back(comp);
-            }
-            for (const auto& hyb : Chemical.HybridizationExamples) {
-                e.chemical.hybridizationExamples.push_back(hyb);
-            }
-
-            e.quantum.atomicRadius.value = Quantum.AtomicRadius.Value;
-            e.quantum.atomicRadius.unit = Quantum.AtomicRadius.Unit;
-            e.quantum.covalentRadius.value = Quantum.CovalentRadius.Value;
-            e.quantum.covalentRadius.unit = Quantum.CovalentRadius.Unit;
-            e.quantum.vanDerWaalsRadius.value = Quantum.VanDerWaalsRadius.Value;
-            e.quantum.vanDerWaalsRadius.unit = Quantum.VanDerWaalsRadius.Unit;
-            e.quantum.magneticOrdering = Quantum.MagneticOrdering;
-            for( const auto& spin : Quantum.SpinStates) {
-                e.quantum.spinStates.push_back(spin);
-            }
-            e.quantum.isParamagnetic = Quantum.IsParamagnetic;
-            e.quantum.nuclearSpin = Quantum.NuclearSpin;
-
-            e.environmentalProp.solubilityInWater.value = EnvironmentalProp.SolubilityInWater.Value;
-            e.environmentalProp.solubilityInWater.unit = EnvironmentalProp.SolubilityInWater.Unit;
-            e.environmentalProp.oxidationInAir.tendency = EnvironmentalProp.OxidationInAir.Tendency;
-            e.environmentalProp.oxidationInAir.spontaneous = EnvironmentalProp.OxidationInAir.Spontaneous;
-            e.environmentalProp.oxidationInAir.requiresSpark = EnvironmentalProp.OxidationInAir.RequiresSpark;
-            e.environmentalProp.toxicity = EnvironmentalProp.Toxicity;
-            e.environmentalProp.biologicalRole = EnvironmentalProp.BiologicalRole;
-            e.environmentalProp.hazards = EnvironmentalProp.Hazards;
-
-            return e;
+            e.isotopes.push_back(destIso);
         };
 
-        ConfigElectronConfiguration parseElectronConfiguration(const std::string& input) {
-            ConfigElectronConfiguration config;
-            config.NobleGas = "";  // Default if not found
+        // === Physical Properties ===
+        const auto& src = PhysicalProperties;
+        auto& dst = e.physicalProperties;
+        dst.density.value = src.Density.Value;
+        dst.density.unit = src.Density.Unit;
+        dst.meltingPoint.value = src.MeltingPoint.Value;
+        dst.meltingPoint.unit = src.MeltingPoint.Unit;
+        dst.boilingPoint.value = src.BoilingPoint.Value;
+        dst.boilingPoint.unit = src.BoilingPoint.Unit;
+        dst.triplePoint.temperature.value = src.TriplePoint.Temperature.Value;
+        dst.triplePoint.temperature.unit = src.TriplePoint.Temperature.Unit;
+        dst.heatCapacity.value = src.HeatCapacity.Value;
+        dst.heatCapacity.unit = src.HeatCapacity.Unit;
+        dst.thermalConductivity.value = src.ThermalConductivity.Value;
+        dst.thermalConductivity.unit = src.ThermalConductivity.Unit;
+        dst.enthalpyOfFusion.value = src.EnthalpyOfFusion.Value;
+        dst.enthalpyOfFusion.unit = src.EnthalpyOfFusion.Unit;
+        dst.enthalpyOfVaporization.value = src.EnthalpyOfVaporization.Value;
+        dst.enthalpyOfVaporization.unit = src.EnthalpyOfVaporization.Unit;
+        dst.entropy.value = src.Entropy.Value;
+        dst.entropy.unit = src.Entropy.Unit;
 
-            std::istringstream iss(input);
-            std::string token;
+        // === Phase Behavior ===
+        for (const auto& state : StateRanges) {
+            Interstellar::Data::ElementData::StateRange destState;
+            destState.temperature.min.value = state.Temperature.Min.Value;
+            destState.temperature.min.unit = state.Temperature.Min.Unit;
+            destState.temperature.max.value = state.Temperature.Max.Value;
+            destState.temperature.max.unit = state.Temperature.Max.Unit;
+            destState.pressure.min.value = state.Pressure.Min.Value;
+            destState.pressure.min.unit = state.Pressure.Min.Unit;
+            destState.pressure.max.value = state.Pressure.Max.Value;
+            destState.pressure.max.unit = state.Pressure.Max.Unit;
+            destState.state = state.State;
 
-            // Regex for orbital like "4f5", "6s2", etc.
-            std::regex orbitalPattern(R"((\d+[spdf])(\d+))");
+            e.stateRanges.push_back(destState);
+        };
 
-            while (iss >> token) {
-                // Check if token is a noble gas (e.g., [Xe])
-                if (token.front() == '[' && token.back() == ']') {
-                    config.NobleGas = token;
-                }
-                // Else, try to parse as orbital
-                else {
-                    std::smatch match;
-                    if (std::regex_match(token, match, orbitalPattern)) {
-                        ConfigOrbital orb;
-                        orb.Orbital = match[1].str();
-                        orb.Electrons = std::stoi(match[2].str());
-                        config.Orbitals.push_back(orb);
-                    }
-                    else {
-                        std::cerr << "Warning: Unrecognized token: " << token << "\n";
-                    }
-                }
-            }
-
-            return config;
+        // === Chemical ===
+        e.chemical.electronegativity.value = Chemical.Electronegativity.Value;
+        e.chemical.electronegativity.unit = Chemical.Electronegativity.Unit;
+        e.chemical.ionizationEnergy.first.value = Chemical.IonizationEnergy.First.Value;
+        e.chemical.ionizationEnergy.first.unit = Chemical.IonizationEnergy.First.Unit;
+        e.chemical.electronAffinity.value = Chemical.ElectronAffinity.Value;
+        e.chemical.electronAffinity.unit = Chemical.ElectronAffinity.Unit;
+        for (const auto& oxy : Chemical.OxidationStates) {
+            Interstellar::Data::ElementData::OxidationState destState;
+            destState.state = oxy.State;
+            destState.common = oxy.Common;
+            e.chemical.oxidationStates.push_back(destState);
+        }
+        e.chemical.standardReductionPotential.value = Chemical.StandardReductionPotential.Value;
+        e.chemical.standardReductionPotential.unit = Chemical.StandardReductionPotential.Unit;
+        e.chemical.reactivity.value = Chemical.Reactivity.Value;
+        e.chemical.reactivity.scale = Chemical.Reactivity.Scale;
+        for (const auto& bond : Chemical.Bonding) {
+            e.chemical.bonding.push_back(bond);
+        }
+        for (const auto& comp : Chemical.CommonCompounds) {
+            e.chemical.commonCompounds.push_back(comp);
+        }
+        for (const auto& hyb : Chemical.HybridizationExamples) {
+            e.chemical.hybridizationExamples.push_back(hyb);
         }
 
-        /// @brief The namespace used when serializing this config
-        std::string getNamespace() const override { return "data"; }
+        // === Quantum ===
+        e.quantum.atomicRadius.value = Quantum.AtomicRadius.Value;
+        e.quantum.atomicRadius.unit = Quantum.AtomicRadius.Unit;
+        e.quantum.covalentRadius.value = Quantum.CovalentRadius.Value;
+        e.quantum.covalentRadius.unit = Quantum.CovalentRadius.Unit;
+        e.quantum.vanDerWaalsRadius.value = Quantum.VanDerWaalsRadius.Value;
+        e.quantum.vanDerWaalsRadius.unit = Quantum.VanDerWaalsRadius.Unit;
+        e.quantum.magneticOrdering = Quantum.MagneticOrdering;
+        for (const auto& spin : Quantum.SpinStates) {
+            e.quantum.spinStates.push_back(spin);
+        }
+        e.quantum.isParamagnetic = Quantum.IsParamagnetic;
+        e.quantum.nuclearSpin = Quantum.NuclearSpin;
 
-        /// @brief The filename from which to load this configuration
-        std::string getFilename() const override { return "elements_all.json"; }
+        
+        // === Environmental ===
+        e.environmentalProp.solubilityInWater.value = EnvironmentalProp.SolubilityInWater.Value;
+        e.environmentalProp.solubilityInWater.unit = EnvironmentalProp.SolubilityInWater.Unit;
+        e.environmentalProp.oxidationInAir.tendency = EnvironmentalProp.OxidationInAir.Tendency;
+        e.environmentalProp.oxidationInAir.spontaneous = EnvironmentalProp.OxidationInAir.Spontaneous;
+        e.environmentalProp.oxidationInAir.requiresSpark = EnvironmentalProp.OxidationInAir.RequiresSpark;
+        e.environmentalProp.toxicity = EnvironmentalProp.Toxicity;
+        e.environmentalProp.biologicalRole = EnvironmentalProp.BiologicalRole;
+        e.environmentalProp.hazards = EnvironmentalProp.Hazards;
 
+        return e;
     };
 
-} // namespace Interstellar::Config
+    /**
+    * @brief Parses a compact electron configuration string into structured orbitals.
+    * 
+    * @param input The string to parse (e.g., "[Ne] 3s2 3p6").
+    * @return A structured electron configuration.
+    */
+    ConfigElectronConfiguration ElementConfig::parseElectronConfiguration(const std::string& input) {
+        ConfigElectronConfiguration config;
+        config.NobleGas = "";  // Default if not found
+
+        std::istringstream iss(input);
+        std::string token;
+
+        // Regex for orbital like "4f5", "6s2", etc.
+        std::regex orbitalPattern(R"((\d+[spdf])(\d+))");
+
+        while (iss >> token) {
+            // Check if token is a noble gas (e.g., [Xe])
+            if (token.front() == '[' && token.back() == ']') {
+                config.NobleGas = token;
+            }
+            // Else, try to parse as orbital
+            else {
+                std::smatch match;
+                if (std::regex_match(token, match, orbitalPattern)) {
+                    ConfigOrbital orb;
+                    orb.Orbital = match[1].str();
+                    orb.Electrons = std::stoi(match[2].str());
+                    config.Orbitals.push_back(orb);
+                }
+                else {
+                    s_Logger.LogWarn("Warning: Unrecognized token: {}",token);
+                }
+            }
+        }
+
+        return config;
+    }
+
+
+    /// @brief Returns the name of the JSON file to load.
+    std::string ElementConfig::getFilename() const { return "elements_all.json"; }
+
+}

@@ -1,20 +1,30 @@
 /**
  * @file
+ * @ingroup InterstellarDocs
  * @brief Doxygen group definitions for all subsystems.
  */
 
 /**
- * @defgroup InterstellarCore Interstellar Core
- * @brief Core engine utilities such as logging, diagnostics, and system initialization.
+ * @defgroup InterstellarDocs Interstellar Documentation
+ * @brief Meta-group for all Doxygen group definitions and documentation conventions.
  *
- * This includes foundational systems like logging (`Logger`), core enums (`LogLevel`),
- * and lifecycle hooks shared across all modules (data, config, input, rendering, etc.).
+ * Contains high-level organizational groupings for the Interstellar game engine.
+ * This group helps centralize documentation of core subsystems and modular interfaces.
+ */
+
+/**
+ * @defgroup InterstellarCore Interstellar Core
+ * @ingroup InterstellarDocs
+ * @brief Foundational engine utilities, including logging, diagnostics, and system bootstrapping.
+ *
+ * This includes core systems like logging (`Logger`), severity enums (`LogLevel`),
+ * and lifecycle hooks shared across modules (data, config, input, rendering, etc.).
  */
 
 /**
  * @defgroup LogLevelUtils Log Level Utilities
  * @ingroup InterstellarCore
- * @brief Provides string parsing and formatting utilities for log levels.
+ * @brief String parsing and formatting utilities for log levels.
  */
 
 /**
@@ -22,30 +32,23 @@
  * @ingroup InterstellarCore
  * @brief Engine-wide logging interfaces and adaptive flushing mechanisms.
  *
- * Defines the `Logger` class, log categories, and adaptive flush strategies based on severity.
+ * Defines the `Logger` class, log categories, and flush strategies based on severity levels.
  */
 
 /**
  * @defgroup Initialization Initialization Utilities
  * @ingroup InterstellarCore
- * @brief Engine startup procedures and low-level bootstrap interfaces.
+ * @brief Engine startup routines and bootstrap interfaces.
  */
 
 /**
  * @defgroup InputSystem Input System
+ * @ingroup InterstellarDocs
  * @brief Core module for handling user input (mouse, keyboard, etc.).
  *
- * The Input module abstracts platform-specific input handling and exposes
- * interfaces for querying device states. This includes real-time polling and
+ * The Input module abstracts platform-specific device handling and exposes
+ * interfaces for querying input states. This includes real-time polling and
  * frame-based state transitions.
- */
-
-/**
- * @defgroup KeyCodes KeyCode Definitions
- * @ingroup InputSystem
- * @brief Enumerates platform-agnostic key identifiers.
- *
- * `KeyCode` allows consistent keyboard input across platforms.
  */
 
 /**
@@ -57,7 +60,15 @@
 /**
  * @defgroup EngineInterfaces Engine Interfaces
  * @ingroup InputSystem
- * @brief Internal abstract extensions of the public interfaces.
+ * @brief Internal abstract extensions of the public input interfaces.
+ */
+
+/**
+ * @defgroup KeyCodes KeyCode Definitions
+ * @ingroup InputSystem
+ * @brief Enumerates unified key identifiers for cross-platform input abstraction.
+ *
+ * `KeyCode` allows consistent input mapping across supported platforms.
  */
 
 /**
@@ -68,19 +79,20 @@
 
 /**
  * @defgroup InterstellarData Interstellar Data
+ * @ingroup InterstellarDocs
  * @brief Shared scientific, physical, and domain-specific game data.
  *
  * Includes definitions such as chemical elements, planetary constants,
- * material properties, and any scientific reference information used in
- * simulation or rendering.
+ * material properties, and scientific reference information used in simulation and rendering.
  */
 
 /**
  * @defgroup InterstellarConfig Interstellar Config
+ * @ingroup InterstellarDocs
  * @brief Configuration framework for serializing/deserializing game data.
  *
- * This includes JSON-driven configuration management, file IO abstraction,
- * editor serialization, and persistent modifiable settings (e.g., ElementConfig).
+ * Includes JSON-driven configuration management, file IO abstraction,
+ * editor serialization, and persistent runtime settings.
  */
 
 /**
@@ -96,5 +108,35 @@
  * @ingroup InterstellarConfig
  * @brief Interfaces and utilities for JSON-based configuration objects.
  *
- * Includes `IJsonConfig`, `JsonConfigBase`, and helpers like `JsonManager` and `AppConfig`.
+ * Includes `IJsonConfig`, `JsonConfigBase`, `JsonManager`, and `AppConfig`.
+ */
+
+/**
+ * @defgroup RenderingSystem Rendering System
+ * @ingroup InterstellarDocs
+ * @brief [Reserved] Placeholder for rendering pipeline interfaces and systems.
+ */
+
+/**
+ * @defgroup SimulationSystem Simulation System
+ * @ingroup InterstellarDocs
+ * @brief [Reserved] Placeholder for game simulation, AI, and logic orchestration.
+ */
+
+/**
+ * @defgroup AudioSystem Audio System
+ * @ingroup InterstellarDocs
+ * @brief [Reserved] Placeholder for audio mixing, playback, and device interfaces.
+ */
+
+/**
+ * @defgroup UISystem UI System
+ * @ingroup InterstellarDocs
+ * @brief [Reserved] Placeholder for user interface frameworks and layout systems.
+ */
+
+/**
+ * @defgroup SaveLoadSystem Save/Load System
+ * @ingroup InterstellarDocs
+ * @brief [Reserved] Placeholder for game state persistence and serialization.
  */

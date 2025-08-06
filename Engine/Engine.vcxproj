@@ -18,12 +18,72 @@
       <Platform>x64</Platform>
     </ProjectConfiguration>
   </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="include\Interstellar\Config\AppConfig.hpp" />
+    <ClInclude Include="include\Interstellar\Config\IConfigStorage.hpp" />
+    <ClInclude Include="include\Interstellar\Config\IJsonConfig.hpp" />
+    <ClInclude Include="include\Interstellar\Config\JsonConfigBase.hpp" />
+    <ClInclude Include="include\Interstellar\Config\JsonImpl\ElementConfig.hpp" />
+    <ClInclude Include="include\Interstellar\Config\JsonImpl\ElementDatabase.hpp" />
+    <ClInclude Include="include\Interstellar\Config\JsonImpl\PreferencesConfig.hpp" />
+    <ClInclude Include="include\Interstellar\Config\JsonImpl\UserInfoConfig.hpp" />
+    <ClInclude Include="include\Interstellar\Config\JsonManager.hpp" />
+    <ClInclude Include="include\Interstellar\Core\AppConfig.hpp" />
+    <ClInclude Include="include\Interstellar\Core\Logging.hpp" />
+    <ClInclude Include="include\Interstellar\Core\LogLevel.hpp" />
+    <ClInclude Include="include\Interstellar\Core\LogLevelUtils.hpp" />
+    <ClInclude Include="include\Interstellar\Data\ElementData.hpp" />
+    <ClInclude Include="include\Interstellar\Data\IElementDatabase.hpp" />
+    <ClInclude Include="include\Interstellar\Graphics\Core\IGraphics.hpp" />
+    <ClInclude Include="include\Interstellar\Graphics\Core\IMesh.hpp" />
+    <ClInclude Include="include\Interstellar\Graphics\Core\IRenderPipeline.hpp" />
+    <ClInclude Include="include\Interstellar\Graphics\Core\IShader.hpp" />
+    <ClInclude Include="include\Interstellar\Graphics\Core\ITexture.hpp" />
+    <ClInclude Include="include\Interstellar\Graphics\Vulkan\Context.hpp" />
+    <ClInclude Include="include\Interstellar\Graphics\Vulkan\Selectors\VulkanSelector.hpp" />
+    <ClInclude Include="include\Interstellar\Graphics\Vulkan\VulkanInstance.hpp" />
+    <ClInclude Include="include\Interstellar\Input\IInputManager.hpp" />
+    <ClInclude Include="include\Interstellar\Input\IKeyboardManager.hpp" />
+    <ClInclude Include="include\Interstellar\Input\IMouseManager.hpp" />
+    <ClInclude Include="include\Interstellar\Input\KeyCode.hpp" />
+    <ClInclude Include="include\Interstellar\Input\KeyCodeTranslator\IKeyCodeTranslator.hpp" />
+    <ClInclude Include="include\Interstellar\Utils\StringUtils.hpp" />
+    <ClInclude Include="src\Interstellar\Graphics\OpenGL\OpenGLGraphics.hpp" />
+    <ClInclude Include="src\Interstellar\Graphics\OpenGL\OpenGLMesh.hpp" />
+    <ClInclude Include="src\Interstellar\Graphics\OpenGL\OpenGLPipeline.hpp" />
+    <ClInclude Include="src\Interstellar\Graphics\OpenGL\OpenGLShader.hpp" />
+    <ClInclude Include="src\Interstellar\Graphics\OpenGL\OpenGLTexture.hpp" />
+    <ClInclude Include="src\Interstellar\Graphics\OpenGL\stb\stb_image.hpp" />
+    <ClInclude Include="src\Interstellar\Input\InternalInputManager.hpp" />
+    <ClInclude Include="src\Interstellar\Input\Keyboard\KeyboardManager.hpp" />
+    <ClInclude Include="src\Interstellar\Input\KeyCodeTranslator\GlfwKeyMap.hpp" />
+    <ClInclude Include="src\Interstellar\Input\Manager\GlfwInputManager.hpp" />
+    <ClInclude Include="src\Interstellar\Input\Mouse\GlfwMouseManager.hpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="include\Interstellar\Config\Storage\FileSystem.cpp" />
+    <ClCompile Include="src\Interstellar\Config\JsonImpl\ElementConfig.cpp" />
+    <ClCompile Include="src\Interstellar\Config\JsonImpl\ElementDatabase.cpp" />
+    <ClCompile Include="src\Interstellar\Core\AppConfig.cpp" />
+    <ClCompile Include="src\Interstellar\Core\Logging.cpp" />
+    <ClCompile Include="src\Interstellar\Graphics\OpenGL\OpenGLGraphics.cpp" />
+    <ClCompile Include="src\Interstellar\Graphics\OpenGL\OpenGLMesh.cpp" />
+    <ClCompile Include="src\Interstellar\Graphics\OpenGL\OpenGLPipeline.cpp" />
+    <ClCompile Include="src\Interstellar\Graphics\OpenGL\OpenGLShader.cpp" />
+    <ClCompile Include="src\Interstellar\Graphics\OpenGL\OpenGLTexture.cpp" />
+    <ClCompile Include="src\Interstellar\Graphics\OpenGL\stb\stb_image.cpp" />
+    <ClCompile Include="src\Interstellar\Graphics\Vulkan\VulkanInstance.cpp" />
+    <ClCompile Include="src\Interstellar\Input\Keyboard\KeyboardManager.cpp" />
+    <ClCompile Include="src\Interstellar\Input\KeyCodeTranslator\GlfwKeyMap.cpp" />
+    <ClCompile Include="src\Interstellar\Input\Manager\GlfwInputManager.cpp" />
+    <ClCompile Include="src\Interstellar\Input\Mouse\GlfwMouseManager.cpp" />
+  </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>17.0</VCProjectVersion>
     <Keyword>Win32Proj</Keyword>
-    <ProjectGuid>{207a2211-9eb8-4b7b-adc2-c8d247ddc535}</ProjectGuid>
-    <RootNamespace>Interstellar</RootNamespace>
-    <WindowsTargetPlatformVersion>10.0.26100.0</WindowsTargetPlatformVersion>
+    <ProjectGuid>{fc9c3cdb-b81a-4536-99ab-e0496152968d}</ProjectGuid>
+    <RootNamespace>Engine</RootNamespace>
+    <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
@@ -40,13 +100,13 @@
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
-    <ConfigurationType>Application</ConfigurationType>
+    <ConfigurationType>StaticLibrary</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
     <PlatformToolset>v143</PlatformToolset>
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
-    <ConfigurationType>Application</ConfigurationType>
+    <ConfigurationType>StaticLibrary</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
     <PlatformToolset>v143</PlatformToolset>
     <WholeProgramOptimization>true</WholeProgramOptimization>
@@ -70,12 +130,6 @@
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-    <OutDir>$(SolutionDir)build\$(Platform)\$(Configuration)\</OutDir>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
-    <OutDir>$(SolutionDir)build\$(Platform)\$(Configuration)\</OutDir>
-  </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
@@ -109,16 +163,12 @@
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpp20</LanguageStandard>
-      <LanguageStandard_C>stdc17</LanguageStandard_C>
-      <AdditionalIncludeDirectories>$(VULKAN_SDK)\Include;$(SolutionDir)..\Engine\src;$(SolutionDir)..\Engine\include;$(SolutionDir)game\include;$(SolutionDir)game\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)..\Engine\include;C:\Users\ADMIN\Desktop\GAMES2\vcpkg\installed\x64-windows\include;$(VULKAN_SDK)\Include;$(SolutionDir)..\Engine\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <AdditionalOptions>/utf-8 %(AdditionalOptions)</AdditionalOptions>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <OutputFile>$(OutDir)$(TargetName)$(TargetExt)</OutputFile>
-      <AdditionalLibraryDirectories>$(VULKAN_SDK)\Lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>vulkan-1.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -130,37 +180,14 @@
       <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpp20</LanguageStandard>
-      <LanguageStandard_C>stdc17</LanguageStandard_C>
-      <AdditionalIncludeDirectories>$(VULKAN_SDK)\Include;$(SolutionDir)..\Engine\src;$(SolutionDir)..\Engine\include;$(SolutionDir)game\include;$(SolutionDir)game\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)..\Engine\include;C:\Users\ADMIN\Desktop\GAMES2\vcpkg\installed\x64-windows\include;$(VULKAN_SDK)\Include;$(SolutionDir)..\Engine\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <AdditionalOptions>/utf-8 %(AdditionalOptions)</AdditionalOptions>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <OutputFile>$(OutDir)$(TargetName)$(TargetExt)</OutputFile>
-      <AdditionalLibraryDirectories>$(VULKAN_SDK)\Lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>vulkan-1.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
-  <ItemGroup>
-    <ClInclude Include="game\include\Interstellar\Interstellar.hpp" />
-  </ItemGroup>
-  <ItemGroup>
-    <ClCompile Include="game\src\Interstellar\Interstellar.cpp" />
-    <ClCompile Include="game\src\main.cpp" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="assets\config\InterstellarConfig.json" />
-    <None Include="assets\data\elements_all.json" />
-    <None Include="doxygen\game_api.dox" />
-    <None Include="doxygen\index.dox" />
-    <None Include="doxygen\Modules.dox" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\Engine\Engine.vcxproj">
-      <Project>{fc9c3cdb-b81a-4536-99ab-e0496152968d}</Project>
-    </ProjectReference>
-  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>

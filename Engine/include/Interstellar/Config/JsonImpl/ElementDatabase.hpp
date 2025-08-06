@@ -1,7 +1,7 @@
 #pragma once
 
 #include "Interstellar/Data/IElementDatabase.hpp"
-#include "Interstellar/Data/ElementData.hpp"
+#include "Interstellar/Data//ElementData.hpp"
 #include <unordered_map>
 #include <string>
 
