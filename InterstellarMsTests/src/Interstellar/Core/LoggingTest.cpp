@@ -1,4 +1,3 @@
-#include "pch.h"
 #include "CppUnitTest.h"
 #include <spdlog/spdlog.h>
 #include <spdlog/spdlog-inl.h>
