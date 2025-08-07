@@ -1,4 +1,4 @@
-#include "CppUnitTest.h"
+#include <gtest/gtest.h>
 #include <spdlog/spdlog.h>
 #include <spdlog/spdlog-inl.h>
 #include <spdlog/sinks/ostream_sink.h>

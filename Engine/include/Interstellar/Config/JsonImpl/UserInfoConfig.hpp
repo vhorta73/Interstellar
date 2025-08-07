@@ -8,10 +8,10 @@ struct UserInfoConfig : JsonConfigBase {
     UserInfoConfig() {
         registerField("Name",
             [this]() { return Name; },
-            [this](auto& v) { Name = v.get<std::string>(); });
+            [this](auto& v) { Name = v.template get<std::string>(); });
         registerField("Age",
             [this]() { return Age; },
-            [this](auto& v) { Age = v.get<int>(); });
+            [this](auto& v) { Age = v.template get<int>(); });
     }
 
     // 2) convenience ctor: delegates to default, then sets members

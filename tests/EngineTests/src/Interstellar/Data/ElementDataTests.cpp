@@ -1,4 +1,4 @@
-#include "CppUnitTest.h"
+#include <gtest/gtest.h>
 #include "nlohmann/json.hpp"
 
 #include "Interstellar/Config/JsonImpl/ElementConfig.hpp"

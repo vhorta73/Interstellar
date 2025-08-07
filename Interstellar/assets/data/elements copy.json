@@ -1,0 +1,8982 @@
+[
+  {
+    "Symbol": "H",
+    "Name": "Hydrogen",
+    "AtomicNumber": 1,
+    "AtomicMass": 1.008,
+    "Isotopes": [
+      {
+        "Name": "Protium",
+        "MassNumber": 1.0078,
+        "HalfLife": null,
+        "RadiationType": null
+      },
+      {
+        "Name": "Deuterium",
+        "MassNumber": 2.014,
+        "HalfLife": null,
+        "RadiationType": null
+      },
+      {
+        "Name": "Tritium",
+        "MassNumber": 3.016,
+        "HalfLife": 12.32,
+        "RadiationType": "beta"
+      }
+    ],
+    "PhysicalProperties": {
+      "Density": 8.988e-05,
+      "MeltingPoint": 300.0,
+      "BoilingPoint": 1000.0,
+      "TriplePoint": {
+        "Temperature": 250.0,
+        "Pressure": 0.01
+      },
+      "HeatCapacity": 25.0,
+      "StateRanges": [
+        {
+          "TemperatureRange": [
+            0,
+            300
+          ],
+          "PressureRange": [
+            0,
+            1
+          ],
+          "State": "solid"
+        },
+        {
+          "TemperatureRange": [
+            300,
+            1000
+          ],
+          "PressureRange": [
+            0,
+            1
+          ],
+          "State": "liquid"
+        },
+        {
+          "TemperatureRange": [
+            1000,
+            10000
+          ],
+          "PressureRange": [
+            0,
+            1
+          ],
+          "State": "gas"
+        }
+      ]
+    },
+    "ChemicalProperties": {
+      "Electronegativity": 1.5,
+      "IonizationEnergy": 10.0,
+      "Reactivity": 0.9,
+      "Bonding": [
+        "ionic",
+        "covalent"
+      ],
+      "CommonCompounds": []
+    },
+    "CosmicAbundance": 0.11800000000000001,
+    "DisplayColor": [
+      0.8,
+      0.8,
+      1.0
+    ],
+    "Radiation": 0.0
+  },
+  {
+    "Symbol": "He",
+    "Name": "Helium",
+    "AtomicNumber": 2,
+    "AtomicMass": 4.0026,
+    "Isotopes": [
+      {
+        "Name": "Helium Isotope",
+        "MassNumber": 4.0026,
+        "HalfLife": null,
+        "RadiationType": null
+      }
+    ],
+    "PhysicalProperties": {
+      "Density": 0.0001785,
+      "MeltingPoint": 300.0,
+      "BoilingPoint": 1000.0,
+      "TriplePoint": {
+        "Temperature": 250.0,
+        "Pressure": 0.01
+      },
+      "HeatCapacity": 25.0,
+      "StateRanges": [
+        {
+          "TemperatureRange": [
+            0,
+            300
+          ],
+          "PressureRange": [
+            0,
+            1
+          ],
+          "State": "solid"
+        },
+        {
+          "TemperatureRange": [
+            300,
+            1000
+          ],
+          "PressureRange": [
+            0,
+            1
+          ],
+          "State": "liquid"
+        },
+        {
+          "TemperatureRange": [
+            1000,
+            10000
+          ],
+          "PressureRange": [
+            0,
+            1
+          ],
+          "State": "gas"
+        }
+      ]
+    },
+    "ChemicalProperties": {
+      "Electronegativity": 1.5,
+      "IonizationEnergy": 10.0,
+      "Reactivity": 0.0,
+      "Bonding": [
+        "ionic",
+        "covalent"
+      ],
+      "CommonCompounds": []
+    },
+    "CosmicAbundance": 0.117,
+    "DisplayColor": [
+      0.85,
+      0.85,
+      1.0
+    ],
+    "Radiation": 0.0
+  },
+  {
+    "Symbol": "Li",
+    "Name": "Lithium",
+    "AtomicNumber": 3,
+    "AtomicMass": 6.94,
+    "Isotopes": [
+      {
+        "Name": "Lithium Isotope",
+        "MassNumber": 6.94,
+        "HalfLife": null,
+        "RadiationType": null
+      }
+    ],
+    "PhysicalProperties": {
+      "Density": 0.534,
+      "MeltingPoint": 300.0,
+      "BoilingPoint": 1000.0,
+      "TriplePoint": {
+        "Temperature": 250.0,
+        "Pressure": 0.01
+      },
+      "HeatCapacity": 25.0,
+      "StateRanges": [
+        {
+          "TemperatureRange": [
+            0,
+            300
+          ],
+          "PressureRange": [
+            0,
+            1
+          ],
+          "State": "solid"
+        },
+        {
+          "TemperatureRange": [
+            300,
+            1000
+          ],
+          "PressureRange": [
+            0,
+            1
+          ],
+          "State": "liquid"
+        },
+        {
+          "TemperatureRange": [
+            1000,
+            10000
+          ],
+          "PressureRange": [
+            0,
+            1
+          ],
+          "State": "gas"
+        }
+      ]
+    },
+    "ChemicalProperties": {
+      "Electronegativity": 1.5,
+      "IonizationEnergy": 10.0,
+      "Reactivity": 0.95,
+      "Bonding": [
+        "ionic",
+        "covalent"
+      ],
+      "CommonCompounds": []
+    },
+    "CosmicAbundance": 0.116,
+    "DisplayColor": [
+      0.75,
+      0.75,
+      0.75
+    ],
+    "Radiation": 0.0
+  },
+  {
+    "Symbol": "E4",
+    "Name": "Element 4",
+    "AtomicNumber": 4,
+    "AtomicMass": 8.0,
+    "Isotopes": [
+      {
+        "Name": "Element 4 Isotope",
+        "MassNumber": 8.0,
+        "HalfLife": null,
+        "RadiationType": null
+      }
+    ],
+    "PhysicalProperties": {
+      "Density": 5.0,
+      "MeltingPoint": 300.0,
+      "BoilingPoint": 1000.0,
+      "TriplePoint": {
+        "Temperature": 250.0,
+        "Pressure": 0.01
+      },
+      "HeatCapacity": 25.0,
+      "StateRanges": [
+        {
+          "TemperatureRange": [
+            0,
+            300
+          ],
+          "PressureRange": [
+            0,
+            1
+          ],
+          "State": "solid"
+        },
+        {
+          "TemperatureRange": [
+            300,
+            1000
+          ],
+          "PressureRange": [
+            0,
+            1
+          ],
+          "State": "liquid"
+        },
+        {
+          "TemperatureRange": [
+            1000,
+            10000
+          ],
+          "PressureRange": [
+            0,
+            1
+          ],
+          "State": "gas"
+        }
+      ]
+    },
+    "ChemicalProperties": {
+      "Electronegativity": 1.5,
+      "IonizationEnergy": 10.0,
+      "Reactivity": 0.5,
+      "Bonding": [
+        "ionic",
+        "covalent"
+      ],
+      "CommonCompounds": []
+    },
+    "CosmicAbundance": 0.115,
+    "DisplayColor": [
+      0.5,
+      0.5,
+      0.5
+    ],
+    "Radiation": 0.0
+  },
+  {
+    "Symbol": "E5",
+    "Name": "Element 5",
+    "AtomicNumber": 5,
+    "AtomicMass": 10.0,
+    "Isotopes": [
+      {
+        "Name": "Element 5 Isotope",
+        "MassNumber": 10.0,
+        "HalfLife": null,
+        "RadiationType": null
+      }
+    ],
+    "PhysicalProperties": {
+      "Density": 5.0,
+      "MeltingPoint": 300.0,
+      "BoilingPoint": 1000.0,
+      "TriplePoint": {
+        "Temperature": 250.0,
+        "Pressure": 0.01
+      },
+      "HeatCapacity": 25.0,
+      "StateRanges": [
+        {
+          "TemperatureRange": [
+            0,
+            300
+          ],
+          "PressureRange": [
+            0,
+            1
+          ],
+          "State": "solid"
+        },
+        {
+          "TemperatureRange": [
+            300,
+            1000
+          ],
+          "PressureRange": [
+            0,
+            1
+          ],
+          "State": "liquid"
+        },
+        {
+          "TemperatureRange": [
+            1000,
+            10000
+          ],
+          "PressureRange": [
+            0,
+            1
+          ],
+          "State": "gas"
+        }
+      ]
+    },
+    "ChemicalProperties": {
+      "Electronegativity": 1.5,
+      "IonizationEnergy": 10.0,
+      "Reactivity": 0.5,
+      "Bonding": [
+        "ionic",
+        "covalent"
+      ],
+      "CommonCompounds": []
+    },
+    "CosmicAbundance": 0.114,
+    "DisplayColor": [
+      0.5,
+      0.5,
+      0.5
+    ],
+    "Radiation": 0.0
+  },
+  {
+    "Symbol": "E6",
+    "Name": "Element 6",
+    "AtomicNumber": 6,
+    "AtomicMass": 12.0,
+    "Isotopes": [
+      {
+        "Name": "Element 6 Isotope",
+        "MassNumber": 12.0,
+        "HalfLife": null,
+        "RadiationType": null
+      }
+    ],
+    "PhysicalProperties": {
+      "Density": 5.0,
+      "MeltingPoint": 300.0,
+      "BoilingPoint": 1000.0,
+      "TriplePoint": {
+        "Temperature": 250.0,
+        "Pressure": 0.01
+      },
+      "HeatCapacity": 25.0,
+      "StateRanges": [
+        {
+          "TemperatureRange": [
+            0,
+            300
+          ],
+          "PressureRange": [
+            0,
+            1
+          ],
+          "State": "solid"
+        },
+        {
+          "TemperatureRange": [
+            300,
+            1000
+          ],
+          "PressureRange": [
+            0,
+            1
+          ],
+          "State": "liquid"
+        },
+        {
+          "TemperatureRange": [
+            1000,
+            10000
+          ],
+          "PressureRange": [
+            0,
+            1
+          ],
+          "State": "gas"
+        }
+      ]
+    },
+    "ChemicalProperties": {
+      "Electronegativity": 1.5,
+      "IonizationEnergy": 10.0,
+      "Reactivity": 0.5,
+      "Bonding": [
+        "ionic",
+        "covalent"
+      ],
+      "CommonCompounds": []
+    },
+    "CosmicAbundance": 0.113,
+    "DisplayColor": [
+      0.5,
+      0.5,
+      0.5
+    ],
+    "Radiation": 0.0
+  },
+  {
+    "Symbol": "E7",
+    "Name": "Element 7",
+    "AtomicNumber": 7,
+    "AtomicMass": 14.0,
+    "Isotopes": [
+      {
+        "Name": "Element 7 Isotope",
+        "MassNumber": 14.0,
+        "HalfLife": null,
+        "RadiationType": null
+      }
+    ],
+    "PhysicalProperties": {
+      "Density": 5.0,
+      "MeltingPoint": 300.0,
+      "BoilingPoint": 1000.0,
+      "TriplePoint": {
+        "Temperature": 250.0,
+        "Pressure": 0.01
+      },
+      "HeatCapacity": 25.0,
+      "StateRanges": [
+        {
+          "TemperatureRange": [
+            0,
+            300
+          ],
+          "PressureRange": [
+            0,
+            1
+          ],
+          "State": "solid"
+        },
+        {
+          "TemperatureRange": [
+            300,
+            1000
+          ],
+          "PressureRange": [
+            0,
+            1
+          ],
+          "State": "liquid"
+        },
+        {
+          "TemperatureRange": [
+            1000,
+            10000
+          ],
+          "PressureRange": [
+            0,
+            1
+          ],
+          "State": "gas"
+        }
+      ]
+    },
+    "ChemicalProperties": {
+      "Electronegativity": 1.5,
+      "IonizationEnergy": 10.0,
+      "Reactivity": 0.5,
+      "Bonding": [
+        "ionic",
+        "covalent"
+      ],
+      "CommonCompounds": []
+    },
+    "CosmicAbundance": 0.112,
+    "DisplayColor": [
+      0.5,
+      0.5,
+      0.5
+    ],
+    "Radiation": 0.0
+  },
+  {
+    "Symbol": "E8",
+    "Name": "Element 8",
+    "AtomicNumber": 8,
+    "AtomicMass": 16.0,
+    "Isotopes": [
+      {
+        "Name": "Element 8 Isotope",
+        "MassNumber": 16.0,
+        "HalfLife": null,
+        "RadiationType": null
+      }
+    ],
+    "PhysicalProperties": {
+      "Density": 5.0,
+      "MeltingPoint": 300.0,
+      "BoilingPoint": 1000.0,
+      "TriplePoint": {
+        "Temperature": 250.0,
+        "Pressure": 0.01
+      },
+      "HeatCapacity": 25.0,
+      "StateRanges": [
+        {
+          "TemperatureRange": [
+            0,
+            300
+          ],
+          "PressureRange": [
+            0,
+            1
+          ],
+          "State": "solid"
+        },
+        {
+          "TemperatureRange": [
+            300,
+            1000
+          ],
+          "PressureRange": [
+            0,
+            1
+          ],
+          "State": "liquid"
+        },
+        {
+          "TemperatureRange": [
+            1000,
+            10000
+          ],
+          "PressureRange": [
+            0,
+            1
+          ],
+          "State": "gas"
+        }
+      ]
+    },
+    "ChemicalProperties": {
+      "Electronegativity": 1.5,
+      "IonizationEnergy": 10.0,
+      "Reactivity": 0.5,
+      "Bonding": [
+        "ionic",
+        "covalent"
+      ],
+      "CommonCompounds": []
+    },
+    "CosmicAbundance": 0.111,
+    "DisplayColor": [
+      0.5,
+      0.5,
+      0.5
+    ],
+    "Radiation": 0.0
+  },
+  {
+    "Symbol": "E9",
+    "Name": "Element 9",
+    "AtomicNumber": 9,
+    "AtomicMass": 18.0,
+    "Isotopes": [
+      {
+        "Name": "Element 9 Isotope",
+        "MassNumber": 18.0,
+        "HalfLife": null,
+        "RadiationType": null
+      }
+    ],
+    "PhysicalProperties": {
+      "Density": 5.0,
+      "MeltingPoint": 300.0,
+      "BoilingPoint": 1000.0,
+      "TriplePoint": {
+        "Temperature": 250.0,
+        "Pressure": 0.01
+      },
+      "HeatCapacity": 25.0,
+      "StateRanges": [
+        {
+          "TemperatureRange": [
+            0,
+            300
+          ],
+          "PressureRange": [
+            0,
+            1
+          ],
+          "State": "solid"
+        },
+        {
+          "TemperatureRange": [
+            300,
+            1000
+          ],
+          "PressureRange": [
+            0,
+            1
+          ],
+          "State": "liquid"
+        },
+        {
+          "TemperatureRange": [
+            1000,
+            10000
+          ],
+          "PressureRange": [
+            0,
+            1
+          ],
+          "State": "gas"
+        }
+      ]
+    },
+    "ChemicalProperties": {
+      "Electronegativity": 1.5,
+      "IonizationEnergy": 10.0,
+      "Reactivity": 0.5,
+      "Bonding": [
+        "ionic",
+        "covalent"
+      ],
+      "CommonCompounds": []
+    },
+    "CosmicAbundance": 0.11,
+    "DisplayColor": [
+      0.5,
+      0.5,
+      0.5
+    ],
+    "Radiation": 0.0
+  },
+  {
+    "Symbol": "E10",
+    "Name": "Element 10",
+    "AtomicNumber": 10,
+    "AtomicMass": 20.0,
+    "Isotopes": [
+      {
+        "Name": "Element 10 Isotope",
+        "MassNumber": 20.0,
+        "HalfLife": null,
+        "RadiationType": null
+      }
+    ],
+    "PhysicalProperties": {
+      "Density": 5.0,
+      "MeltingPoint": 300.0,
+      "BoilingPoint": 1000.0,
+      "TriplePoint": {
+        "Temperature": 250.0,
+        "Pressure": 0.01
+      },
+      "HeatCapacity": 25.0,
+      "StateRanges": [
+        {
+          "TemperatureRange": [
+            0,
+            300
+          ],
+          "PressureRange": [
+            0,
+            1
+          ],
+          "State": "solid"
+        },
+        {
+          "TemperatureRange": [
+            300,
+            1000
+          ],
+          "PressureRange": [
+            0,
+            1
+          ],
+          "State": "liquid"
+        },
+        {
+          "TemperatureRange": [
+            1000,
+            10000
+          ],
+          "PressureRange": [
+            0,
+            1
+          ],
+          "State": "gas"
+        }
+      ]
+    },
+    "ChemicalProperties": {
+      "Electronegativity": 1.5,
+      "IonizationEnergy": 10.0,
+      "Reactivity": 0.5,
+      "Bonding": [
+        "ionic",
+        "covalent"
+      ],
+      "CommonCompounds": []
+    },
+    "CosmicAbundance": 0.109,
+    "DisplayColor": [
+      0.5,
+      0.5,
+      0.5
+    ],
+    "Radiation": 0.0
+  },
+  {
+    "Symbol": "E11",
+    "Name": "Element 11",
+    "AtomicNumber": 11,
+    "AtomicMass": 22.0,
+    "Isotopes": [
+      {
+        "Name": "Element 11 Isotope",
+        "MassNumber": 22.0,
+        "HalfLife": null,
+        "RadiationType": null
+      }
+    ],
+    "PhysicalProperties": {
+      "Density": 5.0,
+      "MeltingPoint": 300.0,
+      "BoilingPoint": 1000.0,
+      "TriplePoint": {
+        "Temperature": 250.0,
+        "Pressure": 0.01
+      },
+      "HeatCapacity": 25.0,
+      "StateRanges": [
+        {
+          "TemperatureRange": [
+            0,
+            300
+          ],
+          "PressureRange": [
+            0,
+            1
+          ],
+          "State": "solid"
+        },
+        {
+          "TemperatureRange": [
+            300,
+            1000
+          ],
+          "PressureRange": [
+            0,
+            1
+          ],
+          "State": "liquid"
+        },
+        {
+          "TemperatureRange": [
+            1000,
+            10000
+          ],
+          "PressureRange": [
+            0,
+            1
+          ],
+          "State": "gas"
+        }
+      ]
+    },
+    "ChemicalProperties": {
+      "Electronegativity": 1.5,
+      "IonizationEnergy": 10.0,
+      "Reactivity": 0.5,
+      "Bonding": [
+        "ionic",
+        "covalent"
+      ],
+      "CommonCompounds": []
+    },
+    "CosmicAbundance": 0.108,
+    "DisplayColor": [
+      0.5,
+      0.5,
+      0.5
+    ],
+    "Radiation": 0.0
+  },
+  {
+    "Symbol": "E12",
+    "Name": "Element 12",
+    "AtomicNumber": 12,
+    "AtomicMass": 24.0,
+    "Isotopes": [
+      {
+        "Name": "Element 12 Isotope",
+        "MassNumber": 24.0,
+        "HalfLife": null,
+        "RadiationType": null
+      }
+    ],
+    "PhysicalProperties": {
+      "Density": 5.0,
+      "MeltingPoint": 300.0,
+      "BoilingPoint": 1000.0,
+      "TriplePoint": {
+        "Temperature": 250.0,
+        "Pressure": 0.01
+      },
+      "HeatCapacity": 25.0,
+      "StateRanges": [
+        {
+          "TemperatureRange": [
+            0,
+            300
+          ],
+          "PressureRange": [
+            0,
+            1
+          ],
+          "State": "solid"
+        },
+        {
+          "TemperatureRange": [
+            300,
+            1000
+          ],
+          "PressureRange": [
+            0,
+            1
+          ],
+          "State": "liquid"
+        },
+        {
+          "TemperatureRange": [
+            1000,
+            10000
+          ],
+          "PressureRange": [
+            0,
+            1
+          ],
+          "State": "gas"
+        }
+      ]
+    },
+    "ChemicalProperties": {
+      "Electronegativity": 1.5,
+      "IonizationEnergy": 10.0,
+      "Reactivity": 0.5,
+      "Bonding": [
+        "ionic",
+        "covalent"
+      ],
+      "CommonCompounds": []
+    },
+    "CosmicAbundance": 0.107,
+    "DisplayColor": [
+      0.5,
+      0.5,
+      0.5
+    ],
+    "Radiation": 0.0
+  },
+  {
+    "Symbol": "E13",
+    "Name": "Element 13",
+    "AtomicNumber": 13,
+    "AtomicMass": 26.0,
+    "Isotopes": [
+      {
+        "Name": "Element 13 Isotope",
+        "MassNumber": 26.0,
+        "HalfLife": null,
+        "RadiationType": null
+      }
+    ],
+    "PhysicalProperties": {
+      "Density": 5.0,
+      "MeltingPoint": 300.0,
+      "BoilingPoint": 1000.0,
+      "TriplePoint": {
+        "Temperature": 250.0,
+        "Pressure": 0.01
+      },
+      "HeatCapacity": 25.0,
+      "StateRanges": [
+        {
+          "TemperatureRange": [
+            0,
+            300
+          ],
+          "PressureRange": [
+            0,
+            1
+          ],
+          "State": "solid"
+        },
+        {
+          "TemperatureRange": [
+            300,
+            1000
+          ],
+          "PressureRange": [
+            0,
+            1
+          ],
+          "State": "liquid"
+        },
+        {
+          "TemperatureRange": [
+            1000,
+            10000
+          ],
+          "PressureRange": [
+            0,
+            1
+          ],
+          "State": "gas"
+        }
+      ]
+    },
+    "ChemicalProperties": {
+      "Electronegativity": 1.5,
+      "IonizationEnergy": 10.0,
+      "Reactivity": 0.5,
+      "Bonding": [
+        "ionic",
+        "covalent"
+      ],
+      "CommonCompounds": []
+    },
+    "CosmicAbundance": 0.106,
+    "DisplayColor": [
+      0.5,
+      0.5,
+      0.5
+    ],
+    "Radiation": 0.0
+  },
+  {
+    "Symbol": "E14",
+    "Name": "Element 14",
+    "AtomicNumber": 14,
+    "AtomicMass": 28.0,
+    "Isotopes": [
+      {
+        "Name": "Element 14 Isotope",
+        "MassNumber": 28.0,
+        "HalfLife": null,
+        "RadiationType": null
+      }
+    ],
+    "PhysicalProperties": {
+      "Density": 5.0,
+      "MeltingPoint": 300.0,
+      "BoilingPoint": 1000.0,
+      "TriplePoint": {
+        "Temperature": 250.0,
+        "Pressure": 0.01
+      },
+      "HeatCapacity": 25.0,
+      "StateRanges": [
+        {
+          "TemperatureRange": [
+            0,
+            300
+          ],
+          "PressureRange": [
+            0,
+            1
+          ],
+          "State": "solid"
+        },
+        {
+          "TemperatureRange": [
+            300,
+            1000
+          ],
+          "PressureRange": [
+            0,
+            1
+          ],
+          "State": "liquid"
+        },
+        {
+          "TemperatureRange": [
+            1000,
+            10000
+          ],
+          "PressureRange": [
+            0,
+            1
+          ],
+          "State": "gas"
+        }
+      ]
+    },
+    "ChemicalProperties": {
+      "Electronegativity": 1.5,
+      "IonizationEnergy": 10.0,
+      "Reactivity": 0.5,
+      "Bonding": [
+        "ionic",
+        "covalent"
+      ],
+      "CommonCompounds": []
+    },
+    "CosmicAbundance": 0.105,
+    "DisplayColor": [
+      0.5,
+      0.5,
+      0.5
+    ],
+    "Radiation": 0.0
+  },
+  {
+    "Symbol": "E15",
+    "Name": "Element 15",
+    "AtomicNumber": 15,
+    "AtomicMass": 30.0,
+    "Isotopes": [
+      {
+        "Name": "Element 15 Isotope",
+        "MassNumber": 30.0,
+        "HalfLife": null,
+        "RadiationType": null
+      }
+    ],
+    "PhysicalProperties": {
+      "Density": 5.0,
+      "MeltingPoint": 300.0,
+      "BoilingPoint": 1000.0,
+      "TriplePoint": {
+        "Temperature": 250.0,
+        "Pressure": 0.01
+      },
+      "HeatCapacity": 25.0,
+      "StateRanges": [
+        {
+          "TemperatureRange": [
+            0,
+            300
+          ],
+          "PressureRange": [
+            0,
+            1
+          ],
+          "State": "solid"
+        },
+        {
+          "TemperatureRange": [
+            300,
+            1000
+          ],
+          "PressureRange": [
+            0,
+            1
+          ],
+          "State": "liquid"
+        },
+        {
+          "TemperatureRange": [
+            1000,
+            10000
+          ],
+          "PressureRange": [
+            0,
+            1
+          ],
+          "State": "gas"
+        }
+      ]
+    },
+    "ChemicalProperties": {
+      "Electronegativity": 1.5,
+      "IonizationEnergy": 10.0,
+      "Reactivity": 0.5,
+      "Bonding": [
+        "ionic",
+        "covalent"
+      ],
+      "CommonCompounds": []
+    },
+    "CosmicAbundance": 0.10400000000000001,
+    "DisplayColor": [
+      0.5,
+      0.5,
+      0.5
+    ],
+    "Radiation": 0.0
+  },
+  {
+    "Symbol": "E16",
+    "Name": "Element 16",
+    "AtomicNumber": 16,
+    "AtomicMass": 32.0,
+    "Isotopes": [
+      {
+        "Name": "Element 16 Isotope",
+        "MassNumber": 32.0,
+        "HalfLife": null,
+        "RadiationType": null
+      }
+    ],
+    "PhysicalProperties": {
+      "Density": 5.0,
+      "MeltingPoint": 300.0,
+      "BoilingPoint": 1000.0,
+      "TriplePoint": {
+        "Temperature": 250.0,
+        "Pressure": 0.01
+      },
+      "HeatCapacity": 25.0,
+      "StateRanges": [
+        {
+          "TemperatureRange": [
+            0,
+            300
+          ],
+          "PressureRange": [
+            0,
+            1
+          ],
+          "State": "solid"
+        },
+        {
+          "TemperatureRange": [
+            300,
+            1000
+          ],
+          "PressureRange": [
+            0,
+            1
+          ],
+          "State": "liquid"
+        },
+        {
+          "TemperatureRange": [
+            1000,
+            10000
+          ],
+          "PressureRange": [
+            0,
+            1
+          ],
+          "State": "gas"
+        }
+      ]
+    },
+    "ChemicalProperties": {
+      "Electronegativity": 1.5,
+      "IonizationEnergy": 10.0,
+      "Reactivity": 0.5,
+      "Bonding": [
+        "ionic",
+        "covalent"
+      ],
+      "CommonCompounds": []
+    },
+    "CosmicAbundance": 0.10300000000000001,
+    "DisplayColor": [
+      0.5,
+      0.5,
+      0.5
+    ],
+    "Radiation": 0.0
+  },
+  {
+    "Symbol": "E17",
+    "Name": "Element 17",
+    "AtomicNumber": 17,
+    "AtomicMass": 34.0,
+    "Isotopes": [
+      {
+        "Name": "Element 17 Isotope",
+        "MassNumber": 34.0,
+        "HalfLife": null,
+        "RadiationType": null
+      }
+    ],
+    "PhysicalProperties": {
+      "Density": 5.0,
+      "MeltingPoint": 300.0,
+      "BoilingPoint": 1000.0,
+      "TriplePoint": {
+        "Temperature": 250.0,
+        "Pressure": 0.01
+      },
+      "HeatCapacity": 25.0,
+      "StateRanges": [
+        {
+          "TemperatureRange": [
+            0,
+            300
+          ],
+          "PressureRange": [
+            0,
+            1
+          ],
+          "State": "solid"
+        },
+        {
+          "TemperatureRange": [
+            300,
+            1000
+          ],
+          "PressureRange": [
+            0,
+            1
+          ],
+          "State": "liquid"
+        },
+        {
+          "TemperatureRange": [
+            1000,
+            10000
+          ],
+          "PressureRange": [
+            0,
+            1
+          ],
+          "State": "gas"
+        }
+      ]
+    },
+    "ChemicalProperties": {
+      "Electronegativity": 1.5,
+      "IonizationEnergy": 10.0,
+      "Reactivity": 0.5,
+      "Bonding": [
+        "ionic",
+        "covalent"
+      ],
+      "CommonCompounds": []
+    },
+    "CosmicAbundance": 0.10200000000000001,
+    "DisplayColor": [
+      0.5,
+      0.5,
+      0.5
+    ],
+    "Radiation": 0.0
+  },
+  {
+    "Symbol": "E18",
+    "Name": "Element 18",
+    "AtomicNumber": 18,
+    "AtomicMass": 36.0,
+    "Isotopes": [
+      {
+        "Name": "Element 18 Isotope",
+        "MassNumber": 36.0,
+        "HalfLife": null,
+        "RadiationType": null
+      }
+    ],
+    "PhysicalProperties": {
+      "Density": 5.0,
+      "MeltingPoint": 300.0,
+      "BoilingPoint": 1000.0,
+      "TriplePoint": {
+        "Temperature": 250.0,
+        "Pressure": 0.01
+      },
+      "HeatCapacity": 25.0,
+      "StateRanges": [
+        {
+          "TemperatureRange": [
+            0,
+            300
+          ],
+          "PressureRange": [
+            0,
+            1
+          ],
+          "State": "solid"
+        },
+        {
+          "TemperatureRange": [
+            300,
+            1000
+          ],
+          "PressureRange": [
+            0,
+            1
+          ],
+          "State": "liquid"
+        },
+        {
+          "TemperatureRange": [
+            1000,
+            10000
+          ],
+          "PressureRange": [
+            0,
+            1
+          ],
+          "State": "gas"
+        }
+      ]
+    },
+    "ChemicalProperties": {
+      "Electronegativity": 1.5,
+      "IonizationEnergy": 10.0,
+      "Reactivity": 0.5,
+      "Bonding": [
+        "ionic",
+        "covalent"
+      ],
+      "CommonCompounds": []
+    },
+    "CosmicAbundance": 0.101,
+    "DisplayColor": [
+      0.5,
+      0.5,
+      0.5
+    ],
+    "Radiation": 0.0
+  },
+  {
+    "Symbol": "E19",
+    "Name": "Element 19",
+    "AtomicNumber": 19,
+    "AtomicMass": 38.0,
+    "Isotopes": [
+      {
+        "Name": "Element 19 Isotope",
+        "MassNumber": 38.0,
+        "HalfLife": null,
+        "RadiationType": null
+      }
+    ],
+    "PhysicalProperties": {
+      "Density": 5.0,
+      "MeltingPoint": 300.0,
+      "BoilingPoint": 1000.0,
+      "TriplePoint": {
+        "Temperature": 250.0,
+        "Pressure": 0.01
+      },
+      "HeatCapacity": 25.0,
+      "StateRanges": [
+        {
+          "TemperatureRange": [
+            0,
+            300
+          ],
+          "PressureRange": [
+            0,
+            1
+          ],
+          "State": "solid"
+        },
+        {
+          "TemperatureRange": [
+            300,
+            1000
+          ],
+          "PressureRange": [
+            0,
+            1
+          ],
+          "State": "liquid"
+        },
+        {
+          "TemperatureRange": [
+            1000,
+            10000
+          ],
+          "PressureRange": [
+            0,
+            1
+          ],
+          "State": "gas"
+        }
+      ]
+    },
+    "ChemicalProperties": {
+      "Electronegativity": 1.5,
+      "IonizationEnergy": 10.0,
+      "Reactivity": 0.5,
+      "Bonding": [
+        "ionic",
+        "covalent"
+      ],
+      "CommonCompounds": []
+    },
+    "CosmicAbundance": 0.1,
+    "DisplayColor": [
+      0.5,
+      0.5,
+      0.5
+    ],
+    "Radiation": 0.0
+  },
+  {
+    "Symbol": "E20",
+    "Name": "Element 20",
+    "AtomicNumber": 20,
+    "AtomicMass": 40.0,
+    "Isotopes": [
+      {
+        "Name": "Element 20 Isotope",
+        "MassNumber": 40.0,
+        "HalfLife": null,
+        "RadiationType": null
+      }
+    ],
+    "PhysicalProperties": {
+      "Density": 5.0,
+      "MeltingPoint": 300.0,
+      "BoilingPoint": 1000.0,
+      "TriplePoint": {
+        "Temperature": 250.0,
+        "Pressure": 0.01
+      },
+      "HeatCapacity": 25.0,
+      "StateRanges": [
+        {
+          "TemperatureRange": [
+            0,
+            300
+          ],
+          "PressureRange": [
+            0,
+            1
+          ],
+          "State": "solid"
+        },
+        {
+          "TemperatureRange": [
+            300,
+            1000
+          ],
+          "PressureRange": [
+            0,
+            1
+          ],
+          "State": "liquid"
+        },
+        {
+          "TemperatureRange": [
+            1000,
+            10000
+          ],
+          "PressureRange": [
+            0,
+            1
+          ],
+          "State": "gas"
+        }
+      ]
+    },
+    "ChemicalProperties": {
+      "Electronegativity": 1.5,
+      "IonizationEnergy": 10.0,
+      "Reactivity": 0.5,
+      "Bonding": [
+        "ionic",
+        "covalent"
+      ],
+      "CommonCompounds": []
+    },
+    "CosmicAbundance": 0.099,
+    "DisplayColor": [
+      0.5,
+      0.5,
+      0.5
+    ],
+    "Radiation": 0.0
+  },
+  {
+    "Symbol": "E21",
+    "Name": "Element 21",
+    "AtomicNumber": 21,
+    "AtomicMass": 42.0,
+    "Isotopes": [
+      {
+        "Name": "Element 21 Isotope",
+        "MassNumber": 42.0,
+        "HalfLife": null,
+        "RadiationType": null
+      }
+    ],
+    "PhysicalProperties": {
+      "Density": 5.0,
+      "MeltingPoint": 300.0,
+      "BoilingPoint": 1000.0,
+      "TriplePoint": {
+        "Temperature": 250.0,
+        "Pressure": 0.01
+      },
+      "HeatCapacity": 25.0,
+      "StateRanges": [
+        {
+          "TemperatureRange": [
+            0,
+            300
+          ],
+          "PressureRange": [
+            0,
+            1
+          ],
+          "State": "solid"
+        },
+        {
+          "TemperatureRange": [
+            300,
+            1000
+          ],
+          "PressureRange": [
+            0,
+            1
+          ],
+          "State": "liquid"
+        },
+        {
+          "TemperatureRange": [
+            1000,
+            10000
+          ],
+          "PressureRange": [
+            0,
+            1
+          ],
+          "State": "gas"
+        }
+      ]
+    },
+    "ChemicalProperties": {
+      "Electronegativity": 1.5,
+      "IonizationEnergy": 10.0,
+      "Reactivity": 0.5,
+      "Bonding": [
+        "ionic",
+        "covalent"
+      ],
+      "CommonCompounds": []
+    },
+    "CosmicAbundance": 0.098,
+    "DisplayColor": [
+      0.5,
+      0.5,
+      0.5
+    ],
+    "Radiation": 0.0
+  },
+  {
+    "Symbol": "E22",
+    "Name": "Element 22",
+    "AtomicNumber": 22,
+    "AtomicMass": 44.0,
+    "Isotopes": [
+      {
+        "Name": "Element 22 Isotope",
+        "MassNumber": 44.0,
+        "HalfLife": null,
+        "RadiationType": null
+      }
+    ],
+    "PhysicalProperties": {
+      "Density": 5.0,
+      "MeltingPoint": 300.0,
+      "BoilingPoint": 1000.0,
+      "TriplePoint": {
+        "Temperature": 250.0,
+        "Pressure": 0.01
+      },
+      "HeatCapacity": 25.0,
+      "StateRanges": [
+        {
+          "TemperatureRange": [
+            0,
+            300
+          ],
+          "PressureRange": [
+            0,
+            1
+          ],
+          "State": "solid"
+        },
+        {
+          "TemperatureRange": [
+            300,
+            1000
+          ],
+          "PressureRange": [
+            0,
+            1
+          ],
+          "State": "liquid"
+        },
+        {
+          "TemperatureRange": [
+            1000,
+            10000
+          ],
+          "PressureRange": [
+            0,
+            1
+          ],
+          "State": "gas"
+        }
+      ]
+    },
+    "ChemicalProperties": {
+      "Electronegativity": 1.5,
+      "IonizationEnergy": 10.0,
+      "Reactivity": 0.5,
+      "Bonding": [
+        "ionic",
+        "covalent"
+      ],
+      "CommonCompounds": []
+    },
+    "CosmicAbundance": 0.097,
+    "DisplayColor": [
+      0.5,
+      0.5,
+      0.5
+    ],
+    "Radiation": 0.0
+  },
+  {
+    "Symbol": "E23",
+    "Name": "Element 23",
+    "AtomicNumber": 23,
+    "AtomicMass": 46.0,
+    "Isotopes": [
+      {
+        "Name": "Element 23 Isotope",
+        "MassNumber": 46.0,
+        "HalfLife": null,
+        "RadiationType": null
+      }
+    ],
+    "PhysicalProperties": {
+      "Density": 5.0,
+      "MeltingPoint": 300.0,
+      "BoilingPoint": 1000.0,
+      "TriplePoint": {
+        "Temperature": 250.0,
+        "Pressure": 0.01
+      },
+      "HeatCapacity": 25.0,
+      "StateRanges": [
+        {
+          "TemperatureRange": [
+            0,
+            300
+          ],
+          "PressureRange": [
+            0,
+            1
+          ],
+          "State": "solid"
+        },
+        {
+          "TemperatureRange": [
+            300,
+            1000
+          ],
+          "PressureRange": [
+            0,
+            1
+          ],
+          "State": "liquid"
+        },
+        {
+          "TemperatureRange": [
+            1000,
+            10000
+          ],
+          "PressureRange": [
+            0,
+            1
+          ],
+          "State": "gas"
+        }
+      ]
+    },
+    "ChemicalProperties": {
+      "Electronegativity": 1.5,
+      "IonizationEnergy": 10.0,
+      "Reactivity": 0.5,
+      "Bonding": [
+        "ionic",
+        "covalent"
+      ],
+      "CommonCompounds": []
+    },
+    "CosmicAbundance": 0.096,
+    "DisplayColor": [
+      0.5,
+      0.5,
+      0.5
+    ],
+    "Radiation": 0.0
+  },
+  {
+    "Symbol": "E24",
+    "Name": "Element 24",
+    "AtomicNumber": 24,
+    "AtomicMass": 48.0,
+    "Isotopes": [
+      {
+        "Name": "Element 24 Isotope",
+        "MassNumber": 48.0,
+        "HalfLife": null,
+        "RadiationType": null
+      }
+    ],
+    "PhysicalProperties": {
+      "Density": 5.0,
+      "MeltingPoint": 300.0,
+      "BoilingPoint": 1000.0,
+      "TriplePoint": {
+        "Temperature": 250.0,
+        "Pressure": 0.01
+      },
+      "HeatCapacity": 25.0,
+      "StateRanges": [
+        {
+          "TemperatureRange": [
+            0,
+            300
+          ],
+          "PressureRange": [
+            0,
+            1
+          ],
+          "State": "solid"
+        },
+        {
+          "TemperatureRange": [
+            300,
+            1000
+          ],
+          "PressureRange": [
+            0,
+            1
+          ],
+          "State": "liquid"
+        },
+        {
+          "TemperatureRange": [
+            1000,
+            10000
+          ],
+          "PressureRange": [
+            0,
+            1
+          ],
+          "State": "gas"
+        }
+      ]
+    },
+    "ChemicalProperties": {
+      "Electronegativity": 1.5,
+      "IonizationEnergy": 10.0,
+      "Reactivity": 0.5,
+      "Bonding": [
+        "ionic",
+        "covalent"
+      ],
+      "CommonCompounds": []
+    },
+    "CosmicAbundance": 0.095,
+    "DisplayColor": [
+      0.5,
+      0.5,
+      0.5
+    ],
+    "Radiation": 0.0
+  },
+  {
+    "Symbol": "E25",
+    "Name": "Element 25",
+    "AtomicNumber": 25,
+    "AtomicMass": 50.0,
+    "Isotopes": [
+      {
+        "Name": "Element 25 Isotope",
+        "MassNumber": 50.0,
+        "HalfLife": null,
+        "RadiationType": null
+      }
+    ],
+    "PhysicalProperties": {
+      "Density": 5.0,
+      "MeltingPoint": 300.0,
+      "BoilingPoint": 1000.0,
+      "TriplePoint": {
+        "Temperature": 250.0,
+        "Pressure": 0.01
+      },
+      "HeatCapacity": 25.0,
+      "StateRanges": [
+        {
+          "TemperatureRange": [
+            0,
+            300
+          ],
+          "PressureRange": [
+            0,
+            1
+          ],
+          "State": "solid"
+        },
+        {
+          "TemperatureRange": [
+            300,
+            1000
+          ],
+          "PressureRange": [
+            0,
+            1
+          ],
+          "State": "liquid"
+        },
+        {
+          "TemperatureRange": [
+            1000,
+            10000
+          ],
+          "PressureRange": [
+            0,
+            1
+          ],
+          "State": "gas"
+        }
+      ]
+    },
+    "ChemicalProperties": {
+      "Electronegativity": 1.5,
+      "IonizationEnergy": 10.0,
+      "Reactivity": 0.5,
+      "Bonding": [
+        "ionic",
+        "covalent"
+      ],
+      "CommonCompounds": []
+    },
+    "CosmicAbundance": 0.094,
+    "DisplayColor": [
+      0.5,
+      0.5,
+      0.5
+    ],
+    "Radiation": 0.0
+  },
+  {
+    "Symbol": "E26",
+    "Name": "Element 26",
+    "AtomicNumber": 26,
+    "AtomicMass": 52.0,
+    "Isotopes": [
+      {
+        "Name": "Element 26 Isotope",
+        "MassNumber": 52.0,
+        "HalfLife": null,
+        "RadiationType": null
+      }
+    ],
+    "PhysicalProperties": {
+      "Density": 5.0,
+      "MeltingPoint": 300.0,
+      "BoilingPoint": 1000.0,
+      "TriplePoint": {
+        "Temperature": 250.0,
+        "Pressure": 0.01
+      },
+      "HeatCapacity": 25.0,
+      "StateRanges": [
+        {
+          "TemperatureRange": [
+            0,
+            300
+          ],
+          "PressureRange": [
+            0,
+            1
+          ],
+          "State": "solid"
+        },
+        {
+          "TemperatureRange": [
+            300,
+            1000
+          ],
+          "PressureRange": [
+            0,
+            1
+          ],
+          "State": "liquid"
+        },
+        {
+          "TemperatureRange": [
+            1000,
+            10000
+          ],
+          "PressureRange": [
+            0,
+            1
+          ],
+          "State": "gas"
+        }
+      ]
+    },
+    "ChemicalProperties": {
+      "Electronegativity": 1.5,
+      "IonizationEnergy": 10.0,
+      "Reactivity": 0.5,
+      "Bonding": [
+        "ionic",
+        "covalent"
+      ],
+      "CommonCompounds": []
+    },
+    "CosmicAbundance": 0.093,
+    "DisplayColor": [
+      0.5,
+      0.5,
+      0.5
+    ],
+    "Radiation": 0.0
+  },
+  {
+    "Symbol": "E27",
+    "Name": "Element 27",
+    "AtomicNumber": 27,
+    "AtomicMass": 54.0,
+    "Isotopes": [
+      {
+        "Name": "Element 27 Isotope",
+        "MassNumber": 54.0,
+        "HalfLife": null,
+        "RadiationType": null
+      }
+    ],
+    "PhysicalProperties": {
+      "Density": 5.0,
+      "MeltingPoint": 300.0,
+      "BoilingPoint": 1000.0,
+      "TriplePoint": {
+        "Temperature": 250.0,
+        "Pressure": 0.01
+      },
+      "HeatCapacity": 25.0,
+      "StateRanges": [
+        {
+          "TemperatureRange": [
+            0,
+            300
+          ],
+          "PressureRange": [
+            0,
+            1
+          ],
+          "State": "solid"
+        },
+        {
+          "TemperatureRange": [
+            300,
+            1000
+          ],
+          "PressureRange": [
+            0,
+            1
+          ],
+          "State": "liquid"
+        },
+        {
+          "TemperatureRange": [
+            1000,
+            10000
+          ],
+          "PressureRange": [
+            0,
+            1
+          ],
+          "State": "gas"
+        }
+      ]
+    },
+    "ChemicalProperties": {
+      "Electronegativity": 1.5,
+      "IonizationEnergy": 10.0,
+      "Reactivity": 0.5,
+      "Bonding": [
+        "ionic",
+        "covalent"
+      ],
+      "CommonCompounds": []
+    },
+    "CosmicAbundance": 0.092,
+    "DisplayColor": [
+      0.5,
+      0.5,
+      0.5
+    ],
+    "Radiation": 0.0
+  },
+  {
+    "Symbol": "E28",
+    "Name": "Element 28",
+    "AtomicNumber": 28,
+    "AtomicMass": 56.0,
+    "Isotopes": [
+      {
+        "Name": "Element 28 Isotope",
+        "MassNumber": 56.0,
+        "HalfLife": null,
+        "RadiationType": null
+      }
+    ],
+    "PhysicalProperties": {
+      "Density": 5.0,
+      "MeltingPoint": 300.0,
+      "BoilingPoint": 1000.0,
+      "TriplePoint": {
+        "Temperature": 250.0,
+        "Pressure": 0.01
+      },
+      "HeatCapacity": 25.0,
+      "StateRanges": [
+        {
+          "TemperatureRange": [
+            0,
+            300
+          ],
+          "PressureRange": [
+            0,
+            1
+          ],
+          "State": "solid"
+        },
+        {
+          "TemperatureRange": [
+            300,
+            1000
+          ],
+          "PressureRange": [
+            0,
+            1
+          ],
+          "State": "liquid"
+        },
+        {
+          "TemperatureRange": [
+            1000,
+            10000
+          ],
+          "PressureRange": [
+            0,
+            1
+          ],
+          "State": "gas"
+        }
+      ]
+    },
+    "ChemicalProperties": {
+      "Electronegativity": 1.5,
+      "IonizationEnergy": 10.0,
+      "Reactivity": 0.5,
+      "Bonding": [
+        "ionic",
+        "covalent"
+      ],
+      "CommonCompounds": []
+    },
+    "CosmicAbundance": 0.091,
+    "DisplayColor": [
+      0.5,
+      0.5,
+      0.5
+    ],
+    "Radiation": 0.0
+  },
+  {
+    "Symbol": "E29",
+    "Name": "Element 29",
+    "AtomicNumber": 29,
+    "AtomicMass": 58.0,
+    "Isotopes": [
+      {
+        "Name": "Element 29 Isotope",
+        "MassNumber": 58.0,
+        "HalfLife": null,
+        "RadiationType": null
+      }
+    ],
+    "PhysicalProperties": {
+      "Density": 5.0,
+      "MeltingPoint": 300.0,
+      "BoilingPoint": 1000.0,
+      "TriplePoint": {
+        "Temperature": 250.0,
+        "Pressure": 0.01
+      },
+      "HeatCapacity": 25.0,
+      "StateRanges": [
+        {
+          "TemperatureRange": [
+            0,
+            300
+          ],
+          "PressureRange": [
+            0,
+            1
+          ],
+          "State": "solid"
+        },
+        {
+          "TemperatureRange": [
+            300,
+            1000
+          ],
+          "PressureRange": [
+            0,
+            1
+          ],
+          "State": "liquid"
+        },
+        {
+          "TemperatureRange": [
+            1000,
+            10000
+          ],
+          "PressureRange": [
+            0,
+            1
+          ],
+          "State": "gas"
+        }
+      ]
+    },
+    "ChemicalProperties": {
+      "Electronegativity": 1.5,
+      "IonizationEnergy": 10.0,
+      "Reactivity": 0.5,
+      "Bonding": [
+        "ionic",
+        "covalent"
+      ],
+      "CommonCompounds": []
+    },
+    "CosmicAbundance": 0.09,
+    "DisplayColor": [
+      0.5,
+      0.5,
+      0.5
+    ],
+    "Radiation": 0.0
+  },
+  {
+    "Symbol": "E30",
+    "Name": "Element 30",
+    "AtomicNumber": 30,
+    "AtomicMass": 60.0,
+    "Isotopes": [
+      {
+        "Name": "Element 30 Isotope",
+        "MassNumber": 60.0,
+        "HalfLife": null,
+        "RadiationType": null
+      }
+    ],
+    "PhysicalProperties": {
+      "Density": 5.0,
+      "MeltingPoint": 300.0,
+      "BoilingPoint": 1000.0,
+      "TriplePoint": {
+        "Temperature": 250.0,
+        "Pressure": 0.01
+      },
+      "HeatCapacity": 25.0,
+      "StateRanges": [
+        {
+          "TemperatureRange": [
+            0,
+            300
+          ],
+          "PressureRange": [
+            0,
+            1
+          ],
+          "State": "solid"
+        },
+        {
+          "TemperatureRange": [
+            300,
+            1000
+          ],
+          "PressureRange": [
+            0,
+            1
+          ],
+          "State": "liquid"
+        },
+        {
+          "TemperatureRange": [
+            1000,
+            10000
+          ],
+          "PressureRange": [
+            0,
+            1
+          ],
+          "State": "gas"
+        }
+      ]
+    },
+    "ChemicalProperties": {
+      "Electronegativity": 1.5,
+      "IonizationEnergy": 10.0,
+      "Reactivity": 0.5,
+      "Bonding": [
+        "ionic",
+        "covalent"
+      ],
+      "CommonCompounds": []
+    },
+    "CosmicAbundance": 0.089,
+    "DisplayColor": [
+      0.5,
+      0.5,
+      0.5
+    ],
+    "Radiation": 0.0
+  },
+  {
+    "Symbol": "E31",
+    "Name": "Element 31",
+    "AtomicNumber": 31,
+    "AtomicMass": 62.0,
+    "Isotopes": [
+      {
+        "Name": "Element 31 Isotope",
+        "MassNumber": 62.0,
+        "HalfLife": null,
+        "RadiationType": null
+      }
+    ],
+    "PhysicalProperties": {
+      "Density": 5.0,
+      "MeltingPoint": 300.0,
+      "BoilingPoint": 1000.0,
+      "TriplePoint": {
+        "Temperature": 250.0,
+        "Pressure": 0.01
+      },
+      "HeatCapacity": 25.0,
+      "StateRanges": [
+        {
+          "TemperatureRange": [
+            0,
+            300
+          ],
+          "PressureRange": [
+            0,
+            1
+          ],
+          "State": "solid"
+        },
+        {
+          "TemperatureRange": [
+            300,
+            1000
+          ],
+          "PressureRange": [
+            0,
+            1
+          ],
+          "State": "liquid"
+        },
+        {
+          "TemperatureRange": [
+            1000,
+            10000
+          ],
+          "PressureRange": [
+            0,
+            1
+          ],
+          "State": "gas"
+        }
+      ]
+    },
+    "ChemicalProperties": {
+      "Electronegativity": 1.5,
+      "IonizationEnergy": 10.0,
+      "Reactivity": 0.5,
+      "Bonding": [
+        "ionic",
+        "covalent"
+      ],
+      "CommonCompounds": []
+    },
+    "CosmicAbundance": 0.088,
+    "DisplayColor": [
+      0.5,
+      0.5,
+      0.5
+    ],
+    "Radiation": 0.0
+  },
+  {
+    "Symbol": "E32",
+    "Name": "Element 32",
+    "AtomicNumber": 32,
+    "AtomicMass": 64.0,
+    "Isotopes": [
+      {
+        "Name": "Element 32 Isotope",
+        "MassNumber": 64.0,
+        "HalfLife": null,
+        "RadiationType": null
+      }
+    ],
+    "PhysicalProperties": {
+      "Density": 5.0,
+      "MeltingPoint": 300.0,
+      "BoilingPoint": 1000.0,
+      "TriplePoint": {
+        "Temperature": 250.0,
+        "Pressure": 0.01
+      },
+      "HeatCapacity": 25.0,
+      "StateRanges": [
+        {
+          "TemperatureRange": [
+            0,
+            300
+          ],
+          "PressureRange": [
+            0,
+            1
+          ],
+          "State": "solid"
+        },
+        {
+          "TemperatureRange": [
+            300,
+            1000
+          ],
+          "PressureRange": [
+            0,
+            1
+          ],
+          "State": "liquid"
+        },
+        {
+          "TemperatureRange": [
+            1000,
+            10000
+          ],
+          "PressureRange": [
+            0,
+            1
+          ],
+          "State": "gas"
+        }
+      ]
+    },
+    "ChemicalProperties": {
+      "Electronegativity": 1.5,
+      "IonizationEnergy": 10.0,
+      "Reactivity": 0.5,
+      "Bonding": [
+        "ionic",
+        "covalent"
+      ],
+      "CommonCompounds": []
+    },
+    "CosmicAbundance": 0.08700000000000001,
+    "DisplayColor": [
+      0.5,
+      0.5,
+      0.5
+    ],
+    "Radiation": 0.0
+  },
+  {
+    "Symbol": "E33",
+    "Name": "Element 33",
+    "AtomicNumber": 33,
+    "AtomicMass": 66.0,
+    "Isotopes": [
+      {
+        "Name": "Element 33 Isotope",
+        "MassNumber": 66.0,
+        "HalfLife": null,
+        "RadiationType": null
+      }
+    ],
+    "PhysicalProperties": {
+      "Density": 5.0,
+      "MeltingPoint": 300.0,
+      "BoilingPoint": 1000.0,
+      "TriplePoint": {
+        "Temperature": 250.0,
+        "Pressure": 0.01
+      },
+      "HeatCapacity": 25.0,
+      "StateRanges": [
+        {
+          "TemperatureRange": [
+            0,
+            300
+          ],
+          "PressureRange": [
+            0,
+            1
+          ],
+          "State": "solid"
+        },
+        {
+          "TemperatureRange": [
+            300,
+            1000
+          ],
+          "PressureRange": [
+            0,
+            1
+          ],
+          "State": "liquid"
+        },
+        {
+          "TemperatureRange": [
+            1000,
+            10000
+          ],
+          "PressureRange": [
+            0,
+            1
+          ],
+          "State": "gas"
+        }
+      ]
+    },
+    "ChemicalProperties": {
+      "Electronegativity": 1.5,
+      "IonizationEnergy": 10.0,
+      "Reactivity": 0.5,
+      "Bonding": [
+        "ionic",
+        "covalent"
+      ],
+      "CommonCompounds": []
+    },
+    "CosmicAbundance": 0.08600000000000001,
+    "DisplayColor": [
+      0.5,
+      0.5,
+      0.5
+    ],
+    "Radiation": 0.0
+  },
+  {
+    "Symbol": "E34",
+    "Name": "Element 34",
+    "AtomicNumber": 34,
+    "AtomicMass": 68.0,
+    "Isotopes": [
+      {
+        "Name": "Element 34 Isotope",
+        "MassNumber": 68.0,
+        "HalfLife": null,
+        "RadiationType": null
+      }
+    ],
+    "PhysicalProperties": {
+      "Density": 5.0,
+      "MeltingPoint": 300.0,
+      "BoilingPoint": 1000.0,
+      "TriplePoint": {
+        "Temperature": 250.0,
+        "Pressure": 0.01
+      },
+      "HeatCapacity": 25.0,
+      "StateRanges": [
+        {
+          "TemperatureRange": [
+            0,
+            300
+          ],
+          "PressureRange": [
+            0,
+            1
+          ],
+          "State": "solid"
+        },
+        {
+          "TemperatureRange": [
+            300,
+            1000
+          ],
+          "PressureRange": [
+            0,
+            1
+          ],
+          "State": "liquid"
+        },
+        {
+          "TemperatureRange": [
+            1000,
+            10000
+          ],
+          "PressureRange": [
+            0,
+            1
+          ],
+          "State": "gas"
+        }
+      ]
+    },
+    "ChemicalProperties": {
+      "Electronegativity": 1.5,
+      "IonizationEnergy": 10.0,
+      "Reactivity": 0.5,
+      "Bonding": [
+        "ionic",
+        "covalent"
+      ],
+      "CommonCompounds": []
+    },
+    "CosmicAbundance": 0.085,
+    "DisplayColor": [
+      0.5,
+      0.5,
+      0.5
+    ],
+    "Radiation": 0.0
+  },
+  {
+    "Symbol": "E35",
+    "Name": "Element 35",
+    "AtomicNumber": 35,
+    "AtomicMass": 70.0,
+    "Isotopes": [
+      {
+        "Name": "Element 35 Isotope",
+        "MassNumber": 70.0,
+        "HalfLife": null,
+        "RadiationType": null
+      }
+    ],
+    "PhysicalProperties": {
+      "Density": 5.0,
+      "MeltingPoint": 300.0,
+      "BoilingPoint": 1000.0,
+      "TriplePoint": {
+        "Temperature": 250.0,
+        "Pressure": 0.01
+      },
+      "HeatCapacity": 25.0,
+      "StateRanges": [
+        {
+          "TemperatureRange": [
+            0,
+            300
+          ],
+          "PressureRange": [
+            0,
+            1
+          ],
+          "State": "solid"
+        },
+        {
+          "TemperatureRange": [
+            300,
+            1000
+          ],
+          "PressureRange": [
+            0,
+            1
+          ],
+          "State": "liquid"
+        },
+        {
+          "TemperatureRange": [
+            1000,
+            10000
+          ],
+          "PressureRange": [
+            0,
+            1
+          ],
+          "State": "gas"
+        }
+      ]
+    },
+    "ChemicalProperties": {
+      "Electronegativity": 1.5,
+      "IonizationEnergy": 10.0,
+      "Reactivity": 0.5,
+      "Bonding": [
+        "ionic",
+        "covalent"
+      ],
+      "CommonCompounds": []
+    },
+    "CosmicAbundance": 0.084,
+    "DisplayColor": [
+      0.5,
+      0.5,
+      0.5
+    ],
+    "Radiation": 0.0
+  },
+  {
+    "Symbol": "E36",
+    "Name": "Element 36",
+    "AtomicNumber": 36,
+    "AtomicMass": 72.0,
+    "Isotopes": [
+      {
+        "Name": "Element 36 Isotope",
+        "MassNumber": 72.0,
+        "HalfLife": null,
+        "RadiationType": null
+      }
+    ],
+    "PhysicalProperties": {
+      "Density": 5.0,
+      "MeltingPoint": 300.0,
+      "BoilingPoint": 1000.0,
+      "TriplePoint": {
+        "Temperature": 250.0,
+        "Pressure": 0.01
+      },
+      "HeatCapacity": 25.0,
+      "StateRanges": [
+        {
+          "TemperatureRange": [
+            0,
+            300
+          ],
+          "PressureRange": [
+            0,
+            1
+          ],
+          "State": "solid"
+        },
+        {
+          "TemperatureRange": [
+            300,
+            1000
+          ],
+          "PressureRange": [
+            0,
+            1
+          ],
+          "State": "liquid"
+        },
+        {
+          "TemperatureRange": [
+            1000,
+            10000
+          ],
+          "PressureRange": [
+            0,
+            1
+          ],
+          "State": "gas"
+        }
+      ]
+    },
+    "ChemicalProperties": {
+      "Electronegativity": 1.5,
+      "IonizationEnergy": 10.0,
+      "Reactivity": 0.5,
+      "Bonding": [
+        "ionic",
+        "covalent"
+      ],
+      "CommonCompounds": []
+    },
+    "CosmicAbundance": 0.083,
+    "DisplayColor": [
+      0.5,
+      0.5,
+      0.5
+    ],
+    "Radiation": 0.0
+  },
+  {
+    "Symbol": "E37",
+    "Name": "Element 37",
+    "AtomicNumber": 37,
+    "AtomicMass": 74.0,
+    "Isotopes": [
+      {
+        "Name": "Element 37 Isotope",
+        "MassNumber": 74.0,
+        "HalfLife": null,
+        "RadiationType": null
+      }
+    ],
+    "PhysicalProperties": {
+      "Density": 5.0,
+      "MeltingPoint": 300.0,
+      "BoilingPoint": 1000.0,
+      "TriplePoint": {
+        "Temperature": 250.0,
+        "Pressure": 0.01
+      },
+      "HeatCapacity": 25.0,
+      "StateRanges": [
+        {
+          "TemperatureRange": [
+            0,
+            300
+          ],
+          "PressureRange": [
+            0,
+            1
+          ],
+          "State": "solid"
+        },
+        {
+          "TemperatureRange": [
+            300,
+            1000
+          ],
+          "PressureRange": [
+            0,
+            1
+          ],
+          "State": "liquid"
+        },
+        {
+          "TemperatureRange": [
+            1000,
+            10000
+          ],
+          "PressureRange": [
+            0,
+            1
+          ],
+          "State": "gas"
+        }
+      ]
+    },
+    "ChemicalProperties": {
+      "Electronegativity": 1.5,
+      "IonizationEnergy": 10.0,
+      "Reactivity": 0.5,
+      "Bonding": [
+        "ionic",
+        "covalent"
+      ],
+      "CommonCompounds": []
+    },
+    "CosmicAbundance": 0.082,
+    "DisplayColor": [
+      0.5,
+      0.5,
+      0.5
+    ],
+    "Radiation": 0.0
+  },
+  {
+    "Symbol": "E38",
+    "Name": "Element 38",
+    "AtomicNumber": 38,
+    "AtomicMass": 76.0,
+    "Isotopes": [
+      {
+        "Name": "Element 38 Isotope",
+        "MassNumber": 76.0,
+        "HalfLife": null,
+        "RadiationType": null
+      }
+    ],
+    "PhysicalProperties": {
+      "Density": 5.0,
+      "MeltingPoint": 300.0,
+      "BoilingPoint": 1000.0,
+      "TriplePoint": {
+        "Temperature": 250.0,
+        "Pressure": 0.01
+      },
+      "HeatCapacity": 25.0,
+      "StateRanges": [
+        {
+          "TemperatureRange": [
+            0,
+            300
+          ],
+          "PressureRange": [
+            0,
+            1
+          ],
+          "State": "solid"
+        },
+        {
+          "TemperatureRange": [
+            300,
+            1000
+          ],
+          "PressureRange": [
+            0,
+            1
+          ],
+          "State": "liquid"
+        },
+        {
+          "TemperatureRange": [
+            1000,
+            10000
+          ],
+          "PressureRange": [
+            0,
+            1
+          ],
+          "State": "gas"
+        }
+      ]
+    },
+    "ChemicalProperties": {
+      "Electronegativity": 1.5,
+      "IonizationEnergy": 10.0,
+      "Reactivity": 0.5,
+      "Bonding": [
+        "ionic",
+        "covalent"
+      ],
+      "CommonCompounds": []
+    },
+    "CosmicAbundance": 0.081,
+    "DisplayColor": [
+      0.5,
+      0.5,
+      0.5
+    ],
+    "Radiation": 0.0
+  },
+  {
+    "Symbol": "E39",
+    "Name": "Element 39",
+    "AtomicNumber": 39,
+    "AtomicMass": 78.0,
+    "Isotopes": [
+      {
+        "Name": "Element 39 Isotope",
+        "MassNumber": 78.0,
+        "HalfLife": null,
+        "RadiationType": null
+      }
+    ],
+    "PhysicalProperties": {
+      "Density": 5.0,
+      "MeltingPoint": 300.0,
+      "BoilingPoint": 1000.0,
+      "TriplePoint": {
+        "Temperature": 250.0,
+        "Pressure": 0.01
+      },
+      "HeatCapacity": 25.0,
+      "StateRanges": [
+        {
+          "TemperatureRange": [
+            0,
+            300
+          ],
+          "PressureRange": [
+            0,
+            1
+          ],
+          "State": "solid"
+        },
+        {
+          "TemperatureRange": [
+            300,
+            1000
+          ],
+          "PressureRange": [
+            0,
+            1
+          ],
+          "State": "liquid"
+        },
+        {
+          "TemperatureRange": [
+            1000,
+            10000
+          ],
+          "PressureRange": [
+            0,
+            1
+          ],
+          "State": "gas"
+        }
+      ]
+    },
+    "ChemicalProperties": {
+      "Electronegativity": 1.5,
+      "IonizationEnergy": 10.0,
+      "Reactivity": 0.5,
+      "Bonding": [
+        "ionic",
+        "covalent"
+      ],
+      "CommonCompounds": []
+    },
+    "CosmicAbundance": 0.08,
+    "DisplayColor": [
+      0.5,
+      0.5,
+      0.5
+    ],
+    "Radiation": 0.0
+  },
+  {
+    "Symbol": "E40",
+    "Name": "Element 40",
+    "AtomicNumber": 40,
+    "AtomicMass": 80.0,
+    "Isotopes": [
+      {
+        "Name": "Element 40 Isotope",
+        "MassNumber": 80.0,
+        "HalfLife": null,
+        "RadiationType": null
+      }
+    ],
+    "PhysicalProperties": {
+      "Density": 5.0,
+      "MeltingPoint": 300.0,
+      "BoilingPoint": 1000.0,
+      "TriplePoint": {
+        "Temperature": 250.0,
+        "Pressure": 0.01
+      },
+      "HeatCapacity": 25.0,
+      "StateRanges": [
+        {
+          "TemperatureRange": [
+            0,
+            300
+          ],
+          "PressureRange": [
+            0,
+            1
+          ],
+          "State": "solid"
+        },
+        {
+          "TemperatureRange": [
+            300,
+            1000
+          ],
+          "PressureRange": [
+            0,
+            1
+          ],
+          "State": "liquid"
+        },
+        {
+          "TemperatureRange": [
+            1000,
+            10000
+          ],
+          "PressureRange": [
+            0,
+            1
+          ],
+          "State": "gas"
+        }
+      ]
+    },
+    "ChemicalProperties": {
+      "Electronegativity": 1.5,
+      "IonizationEnergy": 10.0,
+      "Reactivity": 0.5,
+      "Bonding": [
+        "ionic",
+        "covalent"
+      ],
+      "CommonCompounds": []
+    },
+    "CosmicAbundance": 0.079,
+    "DisplayColor": [
+      0.5,
+      0.5,
+      0.5
+    ],
+    "Radiation": 0.0
+  },
+  {
+    "Symbol": "E41",
+    "Name": "Element 41",
+    "AtomicNumber": 41,
+    "AtomicMass": 82.0,
+    "Isotopes": [
+      {
+        "Name": "Element 41 Isotope",
+        "MassNumber": 82.0,
+        "HalfLife": null,
+        "RadiationType": null
+      }
+    ],
+    "PhysicalProperties": {
+      "Density": 5.0,
+      "MeltingPoint": 300.0,
+      "BoilingPoint": 1000.0,
+      "TriplePoint": {
+        "Temperature": 250.0,
+        "Pressure": 0.01
+      },
+      "HeatCapacity": 25.0,
+      "StateRanges": [
+        {
+          "TemperatureRange": [
+            0,
+            300
+          ],
+          "PressureRange": [
+            0,
+            1
+          ],
+          "State": "solid"
+        },
+        {
+          "TemperatureRange": [
+            300,
+            1000
+          ],
+          "PressureRange": [
+            0,
+            1
+          ],
+          "State": "liquid"
+        },
+        {
+          "TemperatureRange": [
+            1000,
+            10000
+          ],
+          "PressureRange": [
+            0,
+            1
+          ],
+          "State": "gas"
+        }
+      ]
+    },
+    "ChemicalProperties": {
+      "Electronegativity": 1.5,
+      "IonizationEnergy": 10.0,
+      "Reactivity": 0.5,
+      "Bonding": [
+        "ionic",
+        "covalent"
+      ],
+      "CommonCompounds": []
+    },
+    "CosmicAbundance": 0.078,
+    "DisplayColor": [
+      0.5,
+      0.5,
+      0.5
+    ],
+    "Radiation": 0.0
+  },
+  {
+    "Symbol": "E42",
+    "Name": "Element 42",
+    "AtomicNumber": 42,
+    "AtomicMass": 84.0,
+    "Isotopes": [
+      {
+        "Name": "Element 42 Isotope",
+        "MassNumber": 84.0,
+        "HalfLife": null,
+        "RadiationType": null
+      }
+    ],
+    "PhysicalProperties": {
+      "Density": 5.0,
+      "MeltingPoint": 300.0,
+      "BoilingPoint": 1000.0,
+      "TriplePoint": {
+        "Temperature": 250.0,
+        "Pressure": 0.01
+      },
+      "HeatCapacity": 25.0,
+      "StateRanges": [
+        {
+          "TemperatureRange": [
+            0,
+            300
+          ],
+          "PressureRange": [
+            0,
+            1
+          ],
+          "State": "solid"
+        },
+        {
+          "TemperatureRange": [
+            300,
+            1000
+          ],
+          "PressureRange": [
+            0,
+            1
+          ],
+          "State": "liquid"
+        },
+        {
+          "TemperatureRange": [
+            1000,
+            10000
+          ],
+          "PressureRange": [
+            0,
+            1
+          ],
+          "State": "gas"
+        }
+      ]
+    },
+    "ChemicalProperties": {
+      "Electronegativity": 1.5,
+      "IonizationEnergy": 10.0,
+      "Reactivity": 0.5,
+      "Bonding": [
+        "ionic",
+        "covalent"
+      ],
+      "CommonCompounds": []
+    },
+    "CosmicAbundance": 0.077,
+    "DisplayColor": [
+      0.5,
+      0.5,
+      0.5
+    ],
+    "Radiation": 0.0
+  },
+  {
+    "Symbol": "E43",
+    "Name": "Element 43",
+    "AtomicNumber": 43,
+    "AtomicMass": 86.0,
+    "Isotopes": [
+      {
+        "Name": "Element 43 Isotope",
+        "MassNumber": 86.0,
+        "HalfLife": null,
+        "RadiationType": null
+      }
+    ],
+    "PhysicalProperties": {
+      "Density": 5.0,
+      "MeltingPoint": 300.0,
+      "BoilingPoint": 1000.0,
+      "TriplePoint": {
+        "Temperature": 250.0,
+        "Pressure": 0.01
+      },
+      "HeatCapacity": 25.0,
+      "StateRanges": [
+        {
+          "TemperatureRange": [
+            0,
+            300
+          ],
+          "PressureRange": [
+            0,
+            1
+          ],
+          "State": "solid"
+        },
+        {
+          "TemperatureRange": [
+            300,
+            1000
+          ],
+          "PressureRange": [
+            0,
+            1
+          ],
+          "State": "liquid"
+        },
+        {
+          "TemperatureRange": [
+            1000,
+            10000
+          ],
+          "PressureRange": [
+            0,
+            1
+          ],
+          "State": "gas"
+        }
+      ]
+    },
+    "ChemicalProperties": {
+      "Electronegativity": 1.5,
+      "IonizationEnergy": 10.0,
+      "Reactivity": 0.5,
+      "Bonding": [
+        "ionic",
+        "covalent"
+      ],
+      "CommonCompounds": []
+    },
+    "CosmicAbundance": 0.076,
+    "DisplayColor": [
+      0.5,
+      0.5,
+      0.5
+    ],
+    "Radiation": 0.0
+  },
+  {
+    "Symbol": "E44",
+    "Name": "Element 44",
+    "AtomicNumber": 44,
+    "AtomicMass": 88.0,
+    "Isotopes": [
+      {
+        "Name": "Element 44 Isotope",
+        "MassNumber": 88.0,
+        "HalfLife": null,
+        "RadiationType": null
+      }
+    ],
+    "PhysicalProperties": {
+      "Density": 5.0,
+      "MeltingPoint": 300.0,
+      "BoilingPoint": 1000.0,
+      "TriplePoint": {
+        "Temperature": 250.0,
+        "Pressure": 0.01
+      },
+      "HeatCapacity": 25.0,
+      "StateRanges": [
+        {
+          "TemperatureRange": [
+            0,
+            300
+          ],
+          "PressureRange": [
+            0,
+            1
+          ],
+          "State": "solid"
+        },
+        {
+          "TemperatureRange": [
+            300,
+            1000
+          ],
+          "PressureRange": [
+            0,
+            1
+          ],
+          "State": "liquid"
+        },
+        {
+          "TemperatureRange": [
+            1000,
+            10000
+          ],
+          "PressureRange": [
+            0,
+            1
+          ],
+          "State": "gas"
+        }
+      ]
+    },
+    "ChemicalProperties": {
+      "Electronegativity": 1.5,
+      "IonizationEnergy": 10.0,
+      "Reactivity": 0.5,
+      "Bonding": [
+        "ionic",
+        "covalent"
+      ],
+      "CommonCompounds": []
+    },
+    "CosmicAbundance": 0.075,
+    "DisplayColor": [
+      0.5,
+      0.5,
+      0.5
+    ],
+    "Radiation": 0.0
+  },
+  {
+    "Symbol": "E45",
+    "Name": "Element 45",
+    "AtomicNumber": 45,
+    "AtomicMass": 90.0,
+    "Isotopes": [
+      {
+        "Name": "Element 45 Isotope",
+        "MassNumber": 90.0,
+        "HalfLife": null,
+        "RadiationType": null
+      }
+    ],
+    "PhysicalProperties": {
+      "Density": 5.0,
+      "MeltingPoint": 300.0,
+      "BoilingPoint": 1000.0,
+      "TriplePoint": {
+        "Temperature": 250.0,
+        "Pressure": 0.01
+      },
+      "HeatCapacity": 25.0,
+      "StateRanges": [
+        {
+          "TemperatureRange": [
+            0,
+            300
+          ],
+          "PressureRange": [
+            0,
+            1
+          ],
+          "State": "solid"
+        },
+        {
+          "TemperatureRange": [
+            300,
+            1000
+          ],
+          "PressureRange": [
+            0,
+            1
+          ],
+          "State": "liquid"
+        },
+        {
+          "TemperatureRange": [
+            1000,
+            10000
+          ],
+          "PressureRange": [
+            0,
+            1
+          ],
+          "State": "gas"
+        }
+      ]
+    },
+    "ChemicalProperties": {
+      "Electronegativity": 1.5,
+      "IonizationEnergy": 10.0,
+      "Reactivity": 0.5,
+      "Bonding": [
+        "ionic",
+        "covalent"
+      ],
+      "CommonCompounds": []
+    },
+    "CosmicAbundance": 0.074,
+    "DisplayColor": [
+      0.5,
+      0.5,
+      0.5
+    ],
+    "Radiation": 0.0
+  },
+  {
+    "Symbol": "E46",
+    "Name": "Element 46",
+    "AtomicNumber": 46,
+    "AtomicMass": 92.0,
+    "Isotopes": [
+      {
+        "Name": "Element 46 Isotope",
+        "MassNumber": 92.0,
+        "HalfLife": null,
+        "RadiationType": null
+      }
+    ],
+    "PhysicalProperties": {
+      "Density": 5.0,
+      "MeltingPoint": 300.0,
+      "BoilingPoint": 1000.0,
+      "TriplePoint": {
+        "Temperature": 250.0,
+        "Pressure": 0.01
+      },
+      "HeatCapacity": 25.0,
+      "StateRanges": [
+        {
+          "TemperatureRange": [
+            0,
+            300
+          ],
+          "PressureRange": [
+            0,
+            1
+          ],
+          "State": "solid"
+        },
+        {
+          "TemperatureRange": [
+            300,
+            1000
+          ],
+          "PressureRange": [
+            0,
+            1
+          ],
+          "State": "liquid"
+        },
+        {
+          "TemperatureRange": [
+            1000,
+            10000
+          ],
+          "PressureRange": [
+            0,
+            1
+          ],
+          "State": "gas"
+        }
+      ]
+    },
+    "ChemicalProperties": {
+      "Electronegativity": 1.5,
+      "IonizationEnergy": 10.0,
+      "Reactivity": 0.5,
+      "Bonding": [
+        "ionic",
+        "covalent"
+      ],
+      "CommonCompounds": []
+    },
+    "CosmicAbundance": 0.073,
+    "DisplayColor": [
+      0.5,
+      0.5,
+      0.5
+    ],
+    "Radiation": 0.0
+  },
+  {
+    "Symbol": "E47",
+    "Name": "Element 47",
+    "AtomicNumber": 47,
+    "AtomicMass": 94.0,
+    "Isotopes": [
+      {
+        "Name": "Element 47 Isotope",
+        "MassNumber": 94.0,
+        "HalfLife": null,
+        "RadiationType": null
+      }
+    ],
+    "PhysicalProperties": {
+      "Density": 5.0,
+      "MeltingPoint": 300.0,
+      "BoilingPoint": 1000.0,
+      "TriplePoint": {
+        "Temperature": 250.0,
+        "Pressure": 0.01
+      },
+      "HeatCapacity": 25.0,
+      "StateRanges": [
+        {
+          "TemperatureRange": [
+            0,
+            300
+          ],
+          "PressureRange": [
+            0,
+            1
+          ],
+          "State": "solid"
+        },
+        {
+          "TemperatureRange": [
+            300,
+            1000
+          ],
+          "PressureRange": [
+            0,
+            1
+          ],
+          "State": "liquid"
+        },
+        {
+          "TemperatureRange": [
+            1000,
+            10000
+          ],
+          "PressureRange": [
+            0,
+            1
+          ],
+          "State": "gas"
+        }
+      ]
+    },
+    "ChemicalProperties": {
+      "Electronegativity": 1.5,
+      "IonizationEnergy": 10.0,
+      "Reactivity": 0.5,
+      "Bonding": [
+        "ionic",
+        "covalent"
+      ],
+      "CommonCompounds": []
+    },
+    "CosmicAbundance": 0.07200000000000001,
+    "DisplayColor": [
+      0.5,
+      0.5,
+      0.5
+    ],
+    "Radiation": 0.0
+  },
+  {
+    "Symbol": "E48",
+    "Name": "Element 48",
+    "AtomicNumber": 48,
+    "AtomicMass": 96.0,
+    "Isotopes": [
+      {
+        "Name": "Element 48 Isotope",
+        "MassNumber": 96.0,
+        "HalfLife": null,
+        "RadiationType": null
+      }
+    ],
+    "PhysicalProperties": {
+      "Density": 5.0,
+      "MeltingPoint": 300.0,
+      "BoilingPoint": 1000.0,
+      "TriplePoint": {
+        "Temperature": 250.0,
+        "Pressure": 0.01
+      },
+      "HeatCapacity": 25.0,
+      "StateRanges": [
+        {
+          "TemperatureRange": [
+            0,
+            300
+          ],
+          "PressureRange": [
+            0,
+            1
+          ],
+          "State": "solid"
+        },
+        {
+          "TemperatureRange": [
+            300,
+            1000
+          ],
+          "PressureRange": [
+            0,
+            1
+          ],
+          "State": "liquid"
+        },
+        {
+          "TemperatureRange": [
+            1000,
+            10000
+          ],
+          "PressureRange": [
+            0,
+            1
+          ],
+          "State": "gas"
+        }
+      ]
+    },
+    "ChemicalProperties": {
+      "Electronegativity": 1.5,
+      "IonizationEnergy": 10.0,
+      "Reactivity": 0.5,
+      "Bonding": [
+        "ionic",
+        "covalent"
+      ],
+      "CommonCompounds": []
+    },
+    "CosmicAbundance": 0.07100000000000001,
+    "DisplayColor": [
+      0.5,
+      0.5,
+      0.5
+    ],
+    "Radiation": 0.0
+  },
+  {
+    "Symbol": "E49",
+    "Name": "Element 49",
+    "AtomicNumber": 49,
+    "AtomicMass": 98.0,
+    "Isotopes": [
+      {
+        "Name": "Element 49 Isotope",
+        "MassNumber": 98.0,
+        "HalfLife": null,
+        "RadiationType": null
+      }
+    ],
+    "PhysicalProperties": {
+      "Density": 5.0,
+      "MeltingPoint": 300.0,
+      "BoilingPoint": 1000.0,
+      "TriplePoint": {
+        "Temperature": 250.0,
+        "Pressure": 0.01
+      },
+      "HeatCapacity": 25.0,
+      "StateRanges": [
+        {
+          "TemperatureRange": [
+            0,
+            300
+          ],
+          "PressureRange": [
+            0,
+            1
+          ],
+          "State": "solid"
+        },
+        {
+          "TemperatureRange": [
+            300,
+            1000
+          ],
+          "PressureRange": [
+            0,
+            1
+          ],
+          "State": "liquid"
+        },
+        {
+          "TemperatureRange": [
+            1000,
+            10000
+          ],
+          "PressureRange": [
+            0,
+            1
+          ],
+          "State": "gas"
+        }
+      ]
+    },
+    "ChemicalProperties": {
+      "Electronegativity": 1.5,
+      "IonizationEnergy": 10.0,
+      "Reactivity": 0.5,
+      "Bonding": [
+        "ionic",
+        "covalent"
+      ],
+      "CommonCompounds": []
+    },
+    "CosmicAbundance": 0.07,
+    "DisplayColor": [
+      0.5,
+      0.5,
+      0.5
+    ],
+    "Radiation": 0.0
+  },
+  {
+    "Symbol": "E50",
+    "Name": "Element 50",
+    "AtomicNumber": 50,
+    "AtomicMass": 100.0,
+    "Isotopes": [
+      {
+        "Name": "Element 50 Isotope",
+        "MassNumber": 100.0,
+        "HalfLife": null,
+        "RadiationType": null
+      }
+    ],
+    "PhysicalProperties": {
+      "Density": 5.0,
+      "MeltingPoint": 300.0,
+      "BoilingPoint": 1000.0,
+      "TriplePoint": {
+        "Temperature": 250.0,
+        "Pressure": 0.01
+      },
+      "HeatCapacity": 25.0,
+      "StateRanges": [
+        {
+          "TemperatureRange": [
+            0,
+            300
+          ],
+          "PressureRange": [
+            0,
+            1
+          ],
+          "State": "solid"
+        },
+        {
+          "TemperatureRange": [
+            300,
+            1000
+          ],
+          "PressureRange": [
+            0,
+            1
+          ],
+          "State": "liquid"
+        },
+        {
+          "TemperatureRange": [
+            1000,
+            10000
+          ],
+          "PressureRange": [
+            0,
+            1
+          ],
+          "State": "gas"
+        }
+      ]
+    },
+    "ChemicalProperties": {
+      "Electronegativity": 1.5,
+      "IonizationEnergy": 10.0,
+      "Reactivity": 0.5,
+      "Bonding": [
+        "ionic",
+        "covalent"
+      ],
+      "CommonCompounds": []
+    },
+    "CosmicAbundance": 0.069,
+    "DisplayColor": [
+      0.5,
+      0.5,
+      0.5
+    ],
+    "Radiation": 0.0
+  },
+  {
+    "Symbol": "E51",
+    "Name": "Element 51",
+    "AtomicNumber": 51,
+    "AtomicMass": 102.0,
+    "Isotopes": [
+      {
+        "Name": "Element 51 Isotope",
+        "MassNumber": 102.0,
+        "HalfLife": null,
+        "RadiationType": null
+      }
+    ],
+    "PhysicalProperties": {
+      "Density": 5.0,
+      "MeltingPoint": 300.0,
+      "BoilingPoint": 1000.0,
+      "TriplePoint": {
+        "Temperature": 250.0,
+        "Pressure": 0.01
+      },
+      "HeatCapacity": 25.0,
+      "StateRanges": [
+        {
+          "TemperatureRange": [
+            0,
+            300
+          ],
+          "PressureRange": [
+            0,
+            1
+          ],
+          "State": "solid"
+        },
+        {
+          "TemperatureRange": [
+            300,
+            1000
+          ],
+          "PressureRange": [
+            0,
+            1
+          ],
+          "State": "liquid"
+        },
+        {
+          "TemperatureRange": [
+            1000,
+            10000
+          ],
+          "PressureRange": [
+            0,
+            1
+          ],
+          "State": "gas"
+        }
+      ]
+    },
+    "ChemicalProperties": {
+      "Electronegativity": 1.5,
+      "IonizationEnergy": 10.0,
+      "Reactivity": 0.5,
+      "Bonding": [
+        "ionic",
+        "covalent"
+      ],
+      "CommonCompounds": []
+    },
+    "CosmicAbundance": 0.068,
+    "DisplayColor": [
+      0.5,
+      0.5,
+      0.5
+    ],
+    "Radiation": 0.0
+  },
+  {
+    "Symbol": "E52",
+    "Name": "Element 52",
+    "AtomicNumber": 52,
+    "AtomicMass": 104.0,
+    "Isotopes": [
+      {
+        "Name": "Element 52 Isotope",
+        "MassNumber": 104.0,
+        "HalfLife": null,
+        "RadiationType": null
+      }
+    ],
+    "PhysicalProperties": {
+      "Density": 5.0,
+      "MeltingPoint": 300.0,
+      "BoilingPoint": 1000.0,
+      "TriplePoint": {
+        "Temperature": 250.0,
+        "Pressure": 0.01
+      },
+      "HeatCapacity": 25.0,
+      "StateRanges": [
+        {
+          "TemperatureRange": [
+            0,
+            300
+          ],
+          "PressureRange": [
+            0,
+            1
+          ],
+          "State": "solid"
+        },
+        {
+          "TemperatureRange": [
+            300,
+            1000
+          ],
+          "PressureRange": [
+            0,
+            1
+          ],
+          "State": "liquid"
+        },
+        {
+          "TemperatureRange": [
+            1000,
+            10000
+          ],
+          "PressureRange": [
+            0,
+            1
+          ],
+          "State": "gas"
+        }
+      ]
+    },
+    "ChemicalProperties": {
+      "Electronegativity": 1.5,
+      "IonizationEnergy": 10.0,
+      "Reactivity": 0.5,
+      "Bonding": [
+        "ionic",
+        "covalent"
+      ],
+      "CommonCompounds": []
+    },
+    "CosmicAbundance": 0.067,
+    "DisplayColor": [
+      0.5,
+      0.5,
+      0.5
+    ],
+    "Radiation": 0.0
+  },
+  {
+    "Symbol": "E53",
+    "Name": "Element 53",
+    "AtomicNumber": 53,
+    "AtomicMass": 106.0,
+    "Isotopes": [
+      {
+        "Name": "Element 53 Isotope",
+        "MassNumber": 106.0,
+        "HalfLife": null,
+        "RadiationType": null
+      }
+    ],
+    "PhysicalProperties": {
+      "Density": 5.0,
+      "MeltingPoint": 300.0,
+      "BoilingPoint": 1000.0,
+      "TriplePoint": {
+        "Temperature": 250.0,
+        "Pressure": 0.01
+      },
+      "HeatCapacity": 25.0,
+      "StateRanges": [
+        {
+          "TemperatureRange": [
+            0,
+            300
+          ],
+          "PressureRange": [
+            0,
+            1
+          ],
+          "State": "solid"
+        },
+        {
+          "TemperatureRange": [
+            300,
+            1000
+          ],
+          "PressureRange": [
+            0,
+            1
+          ],
+          "State": "liquid"
+        },
+        {
+          "TemperatureRange": [
+            1000,
+            10000
+          ],
+          "PressureRange": [
+            0,
+            1
+          ],
+          "State": "gas"
+        }
+      ]
+    },
+    "ChemicalProperties": {
+      "Electronegativity": 1.5,
+      "IonizationEnergy": 10.0,
+      "Reactivity": 0.5,
+      "Bonding": [
+        "ionic",
+        "covalent"
+      ],
+      "CommonCompounds": []
+    },
+    "CosmicAbundance": 0.066,
+    "DisplayColor": [
+      0.5,
+      0.5,
+      0.5
+    ],
+    "Radiation": 0.0
+  },
+  {
+    "Symbol": "E54",
+    "Name": "Element 54",
+    "AtomicNumber": 54,
+    "AtomicMass": 108.0,
+    "Isotopes": [
+      {
+        "Name": "Element 54 Isotope",
+        "MassNumber": 108.0,
+        "HalfLife": null,
+        "RadiationType": null
+      }
+    ],
+    "PhysicalProperties": {
+      "Density": 5.0,
+      "MeltingPoint": 300.0,
+      "BoilingPoint": 1000.0,
+      "TriplePoint": {
+        "Temperature": 250.0,
+        "Pressure": 0.01
+      },
+      "HeatCapacity": 25.0,
+      "StateRanges": [
+        {
+          "TemperatureRange": [
+            0,
+            300
+          ],
+          "PressureRange": [
+            0,
+            1
+          ],
+          "State": "solid"
+        },
+        {
+          "TemperatureRange": [
+            300,
+            1000
+          ],
+          "PressureRange": [
+            0,
+            1
+          ],
+          "State": "liquid"
+        },
+        {
+          "TemperatureRange": [
+            1000,
+            10000
+          ],
+          "PressureRange": [
+            0,
+            1
+          ],
+          "State": "gas"
+        }
+      ]
+    },
+    "ChemicalProperties": {
+      "Electronegativity": 1.5,
+      "IonizationEnergy": 10.0,
+      "Reactivity": 0.5,
+      "Bonding": [
+        "ionic",
+        "covalent"
+      ],
+      "CommonCompounds": []
+    },
+    "CosmicAbundance": 0.065,
+    "DisplayColor": [
+      0.5,
+      0.5,
+      0.5
+    ],
+    "Radiation": 0.0
+  },
+  {
+    "Symbol": "E55",
+    "Name": "Element 55",
+    "AtomicNumber": 55,
+    "AtomicMass": 110.0,
+    "Isotopes": [
+      {
+        "Name": "Element 55 Isotope",
+        "MassNumber": 110.0,
+        "HalfLife": null,
+        "RadiationType": null
+      }
+    ],
+    "PhysicalProperties": {
+      "Density": 5.0,
+      "MeltingPoint": 300.0,
+      "BoilingPoint": 1000.0,
+      "TriplePoint": {
+        "Temperature": 250.0,
+        "Pressure": 0.01
+      },
+      "HeatCapacity": 25.0,
+      "StateRanges": [
+        {
+          "TemperatureRange": [
+            0,
+            300
+          ],
+          "PressureRange": [
+            0,
+            1
+          ],
+          "State": "solid"
+        },
+        {
+          "TemperatureRange": [
+            300,
+            1000
+          ],
+          "PressureRange": [
+            0,
+            1
+          ],
+          "State": "liquid"
+        },
+        {
+          "TemperatureRange": [
+            1000,
+            10000
+          ],
+          "PressureRange": [
+            0,
+            1
+          ],
+          "State": "gas"
+        }
+      ]
+    },
+    "ChemicalProperties": {
+      "Electronegativity": 1.5,
+      "IonizationEnergy": 10.0,
+      "Reactivity": 0.5,
+      "Bonding": [
+        "ionic",
+        "covalent"
+      ],
+      "CommonCompounds": []
+    },
+    "CosmicAbundance": 0.064,
+    "DisplayColor": [
+      0.5,
+      0.5,
+      0.5
+    ],
+    "Radiation": 0.0
+  },
+  {
+    "Symbol": "E56",
+    "Name": "Element 56",
+    "AtomicNumber": 56,
+    "AtomicMass": 112.0,
+    "Isotopes": [
+      {
+        "Name": "Element 56 Isotope",
+        "MassNumber": 112.0,
+        "HalfLife": null,
+        "RadiationType": null
+      }
+    ],
+    "PhysicalProperties": {
+      "Density": 5.0,
+      "MeltingPoint": 300.0,
+      "BoilingPoint": 1000.0,
+      "TriplePoint": {
+        "Temperature": 250.0,
+        "Pressure": 0.01
+      },
+      "HeatCapacity": 25.0,
+      "StateRanges": [
+        {
+          "TemperatureRange": [
+            0,
+            300
+          ],
+          "PressureRange": [
+            0,
+            1
+          ],
+          "State": "solid"
+        },
+        {
+          "TemperatureRange": [
+            300,
+            1000
+          ],
+          "PressureRange": [
+            0,
+            1
+          ],
+          "State": "liquid"
+        },
+        {
+          "TemperatureRange": [
+            1000,
+            10000
+          ],
+          "PressureRange": [
+            0,
+            1
+          ],
+          "State": "gas"
+        }
+      ]
+    },
+    "ChemicalProperties": {
+      "Electronegativity": 1.5,
+      "IonizationEnergy": 10.0,
+      "Reactivity": 0.5,
+      "Bonding": [
+        "ionic",
+        "covalent"
+      ],
+      "CommonCompounds": []
+    },
+    "CosmicAbundance": 0.063,
+    "DisplayColor": [
+      0.5,
+      0.5,
+      0.5
+    ],
+    "Radiation": 0.0
+  },
+  {
+    "Symbol": "E57",
+    "Name": "Element 57",
+    "AtomicNumber": 57,
+    "AtomicMass": 114.0,
+    "Isotopes": [
+      {
+        "Name": "Element 57 Isotope",
+        "MassNumber": 114.0,
+        "HalfLife": null,
+        "RadiationType": null
+      }
+    ],
+    "PhysicalProperties": {
+      "Density": 5.0,
+      "MeltingPoint": 300.0,
+      "BoilingPoint": 1000.0,
+      "TriplePoint": {
+        "Temperature": 250.0,
+        "Pressure": 0.01
+      },
+      "HeatCapacity": 25.0,
+      "StateRanges": [
+        {
+          "TemperatureRange": [
+            0,
+            300
+          ],
+          "PressureRange": [
+            0,
+            1
+          ],
+          "State": "solid"
+        },
+        {
+          "TemperatureRange": [
+            300,
+            1000
+          ],
+          "PressureRange": [
+            0,
+            1
+          ],
+          "State": "liquid"
+        },
+        {
+          "TemperatureRange": [
+            1000,
+            10000
+          ],
+          "PressureRange": [
+            0,
+            1
+          ],
+          "State": "gas"
+        }
+      ]
+    },
+    "ChemicalProperties": {
+      "Electronegativity": 1.5,
+      "IonizationEnergy": 10.0,
+      "Reactivity": 0.5,
+      "Bonding": [
+        "ionic",
+        "covalent"
+      ],
+      "CommonCompounds": []
+    },
+    "CosmicAbundance": 0.062,
+    "DisplayColor": [
+      0.5,
+      0.5,
+      0.5
+    ],
+    "Radiation": 0.0
+  },
+  {
+    "Symbol": "E58",
+    "Name": "Element 58",
+    "AtomicNumber": 58,
+    "AtomicMass": 116.0,
+    "Isotopes": [
+      {
+        "Name": "Element 58 Isotope",
+        "MassNumber": 116.0,
+        "HalfLife": null,
+        "RadiationType": null
+      }
+    ],
+    "PhysicalProperties": {
+      "Density": 5.0,
+      "MeltingPoint": 300.0,
+      "BoilingPoint": 1000.0,
+      "TriplePoint": {
+        "Temperature": 250.0,
+        "Pressure": 0.01
+      },
+      "HeatCapacity": 25.0,
+      "StateRanges": [
+        {
+          "TemperatureRange": [
+            0,
+            300
+          ],
+          "PressureRange": [
+            0,
+            1
+          ],
+          "State": "solid"
+        },
+        {
+          "TemperatureRange": [
+            300,
+            1000
+          ],
+          "PressureRange": [
+            0,
+            1
+          ],
+          "State": "liquid"
+        },
+        {
+          "TemperatureRange": [
+            1000,
+            10000
+          ],
+          "PressureRange": [
+            0,
+            1
+          ],
+          "State": "gas"
+        }
+      ]
+    },
+    "ChemicalProperties": {
+      "Electronegativity": 1.5,
+      "IonizationEnergy": 10.0,
+      "Reactivity": 0.5,
+      "Bonding": [
+        "ionic",
+        "covalent"
+      ],
+      "CommonCompounds": []
+    },
+    "CosmicAbundance": 0.061,
+    "DisplayColor": [
+      0.5,
+      0.5,
+      0.5
+    ],
+    "Radiation": 0.0
+  },
+  {
+    "Symbol": "E59",
+    "Name": "Element 59",
+    "AtomicNumber": 59,
+    "AtomicMass": 118.0,
+    "Isotopes": [
+      {
+        "Name": "Element 59 Isotope",
+        "MassNumber": 118.0,
+        "HalfLife": null,
+        "RadiationType": null
+      }
+    ],
+    "PhysicalProperties": {
+      "Density": 5.0,
+      "MeltingPoint": 300.0,
+      "BoilingPoint": 1000.0,
+      "TriplePoint": {
+        "Temperature": 250.0,
+        "Pressure": 0.01
+      },
+      "HeatCapacity": 25.0,
+      "StateRanges": [
+        {
+          "TemperatureRange": [
+            0,
+            300
+          ],
+          "PressureRange": [
+            0,
+            1
+          ],
+          "State": "solid"
+        },
+        {
+          "TemperatureRange": [
+            300,
+            1000
+          ],
+          "PressureRange": [
+            0,
+            1
+          ],
+          "State": "liquid"
+        },
+        {
+          "TemperatureRange": [
+            1000,
+            10000
+          ],
+          "PressureRange": [
+            0,
+            1
+          ],
+          "State": "gas"
+        }
+      ]
+    },
+    "ChemicalProperties": {
+      "Electronegativity": 1.5,
+      "IonizationEnergy": 10.0,
+      "Reactivity": 0.5,
+      "Bonding": [
+        "ionic",
+        "covalent"
+      ],
+      "CommonCompounds": []
+    },
+    "CosmicAbundance": 0.06,
+    "DisplayColor": [
+      0.5,
+      0.5,
+      0.5
+    ],
+    "Radiation": 0.0
+  },
+  {
+    "Symbol": "E60",
+    "Name": "Element 60",
+    "AtomicNumber": 60,
+    "AtomicMass": 120.0,
+    "Isotopes": [
+      {
+        "Name": "Element 60 Isotope",
+        "MassNumber": 120.0,
+        "HalfLife": null,
+        "RadiationType": null
+      }
+    ],
+    "PhysicalProperties": {
+      "Density": 5.0,
+      "MeltingPoint": 300.0,
+      "BoilingPoint": 1000.0,
+      "TriplePoint": {
+        "Temperature": 250.0,
+        "Pressure": 0.01
+      },
+      "HeatCapacity": 25.0,
+      "StateRanges": [
+        {
+          "TemperatureRange": [
+            0,
+            300
+          ],
+          "PressureRange": [
+            0,
+            1
+          ],
+          "State": "solid"
+        },
+        {
+          "TemperatureRange": [
+            300,
+            1000
+          ],
+          "PressureRange": [
+            0,
+            1
+          ],
+          "State": "liquid"
+        },
+        {
+          "TemperatureRange": [
+            1000,
+            10000
+          ],
+          "PressureRange": [
+            0,
+            1
+          ],
+          "State": "gas"
+        }
+      ]
+    },
+    "ChemicalProperties": {
+      "Electronegativity": 1.5,
+      "IonizationEnergy": 10.0,
+      "Reactivity": 0.5,
+      "Bonding": [
+        "ionic",
+        "covalent"
+      ],
+      "CommonCompounds": []
+    },
+    "CosmicAbundance": 0.059000000000000004,
+    "DisplayColor": [
+      0.5,
+      0.5,
+      0.5
+    ],
+    "Radiation": 0.0
+  },
+  {
+    "Symbol": "E61",
+    "Name": "Element 61",
+    "AtomicNumber": 61,
+    "AtomicMass": 122.0,
+    "Isotopes": [
+      {
+        "Name": "Element 61 Isotope",
+        "MassNumber": 122.0,
+        "HalfLife": null,
+        "RadiationType": null
+      }
+    ],
+    "PhysicalProperties": {
+      "Density": 5.0,
+      "MeltingPoint": 300.0,
+      "BoilingPoint": 1000.0,
+      "TriplePoint": {
+        "Temperature": 250.0,
+        "Pressure": 0.01
+      },
+      "HeatCapacity": 25.0,
+      "StateRanges": [
+        {
+          "TemperatureRange": [
+            0,
+            300
+          ],
+          "PressureRange": [
+            0,
+            1
+          ],
+          "State": "solid"
+        },
+        {
+          "TemperatureRange": [
+            300,
+            1000
+          ],
+          "PressureRange": [
+            0,
+            1
+          ],
+          "State": "liquid"
+        },
+        {
+          "TemperatureRange": [
+            1000,
+            10000
+          ],
+          "PressureRange": [
+            0,
+            1
+          ],
+          "State": "gas"
+        }
+      ]
+    },
+    "ChemicalProperties": {
+      "Electronegativity": 1.5,
+      "IonizationEnergy": 10.0,
+      "Reactivity": 0.5,
+      "Bonding": [
+        "ionic",
+        "covalent"
+      ],
+      "CommonCompounds": []
+    },
+    "CosmicAbundance": 0.058,
+    "DisplayColor": [
+      0.5,
+      0.5,
+      0.5
+    ],
+    "Radiation": 0.0
+  },
+  {
+    "Symbol": "E62",
+    "Name": "Element 62",
+    "AtomicNumber": 62,
+    "AtomicMass": 124.0,
+    "Isotopes": [
+      {
+        "Name": "Element 62 Isotope",
+        "MassNumber": 124.0,
+        "HalfLife": null,
+        "RadiationType": null
+      }
+    ],
+    "PhysicalProperties": {
+      "Density": 5.0,
+      "MeltingPoint": 300.0,
+      "BoilingPoint": 1000.0,
+      "TriplePoint": {
+        "Temperature": 250.0,
+        "Pressure": 0.01
+      },
+      "HeatCapacity": 25.0,
+      "StateRanges": [
+        {
+          "TemperatureRange": [
+            0,
+            300
+          ],
+          "PressureRange": [
+            0,
+            1
+          ],
+          "State": "solid"
+        },
+        {
+          "TemperatureRange": [
+            300,
+            1000
+          ],
+          "PressureRange": [
+            0,
+            1
+          ],
+          "State": "liquid"
+        },
+        {
+          "TemperatureRange": [
+            1000,
+            10000
+          ],
+          "PressureRange": [
+            0,
+            1
+          ],
+          "State": "gas"
+        }
+      ]
+    },
+    "ChemicalProperties": {
+      "Electronegativity": 1.5,
+      "IonizationEnergy": 10.0,
+      "Reactivity": 0.5,
+      "Bonding": [
+        "ionic",
+        "covalent"
+      ],
+      "CommonCompounds": []
+    },
+    "CosmicAbundance": 0.057,
+    "DisplayColor": [
+      0.5,
+      0.5,
+      0.5
+    ],
+    "Radiation": 0.0
+  },
+  {
+    "Symbol": "E63",
+    "Name": "Element 63",
+    "AtomicNumber": 63,
+    "AtomicMass": 126.0,
+    "Isotopes": [
+      {
+        "Name": "Element 63 Isotope",
+        "MassNumber": 126.0,
+        "HalfLife": null,
+        "RadiationType": null
+      }
+    ],
+    "PhysicalProperties": {
+      "Density": 5.0,
+      "MeltingPoint": 300.0,
+      "BoilingPoint": 1000.0,
+      "TriplePoint": {
+        "Temperature": 250.0,
+        "Pressure": 0.01
+      },
+      "HeatCapacity": 25.0,
+      "StateRanges": [
+        {
+          "TemperatureRange": [
+            0,
+            300
+          ],
+          "PressureRange": [
+            0,
+            1
+          ],
+          "State": "solid"
+        },
+        {
+          "TemperatureRange": [
+            300,
+            1000
+          ],
+          "PressureRange": [
+            0,
+            1
+          ],
+          "State": "liquid"
+        },
+        {
+          "TemperatureRange": [
+            1000,
+            10000
+          ],
+          "PressureRange": [
+            0,
+            1
+          ],
+          "State": "gas"
+        }
+      ]
+    },
+    "ChemicalProperties": {
+      "Electronegativity": 1.5,
+      "IonizationEnergy": 10.0,
+      "Reactivity": 0.5,
+      "Bonding": [
+        "ionic",
+        "covalent"
+      ],
+      "CommonCompounds": []
+    },
+    "CosmicAbundance": 0.056,
+    "DisplayColor": [
+      0.5,
+      0.5,
+      0.5
+    ],
+    "Radiation": 0.0
+  },
+  {
+    "Symbol": "E64",
+    "Name": "Element 64",
+    "AtomicNumber": 64,
+    "AtomicMass": 128.0,
+    "Isotopes": [
+      {
+        "Name": "Element 64 Isotope",
+        "MassNumber": 128.0,
+        "HalfLife": null,
+        "RadiationType": null
+      }
+    ],
+    "PhysicalProperties": {
+      "Density": 5.0,
+      "MeltingPoint": 300.0,
+      "BoilingPoint": 1000.0,
+      "TriplePoint": {
+        "Temperature": 250.0,
+        "Pressure": 0.01
+      },
+      "HeatCapacity": 25.0,
+      "StateRanges": [
+        {
+          "TemperatureRange": [
+            0,
+            300
+          ],
+          "PressureRange": [
+            0,
+            1
+          ],
+          "State": "solid"
+        },
+        {
+          "TemperatureRange": [
+            300,
+            1000
+          ],
+          "PressureRange": [
+            0,
+            1
+          ],
+          "State": "liquid"
+        },
+        {
+          "TemperatureRange": [
+            1000,
+            10000
+          ],
+          "PressureRange": [
+            0,
+            1
+          ],
+          "State": "gas"
+        }
+      ]
+    },
+    "ChemicalProperties": {
+      "Electronegativity": 1.5,
+      "IonizationEnergy": 10.0,
+      "Reactivity": 0.5,
+      "Bonding": [
+        "ionic",
+        "covalent"
+      ],
+      "CommonCompounds": []
+    },
+    "CosmicAbundance": 0.055,
+    "DisplayColor": [
+      0.5,
+      0.5,
+      0.5
+    ],
+    "Radiation": 0.0
+  },
+  {
+    "Symbol": "E65",
+    "Name": "Element 65",
+    "AtomicNumber": 65,
+    "AtomicMass": 130.0,
+    "Isotopes": [
+      {
+        "Name": "Element 65 Isotope",
+        "MassNumber": 130.0,
+        "HalfLife": null,
+        "RadiationType": null
+      }
+    ],
+    "PhysicalProperties": {
+      "Density": 5.0,
+      "MeltingPoint": 300.0,
+      "BoilingPoint": 1000.0,
+      "TriplePoint": {
+        "Temperature": 250.0,
+        "Pressure": 0.01
+      },
+      "HeatCapacity": 25.0,
+      "StateRanges": [
+        {
+          "TemperatureRange": [
+            0,
+            300
+          ],
+          "PressureRange": [
+            0,
+            1
+          ],
+          "State": "solid"
+        },
+        {
+          "TemperatureRange": [
+            300,
+            1000
+          ],
+          "PressureRange": [
+            0,
+            1
+          ],
+          "State": "liquid"
+        },
+        {
+          "TemperatureRange": [
+            1000,
+            10000
+          ],
+          "PressureRange": [
+            0,
+            1
+          ],
+          "State": "gas"
+        }
+      ]
+    },
+    "ChemicalProperties": {
+      "Electronegativity": 1.5,
+      "IonizationEnergy": 10.0,
+      "Reactivity": 0.5,
+      "Bonding": [
+        "ionic",
+        "covalent"
+      ],
+      "CommonCompounds": []
+    },
+    "CosmicAbundance": 0.054,
+    "DisplayColor": [
+      0.5,
+      0.5,
+      0.5
+    ],
+    "Radiation": 0.0
+  },
+  {
+    "Symbol": "E66",
+    "Name": "Element 66",
+    "AtomicNumber": 66,
+    "AtomicMass": 132.0,
+    "Isotopes": [
+      {
+        "Name": "Element 66 Isotope",
+        "MassNumber": 132.0,
+        "HalfLife": null,
+        "RadiationType": null
+      }
+    ],
+    "PhysicalProperties": {
+      "Density": 5.0,
+      "MeltingPoint": 300.0,
+      "BoilingPoint": 1000.0,
+      "TriplePoint": {
+        "Temperature": 250.0,
+        "Pressure": 0.01
+      },
+      "HeatCapacity": 25.0,
+      "StateRanges": [
+        {
+          "TemperatureRange": [
+            0,
+            300
+          ],
+          "PressureRange": [
+            0,
+            1
+          ],
+          "State": "solid"
+        },
+        {
+          "TemperatureRange": [
+            300,
+            1000
+          ],
+          "PressureRange": [
+            0,
+            1
+          ],
+          "State": "liquid"
+        },
+        {
+          "TemperatureRange": [
+            1000,
+            10000
+          ],
+          "PressureRange": [
+            0,
+            1
+          ],
+          "State": "gas"
+        }
+      ]
+    },
+    "ChemicalProperties": {
+      "Electronegativity": 1.5,
+      "IonizationEnergy": 10.0,
+      "Reactivity": 0.5,
+      "Bonding": [
+        "ionic",
+        "covalent"
+      ],
+      "CommonCompounds": []
+    },
+    "CosmicAbundance": 0.053,
+    "DisplayColor": [
+      0.5,
+      0.5,
+      0.5
+    ],
+    "Radiation": 0.0
+  },
+  {
+    "Symbol": "E67",
+    "Name": "Element 67",
+    "AtomicNumber": 67,
+    "AtomicMass": 134.0,
+    "Isotopes": [
+      {
+        "Name": "Element 67 Isotope",
+        "MassNumber": 134.0,
+        "HalfLife": null,
+        "RadiationType": null
+      }
+    ],
+    "PhysicalProperties": {
+      "Density": 5.0,
+      "MeltingPoint": 300.0,
+      "BoilingPoint": 1000.0,
+      "TriplePoint": {
+        "Temperature": 250.0,
+        "Pressure": 0.01
+      },
+      "HeatCapacity": 25.0,
+      "StateRanges": [
+        {
+          "TemperatureRange": [
+            0,
+            300
+          ],
+          "PressureRange": [
+            0,
+            1
+          ],
+          "State": "solid"
+        },
+        {
+          "TemperatureRange": [
+            300,
+            1000
+          ],
+          "PressureRange": [
+            0,
+            1
+          ],
+          "State": "liquid"
+        },
+        {
+          "TemperatureRange": [
+            1000,
+            10000
+          ],
+          "PressureRange": [
+            0,
+            1
+          ],
+          "State": "gas"
+        }
+      ]
+    },
+    "ChemicalProperties": {
+      "Electronegativity": 1.5,
+      "IonizationEnergy": 10.0,
+      "Reactivity": 0.5,
+      "Bonding": [
+        "ionic",
+        "covalent"
+      ],
+      "CommonCompounds": []
+    },
+    "CosmicAbundance": 0.052000000000000005,
+    "DisplayColor": [
+      0.5,
+      0.5,
+      0.5
+    ],
+    "Radiation": 0.0
+  },
+  {
+    "Symbol": "E68",
+    "Name": "Element 68",
+    "AtomicNumber": 68,
+    "AtomicMass": 136.0,
+    "Isotopes": [
+      {
+        "Name": "Element 68 Isotope",
+        "MassNumber": 136.0,
+        "HalfLife": null,
+        "RadiationType": null
+      }
+    ],
+    "PhysicalProperties": {
+      "Density": 5.0,
+      "MeltingPoint": 300.0,
+      "BoilingPoint": 1000.0,
+      "TriplePoint": {
+        "Temperature": 250.0,
+        "Pressure": 0.01
+      },
+      "HeatCapacity": 25.0,
+      "StateRanges": [
+        {
+          "TemperatureRange": [
+            0,
+            300
+          ],
+          "PressureRange": [
+            0,
+            1
+          ],
+          "State": "solid"
+        },
+        {
+          "TemperatureRange": [
+            300,
+            1000
+          ],
+          "PressureRange": [
+            0,
+            1
+          ],
+          "State": "liquid"
+        },
+        {
+          "TemperatureRange": [
+            1000,
+            10000
+          ],
+          "PressureRange": [
+            0,
+            1
+          ],
+          "State": "gas"
+        }
+      ]
+    },
+    "ChemicalProperties": {
+      "Electronegativity": 1.5,
+      "IonizationEnergy": 10.0,
+      "Reactivity": 0.5,
+      "Bonding": [
+        "ionic",
+        "covalent"
+      ],
+      "CommonCompounds": []
+    },
+    "CosmicAbundance": 0.051000000000000004,
+    "DisplayColor": [
+      0.5,
+      0.5,
+      0.5
+    ],
+    "Radiation": 0.0
+  },
+  {
+    "Symbol": "E69",
+    "Name": "Element 69",
+    "AtomicNumber": 69,
+    "AtomicMass": 138.0,
+    "Isotopes": [
+      {
+        "Name": "Element 69 Isotope",
+        "MassNumber": 138.0,
+        "HalfLife": null,
+        "RadiationType": null
+      }
+    ],
+    "PhysicalProperties": {
+      "Density": 5.0,
+      "MeltingPoint": 300.0,
+      "BoilingPoint": 1000.0,
+      "TriplePoint": {
+        "Temperature": 250.0,
+        "Pressure": 0.01
+      },
+      "HeatCapacity": 25.0,
+      "StateRanges": [
+        {
+          "TemperatureRange": [
+            0,
+            300
+          ],
+          "PressureRange": [
+            0,
+            1
+          ],
+          "State": "solid"
+        },
+        {
+          "TemperatureRange": [
+            300,
+            1000
+          ],
+          "PressureRange": [
+            0,
+            1
+          ],
+          "State": "liquid"
+        },
+        {
+          "TemperatureRange": [
+            1000,
+            10000
+          ],
+          "PressureRange": [
+            0,
+            1
+          ],
+          "State": "gas"
+        }
+      ]
+    },
+    "ChemicalProperties": {
+      "Electronegativity": 1.5,
+      "IonizationEnergy": 10.0,
+      "Reactivity": 0.5,
+      "Bonding": [
+        "ionic",
+        "covalent"
+      ],
+      "CommonCompounds": []
+    },
+    "CosmicAbundance": 0.05,
+    "DisplayColor": [
+      0.5,
+      0.5,
+      0.5
+    ],
+    "Radiation": 0.0
+  },
+  {
+    "Symbol": "E70",
+    "Name": "Element 70",
+    "AtomicNumber": 70,
+    "AtomicMass": 140.0,
+    "Isotopes": [
+      {
+        "Name": "Element 70 Isotope",
+        "MassNumber": 140.0,
+        "HalfLife": null,
+        "RadiationType": null
+      }
+    ],
+    "PhysicalProperties": {
+      "Density": 5.0,
+      "MeltingPoint": 300.0,
+      "BoilingPoint": 1000.0,
+      "TriplePoint": {
+        "Temperature": 250.0,
+        "Pressure": 0.01
+      },
+      "HeatCapacity": 25.0,
+      "StateRanges": [
+        {
+          "TemperatureRange": [
+            0,
+            300
+          ],
+          "PressureRange": [
+            0,
+            1
+          ],
+          "State": "solid"
+        },
+        {
+          "TemperatureRange": [
+            300,
+            1000
+          ],
+          "PressureRange": [
+            0,
+            1
+          ],
+          "State": "liquid"
+        },
+        {
+          "TemperatureRange": [
+            1000,
+            10000
+          ],
+          "PressureRange": [
+            0,
+            1
+          ],
+          "State": "gas"
+        }
+      ]
+    },
+    "ChemicalProperties": {
+      "Electronegativity": 1.5,
+      "IonizationEnergy": 10.0,
+      "Reactivity": 0.5,
+      "Bonding": [
+        "ionic",
+        "covalent"
+      ],
+      "CommonCompounds": []
+    },
+    "CosmicAbundance": 0.049,
+    "DisplayColor": [
+      0.5,
+      0.5,
+      0.5
+    ],
+    "Radiation": 0.0
+  },
+  {
+    "Symbol": "E71",
+    "Name": "Element 71",
+    "AtomicNumber": 71,
+    "AtomicMass": 142.0,
+    "Isotopes": [
+      {
+        "Name": "Element 71 Isotope",
+        "MassNumber": 142.0,
+        "HalfLife": null,
+        "RadiationType": null
+      }
+    ],
+    "PhysicalProperties": {
+      "Density": 5.0,
+      "MeltingPoint": 300.0,
+      "BoilingPoint": 1000.0,
+      "TriplePoint": {
+        "Temperature": 250.0,
+        "Pressure": 0.01
+      },
+      "HeatCapacity": 25.0,
+      "StateRanges": [
+        {
+          "TemperatureRange": [
+            0,
+            300
+          ],
+          "PressureRange": [
+            0,
+            1
+          ],
+          "State": "solid"
+        },
+        {
+          "TemperatureRange": [
+            300,
+            1000
+          ],
+          "PressureRange": [
+            0,
+            1
+          ],
+          "State": "liquid"
+        },
+        {
+          "TemperatureRange": [
+            1000,
+            10000
+          ],
+          "PressureRange": [
+            0,
+            1
+          ],
+          "State": "gas"
+        }
+      ]
+    },
+    "ChemicalProperties": {
+      "Electronegativity": 1.5,
+      "IonizationEnergy": 10.0,
+      "Reactivity": 0.5,
+      "Bonding": [
+        "ionic",
+        "covalent"
+      ],
+      "CommonCompounds": []
+    },
+    "CosmicAbundance": 0.048,
+    "DisplayColor": [
+      0.5,
+      0.5,
+      0.5
+    ],
+    "Radiation": 0.0
+  },
+  {
+    "Symbol": "E72",
+    "Name": "Element 72",
+    "AtomicNumber": 72,
+    "AtomicMass": 144.0,
+    "Isotopes": [
+      {
+        "Name": "Element 72 Isotope",
+        "MassNumber": 144.0,
+        "HalfLife": null,
+        "RadiationType": null
+      }
+    ],
+    "PhysicalProperties": {
+      "Density": 5.0,
+      "MeltingPoint": 300.0,
+      "BoilingPoint": 1000.0,
+      "TriplePoint": {
+        "Temperature": 250.0,
+        "Pressure": 0.01
+      },
+      "HeatCapacity": 25.0,
+      "StateRanges": [
+        {
+          "TemperatureRange": [
+            0,
+            300
+          ],
+          "PressureRange": [
+            0,
+            1
+          ],
+          "State": "solid"
+        },
+        {
+          "TemperatureRange": [
+            300,
+            1000
+          ],
+          "PressureRange": [
+            0,
+            1
+          ],
+          "State": "liquid"
+        },
+        {
+          "TemperatureRange": [
+            1000,
+            10000
+          ],
+          "PressureRange": [
+            0,
+            1
+          ],
+          "State": "gas"
+        }
+      ]
+    },
+    "ChemicalProperties": {
+      "Electronegativity": 1.5,
+      "IonizationEnergy": 10.0,
+      "Reactivity": 0.5,
+      "Bonding": [
+        "ionic",
+        "covalent"
+      ],
+      "CommonCompounds": []
+    },
+    "CosmicAbundance": 0.047,
+    "DisplayColor": [
+      0.5,
+      0.5,
+      0.5
+    ],
+    "Radiation": 0.0
+  },
+  {
+    "Symbol": "E73",
+    "Name": "Element 73",
+    "AtomicNumber": 73,
+    "AtomicMass": 146.0,
+    "Isotopes": [
+      {
+        "Name": "Element 73 Isotope",
+        "MassNumber": 146.0,
+        "HalfLife": null,
+        "RadiationType": null
+      }
+    ],
+    "PhysicalProperties": {
+      "Density": 5.0,
+      "MeltingPoint": 300.0,
+      "BoilingPoint": 1000.0,
+      "TriplePoint": {
+        "Temperature": 250.0,
+        "Pressure": 0.01
+      },
+      "HeatCapacity": 25.0,
+      "StateRanges": [
+        {
+          "TemperatureRange": [
+            0,
+            300
+          ],
+          "PressureRange": [
+            0,
+            1
+          ],
+          "State": "solid"
+        },
+        {
+          "TemperatureRange": [
+            300,
+            1000
+          ],
+          "PressureRange": [
+            0,
+            1
+          ],
+          "State": "liquid"
+        },
+        {
+          "TemperatureRange": [
+            1000,
+            10000
+          ],
+          "PressureRange": [
+            0,
+            1
+          ],
+          "State": "gas"
+        }
+      ]
+    },
+    "ChemicalProperties": {
+      "Electronegativity": 1.5,
+      "IonizationEnergy": 10.0,
+      "Reactivity": 0.5,
+      "Bonding": [
+        "ionic",
+        "covalent"
+      ],
+      "CommonCompounds": []
+    },
+    "CosmicAbundance": 0.046,
+    "DisplayColor": [
+      0.5,
+      0.5,
+      0.5
+    ],
+    "Radiation": 0.0
+  },
+  {
+    "Symbol": "E74",
+    "Name": "Element 74",
+    "AtomicNumber": 74,
+    "AtomicMass": 148.0,
+    "Isotopes": [
+      {
+        "Name": "Element 74 Isotope",
+        "MassNumber": 148.0,
+        "HalfLife": null,
+        "RadiationType": null
+      }
+    ],
+    "PhysicalProperties": {
+      "Density": 5.0,
+      "MeltingPoint": 300.0,
+      "BoilingPoint": 1000.0,
+      "TriplePoint": {
+        "Temperature": 250.0,
+        "Pressure": 0.01
+      },
+      "HeatCapacity": 25.0,
+      "StateRanges": [
+        {
+          "TemperatureRange": [
+            0,
+            300
+          ],
+          "PressureRange": [
+            0,
+            1
+          ],
+          "State": "solid"
+        },
+        {
+          "TemperatureRange": [
+            300,
+            1000
+          ],
+          "PressureRange": [
+            0,
+            1
+          ],
+          "State": "liquid"
+        },
+        {
+          "TemperatureRange": [
+            1000,
+            10000
+          ],
+          "PressureRange": [
+            0,
+            1
+          ],
+          "State": "gas"
+        }
+      ]
+    },
+    "ChemicalProperties": {
+      "Electronegativity": 1.5,
+      "IonizationEnergy": 10.0,
+      "Reactivity": 0.5,
+      "Bonding": [
+        "ionic",
+        "covalent"
+      ],
+      "CommonCompounds": []
+    },
+    "CosmicAbundance": 0.045,
+    "DisplayColor": [
+      0.5,
+      0.5,
+      0.5
+    ],
+    "Radiation": 0.0
+  },
+  {
+    "Symbol": "E75",
+    "Name": "Element 75",
+    "AtomicNumber": 75,
+    "AtomicMass": 150.0,
+    "Isotopes": [
+      {
+        "Name": "Element 75 Isotope",
+        "MassNumber": 150.0,
+        "HalfLife": null,
+        "RadiationType": null
+      }
+    ],
+    "PhysicalProperties": {
+      "Density": 5.0,
+      "MeltingPoint": 300.0,
+      "BoilingPoint": 1000.0,
+      "TriplePoint": {
+        "Temperature": 250.0,
+        "Pressure": 0.01
+      },
+      "HeatCapacity": 25.0,
+      "StateRanges": [
+        {
+          "TemperatureRange": [
+            0,
+            300
+          ],
+          "PressureRange": [
+            0,
+            1
+          ],
+          "State": "solid"
+        },
+        {
+          "TemperatureRange": [
+            300,
+            1000
+          ],
+          "PressureRange": [
+            0,
+            1
+          ],
+          "State": "liquid"
+        },
+        {
+          "TemperatureRange": [
+            1000,
+            10000
+          ],
+          "PressureRange": [
+            0,
+            1
+          ],
+          "State": "gas"
+        }
+      ]
+    },
+    "ChemicalProperties": {
+      "Electronegativity": 1.5,
+      "IonizationEnergy": 10.0,
+      "Reactivity": 0.5,
+      "Bonding": [
+        "ionic",
+        "covalent"
+      ],
+      "CommonCompounds": []
+    },
+    "CosmicAbundance": 0.044,
+    "DisplayColor": [
+      0.5,
+      0.5,
+      0.5
+    ],
+    "Radiation": 0.0
+  },
+  {
+    "Symbol": "E76",
+    "Name": "Element 76",
+    "AtomicNumber": 76,
+    "AtomicMass": 152.0,
+    "Isotopes": [
+      {
+        "Name": "Element 76 Isotope",
+        "MassNumber": 152.0,
+        "HalfLife": null,
+        "RadiationType": null
+      }
+    ],
+    "PhysicalProperties": {
+      "Density": 5.0,
+      "MeltingPoint": 300.0,
+      "BoilingPoint": 1000.0,
+      "TriplePoint": {
+        "Temperature": 250.0,
+        "Pressure": 0.01
+      },
+      "HeatCapacity": 25.0,
+      "StateRanges": [
+        {
+          "TemperatureRange": [
+            0,
+            300
+          ],
+          "PressureRange": [
+            0,
+            1
+          ],
+          "State": "solid"
+        },
+        {
+          "TemperatureRange": [
+            300,
+            1000
+          ],
+          "PressureRange": [
+            0,
+            1
+          ],
+          "State": "liquid"
+        },
+        {
+          "TemperatureRange": [
+            1000,
+            10000
+          ],
+          "PressureRange": [
+            0,
+            1
+          ],
+          "State": "gas"
+        }
+      ]
+    },
+    "ChemicalProperties": {
+      "Electronegativity": 1.5,
+      "IonizationEnergy": 10.0,
+      "Reactivity": 0.5,
+      "Bonding": [
+        "ionic",
+        "covalent"
+      ],
+      "CommonCompounds": []
+    },
+    "CosmicAbundance": 0.043000000000000003,
+    "DisplayColor": [
+      0.5,
+      0.5,
+      0.5
+    ],
+    "Radiation": 0.0
+  },
+  {
+    "Symbol": "E77",
+    "Name": "Element 77",
+    "AtomicNumber": 77,
+    "AtomicMass": 154.0,
+    "Isotopes": [
+      {
+        "Name": "Element 77 Isotope",
+        "MassNumber": 154.0,
+        "HalfLife": null,
+        "RadiationType": null
+      }
+    ],
+    "PhysicalProperties": {
+      "Density": 5.0,
+      "MeltingPoint": 300.0,
+      "BoilingPoint": 1000.0,
+      "TriplePoint": {
+        "Temperature": 250.0,
+        "Pressure": 0.01
+      },
+      "HeatCapacity": 25.0,
+      "StateRanges": [
+        {
+          "TemperatureRange": [
+            0,
+            300
+          ],
+          "PressureRange": [
+            0,
+            1
+          ],
+          "State": "solid"
+        },
+        {
+          "TemperatureRange": [
+            300,
+            1000
+          ],
+          "PressureRange": [
+            0,
+            1
+          ],
+          "State": "liquid"
+        },
+        {
+          "TemperatureRange": [
+            1000,
+            10000
+          ],
+          "PressureRange": [
+            0,
+            1
+          ],
+          "State": "gas"
+        }
+      ]
+    },
+    "ChemicalProperties": {
+      "Electronegativity": 1.5,
+      "IonizationEnergy": 10.0,
+      "Reactivity": 0.5,
+      "Bonding": [
+        "ionic",
+        "covalent"
+      ],
+      "CommonCompounds": []
+    },
+    "CosmicAbundance": 0.042,
+    "DisplayColor": [
+      0.5,
+      0.5,
+      0.5
+    ],
+    "Radiation": 0.0
+  },
+  {
+    "Symbol": "E78",
+    "Name": "Element 78",
+    "AtomicNumber": 78,
+    "AtomicMass": 156.0,
+    "Isotopes": [
+      {
+        "Name": "Element 78 Isotope",
+        "MassNumber": 156.0,
+        "HalfLife": null,
+        "RadiationType": null
+      }
+    ],
+    "PhysicalProperties": {
+      "Density": 5.0,
+      "MeltingPoint": 300.0,
+      "BoilingPoint": 1000.0,
+      "TriplePoint": {
+        "Temperature": 250.0,
+        "Pressure": 0.01
+      },
+      "HeatCapacity": 25.0,
+      "StateRanges": [
+        {
+          "TemperatureRange": [
+            0,
+            300
+          ],
+          "PressureRange": [
+            0,
+            1
+          ],
+          "State": "solid"
+        },
+        {
+          "TemperatureRange": [
+            300,
+            1000
+          ],
+          "PressureRange": [
+            0,
+            1
+          ],
+          "State": "liquid"
+        },
+        {
+          "TemperatureRange": [
+            1000,
+            10000
+          ],
+          "PressureRange": [
+            0,
+            1
+          ],
+          "State": "gas"
+        }
+      ]
+    },
+    "ChemicalProperties": {
+      "Electronegativity": 1.5,
+      "IonizationEnergy": 10.0,
+      "Reactivity": 0.5,
+      "Bonding": [
+        "ionic",
+        "covalent"
+      ],
+      "CommonCompounds": []
+    },
+    "CosmicAbundance": 0.041,
+    "DisplayColor": [
+      0.5,
+      0.5,
+      0.5
+    ],
+    "Radiation": 0.0
+  },
+  {
+    "Symbol": "E79",
+    "Name": "Element 79",
+    "AtomicNumber": 79,
+    "AtomicMass": 158.0,
+    "Isotopes": [
+      {
+        "Name": "Element 79 Isotope",
+        "MassNumber": 158.0,
+        "HalfLife": null,
+        "RadiationType": null
+      }
+    ],
+    "PhysicalProperties": {
+      "Density": 5.0,
+      "MeltingPoint": 300.0,
+      "BoilingPoint": 1000.0,
+      "TriplePoint": {
+        "Temperature": 250.0,
+        "Pressure": 0.01
+      },
+      "HeatCapacity": 25.0,
+      "StateRanges": [
+        {
+          "TemperatureRange": [
+            0,
+            300
+          ],
+          "PressureRange": [
+            0,
+            1
+          ],
+          "State": "solid"
+        },
+        {
+          "TemperatureRange": [
+            300,
+            1000
+          ],
+          "PressureRange": [
+            0,
+            1
+          ],
+          "State": "liquid"
+        },
+        {
+          "TemperatureRange": [
+            1000,
+            10000
+          ],
+          "PressureRange": [
+            0,
+            1
+          ],
+          "State": "gas"
+        }
+      ]
+    },
+    "ChemicalProperties": {
+      "Electronegativity": 1.5,
+      "IonizationEnergy": 10.0,
+      "Reactivity": 0.5,
+      "Bonding": [
+        "ionic",
+        "covalent"
+      ],
+      "CommonCompounds": []
+    },
+    "CosmicAbundance": 0.04,
+    "DisplayColor": [
+      0.5,
+      0.5,
+      0.5
+    ],
+    "Radiation": 0.0
+  },
+  {
+    "Symbol": "E80",
+    "Name": "Element 80",
+    "AtomicNumber": 80,
+    "AtomicMass": 160.0,
+    "Isotopes": [
+      {
+        "Name": "Element 80 Isotope",
+        "MassNumber": 160.0,
+        "HalfLife": null,
+        "RadiationType": null
+      }
+    ],
+    "PhysicalProperties": {
+      "Density": 5.0,
+      "MeltingPoint": 300.0,
+      "BoilingPoint": 1000.0,
+      "TriplePoint": {
+        "Temperature": 250.0,
+        "Pressure": 0.01
+      },
+      "HeatCapacity": 25.0,
+      "StateRanges": [
+        {
+          "TemperatureRange": [
+            0,
+            300
+          ],
+          "PressureRange": [
+            0,
+            1
+          ],
+          "State": "solid"
+        },
+        {
+          "TemperatureRange": [
+            300,
+            1000
+          ],
+          "PressureRange": [
+            0,
+            1
+          ],
+          "State": "liquid"
+        },
+        {
+          "TemperatureRange": [
+            1000,
+            10000
+          ],
+          "PressureRange": [
+            0,
+            1
+          ],
+          "State": "gas"
+        }
+      ]
+    },
+    "ChemicalProperties": {
+      "Electronegativity": 1.5,
+      "IonizationEnergy": 10.0,
+      "Reactivity": 0.5,
+      "Bonding": [
+        "ionic",
+        "covalent"
+      ],
+      "CommonCompounds": []
+    },
+    "CosmicAbundance": 0.039,
+    "DisplayColor": [
+      0.5,
+      0.5,
+      0.5
+    ],
+    "Radiation": 0.0
+  },
+  {
+    "Symbol": "E81",
+    "Name": "Element 81",
+    "AtomicNumber": 81,
+    "AtomicMass": 162.0,
+    "Isotopes": [
+      {
+        "Name": "Element 81 Isotope",
+        "MassNumber": 162.0,
+        "HalfLife": null,
+        "RadiationType": null
+      }
+    ],
+    "PhysicalProperties": {
+      "Density": 5.0,
+      "MeltingPoint": 300.0,
+      "BoilingPoint": 1000.0,
+      "TriplePoint": {
+        "Temperature": 250.0,
+        "Pressure": 0.01
+      },
+      "HeatCapacity": 25.0,
+      "StateRanges": [
+        {
+          "TemperatureRange": [
+            0,
+            300
+          ],
+          "PressureRange": [
+            0,
+            1
+          ],
+          "State": "solid"
+        },
+        {
+          "TemperatureRange": [
+            300,
+            1000
+          ],
+          "PressureRange": [
+            0,
+            1
+          ],
+          "State": "liquid"
+        },
+        {
+          "TemperatureRange": [
+            1000,
+            10000
+          ],
+          "PressureRange": [
+            0,
+            1
+          ],
+          "State": "gas"
+        }
+      ]
+    },
+    "ChemicalProperties": {
+      "Electronegativity": 1.5,
+      "IonizationEnergy": 10.0,
+      "Reactivity": 0.5,
+      "Bonding": [
+        "ionic",
+        "covalent"
+      ],
+      "CommonCompounds": []
+    },
+    "CosmicAbundance": 0.038,
+    "DisplayColor": [
+      0.5,
+      0.5,
+      0.5
+    ],
+    "Radiation": 0.0
+  },
+  {
+    "Symbol": "E82",
+    "Name": "Element 82",
+    "AtomicNumber": 82,
+    "AtomicMass": 164.0,
+    "Isotopes": [
+      {
+        "Name": "Element 82 Isotope",
+        "MassNumber": 164.0,
+        "HalfLife": null,
+        "RadiationType": null
+      }
+    ],
+    "PhysicalProperties": {
+      "Density": 5.0,
+      "MeltingPoint": 300.0,
+      "BoilingPoint": 1000.0,
+      "TriplePoint": {
+        "Temperature": 250.0,
+        "Pressure": 0.01
+      },
+      "HeatCapacity": 25.0,
+      "StateRanges": [
+        {
+          "TemperatureRange": [
+            0,
+            300
+          ],
+          "PressureRange": [
+            0,
+            1
+          ],
+          "State": "solid"
+        },
+        {
+          "TemperatureRange": [
+            300,
+            1000
+          ],
+          "PressureRange": [
+            0,
+            1
+          ],
+          "State": "liquid"
+        },
+        {
+          "TemperatureRange": [
+            1000,
+            10000
+          ],
+          "PressureRange": [
+            0,
+            1
+          ],
+          "State": "gas"
+        }
+      ]
+    },
+    "ChemicalProperties": {
+      "Electronegativity": 1.5,
+      "IonizationEnergy": 10.0,
+      "Reactivity": 0.5,
+      "Bonding": [
+        "ionic",
+        "covalent"
+      ],
+      "CommonCompounds": []
+    },
+    "CosmicAbundance": 0.037,
+    "DisplayColor": [
+      0.5,
+      0.5,
+      0.5
+    ],
+    "Radiation": 0.0
+  },
+  {
+    "Symbol": "E83",
+    "Name": "Element 83",
+    "AtomicNumber": 83,
+    "AtomicMass": 166.0,
+    "Isotopes": [
+      {
+        "Name": "Element 83 Isotope",
+        "MassNumber": 166.0,
+        "HalfLife": null,
+        "RadiationType": null
+      }
+    ],
+    "PhysicalProperties": {
+      "Density": 5.0,
+      "MeltingPoint": 300.0,
+      "BoilingPoint": 1000.0,
+      "TriplePoint": {
+        "Temperature": 250.0,
+        "Pressure": 0.01
+      },
+      "HeatCapacity": 25.0,
+      "StateRanges": [
+        {
+          "TemperatureRange": [
+            0,
+            300
+          ],
+          "PressureRange": [
+            0,
+            1
+          ],
+          "State": "solid"
+        },
+        {
+          "TemperatureRange": [
+            300,
+            1000
+          ],
+          "PressureRange": [
+            0,
+            1
+          ],
+          "State": "liquid"
+        },
+        {
+          "TemperatureRange": [
+            1000,
+            10000
+          ],
+          "PressureRange": [
+            0,
+            1
+          ],
+          "State": "gas"
+        }
+      ]
+    },
+    "ChemicalProperties": {
+      "Electronegativity": 1.5,
+      "IonizationEnergy": 10.0,
+      "Reactivity": 0.5,
+      "Bonding": [
+        "ionic",
+        "covalent"
+      ],
+      "CommonCompounds": []
+    },
+    "CosmicAbundance": 0.036000000000000004,
+    "DisplayColor": [
+      0.5,
+      0.5,
+      0.5
+    ],
+    "Radiation": 0.0
+  },
+  {
+    "Symbol": "E84",
+    "Name": "Element 84",
+    "AtomicNumber": 84,
+    "AtomicMass": 168.0,
+    "Isotopes": [
+      {
+        "Name": "Element 84 Isotope",
+        "MassNumber": 168.0,
+        "HalfLife": null,
+        "RadiationType": null
+      }
+    ],
+    "PhysicalProperties": {
+      "Density": 5.0,
+      "MeltingPoint": 300.0,
+      "BoilingPoint": 1000.0,
+      "TriplePoint": {
+        "Temperature": 250.0,
+        "Pressure": 0.01
+      },
+      "HeatCapacity": 25.0,
+      "StateRanges": [
+        {
+          "TemperatureRange": [
+            0,
+            300
+          ],
+          "PressureRange": [
+            0,
+            1
+          ],
+          "State": "solid"
+        },
+        {
+          "TemperatureRange": [
+            300,
+            1000
+          ],
+          "PressureRange": [
+            0,
+            1
+          ],
+          "State": "liquid"
+        },
+        {
+          "TemperatureRange": [
+            1000,
+            10000
+          ],
+          "PressureRange": [
+            0,
+            1
+          ],
+          "State": "gas"
+        }
+      ]
+    },
+    "ChemicalProperties": {
+      "Electronegativity": 1.5,
+      "IonizationEnergy": 10.0,
+      "Reactivity": 0.5,
+      "Bonding": [
+        "ionic",
+        "covalent"
+      ],
+      "CommonCompounds": []
+    },
+    "CosmicAbundance": 0.035,
+    "DisplayColor": [
+      0.5,
+      0.5,
+      0.5
+    ],
+    "Radiation": 0.0
+  },
+  {
+    "Symbol": "E85",
+    "Name": "Element 85",
+    "AtomicNumber": 85,
+    "AtomicMass": 170.0,
+    "Isotopes": [
+      {
+        "Name": "Element 85 Isotope",
+        "MassNumber": 170.0,
+        "HalfLife": null,
+        "RadiationType": null
+      }
+    ],
+    "PhysicalProperties": {
+      "Density": 5.0,
+      "MeltingPoint": 300.0,
+      "BoilingPoint": 1000.0,
+      "TriplePoint": {
+        "Temperature": 250.0,
+        "Pressure": 0.01
+      },
+      "HeatCapacity": 25.0,
+      "StateRanges": [
+        {
+          "TemperatureRange": [
+            0,
+            300
+          ],
+          "PressureRange": [
+            0,
+            1
+          ],
+          "State": "solid"
+        },
+        {
+          "TemperatureRange": [
+            300,
+            1000
+          ],
+          "PressureRange": [
+            0,
+            1
+          ],
+          "State": "liquid"
+        },
+        {
+          "TemperatureRange": [
+            1000,
+            10000
+          ],
+          "PressureRange": [
+            0,
+            1
+          ],
+          "State": "gas"
+        }
+      ]
+    },
+    "ChemicalProperties": {
+      "Electronegativity": 1.5,
+      "IonizationEnergy": 10.0,
+      "Reactivity": 0.5,
+      "Bonding": [
+        "ionic",
+        "covalent"
+      ],
+      "CommonCompounds": []
+    },
+    "CosmicAbundance": 0.034,
+    "DisplayColor": [
+      0.5,
+      0.5,
+      0.5
+    ],
+    "Radiation": 0.0
+  },
+  {
+    "Symbol": "E86",
+    "Name": "Element 86",
+    "AtomicNumber": 86,
+    "AtomicMass": 172.0,
+    "Isotopes": [
+      {
+        "Name": "Element 86 Isotope",
+        "MassNumber": 172.0,
+        "HalfLife": null,
+        "RadiationType": null
+      }
+    ],
+    "PhysicalProperties": {
+      "Density": 5.0,
+      "MeltingPoint": 300.0,
+      "BoilingPoint": 1000.0,
+      "TriplePoint": {
+        "Temperature": 250.0,
+        "Pressure": 0.01
+      },
+      "HeatCapacity": 25.0,
+      "StateRanges": [
+        {
+          "TemperatureRange": [
+            0,
+            300
+          ],
+          "PressureRange": [
+            0,
+            1
+          ],
+          "State": "solid"
+        },
+        {
+          "TemperatureRange": [
+            300,
+            1000
+          ],
+          "PressureRange": [
+            0,
+            1
+          ],
+          "State": "liquid"
+        },
+        {
+          "TemperatureRange": [
+            1000,
+            10000
+          ],
+          "PressureRange": [
+            0,
+            1
+          ],
+          "State": "gas"
+        }
+      ]
+    },
+    "ChemicalProperties": {
+      "Electronegativity": 1.5,
+      "IonizationEnergy": 10.0,
+      "Reactivity": 0.5,
+      "Bonding": [
+        "ionic",
+        "covalent"
+      ],
+      "CommonCompounds": []
+    },
+    "CosmicAbundance": 0.033,
+    "DisplayColor": [
+      0.5,
+      0.5,
+      0.5
+    ],
+    "Radiation": 0.0
+  },
+  {
+    "Symbol": "E87",
+    "Name": "Element 87",
+    "AtomicNumber": 87,
+    "AtomicMass": 174.0,
+    "Isotopes": [
+      {
+        "Name": "Element 87 Isotope",
+        "MassNumber": 174.0,
+        "HalfLife": null,
+        "RadiationType": null
+      }
+    ],
+    "PhysicalProperties": {
+      "Density": 5.0,
+      "MeltingPoint": 300.0,
+      "BoilingPoint": 1000.0,
+      "TriplePoint": {
+        "Temperature": 250.0,
+        "Pressure": 0.01
+      },
+      "HeatCapacity": 25.0,
+      "StateRanges": [
+        {
+          "TemperatureRange": [
+            0,
+            300
+          ],
+          "PressureRange": [
+            0,
+            1
+          ],
+          "State": "solid"
+        },
+        {
+          "TemperatureRange": [
+            300,
+            1000
+          ],
+          "PressureRange": [
+            0,
+            1
+          ],
+          "State": "liquid"
+        },
+        {
+          "TemperatureRange": [
+            1000,
+            10000
+          ],
+          "PressureRange": [
+            0,
+            1
+          ],
+          "State": "gas"
+        }
+      ]
+    },
+    "ChemicalProperties": {
+      "Electronegativity": 1.5,
+      "IonizationEnergy": 10.0,
+      "Reactivity": 0.5,
+      "Bonding": [
+        "ionic",
+        "covalent"
+      ],
+      "CommonCompounds": []
+    },
+    "CosmicAbundance": 0.032,
+    "DisplayColor": [
+      0.5,
+      0.5,
+      0.5
+    ],
+    "Radiation": 0.0
+  },
+  {
+    "Symbol": "E88",
+    "Name": "Element 88",
+    "AtomicNumber": 88,
+    "AtomicMass": 176.0,
+    "Isotopes": [
+      {
+        "Name": "Element 88 Isotope",
+        "MassNumber": 176.0,
+        "HalfLife": null,
+        "RadiationType": null
+      }
+    ],
+    "PhysicalProperties": {
+      "Density": 5.0,
+      "MeltingPoint": 300.0,
+      "BoilingPoint": 1000.0,
+      "TriplePoint": {
+        "Temperature": 250.0,
+        "Pressure": 0.01
+      },
+      "HeatCapacity": 25.0,
+      "StateRanges": [
+        {
+          "TemperatureRange": [
+            0,
+            300
+          ],
+          "PressureRange": [
+            0,
+            1
+          ],
+          "State": "solid"
+        },
+        {
+          "TemperatureRange": [
+            300,
+            1000
+          ],
+          "PressureRange": [
+            0,
+            1
+          ],
+          "State": "liquid"
+        },
+        {
+          "TemperatureRange": [
+            1000,
+            10000
+          ],
+          "PressureRange": [
+            0,
+            1
+          ],
+          "State": "gas"
+        }
+      ]
+    },
+    "ChemicalProperties": {
+      "Electronegativity": 1.5,
+      "IonizationEnergy": 10.0,
+      "Reactivity": 0.5,
+      "Bonding": [
+        "ionic",
+        "covalent"
+      ],
+      "CommonCompounds": []
+    },
+    "CosmicAbundance": 0.031,
+    "DisplayColor": [
+      0.5,
+      0.5,
+      0.5
+    ],
+    "Radiation": 0.0
+  },
+  {
+    "Symbol": "E89",
+    "Name": "Element 89",
+    "AtomicNumber": 89,
+    "AtomicMass": 178.0,
+    "Isotopes": [
+      {
+        "Name": "Element 89 Isotope",
+        "MassNumber": 178.0,
+        "HalfLife": null,
+        "RadiationType": null
+      }
+    ],
+    "PhysicalProperties": {
+      "Density": 5.0,
+      "MeltingPoint": 300.0,
+      "BoilingPoint": 1000.0,
+      "TriplePoint": {
+        "Temperature": 250.0,
+        "Pressure": 0.01
+      },
+      "HeatCapacity": 25.0,
+      "StateRanges": [
+        {
+          "TemperatureRange": [
+            0,
+            300
+          ],
+          "PressureRange": [
+            0,
+            1
+          ],
+          "State": "solid"
+        },
+        {
+          "TemperatureRange": [
+            300,
+            1000
+          ],
+          "PressureRange": [
+            0,
+            1
+          ],
+          "State": "liquid"
+        },
+        {
+          "TemperatureRange": [
+            1000,
+            10000
+          ],
+          "PressureRange": [
+            0,
+            1
+          ],
+          "State": "gas"
+        }
+      ]
+    },
+    "ChemicalProperties": {
+      "Electronegativity": 1.5,
+      "IonizationEnergy": 10.0,
+      "Reactivity": 0.5,
+      "Bonding": [
+        "ionic",
+        "covalent"
+      ],
+      "CommonCompounds": []
+    },
+    "CosmicAbundance": 0.03,
+    "DisplayColor": [
+      0.5,
+      0.5,
+      0.5
+    ],
+    "Radiation": 0.0
+  },
+  {
+    "Symbol": "E90",
+    "Name": "Element 90",
+    "AtomicNumber": 90,
+    "AtomicMass": 180.0,
+    "Isotopes": [
+      {
+        "Name": "Element 90 Isotope",
+        "MassNumber": 180.0,
+        "HalfLife": null,
+        "RadiationType": null
+      }
+    ],
+    "PhysicalProperties": {
+      "Density": 5.0,
+      "MeltingPoint": 300.0,
+      "BoilingPoint": 1000.0,
+      "TriplePoint": {
+        "Temperature": 250.0,
+        "Pressure": 0.01
+      },
+      "HeatCapacity": 25.0,
+      "StateRanges": [
+        {
+          "TemperatureRange": [
+            0,
+            300
+          ],
+          "PressureRange": [
+            0,
+            1
+          ],
+          "State": "solid"
+        },
+        {
+          "TemperatureRange": [
+            300,
+            1000
+          ],
+          "PressureRange": [
+            0,
+            1
+          ],
+          "State": "liquid"
+        },
+        {
+          "TemperatureRange": [
+            1000,
+            10000
+          ],
+          "PressureRange": [
+            0,
+            1
+          ],
+          "State": "gas"
+        }
+      ]
+    },
+    "ChemicalProperties": {
+      "Electronegativity": 1.5,
+      "IonizationEnergy": 10.0,
+      "Reactivity": 0.5,
+      "Bonding": [
+        "ionic",
+        "covalent"
+      ],
+      "CommonCompounds": []
+    },
+    "CosmicAbundance": 0.029,
+    "DisplayColor": [
+      0.5,
+      0.5,
+      0.5
+    ],
+    "Radiation": 0.0
+  },
+  {
+    "Symbol": "E91",
+    "Name": "Element 91",
+    "AtomicNumber": 91,
+    "AtomicMass": 182.0,
+    "Isotopes": [
+      {
+        "Name": "Element 91 Isotope",
+        "MassNumber": 182.0,
+        "HalfLife": null,
+        "RadiationType": null
+      }
+    ],
+    "PhysicalProperties": {
+      "Density": 5.0,
+      "MeltingPoint": 300.0,
+      "BoilingPoint": 1000.0,
+      "TriplePoint": {
+        "Temperature": 250.0,
+        "Pressure": 0.01
+      },
+      "HeatCapacity": 25.0,
+      "StateRanges": [
+        {
+          "TemperatureRange": [
+            0,
+            300
+          ],
+          "PressureRange": [
+            0,
+            1
+          ],
+          "State": "solid"
+        },
+        {
+          "TemperatureRange": [
+            300,
+            1000
+          ],
+          "PressureRange": [
+            0,
+            1
+          ],
+          "State": "liquid"
+        },
+        {
+          "TemperatureRange": [
+            1000,
+            10000
+          ],
+          "PressureRange": [
+            0,
+            1
+          ],
+          "State": "gas"
+        }
+      ]
+    },
+    "ChemicalProperties": {
+      "Electronegativity": 1.5,
+      "IonizationEnergy": 10.0,
+      "Reactivity": 0.5,
+      "Bonding": [
+        "ionic",
+        "covalent"
+      ],
+      "CommonCompounds": []
+    },
+    "CosmicAbundance": 0.028,
+    "DisplayColor": [
+      0.5,
+      0.5,
+      0.5
+    ],
+    "Radiation": 0.0
+  },
+  {
+    "Symbol": "E92",
+    "Name": "Element 92",
+    "AtomicNumber": 92,
+    "AtomicMass": 184.0,
+    "Isotopes": [
+      {
+        "Name": "Element 92 Isotope",
+        "MassNumber": 184.0,
+        "HalfLife": null,
+        "RadiationType": null
+      }
+    ],
+    "PhysicalProperties": {
+      "Density": 5.0,
+      "MeltingPoint": 300.0,
+      "BoilingPoint": 1000.0,
+      "TriplePoint": {
+        "Temperature": 250.0,
+        "Pressure": 0.01
+      },
+      "HeatCapacity": 25.0,
+      "StateRanges": [
+        {
+          "TemperatureRange": [
+            0,
+            300
+          ],
+          "PressureRange": [
+            0,
+            1
+          ],
+          "State": "solid"
+        },
+        {
+          "TemperatureRange": [
+            300,
+            1000
+          ],
+          "PressureRange": [
+            0,
+            1
+          ],
+          "State": "liquid"
+        },
+        {
+          "TemperatureRange": [
+            1000,
+            10000
+          ],
+          "PressureRange": [
+            0,
+            1
+          ],
+          "State": "gas"
+        }
+      ]
+    },
+    "ChemicalProperties": {
+      "Electronegativity": 1.5,
+      "IonizationEnergy": 10.0,
+      "Reactivity": 0.5,
+      "Bonding": [
+        "ionic",
+        "covalent"
+      ],
+      "CommonCompounds": []
+    },
+    "CosmicAbundance": 0.027,
+    "DisplayColor": [
+      0.5,
+      0.5,
+      0.5
+    ],
+    "Radiation": 0.0
+  },
+  {
+    "Symbol": "E93",
+    "Name": "Element 93",
+    "AtomicNumber": 93,
+    "AtomicMass": 186.0,
+    "Isotopes": [
+      {
+        "Name": "Element 93 Isotope",
+        "MassNumber": 186.0,
+        "HalfLife": null,
+        "RadiationType": null
+      }
+    ],
+    "PhysicalProperties": {
+      "Density": 5.0,
+      "MeltingPoint": 300.0,
+      "BoilingPoint": 1000.0,
+      "TriplePoint": {
+        "Temperature": 250.0,
+        "Pressure": 0.01
+      },
+      "HeatCapacity": 25.0,
+      "StateRanges": [
+        {
+          "TemperatureRange": [
+            0,
+            300
+          ],
+          "PressureRange": [
+            0,
+            1
+          ],
+          "State": "solid"
+        },
+        {
+          "TemperatureRange": [
+            300,
+            1000
+          ],
+          "PressureRange": [
+            0,
+            1
+          ],
+          "State": "liquid"
+        },
+        {
+          "TemperatureRange": [
+            1000,
+            10000
+          ],
+          "PressureRange": [
+            0,
+            1
+          ],
+          "State": "gas"
+        }
+      ]
+    },
+    "ChemicalProperties": {
+      "Electronegativity": 1.5,
+      "IonizationEnergy": 10.0,
+      "Reactivity": 0.5,
+      "Bonding": [
+        "ionic",
+        "covalent"
+      ],
+      "CommonCompounds": []
+    },
+    "CosmicAbundance": 0.026000000000000002,
+    "DisplayColor": [
+      0.5,
+      0.5,
+      0.5
+    ],
+    "Radiation": 0.0
+  },
+  {
+    "Symbol": "E94",
+    "Name": "Element 94",
+    "AtomicNumber": 94,
+    "AtomicMass": 188.0,
+    "Isotopes": [
+      {
+        "Name": "Element 94 Isotope",
+        "MassNumber": 188.0,
+        "HalfLife": null,
+        "RadiationType": null
+      }
+    ],
+    "PhysicalProperties": {
+      "Density": 5.0,
+      "MeltingPoint": 300.0,
+      "BoilingPoint": 1000.0,
+      "TriplePoint": {
+        "Temperature": 250.0,
+        "Pressure": 0.01
+      },
+      "HeatCapacity": 25.0,
+      "StateRanges": [
+        {
+          "TemperatureRange": [
+            0,
+            300
+          ],
+          "PressureRange": [
+            0,
+            1
+          ],
+          "State": "solid"
+        },
+        {
+          "TemperatureRange": [
+            300,
+            1000
+          ],
+          "PressureRange": [
+            0,
+            1
+          ],
+          "State": "liquid"
+        },
+        {
+          "TemperatureRange": [
+            1000,
+            10000
+          ],
+          "PressureRange": [
+            0,
+            1
+          ],
+          "State": "gas"
+        }
+      ]
+    },
+    "ChemicalProperties": {
+      "Electronegativity": 1.5,
+      "IonizationEnergy": 10.0,
+      "Reactivity": 0.5,
+      "Bonding": [
+        "ionic",
+        "covalent"
+      ],
+      "CommonCompounds": []
+    },
+    "CosmicAbundance": 0.025,
+    "DisplayColor": [
+      0.5,
+      0.5,
+      0.5
+    ],
+    "Radiation": 0.0
+  },
+  {
+    "Symbol": "E95",
+    "Name": "Element 95",
+    "AtomicNumber": 95,
+    "AtomicMass": 190.0,
+    "Isotopes": [
+      {
+        "Name": "Element 95 Isotope",
+        "MassNumber": 190.0,
+        "HalfLife": null,
+        "RadiationType": null
+      }
+    ],
+    "PhysicalProperties": {
+      "Density": 5.0,
+      "MeltingPoint": 300.0,
+      "BoilingPoint": 1000.0,
+      "TriplePoint": {
+        "Temperature": 250.0,
+        "Pressure": 0.01
+      },
+      "HeatCapacity": 25.0,
+      "StateRanges": [
+        {
+          "TemperatureRange": [
+            0,
+            300
+          ],
+          "PressureRange": [
+            0,
+            1
+          ],
+          "State": "solid"
+        },
+        {
+          "TemperatureRange": [
+            300,
+            1000
+          ],
+          "PressureRange": [
+            0,
+            1
+          ],
+          "State": "liquid"
+        },
+        {
+          "TemperatureRange": [
+            1000,
+            10000
+          ],
+          "PressureRange": [
+            0,
+            1
+          ],
+          "State": "gas"
+        }
+      ]
+    },
+    "ChemicalProperties": {
+      "Electronegativity": 1.5,
+      "IonizationEnergy": 10.0,
+      "Reactivity": 0.5,
+      "Bonding": [
+        "ionic",
+        "covalent"
+      ],
+      "CommonCompounds": []
+    },
+    "CosmicAbundance": 0.024,
+    "DisplayColor": [
+      0.5,
+      0.5,
+      0.5
+    ],
+    "Radiation": 0.0
+  },
+  {
+    "Symbol": "E96",
+    "Name": "Element 96",
+    "AtomicNumber": 96,
+    "AtomicMass": 192.0,
+    "Isotopes": [
+      {
+        "Name": "Element 96 Isotope",
+        "MassNumber": 192.0,
+        "HalfLife": null,
+        "RadiationType": null
+      }
+    ],
+    "PhysicalProperties": {
+      "Density": 5.0,
+      "MeltingPoint": 300.0,
+      "BoilingPoint": 1000.0,
+      "TriplePoint": {
+        "Temperature": 250.0,
+        "Pressure": 0.01
+      },
+      "HeatCapacity": 25.0,
+      "StateRanges": [
+        {
+          "TemperatureRange": [
+            0,
+            300
+          ],
+          "PressureRange": [
+            0,
+            1
+          ],
+          "State": "solid"
+        },
+        {
+          "TemperatureRange": [
+            300,
+            1000
+          ],
+          "PressureRange": [
+            0,
+            1
+          ],
+          "State": "liquid"
+        },
+        {
+          "TemperatureRange": [
+            1000,
+            10000
+          ],
+          "PressureRange": [
+            0,
+            1
+          ],
+          "State": "gas"
+        }
+      ]
+    },
+    "ChemicalProperties": {
+      "Electronegativity": 1.5,
+      "IonizationEnergy": 10.0,
+      "Reactivity": 0.5,
+      "Bonding": [
+        "ionic",
+        "covalent"
+      ],
+      "CommonCompounds": []
+    },
+    "CosmicAbundance": 0.023,
+    "DisplayColor": [
+      0.5,
+      0.5,
+      0.5
+    ],
+    "Radiation": 0.0
+  },
+  {
+    "Symbol": "E97",
+    "Name": "Element 97",
+    "AtomicNumber": 97,
+    "AtomicMass": 194.0,
+    "Isotopes": [
+      {
+        "Name": "Element 97 Isotope",
+        "MassNumber": 194.0,
+        "HalfLife": null,
+        "RadiationType": null
+      }
+    ],
+    "PhysicalProperties": {
+      "Density": 5.0,
+      "MeltingPoint": 300.0,
+      "BoilingPoint": 1000.0,
+      "TriplePoint": {
+        "Temperature": 250.0,
+        "Pressure": 0.01
+      },
+      "HeatCapacity": 25.0,
+      "StateRanges": [
+        {
+          "TemperatureRange": [
+            0,
+            300
+          ],
+          "PressureRange": [
+            0,
+            1
+          ],
+          "State": "solid"
+        },
+        {
+          "TemperatureRange": [
+            300,
+            1000
+          ],
+          "PressureRange": [
+            0,
+            1
+          ],
+          "State": "liquid"
+        },
+        {
+          "TemperatureRange": [
+            1000,
+            10000
+          ],
+          "PressureRange": [
+            0,
+            1
+          ],
+          "State": "gas"
+        }
+      ]
+    },
+    "ChemicalProperties": {
+      "Electronegativity": 1.5,
+      "IonizationEnergy": 10.0,
+      "Reactivity": 0.5,
+      "Bonding": [
+        "ionic",
+        "covalent"
+      ],
+      "CommonCompounds": []
+    },
+    "CosmicAbundance": 0.022,
+    "DisplayColor": [
+      0.5,
+      0.5,
+      0.5
+    ],
+    "Radiation": 0.0
+  },
+  {
+    "Symbol": "E98",
+    "Name": "Element 98",
+    "AtomicNumber": 98,
+    "AtomicMass": 196.0,
+    "Isotopes": [
+      {
+        "Name": "Element 98 Isotope",
+        "MassNumber": 196.0,
+        "HalfLife": null,
+        "RadiationType": null
+      }
+    ],
+    "PhysicalProperties": {
+      "Density": 5.0,
+      "MeltingPoint": 300.0,
+      "BoilingPoint": 1000.0,
+      "TriplePoint": {
+        "Temperature": 250.0,
+        "Pressure": 0.01
+      },
+      "HeatCapacity": 25.0,
+      "StateRanges": [
+        {
+          "TemperatureRange": [
+            0,
+            300
+          ],
+          "PressureRange": [
+            0,
+            1
+          ],
+          "State": "solid"
+        },
+        {
+          "TemperatureRange": [
+            300,
+            1000
+          ],
+          "PressureRange": [
+            0,
+            1
+          ],
+          "State": "liquid"
+        },
+        {
+          "TemperatureRange": [
+            1000,
+            10000
+          ],
+          "PressureRange": [
+            0,
+            1
+          ],
+          "State": "gas"
+        }
+      ]
+    },
+    "ChemicalProperties": {
+      "Electronegativity": 1.5,
+      "IonizationEnergy": 10.0,
+      "Reactivity": 0.5,
+      "Bonding": [
+        "ionic",
+        "covalent"
+      ],
+      "CommonCompounds": []
+    },
+    "CosmicAbundance": 0.021,
+    "DisplayColor": [
+      0.5,
+      0.5,
+      0.5
+    ],
+    "Radiation": 0.0
+  },
+  {
+    "Symbol": "E99",
+    "Name": "Element 99",
+    "AtomicNumber": 99,
+    "AtomicMass": 198.0,
+    "Isotopes": [
+      {
+        "Name": "Element 99 Isotope",
+        "MassNumber": 198.0,
+        "HalfLife": null,
+        "RadiationType": null
+      }
+    ],
+    "PhysicalProperties": {
+      "Density": 5.0,
+      "MeltingPoint": 300.0,
+      "BoilingPoint": 1000.0,
+      "TriplePoint": {
+        "Temperature": 250.0,
+        "Pressure": 0.01
+      },
+      "HeatCapacity": 25.0,
+      "StateRanges": [
+        {
+          "TemperatureRange": [
+            0,
+            300
+          ],
+          "PressureRange": [
+            0,
+            1
+          ],
+          "State": "solid"
+        },
+        {
+          "TemperatureRange": [
+            300,
+            1000
+          ],
+          "PressureRange": [
+            0,
+            1
+          ],
+          "State": "liquid"
+        },
+        {
+          "TemperatureRange": [
+            1000,
+            10000
+          ],
+          "PressureRange": [
+            0,
+            1
+          ],
+          "State": "gas"
+        }
+      ]
+    },
+    "ChemicalProperties": {
+      "Electronegativity": 1.5,
+      "IonizationEnergy": 10.0,
+      "Reactivity": 0.5,
+      "Bonding": [
+        "ionic",
+        "covalent"
+      ],
+      "CommonCompounds": []
+    },
+    "CosmicAbundance": 0.02,
+    "DisplayColor": [
+      0.5,
+      0.5,
+      0.5
+    ],
+    "Radiation": 0.0
+  },
+  {
+    "Symbol": "E100",
+    "Name": "Element 100",
+    "AtomicNumber": 100,
+    "AtomicMass": 200.0,
+    "Isotopes": [
+      {
+        "Name": "Element 100 Isotope",
+        "MassNumber": 200.0,
+        "HalfLife": null,
+        "RadiationType": null
+      }
+    ],
+    "PhysicalProperties": {
+      "Density": 5.0,
+      "MeltingPoint": 300.0,
+      "BoilingPoint": 1000.0,
+      "TriplePoint": {
+        "Temperature": 250.0,
+        "Pressure": 0.01
+      },
+      "HeatCapacity": 25.0,
+      "StateRanges": [
+        {
+          "TemperatureRange": [
+            0,
+            300
+          ],
+          "PressureRange": [
+            0,
+            1
+          ],
+          "State": "solid"
+        },
+        {
+          "TemperatureRange": [
+            300,
+            1000
+          ],
+          "PressureRange": [
+            0,
+            1
+          ],
+          "State": "liquid"
+        },
+        {
+          "TemperatureRange": [
+            1000,
+            10000
+          ],
+          "PressureRange": [
+            0,
+            1
+          ],
+          "State": "gas"
+        }
+      ]
+    },
+    "ChemicalProperties": {
+      "Electronegativity": 1.5,
+      "IonizationEnergy": 10.0,
+      "Reactivity": 0.5,
+      "Bonding": [
+        "ionic",
+        "covalent"
+      ],
+      "CommonCompounds": []
+    },
+    "CosmicAbundance": 0.019,
+    "DisplayColor": [
+      0.5,
+      0.5,
+      0.5
+    ],
+    "Radiation": 0.0
+  },
+  {
+    "Symbol": "E101",
+    "Name": "Element 101",
+    "AtomicNumber": 101,
+    "AtomicMass": 202.0,
+    "Isotopes": [
+      {
+        "Name": "Element 101 Isotope",
+        "MassNumber": 202.0,
+        "HalfLife": null,
+        "RadiationType": null
+      }
+    ],
+    "PhysicalProperties": {
+      "Density": 5.0,
+      "MeltingPoint": 300.0,
+      "BoilingPoint": 1000.0,
+      "TriplePoint": {
+        "Temperature": 250.0,
+        "Pressure": 0.01
+      },
+      "HeatCapacity": 25.0,
+      "StateRanges": [
+        {
+          "TemperatureRange": [
+            0,
+            300
+          ],
+          "PressureRange": [
+            0,
+            1
+          ],
+          "State": "solid"
+        },
+        {
+          "TemperatureRange": [
+            300,
+            1000
+          ],
+          "PressureRange": [
+            0,
+            1
+          ],
+          "State": "liquid"
+        },
+        {
+          "TemperatureRange": [
+            1000,
+            10000
+          ],
+          "PressureRange": [
+            0,
+            1
+          ],
+          "State": "gas"
+        }
+      ]
+    },
+    "ChemicalProperties": {
+      "Electronegativity": 1.5,
+      "IonizationEnergy": 10.0,
+      "Reactivity": 0.5,
+      "Bonding": [
+        "ionic",
+        "covalent"
+      ],
+      "CommonCompounds": []
+    },
+    "CosmicAbundance": 0.018000000000000002,
+    "DisplayColor": [
+      0.5,
+      0.5,
+      0.5
+    ],
+    "Radiation": 0.0
+  },
+  {
+    "Symbol": "E102",
+    "Name": "Element 102",
+    "AtomicNumber": 102,
+    "AtomicMass": 204.0,
+    "Isotopes": [
+      {
+        "Name": "Element 102 Isotope",
+        "MassNumber": 204.0,
+        "HalfLife": null,
+        "RadiationType": null
+      }
+    ],
+    "PhysicalProperties": {
+      "Density": 5.0,
+      "MeltingPoint": 300.0,
+      "BoilingPoint": 1000.0,
+      "TriplePoint": {
+        "Temperature": 250.0,
+        "Pressure": 0.01
+      },
+      "HeatCapacity": 25.0,
+      "StateRanges": [
+        {
+          "TemperatureRange": [
+            0,
+            300
+          ],
+          "PressureRange": [
+            0,
+            1
+          ],
+          "State": "solid"
+        },
+        {
+          "TemperatureRange": [
+            300,
+            1000
+          ],
+          "PressureRange": [
+            0,
+            1
+          ],
+          "State": "liquid"
+        },
+        {
+          "TemperatureRange": [
+            1000,
+            10000
+          ],
+          "PressureRange": [
+            0,
+            1
+          ],
+          "State": "gas"
+        }
+      ]
+    },
+    "ChemicalProperties": {
+      "Electronegativity": 1.5,
+      "IonizationEnergy": 10.0,
+      "Reactivity": 0.5,
+      "Bonding": [
+        "ionic",
+        "covalent"
+      ],
+      "CommonCompounds": []
+    },
+    "CosmicAbundance": 0.017,
+    "DisplayColor": [
+      0.5,
+      0.5,
+      0.5
+    ],
+    "Radiation": 0.0
+  },
+  {
+    "Symbol": "E103",
+    "Name": "Element 103",
+    "AtomicNumber": 103,
+    "AtomicMass": 206.0,
+    "Isotopes": [
+      {
+        "Name": "Element 103 Isotope",
+        "MassNumber": 206.0,
+        "HalfLife": null,
+        "RadiationType": null
+      }
+    ],
+    "PhysicalProperties": {
+      "Density": 5.0,
+      "MeltingPoint": 300.0,
+      "BoilingPoint": 1000.0,
+      "TriplePoint": {
+        "Temperature": 250.0,
+        "Pressure": 0.01
+      },
+      "HeatCapacity": 25.0,
+      "StateRanges": [
+        {
+          "TemperatureRange": [
+            0,
+            300
+          ],
+          "PressureRange": [
+            0,
+            1
+          ],
+          "State": "solid"
+        },
+        {
+          "TemperatureRange": [
+            300,
+            1000
+          ],
+          "PressureRange": [
+            0,
+            1
+          ],
+          "State": "liquid"
+        },
+        {
+          "TemperatureRange": [
+            1000,
+            10000
+          ],
+          "PressureRange": [
+            0,
+            1
+          ],
+          "State": "gas"
+        }
+      ]
+    },
+    "ChemicalProperties": {
+      "Electronegativity": 1.5,
+      "IonizationEnergy": 10.0,
+      "Reactivity": 0.5,
+      "Bonding": [
+        "ionic",
+        "covalent"
+      ],
+      "CommonCompounds": []
+    },
+    "CosmicAbundance": 0.016,
+    "DisplayColor": [
+      0.5,
+      0.5,
+      0.5
+    ],
+    "Radiation": 0.0
+  },
+  {
+    "Symbol": "E104",
+    "Name": "Element 104",
+    "AtomicNumber": 104,
+    "AtomicMass": 208.0,
+    "Isotopes": [
+      {
+        "Name": "Element 104 Isotope",
+        "MassNumber": 208.0,
+        "HalfLife": null,
+        "RadiationType": null
+      }
+    ],
+    "PhysicalProperties": {
+      "Density": 5.0,
+      "MeltingPoint": 300.0,
+      "BoilingPoint": 1000.0,
+      "TriplePoint": {
+        "Temperature": 250.0,
+        "Pressure": 0.01
+      },
+      "HeatCapacity": 25.0,
+      "StateRanges": [
+        {
+          "TemperatureRange": [
+            0,
+            300
+          ],
+          "PressureRange": [
+            0,
+            1
+          ],
+          "State": "solid"
+        },
+        {
+          "TemperatureRange": [
+            300,
+            1000
+          ],
+          "PressureRange": [
+            0,
+            1
+          ],
+          "State": "liquid"
+        },
+        {
+          "TemperatureRange": [
+            1000,
+            10000
+          ],
+          "PressureRange": [
+            0,
+            1
+          ],
+          "State": "gas"
+        }
+      ]
+    },
+    "ChemicalProperties": {
+      "Electronegativity": 1.5,
+      "IonizationEnergy": 10.0,
+      "Reactivity": 0.5,
+      "Bonding": [
+        "ionic",
+        "covalent"
+      ],
+      "CommonCompounds": []
+    },
+    "CosmicAbundance": 0.015,
+    "DisplayColor": [
+      0.5,
+      0.5,
+      0.5
+    ],
+    "Radiation": 0.0
+  },
+  {
+    "Symbol": "E105",
+    "Name": "Element 105",
+    "AtomicNumber": 105,
+    "AtomicMass": 210.0,
+    "Isotopes": [
+      {
+        "Name": "Element 105 Isotope",
+        "MassNumber": 210.0,
+        "HalfLife": null,
+        "RadiationType": null
+      }
+    ],
+    "PhysicalProperties": {
+      "Density": 5.0,
+      "MeltingPoint": 300.0,
+      "BoilingPoint": 1000.0,
+      "TriplePoint": {
+        "Temperature": 250.0,
+        "Pressure": 0.01
+      },
+      "HeatCapacity": 25.0,
+      "StateRanges": [
+        {
+          "TemperatureRange": [
+            0,
+            300
+          ],
+          "PressureRange": [
+            0,
+            1
+          ],
+          "State": "solid"
+        },
+        {
+          "TemperatureRange": [
+            300,
+            1000
+          ],
+          "PressureRange": [
+            0,
+            1
+          ],
+          "State": "liquid"
+        },
+        {
+          "TemperatureRange": [
+            1000,
+            10000
+          ],
+          "PressureRange": [
+            0,
+            1
+          ],
+          "State": "gas"
+        }
+      ]
+    },
+    "ChemicalProperties": {
+      "Electronegativity": 1.5,
+      "IonizationEnergy": 10.0,
+      "Reactivity": 0.5,
+      "Bonding": [
+        "ionic",
+        "covalent"
+      ],
+      "CommonCompounds": []
+    },
+    "CosmicAbundance": 0.014,
+    "DisplayColor": [
+      0.5,
+      0.5,
+      0.5
+    ],
+    "Radiation": 0.0
+  },
+  {
+    "Symbol": "E106",
+    "Name": "Element 106",
+    "AtomicNumber": 106,
+    "AtomicMass": 212.0,
+    "Isotopes": [
+      {
+        "Name": "Element 106 Isotope",
+        "MassNumber": 212.0,
+        "HalfLife": null,
+        "RadiationType": null
+      }
+    ],
+    "PhysicalProperties": {
+      "Density": 5.0,
+      "MeltingPoint": 300.0,
+      "BoilingPoint": 1000.0,
+      "TriplePoint": {
+        "Temperature": 250.0,
+        "Pressure": 0.01
+      },
+      "HeatCapacity": 25.0,
+      "StateRanges": [
+        {
+          "TemperatureRange": [
+            0,
+            300
+          ],
+          "PressureRange": [
+            0,
+            1
+          ],
+          "State": "solid"
+        },
+        {
+          "TemperatureRange": [
+            300,
+            1000
+          ],
+          "PressureRange": [
+            0,
+            1
+          ],
+          "State": "liquid"
+        },
+        {
+          "TemperatureRange": [
+            1000,
+            10000
+          ],
+          "PressureRange": [
+            0,
+            1
+          ],
+          "State": "gas"
+        }
+      ]
+    },
+    "ChemicalProperties": {
+      "Electronegativity": 1.5,
+      "IonizationEnergy": 10.0,
+      "Reactivity": 0.5,
+      "Bonding": [
+        "ionic",
+        "covalent"
+      ],
+      "CommonCompounds": []
+    },
+    "CosmicAbundance": 0.013000000000000001,
+    "DisplayColor": [
+      0.5,
+      0.5,
+      0.5
+    ],
+    "Radiation": 0.0
+  },
+  {
+    "Symbol": "E107",
+    "Name": "Element 107",
+    "AtomicNumber": 107,
+    "AtomicMass": 214.0,
+    "Isotopes": [
+      {
+        "Name": "Element 107 Isotope",
+        "MassNumber": 214.0,
+        "HalfLife": null,
+        "RadiationType": null
+      }
+    ],
+    "PhysicalProperties": {
+      "Density": 5.0,
+      "MeltingPoint": 300.0,
+      "BoilingPoint": 1000.0,
+      "TriplePoint": {
+        "Temperature": 250.0,
+        "Pressure": 0.01
+      },
+      "HeatCapacity": 25.0,
+      "StateRanges": [
+        {
+          "TemperatureRange": [
+            0,
+            300
+          ],
+          "PressureRange": [
+            0,
+            1
+          ],
+          "State": "solid"
+        },
+        {
+          "TemperatureRange": [
+            300,
+            1000
+          ],
+          "PressureRange": [
+            0,
+            1
+          ],
+          "State": "liquid"
+        },
+        {
+          "TemperatureRange": [
+            1000,
+            10000
+          ],
+          "PressureRange": [
+            0,
+            1
+          ],
+          "State": "gas"
+        }
+      ]
+    },
+    "ChemicalProperties": {
+      "Electronegativity": 1.5,
+      "IonizationEnergy": 10.0,
+      "Reactivity": 0.5,
+      "Bonding": [
+        "ionic",
+        "covalent"
+      ],
+      "CommonCompounds": []
+    },
+    "CosmicAbundance": 0.012,
+    "DisplayColor": [
+      0.5,
+      0.5,
+      0.5
+    ],
+    "Radiation": 0.0
+  },
+  {
+    "Symbol": "E108",
+    "Name": "Element 108",
+    "AtomicNumber": 108,
+    "AtomicMass": 216.0,
+    "Isotopes": [
+      {
+        "Name": "Element 108 Isotope",
+        "MassNumber": 216.0,
+        "HalfLife": null,
+        "RadiationType": null
+      }
+    ],
+    "PhysicalProperties": {
+      "Density": 5.0,
+      "MeltingPoint": 300.0,
+      "BoilingPoint": 1000.0,
+      "TriplePoint": {
+        "Temperature": 250.0,
+        "Pressure": 0.01
+      },
+      "HeatCapacity": 25.0,
+      "StateRanges": [
+        {
+          "TemperatureRange": [
+            0,
+            300
+          ],
+          "PressureRange": [
+            0,
+            1
+          ],
+          "State": "solid"
+        },
+        {
+          "TemperatureRange": [
+            300,
+            1000
+          ],
+          "PressureRange": [
+            0,
+            1
+          ],
+          "State": "liquid"
+        },
+        {
+          "TemperatureRange": [
+            1000,
+            10000
+          ],
+          "PressureRange": [
+            0,
+            1
+          ],
+          "State": "gas"
+        }
+      ]
+    },
+    "ChemicalProperties": {
+      "Electronegativity": 1.5,
+      "IonizationEnergy": 10.0,
+      "Reactivity": 0.5,
+      "Bonding": [
+        "ionic",
+        "covalent"
+      ],
+      "CommonCompounds": []
+    },
+    "CosmicAbundance": 0.011,
+    "DisplayColor": [
+      0.5,
+      0.5,
+      0.5
+    ],
+    "Radiation": 0.0
+  },
+  {
+    "Symbol": "E109",
+    "Name": "Element 109",
+    "AtomicNumber": 109,
+    "AtomicMass": 218.0,
+    "Isotopes": [
+      {
+        "Name": "Element 109 Isotope",
+        "MassNumber": 218.0,
+        "HalfLife": null,
+        "RadiationType": null
+      }
+    ],
+    "PhysicalProperties": {
+      "Density": 5.0,
+      "MeltingPoint": 300.0,
+      "BoilingPoint": 1000.0,
+      "TriplePoint": {
+        "Temperature": 250.0,
+        "Pressure": 0.01
+      },
+      "HeatCapacity": 25.0,
+      "StateRanges": [
+        {
+          "TemperatureRange": [
+            0,
+            300
+          ],
+          "PressureRange": [
+            0,
+            1
+          ],
+          "State": "solid"
+        },
+        {
+          "TemperatureRange": [
+            300,
+            1000
+          ],
+          "PressureRange": [
+            0,
+            1
+          ],
+          "State": "liquid"
+        },
+        {
+          "TemperatureRange": [
+            1000,
+            10000
+          ],
+          "PressureRange": [
+            0,
+            1
+          ],
+          "State": "gas"
+        }
+      ]
+    },
+    "ChemicalProperties": {
+      "Electronegativity": 1.5,
+      "IonizationEnergy": 10.0,
+      "Reactivity": 0.5,
+      "Bonding": [
+        "ionic",
+        "covalent"
+      ],
+      "CommonCompounds": []
+    },
+    "CosmicAbundance": 0.01,
+    "DisplayColor": [
+      0.5,
+      0.5,
+      0.5
+    ],
+    "Radiation": 0.0
+  },
+  {
+    "Symbol": "E110",
+    "Name": "Element 110",
+    "AtomicNumber": 110,
+    "AtomicMass": 220.0,
+    "Isotopes": [
+      {
+        "Name": "Element 110 Isotope",
+        "MassNumber": 220.0,
+        "HalfLife": null,
+        "RadiationType": null
+      }
+    ],
+    "PhysicalProperties": {
+      "Density": 5.0,
+      "MeltingPoint": 300.0,
+      "BoilingPoint": 1000.0,
+      "TriplePoint": {
+        "Temperature": 250.0,
+        "Pressure": 0.01
+      },
+      "HeatCapacity": 25.0,
+      "StateRanges": [
+        {
+          "TemperatureRange": [
+            0,
+            300
+          ],
+          "PressureRange": [
+            0,
+            1
+          ],
+          "State": "solid"
+        },
+        {
+          "TemperatureRange": [
+            300,
+            1000
+          ],
+          "PressureRange": [
+            0,
+            1
+          ],
+          "State": "liquid"
+        },
+        {
+          "TemperatureRange": [
+            1000,
+            10000
+          ],
+          "PressureRange": [
+            0,
+            1
+          ],
+          "State": "gas"
+        }
+      ]
+    },
+    "ChemicalProperties": {
+      "Electronegativity": 1.5,
+      "IonizationEnergy": 10.0,
+      "Reactivity": 0.5,
+      "Bonding": [
+        "ionic",
+        "covalent"
+      ],
+      "CommonCompounds": []
+    },
+    "CosmicAbundance": 0.009000000000000001,
+    "DisplayColor": [
+      0.5,
+      0.5,
+      0.5
+    ],
+    "Radiation": 0.0
+  },
+  {
+    "Symbol": "E111",
+    "Name": "Element 111",
+    "AtomicNumber": 111,
+    "AtomicMass": 222.0,
+    "Isotopes": [
+      {
+        "Name": "Element 111 Isotope",
+        "MassNumber": 222.0,
+        "HalfLife": null,
+        "RadiationType": null
+      }
+    ],
+    "PhysicalProperties": {
+      "Density": 5.0,
+      "MeltingPoint": 300.0,
+      "BoilingPoint": 1000.0,
+      "TriplePoint": {
+        "Temperature": 250.0,
+        "Pressure": 0.01
+      },
+      "HeatCapacity": 25.0,
+      "StateRanges": [
+        {
+          "TemperatureRange": [
+            0,
+            300
+          ],
+          "PressureRange": [
+            0,
+            1
+          ],
+          "State": "solid"
+        },
+        {
+          "TemperatureRange": [
+            300,
+            1000
+          ],
+          "PressureRange": [
+            0,
+            1
+          ],
+          "State": "liquid"
+        },
+        {
+          "TemperatureRange": [
+            1000,
+            10000
+          ],
+          "PressureRange": [
+            0,
+            1
+          ],
+          "State": "gas"
+        }
+      ]
+    },
+    "ChemicalProperties": {
+      "Electronegativity": 1.5,
+      "IonizationEnergy": 10.0,
+      "Reactivity": 0.5,
+      "Bonding": [
+        "ionic",
+        "covalent"
+      ],
+      "CommonCompounds": []
+    },
+    "CosmicAbundance": 0.008,
+    "DisplayColor": [
+      0.5,
+      0.5,
+      0.5
+    ],
+    "Radiation": 0.0
+  },
+  {
+    "Symbol": "E112",
+    "Name": "Element 112",
+    "AtomicNumber": 112,
+    "AtomicMass": 224.0,
+    "Isotopes": [
+      {
+        "Name": "Element 112 Isotope",
+        "MassNumber": 224.0,
+        "HalfLife": null,
+        "RadiationType": null
+      }
+    ],
+    "PhysicalProperties": {
+      "Density": 5.0,
+      "MeltingPoint": 300.0,
+      "BoilingPoint": 1000.0,
+      "TriplePoint": {
+        "Temperature": 250.0,
+        "Pressure": 0.01
+      },
+      "HeatCapacity": 25.0,
+      "StateRanges": [
+        {
+          "TemperatureRange": [
+            0,
+            300
+          ],
+          "PressureRange": [
+            0,
+            1
+          ],
+          "State": "solid"
+        },
+        {
+          "TemperatureRange": [
+            300,
+            1000
+          ],
+          "PressureRange": [
+            0,
+            1
+          ],
+          "State": "liquid"
+        },
+        {
+          "TemperatureRange": [
+            1000,
+            10000
+          ],
+          "PressureRange": [
+            0,
+            1
+          ],
+          "State": "gas"
+        }
+      ]
+    },
+    "ChemicalProperties": {
+      "Electronegativity": 1.5,
+      "IonizationEnergy": 10.0,
+      "Reactivity": 0.5,
+      "Bonding": [
+        "ionic",
+        "covalent"
+      ],
+      "CommonCompounds": []
+    },
+    "CosmicAbundance": 0.007,
+    "DisplayColor": [
+      0.5,
+      0.5,
+      0.5
+    ],
+    "Radiation": 0.0
+  },
+  {
+    "Symbol": "E113",
+    "Name": "Element 113",
+    "AtomicNumber": 113,
+    "AtomicMass": 226.0,
+    "Isotopes": [
+      {
+        "Name": "Element 113 Isotope",
+        "MassNumber": 226.0,
+        "HalfLife": null,
+        "RadiationType": null
+      }
+    ],
+    "PhysicalProperties": {
+      "Density": 5.0,
+      "MeltingPoint": 300.0,
+      "BoilingPoint": 1000.0,
+      "TriplePoint": {
+        "Temperature": 250.0,
+        "Pressure": 0.01
+      },
+      "HeatCapacity": 25.0,
+      "StateRanges": [
+        {
+          "TemperatureRange": [
+            0,
+            300
+          ],
+          "PressureRange": [
+            0,
+            1
+          ],
+          "State": "solid"
+        },
+        {
+          "TemperatureRange": [
+            300,
+            1000
+          ],
+          "PressureRange": [
+            0,
+            1
+          ],
+          "State": "liquid"
+        },
+        {
+          "TemperatureRange": [
+            1000,
+            10000
+          ],
+          "PressureRange": [
+            0,
+            1
+          ],
+          "State": "gas"
+        }
+      ]
+    },
+    "ChemicalProperties": {
+      "Electronegativity": 1.5,
+      "IonizationEnergy": 10.0,
+      "Reactivity": 0.5,
+      "Bonding": [
+        "ionic",
+        "covalent"
+      ],
+      "CommonCompounds": []
+    },
+    "CosmicAbundance": 0.006,
+    "DisplayColor": [
+      0.5,
+      0.5,
+      0.5
+    ],
+    "Radiation": 0.0
+  },
+  {
+    "Symbol": "E114",
+    "Name": "Element 114",
+    "AtomicNumber": 114,
+    "AtomicMass": 228.0,
+    "Isotopes": [
+      {
+        "Name": "Element 114 Isotope",
+        "MassNumber": 228.0,
+        "HalfLife": null,
+        "RadiationType": null
+      }
+    ],
+    "PhysicalProperties": {
+      "Density": 5.0,
+      "MeltingPoint": 300.0,
+      "BoilingPoint": 1000.0,
+      "TriplePoint": {
+        "Temperature": 250.0,
+        "Pressure": 0.01
+      },
+      "HeatCapacity": 25.0,
+      "StateRanges": [
+        {
+          "TemperatureRange": [
+            0,
+            300
+          ],
+          "PressureRange": [
+            0,
+            1
+          ],
+          "State": "solid"
+        },
+        {
+          "TemperatureRange": [
+            300,
+            1000
+          ],
+          "PressureRange": [
+            0,
+            1
+          ],
+          "State": "liquid"
+        },
+        {
+          "TemperatureRange": [
+            1000,
+            10000
+          ],
+          "PressureRange": [
+            0,
+            1
+          ],
+          "State": "gas"
+        }
+      ]
+    },
+    "ChemicalProperties": {
+      "Electronegativity": 1.5,
+      "IonizationEnergy": 10.0,
+      "Reactivity": 0.5,
+      "Bonding": [
+        "ionic",
+        "covalent"
+      ],
+      "CommonCompounds": []
+    },
+    "CosmicAbundance": 0.005,
+    "DisplayColor": [
+      0.5,
+      0.5,
+      0.5
+    ],
+    "Radiation": 0.0
+  },
+  {
+    "Symbol": "E115",
+    "Name": "Element 115",
+    "AtomicNumber": 115,
+    "AtomicMass": 230.0,
+    "Isotopes": [
+      {
+        "Name": "Element 115 Isotope",
+        "MassNumber": 230.0,
+        "HalfLife": null,
+        "RadiationType": null
+      }
+    ],
+    "PhysicalProperties": {
+      "Density": 5.0,
+      "MeltingPoint": 300.0,
+      "BoilingPoint": 1000.0,
+      "TriplePoint": {
+        "Temperature": 250.0,
+        "Pressure": 0.01
+      },
+      "HeatCapacity": 25.0,
+      "StateRanges": [
+        {
+          "TemperatureRange": [
+            0,
+            300
+          ],
+          "PressureRange": [
+            0,
+            1
+          ],
+          "State": "solid"
+        },
+        {
+          "TemperatureRange": [
+            300,
+            1000
+          ],
+          "PressureRange": [
+            0,
+            1
+          ],
+          "State": "liquid"
+        },
+        {
+          "TemperatureRange": [
+            1000,
+            10000
+          ],
+          "PressureRange": [
+            0,
+            1
+          ],
+          "State": "gas"
+        }
+      ]
+    },
+    "ChemicalProperties": {
+      "Electronegativity": 1.5,
+      "IonizationEnergy": 10.0,
+      "Reactivity": 0.5,
+      "Bonding": [
+        "ionic",
+        "covalent"
+      ],
+      "CommonCompounds": []
+    },
+    "CosmicAbundance": 0.004,
+    "DisplayColor": [
+      0.5,
+      0.5,
+      0.5
+    ],
+    "Radiation": 0.0
+  },
+  {
+    "Symbol": "E116",
+    "Name": "Element 116",
+    "AtomicNumber": 116,
+    "AtomicMass": 232.0,
+    "Isotopes": [
+      {
+        "Name": "Element 116 Isotope",
+        "MassNumber": 232.0,
+        "HalfLife": null,
+        "RadiationType": null
+      }
+    ],
+    "PhysicalProperties": {
+      "Density": 5.0,
+      "MeltingPoint": 300.0,
+      "BoilingPoint": 1000.0,
+      "TriplePoint": {
+        "Temperature": 250.0,
+        "Pressure": 0.01
+      },
+      "HeatCapacity": 25.0,
+      "StateRanges": [
+        {
+          "TemperatureRange": [
+            0,
+            300
+          ],
+          "PressureRange": [
+            0,
+            1
+          ],
+          "State": "solid"
+        },
+        {
+          "TemperatureRange": [
+            300,
+            1000
+          ],
+          "PressureRange": [
+            0,
+            1
+          ],
+          "State": "liquid"
+        },
+        {
+          "TemperatureRange": [
+            1000,
+            10000
+          ],
+          "PressureRange": [
+            0,
+            1
+          ],
+          "State": "gas"
+        }
+      ]
+    },
+    "ChemicalProperties": {
+      "Electronegativity": 1.5,
+      "IonizationEnergy": 10.0,
+      "Reactivity": 0.5,
+      "Bonding": [
+        "ionic",
+        "covalent"
+      ],
+      "CommonCompounds": []
+    },
+    "CosmicAbundance": 0.003,
+    "DisplayColor": [
+      0.5,
+      0.5,
+      0.5
+    ],
+    "Radiation": 0.0
+  },
+  {
+    "Symbol": "E117",
+    "Name": "Element 117",
+    "AtomicNumber": 117,
+    "AtomicMass": 234.0,
+    "Isotopes": [
+      {
+        "Name": "Element 117 Isotope",
+        "MassNumber": 234.0,
+        "HalfLife": null,
+        "RadiationType": null
+      }
+    ],
+    "PhysicalProperties": {
+      "Density": 5.0,
+      "MeltingPoint": 300.0,
+      "BoilingPoint": 1000.0,
+      "TriplePoint": {
+        "Temperature": 250.0,
+        "Pressure": 0.01
+      },
+      "HeatCapacity": 25.0,
+      "StateRanges": [
+        {
+          "TemperatureRange": [
+            0,
+            300
+          ],
+          "PressureRange": [
+            0,
+            1
+          ],
+          "State": "solid"
+        },
+        {
+          "TemperatureRange": [
+            300,
+            1000
+          ],
+          "PressureRange": [
+            0,
+            1
+          ],
+          "State": "liquid"
+        },
+        {
+          "TemperatureRange": [
+            1000,
+            10000
+          ],
+          "PressureRange": [
+            0,
+            1
+          ],
+          "State": "gas"
+        }
+      ]
+    },
+    "ChemicalProperties": {
+      "Electronegativity": 1.5,
+      "IonizationEnergy": 10.0,
+      "Reactivity": 0.5,
+      "Bonding": [
+        "ionic",
+        "covalent"
+      ],
+      "CommonCompounds": []
+    },
+    "CosmicAbundance": 0.002,
+    "DisplayColor": [
+      0.5,
+      0.5,
+      0.5
+    ],
+    "Radiation": 0.0
+  },
+  {
+    "Symbol": "E118",
+    "Name": "Element 118",
+    "AtomicNumber": 118,
+    "AtomicMass": 236.0,
+    "Isotopes": [
+      {
+        "Name": "Element 118 Isotope",
+        "MassNumber": 236.0,
+        "HalfLife": null,
+        "RadiationType": null
+      }
+    ],
+    "PhysicalProperties": {
+      "Density": 5.0,
+      "MeltingPoint": 300.0,
+      "BoilingPoint": 1000.0,
+      "TriplePoint": {
+        "Temperature": 250.0,
+        "Pressure": 0.01
+      },
+      "HeatCapacity": 25.0,
+      "StateRanges": [
+        {
+          "TemperatureRange": [
+            0,
+            300
+          ],
+          "PressureRange": [
+            0,
+            1
+          ],
+          "State": "solid"
+        },
+        {
+          "TemperatureRange": [
+            300,
+            1000
+          ],
+          "PressureRange": [
+            0,
+            1
+          ],
+          "State": "liquid"
+        },
+        {
+          "TemperatureRange": [
+            1000,
+            10000
+          ],
+          "PressureRange": [
+            0,
+            1
+          ],
+          "State": "gas"
+        }
+      ]
+    },
+    "ChemicalProperties": {
+      "Electronegativity": 1.5,
+      "IonizationEnergy": 10.0,
+      "Reactivity": 0.5,
+      "Bonding": [
+        "ionic",
+        "covalent"
+      ],
+      "CommonCompounds": []
+    },
+    "CosmicAbundance": 0.001,
+    "DisplayColor": [
+      0.5,
+      0.5,
+      0.5
+    ],
+    "Radiation": 0.0
+  }
+]
