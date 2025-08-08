@@ -1,0 +1,142 @@
+/**
+ * @file
+ * @ingroup InterstellarDocs
+ * @brief Doxygen group definitions for all subsystems.
+ */
+
+/**
+ * @defgroup InterstellarDocs Interstellar Documentation
+ * @brief Meta-group for all Doxygen group definitions and documentation conventions.
+ *
+ * Contains high-level organizational groupings for the Interstellar game engine.
+ * This group helps centralize documentation of core subsystems and modular interfaces.
+ */
+
+/**
+ * @defgroup InterstellarCore Interstellar Core
+ * @ingroup InterstellarDocs
+ * @brief Foundational engine utilities, including logging, diagnostics, and system bootstrapping.
+ *
+ * This includes core systems like logging (`Logger`), severity enums (`LogLevel`),
+ * and lifecycle hooks shared across modules (data, config, input, rendering, etc.).
+ */
+
+/**
+ * @defgroup LogLevelUtils Log Level Utilities
+ * @ingroup InterstellarCore
+ * @brief String parsing and formatting utilities for log levels.
+ */
+
+/**
+ * @defgroup LoggingSystem Logging System
+ * @ingroup InterstellarCore
+ * @brief Engine-wide logging interfaces and adaptive flushing mechanisms.
+ *
+ * Defines the `Logger` class, log categories, and flush strategies based on severity levels.
+ */
+
+/**
+ * @defgroup Initialization Initialization Utilities
+ * @ingroup InterstellarCore
+ * @brief Engine startup routines and bootstrap interfaces.
+ */
+
+/**
+ * @defgroup InputSystem Input System
+ * @ingroup InterstellarDocs
+ * @brief Core module for handling user input (mouse, keyboard, etc.).
+ *
+ * The Input module abstracts platform-specific device handling and exposes
+ * interfaces for querying input states. This includes real-time polling and
+ * frame-based state transitions.
+ */
+
+/**
+ * @defgroup GameInterfaces Game Interfaces
+ * @ingroup InputSystem
+ * @brief Public input interfaces exposed to game logic.
+ */
+
+/**
+ * @defgroup EngineInterfaces Engine Interfaces
+ * @ingroup InputSystem
+ * @brief Internal abstract extensions of the public input interfaces.
+ */
+
+/**
+ * @defgroup KeyCodes KeyCode Definitions
+ * @ingroup InputSystem
+ * @brief Enumerates unified key identifiers for cross-platform input abstraction.
+ *
+ * `KeyCode` allows consistent input mapping across supported platforms.
+ */
+
+/**
+ * @defgroup PlatformImplementations Platform Implementations
+ * @ingroup InputSystem
+ * @brief Concrete input backends for specific platforms (GLFW, SDL, etc.).
+ */
+
+/**
+ * @defgroup InterstellarData Interstellar Data
+ * @ingroup InterstellarDocs
+ * @brief Shared scientific, physical, and domain-specific game data.
+ *
+ * Includes definitions such as chemical elements, planetary constants,
+ * material properties, and scientific reference information used in simulation and rendering.
+ */
+
+/**
+ * @defgroup InterstellarConfig Interstellar Config
+ * @ingroup InterstellarDocs
+ * @brief Configuration framework for serializing/deserializing game data.
+ *
+ * Includes JSON-driven configuration management, file IO abstraction,
+ * editor serialization, and persistent runtime settings.
+ */
+
+/**
+ * @defgroup ConfigStorage Config Storage
+ * @ingroup InterstellarConfig
+ * @brief Abstract file system interfaces for reading and writing configs.
+ *
+ * Includes `IConfigStorage`, `FileSystem`, and related components.
+ */
+
+/**
+ * @defgroup JsonConfig Json Configuration
+ * @ingroup InterstellarConfig
+ * @brief Interfaces and utilities for JSON-based configuration objects.
+ *
+ * Includes `IJsonConfig`, `JsonConfigBase`, `JsonManager`, and `AppConfig`.
+ */
+
+/**
+ * @defgroup RenderingSystem Rendering System
+ * @ingroup InterstellarDocs
+ * @brief [Reserved] Placeholder for rendering pipeline interfaces and systems.
+ */
+
+/**
+ * @defgroup SimulationSystem Simulation System
+ * @ingroup InterstellarDocs
+ * @brief [Reserved] Placeholder for game simulation, AI, and logic orchestration.
+ */
+
+/**
+ * @defgroup AudioSystem Audio System
+ * @ingroup InterstellarDocs
+ * @brief [Reserved] Placeholder for audio mixing, playback, and device interfaces.
+ */
+
+/**
+ * @defgroup UISystem UI System
+ * @ingroup InterstellarDocs
+ * @brief [Reserved] Placeholder for user interface frameworks and layout systems.
+ */
+
+/**
+ * @defgroup SaveLoadSystem Save/Load System
+ * @ingroup InterstellarDocs
+ * @brief [Reserved] Placeholder for game state persistence and serialization.
+ */

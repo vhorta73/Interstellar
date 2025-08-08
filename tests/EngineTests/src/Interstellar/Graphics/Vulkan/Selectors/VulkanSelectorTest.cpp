@@ -2,91 +2,82 @@
 #include <vector>
 #include "Helpers/VulkanSelectorTestHelpers.hpp"
 
-// using namespace Microsoft::VisualStudio::CppUnitTestFramework;
-using namespace TestHelpers;
+namespace Interstellar_Graphics_Vulkan_Selectors_Test {
 
-namespace VulkanSelectorTest
-{
-    TEST(VulkanSelectorWithPreferencesTest, LayerFirst_PicksTopPair)
-    {
-        const std::vector<std::string> layers = {
-            "VK_LAYER_KHRONOS_validation",
-            "VK_LAYER_LUNARG_gfxreconstruct"
-        };
-        static const std::vector<std::string> exts = {
-            "VK_EXT_debug_utils",
-            "VK_KHR_surface"
-        };
+    using TestHelpers::ComputePreferredCombo;
 
-        auto layerExtensionPair = ComputePreferredCombo(layers, exts);
-        Assert::AreEqual(std::string("VK_LAYER_KHRONOS_validation"), layerExtensionPair.first);
-        Assert::AreEqual(std::string("VK_EXT_debug_utils"), layerExtensionPair.second);
-    }
-    TEST(VulkanSelectorWithPreferencesTest, LayerFirst_FallbackToNextExtension)
-    {
-        // Imagine validation layer present but only VK_EXT_debug_report is available
-        static const std::vector<std::string> layers = {
-            "VK_LAYER_KHRONOS_validation"
-        };
-        static const std::vector<std::string> exts = {
-            "VK_EXT_debug_report",    // lower priority than debug_utils
-            "VK_KHR_surface"
-        };
+    using PreferencePair = std::pair<std::string, std::string>;
 
-        auto layerExtensionPair = ComputePreferredCombo(layers, exts);
-        Assert::AreEqual(std::string("VK_LAYER_KHRONOS_validation"), layerExtensionPair.first);
-        Assert::AreEqual(std::string("VK_EXT_debug_report"), layerExtensionPair.second);
+    class VulkanSelectorTest : public ::testing::Test {
+    protected:
+        std::vector<std::string> layers;
+        std::vector<std::string> exts;
+        PreferencePair result;
+
+        void Compute() {
+            result = ComputePreferredCombo(layers, exts);
+        }
+    };
+
+    /// @brief When both validation and gfxreconstruct layers are available,
+    /// pick the highest-priority layer and its top preferred extension.
+    TEST_F(VulkanSelectorTest, LayerFirst_PicksTopPair) {
+        layers = { "VK_LAYER_KHRONOS_validation", "VK_LAYER_LUNARG_gfxreconstruct" };
+        exts = { "VK_EXT_debug_utils", "VK_KHR_surface" };
+        Compute();
+
+        EXPECT_EQ("VK_LAYER_KHRONOS_validation", result.first);
+        EXPECT_EQ("VK_EXT_debug_utils", result.second);
     }
 
-    TEST(VulkanSelectorWithPreferencesTest,LayerFirst_FallbackToFirstAvailableExtension)
-    {
-        // validation present, but none of its preferred exts are available
-        static const std::vector<std::string> layers = {
-            "VK_LAYER_KHRONOS_validation"
-        };
-        static const std::vector<std::string> exts = {
-            "VK_KHR_surface",
-            "VK_EXT_unknown"   // not in any table
-        };
+    /// @brief If only debug_report extension is available, fallback from debug_utils -> debug_report.
+    TEST_F(VulkanSelectorTest, LayerFirst_FallbacksToNextExtension) {
+        layers = { "VK_LAYER_KHRONOS_validation" };
+        exts = { "VK_EXT_debug_report", "VK_KHR_surface" };
+        Compute();
 
-        auto layerExtensionPair = ComputePreferredCombo(layers, exts);
-        Assert::AreEqual(std::string("VK_LAYER_KHRONOS_validation"), layerExtensionPair.first);
-        // fallback picks first in exts vector
-        Assert::AreEqual(std::string("VK_KHR_surface"), layerExtensionPair.second);
+        EXPECT_EQ("VK_LAYER_KHRONOS_validation", result.first);
+        EXPECT_EQ("VK_EXT_debug_report", result.second);
     }
 
-    TEST(VulkanSelectorWithPreferencesTest, ExtensionFirst_PicksTopPair)
-    {
-        // No known layers present, but a known extension with its layer list
-        static const std::vector<std::string> layers = {
-            "Some_Other_Layer"
-        };
-        static const std::vector<std::string> exts = {
-            "VK_EXT_debug_utils",     // maps to VK_LAYER_KHRONOS_validation
-            "VK_KHR_surface"
-        };
+    /// @brief If none of the preferred extensions are present, pick the first available extension.
+    TEST_F(VulkanSelectorTest, LayerFirst_FallbacksToFirstAvailableExtension) {
+        layers = { "VK_LAYER_KHRONOS_validation" };
+        exts = { "VK_KHR_surface", "VK_EXT_unknown" };
+        Compute();
 
-        auto layerExtensionPair = ComputePreferredCombo(layers, exts);
-        const std::string layerName = layerExtensionPair.first;
-        const auto& extPrefs = layerExtensionPair.second;
-
-        Assert::AreEqual(std::string("Some_Other_Layer"), layerName);
-        Assert::AreEqual(std::string("VK_EXT_debug_utils"), extPrefs);
+        EXPECT_EQ("VK_LAYER_KHRONOS_validation", result.first);
+        EXPECT_EQ("VK_KHR_surface", result.second);
     }
 
-    TEST(VulkanSelectorWithPreferencesTest, GenericFallback_WhenNoTableMatches)
-    {
-        // Neither known layers nor known extensions
-        static const std::vector<std::string> layers = {
-            "LAYER_A", "LAYER_B"
-        };
-        static const std::vector<std::string> exts = {
-            "EXT_X", "EXT_Y"
-        };
+    /// @brief With an unknown layer but known extension, keep the provided layer and pick the preferred extension.
+    TEST_F(VulkanSelectorTest, ExtensionFirst_PicksTopPair) {
+        layers = { "Some_Other_Layer" };
+        exts = { "VK_EXT_debug_utils", "VK_KHR_surface" };
+        Compute();
 
-        auto layerExtensionPair = ComputePreferredCombo(layers, exts);
-        // picks first of each list
-        Assert::AreEqual(std::string("LAYER_A"), layerExtensionPair.first);
-        Assert::AreEqual(std::string("EXT_X"), layerExtensionPair.second);
+        EXPECT_EQ("Some_Other_Layer", result.first);
+        EXPECT_EQ("VK_EXT_debug_utils", result.second);
     }
-}
+
+    /// @brief When no known layers or extensions match preferences, fall back to the first of each list.
+    TEST_F(VulkanSelectorTest, GenericFallback_WhenNoTableMatches) {
+        layers = { "LAYER_A", "LAYER_B" };
+        exts = { "EXT_X", "EXT_Y" };
+        Compute();
+
+        EXPECT_EQ("LAYER_A", result.first);
+        EXPECT_EQ("EXT_X", result.second);
+    }
+
+    /// @brief Edge case: empty layers or extensions should produce empty strings in the result.
+    TEST_F(VulkanSelectorTest, EmptyInputs_YieldsEmptyStrings) {
+        layers.clear();
+        exts.clear();
+        Compute();
+
+        EXPECT_EQ("", result.first);
+        EXPECT_EQ("", result.second);
+    }
+
+}  // namespace Interstellar_Graphics_Vulkan_Selectors_Test
