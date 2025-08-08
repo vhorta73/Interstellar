@@ -39,3 +39,21 @@ if(BUILD_TESTING)
   endif()
   add_subdirectory(tests)
 endif()
+
+find_package(Doxygen REQUIRED)
+
+set(DOXYGEN_IN "${CMAKE_SOURCE_DIR}/docs/Doxyfile")
+set(DOXYGEN_OUT "${CMAKE_BINARY_DIR}/docs")
+
+# Optional: sanity check that it exists at configure time
+if(NOT EXISTS "${DOXYGEN_IN}")
+  message(FATAL_ERROR "Doxygen config not found: ${DOXYGEN_IN}")
+endif()
+
+add_custom_target(Documentation ALL
+  # NOTE: COMMAND takes the executable and each argument separately.
+  COMMENT "Generating API docs with Doxygen"
+  VERBATIM
+  WORKING_DIRECTORY "${CMAKE_SOURCE_DIR}"
+  COMMAND "${DOXYGEN_EXECUTABLE}" "${DOXYGEN_IN}"
+)
