@@ -1,7 +1,12 @@
+
 cmake_minimum_required(VERSION 3.29)
 project(Interstellar VERSION 1.0 LANGUAGES CXX)
 
-# Options
+# Silence MSVC deprecation warnings for stdext iterators
+if(MSVC)
+  add_compile_definitions(_SILENCE_STDEXT_ARR_ITERS_DEPRECATION_WARNING)
+endif()
+
 option(BUILD_TESTING "Enable building of tests" ON)
 
 # C++ standard
@@ -20,11 +25,13 @@ FetchContent_Declare(
 set(gtest_force_shared_crt ON CACHE BOOL "" FORCE)
 FetchContent_MakeAvailable(googletest)
 
-enable_testing()
+# Enable CTest for test discovery
+include(CTest)
 
 # Modules
 add_subdirectory(Engine)
 add_subdirectory(Interstellar)
+
 if(BUILD_TESTING)
   # Ensure Vulkan SDK is defined for tests that may use it
   if(NOT DEFINED ENV{VULKAN_SDK})
