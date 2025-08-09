@@ -18,6 +18,14 @@ if(APP_TEST_SOURCES)
     DISCOVERY_MODE PRE_TEST
     WORKING_DIRECTORY $<TARGET_FILE_DIR:AppTests>
   )
+  
+  if (INSTALL_TESTS)
+    install(TARGETS AppTests RUNTIME DESTINATION tests/bin)
+    if (MSVC)
+      install(FILES "$<TARGET_PDB_FILE:AppTests>" DESTINATION tests/bin OPTIONAL)
+    endif()
+  endif()
+
 else()
   message(STATUS "No AppTests sources found; skipping AppTests target")
 endif()

@@ -1,7 +1,4 @@
-# tests/CMakeLists.txt
-# (Top-level CMake already did include(CTest), so we don't repeat it here.)
-
-# Add suites only if they exist
+# Added by top-level: include(CTest) and googletest already provided
 if(EXISTS "${CMAKE_CURRENT_SOURCE_DIR}/EngineTests/CMakeLists.txt")
   add_subdirectory(EngineTests)
 endif()
