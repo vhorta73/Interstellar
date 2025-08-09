@@ -1,6 +1,4 @@
-
 # tests/AppTests/CMakeLists.txt
-
 include(GoogleTest)
 
 file(GLOB_RECURSE APP_TEST_SOURCES src/*.cpp)
@@ -12,9 +10,13 @@ if(APP_TEST_SOURCES)
     ${CMAKE_SOURCE_DIR}/Engine/include
   )
   target_link_libraries(AppTests PRIVATE Engine gtest_main)
+  set_target_properties(AppTests PROPERTIES
+    RUNTIME_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/tests/bin"
+    FOLDER "Tests"
+  )
   gtest_discover_tests(AppTests
-    WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}
-    PROPERTIES LABELS "AppTests"
+    DISCOVERY_MODE PRE_TEST
+    WORKING_DIRECTORY $<TARGET_FILE_DIR:AppTests>
   )
 else()
   message(STATUS "No AppTests sources found; skipping AppTests target")
