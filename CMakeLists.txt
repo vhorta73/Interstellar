@@ -51,6 +51,12 @@ endif()
 
 # ---------- Tests in the build tree ----------
 include(CTest)
+if (EXISTS "${CMAKE_CURRENT_SOURCE_DIR}/tests/EngineTests/CMakeLists.txt}")
+  add_subdirectory(tests/EngineTests)
+endif()
+if (EXISTS "${CMAKE_CURRENT_SOURCE_DIR}/tests/AppTests/CMakeLists.txt}")
+  add_subdirectory(tests/AppTests)
+endif()
 if(BUILD_TESTING)
   include(FetchContent)
   FetchContent_Declare(
@@ -73,6 +79,11 @@ if(BUILD_TESTING)
 endif()
 
 # ---------- Subprojects ----------
+# Utils (header-only or static lib)
+if (EXISTS "${CMAKE_CURRENT_SOURCE_DIR}/Utils/CMakeLists.txt")
+  add_subdirectory(Utils)
+endif()
+
 add_subdirectory(Engine)
 add_subdirectory(Interstellar)
 
@@ -94,7 +105,7 @@ endif()
 # ---------- Packaging ----------
 include(InstallRequiredSystemLibraries)
 set(CPACK_PACKAGE_NAME "Interstellar")
-set(CPACK_PACKAGE_VENDOR "YourCompany")
+set(CPACK_PACKAGE_VENDOR "Imagine")
 set(CPACK_PACKAGE_VERSION "${PROJECT_VERSION}")
 set(CPACK_GENERATOR "ZIP")
 set(CPACK_INCLUDE_TOPLEVEL_DIRECTORY OFF)

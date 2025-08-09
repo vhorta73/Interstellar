@@ -84,6 +84,7 @@ target_link_libraries(Engine
     glm::glm
     Vulkan::Vulkan
     CLI11::CLI11
+    Utils
   PRIVATE
     glfw
     glad

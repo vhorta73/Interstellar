@@ -8,20 +8,13 @@
     "Period": 1,
     "Block": "s",
     "StandardState": "gas",
-    "Color": [
-      0.8,
-      0.8,
-      1.0,
-      0.5
-    ],
-    "CosmicAbundanceCosmicAbundance": {
+    "Color": [ 0.8, 0.8, 1.0 ],
+    "CosmicAbundance": {
       "Value": 0.75,
       "Unit": "fraction of baryonic mass"
     },
     "ElectronConfiguration": "1s1",
-    "ElectronShells": [
-      1
-    ],
+    "ElectronShells": [ 1 ],
     "ValenceElectrons": 1,
     "Isotopes": [
       {
@@ -50,9 +43,7 @@
           "Unit": "years"
         },
         "RadiationType": "beta",
-        "DecayProducts": [
-          "Helium-3"
-        ]
+        "DecayProducts": [ "Helium-3" ]
       }
     ],
     "PhysicalProperties": {
@@ -176,7 +167,7 @@
             "Unit": "K"
           },
           {
-            "Value": 100000000.0,
+            "Value": 1e8,
             "Unit": "K"
           }
         ],
@@ -195,7 +186,7 @@
     ],
     "ChemicalProperties": {
       "Electronegativity": {
-        "Value": 2.2,
+        "Value": 2.20,
         "Unit": "Pauling"
       },
       "IonizationEnergy": {
@@ -217,7 +208,7 @@
         }
       ],
       "StandardReductionPotential": {
-        "Value": 0.0,
+        "Value": 0.00,
         "Unit": "V"
       },
       "Reactivity": {
@@ -261,9 +252,7 @@
         "Unit": "pm"
       },
       "MagneticOrdering": "diamagnetic",
-      "SpinStates": [
-        0.5
-      ],
+      "SpinStates": [ 0.5 ],
       "IsParamagnetic": false,
       "NuclearSpin": 0.5
     },
@@ -296,21 +285,15 @@
     "Period": 1,
     "Block": "s",
     "StandardState": "gas",
-    "Color": [
-      1.0,
-      1.0,
-      1.0,
-      0.5
-    ],
+    "Color": [ 1.0, 1.0, 1.0 ],
     "CosmicAbundance": {
       "Value": 0.23,
       "Unit": "fraction of baryonic mass"
     },
     "ElectronConfiguration": "1s2",
-    "ElectronShells": [
-      2
-    ],
+    "ElectronShells": [ 2 ],
     "ValenceElectrons": 2,
+
     "Isotopes": [
       {
         "Name": "Helium-3",
@@ -329,6 +312,7 @@
         "RadiationType": null
       }
     ],
+
     "PhysicalProperties": {
       "Density": {
         "Value": 0.0001786,
@@ -373,6 +357,7 @@
         "Unit": "J/mol*K"
       }
     },
+
     "StateRanges": [
       {
         "TemperatureRange": [
@@ -450,7 +435,7 @@
             "Unit": "K"
           },
           {
-            "Value": 100000000.0,
+            "Value": 1e8,
             "Unit": "K"
           }
         ],
@@ -467,6 +452,7 @@
         "State": "plasma"
       }
     ],
+
     "ChemicalProperties": {
       "Electronegativity": null,
       "IonizationEnergy": {
@@ -497,6 +483,7 @@
       "Bonding": [],
       "CommonCompounds": []
     },
+
     "QuantumProperties": {
       "AtomicRadius": {
         "Value": 31,
@@ -515,6 +502,7 @@
       "IsParamagnetic": false,
       "NuclearSpin": 0
     },
+
     "EnvironmentalBehavior": {
       "Solubility": {
         "InWater": {
@@ -540,21 +528,13 @@
     "Period": 2,
     "Block": "s",
     "StandardState": "solid",
-    "Color": [
-      0.8,
-      0.8,
-      0.8,
-      1.0
-    ],
+    "Color": [ 0.8, 0.8, 0.8 ],
     "CosmicAbundance": {
-      "Value": 0.0001,
+      "Value": 1e-4,
       "Unit": "fraction of baryonic mass"
     },
     "ElectronConfiguration": "[He] 2s1",
-    "ElectronShells": [
-      2,
-      1
-    ],
+    "ElectronShells": [ 2, 1 ],
     "ValenceElectrons": 1,
     "Isotopes": [
       {
@@ -598,7 +578,7 @@
         }
       },
       "HeatCapacity": {
-        "Value": 35.7,
+        "Value": 35.70,
         "Unit": "J/mol*K"
       },
       "ThermalConductivity": {
@@ -695,7 +675,7 @@
             "Unit": "K"
           },
           {
-            "Value": 100000000.0,
+            "Value": 1e8,
             "Unit": "K"
           }
         ],
@@ -766,9 +746,7 @@
         "Unit": "pm"
       },
       "MagneticOrdering": "paramagnetic",
-      "SpinStates": [
-        0.5
-      ],
+      "SpinStates": [ 0.5 ],
       "IsParamagnetic": true,
       "NuclearSpin": 1.0
     },
@@ -800,21 +778,13 @@
     "Period": 2,
     "Block": "s",
     "StandardState": "solid",
-    "Color": [
-      0.8,
-      0.9,
-      0.9,
-      1.0
-    ],
+    "Color": [ 0.8, 0.9, 0.9 ],
     "CosmicAbundance": {
       "Value": 2.4e-11,
       "Unit": "fraction of baryonic mass"
     },
     "ElectronConfiguration": "[He] 2s2",
-    "ElectronShells": [
-      2,
-      2
-    ],
+    "ElectronShells": [ 2, 2 ],
     "ValenceElectrons": 2,
     "Isotopes": [
       {
@@ -831,13 +801,11 @@
         "IsStable": false,
         "NaturalAbundance": 0.0,
         "HalfLife": {
-          "Value": 1390000.0,
+          "Value": 1.39e6,
           "Unit": "years"
         },
         "RadiationType": "beta",
-        "DecayProducts": [
-          "Boron-10"
-        ]
+        "DecayProducts": [ "Boron-10" ]
       }
     ],
     "PhysicalProperties": {
@@ -988,15 +956,8 @@
         "Value": 0.7,
         "Scale": "0-1"
       },
-      "Bonding": [
-        "metallic",
-        "ionic (in compounds)"
-      ],
-      "CommonCompounds": [
-        "BeCl2",
-        "BeO",
-        "Be(OH)2"
-      ],
+      "Bonding": [ "metallic", "ionic (in compounds)" ],
+      "CommonCompounds": [ "BeCl2", "BeO", "Be(OH)2" ],
       "HybridizationExamples": [
         {
           "Molecule": "BeCl2",
@@ -1018,9 +979,7 @@
         "Unit": "pm"
       },
       "MagneticOrdering": "diamagnetic",
-      "SpinStates": [
-        0
-      ],
+      "SpinStates": [ 0 ],
       "IsParamagnetic": false,
       "NuclearSpin": 1.5
     },
@@ -1037,10 +996,7 @@
       },
       "Toxicity": "toxic if inhaled as dust",
       "BiologicalRole": "no known essential role",
-      "Hazards": [
-        "toxic dust",
-        "lung damage upon inhalation"
-      ]
+      "Hazards": [ "toxic dust", "lung damage upon inhalation" ]
     }
   },
   {
@@ -1052,21 +1008,13 @@
     "Period": 2,
     "Block": "p",
     "StandardState": "solid",
-    "Color": [
-      0.9,
-      0.6,
-      0.2,
-      1.0
-    ],
+    "Color": [ 0.9, 0.6, 0.2 ],
     "CosmicAbundance": {
       "Value": 1e-10,
       "Unit": "fraction of baryonic mass"
     },
     "ElectronConfiguration": "[He] 2s2 2p1",
-    "ElectronShells": [
-      2,
-      3
-    ],
+    "ElectronShells": [ 2, 3 ],
     "ValenceElectrons": 3,
     "Isotopes": [
       {
@@ -1207,7 +1155,7 @@
             "Unit": "K"
           },
           {
-            "Value": 100000000.0,
+            "Value": 1e8,
             "Unit": "K"
           }
         ],
@@ -1284,9 +1232,7 @@
         "Unit": "pm"
       },
       "MagneticOrdering": "diamagnetic",
-      "SpinStates": [
-        1.5
-      ],
+      "SpinStates": [ 1.5 ],
       "IsParamagnetic": false,
       "NuclearSpin": 3.0
     },
@@ -1318,26 +1264,18 @@
     "Period": 2,
     "Block": "p",
     "StandardState": "solid",
-    "Color": [
-      0.2,
-      0.2,
-      0.2,
-      1.0
-    ],
+    "Color": [ 0.2, 0.2, 0.2 ],
     "CosmicAbundance": {
-      "Value": 0.00024,
+      "Value": 2.4e-4,
       "Unit": "fraction of baryonic mass"
     },
     "ElectronConfiguration": "[He] 2s2 2p2",
-    "ElectronShells": [
-      2,
-      4
-    ],
+    "ElectronShells": [ 2, 4 ],
     "ValenceElectrons": 4,
     "Isotopes": [
       {
         "Name": "Carbon-12",
-        "MassNumber": 12.0,
+        "MassNumber": 12.000,
         "IsStable": true,
         "NaturalAbundance": 98.93,
         "HalfLife": null,
@@ -1361,9 +1299,7 @@
           "Unit": "years"
         },
         "RadiationType": "beta",
-        "DecayProducts": [
-          "Nitrogen-14"
-        ]
+        "DecayProducts": [ "Nitrogen-14" ]
       }
     ],
     "PhysicalProperties": {
@@ -1487,7 +1423,7 @@
             "Unit": "K"
           },
           {
-            "Value": 100000000.0,
+            "Value": 1e8,
             "Unit": "K"
           }
         ],
@@ -1511,7 +1447,7 @@
       },
       "IonizationEnergy": {
         "First": {
-          "Value": 11.26,
+          "Value": 11.260,
           "Unit": "eV"
         }
       },
@@ -1534,7 +1470,7 @@
         }
       ],
       "StandardReductionPotential": {
-        "Value": 0.2,
+        "Value": 0.20,
         "Unit": "V"
       },
       "Reactivity": {
@@ -1581,9 +1517,7 @@
         "Unit": "pm"
       },
       "MagneticOrdering": "diamagnetic",
-      "SpinStates": [
-        1
-      ],
+      "SpinStates": [ 1 ],
       "IsParamagnetic": false,
       "NuclearSpin": 0
     },
@@ -1615,21 +1549,13 @@
     "Period": 2,
     "Block": "p",
     "StandardState": "gas",
-    "Color": [
-      0.5,
-      0.5,
-      1.0,
-      0.5
-    ],
+    "Color": [ 0.5, 0.5, 1.0 ],
     "CosmicAbundance": {
-      "Value": 0.0001,
+      "Value": 1e-4,
       "Unit": "fraction of baryonic mass"
     },
     "ElectronConfiguration": "[He] 2s2 2p3",
-    "ElectronShells": [
-      2,
-      5
-    ],
+    "ElectronShells": [ 2, 5 ],
     "ValenceElectrons": 5,
     "Isotopes": [
       {
@@ -1642,7 +1568,7 @@
       },
       {
         "Name": "Nitrogen-15",
-        "MassNumber": 15.0,
+        "MassNumber": 15.000,
         "IsStable": true,
         "NaturalAbundance": 0.37,
         "HalfLife": null,
@@ -1770,7 +1696,7 @@
             "Unit": "K"
           },
           {
-            "Value": 100000000.0,
+            "Value": 1e8,
             "Unit": "K"
           }
         ],
@@ -1825,7 +1751,7 @@
         }
       ],
       "StandardReductionPotential": {
-        "Value": 0.8,
+        "Value": 0.80,
         "Unit": "V"
       },
       "Reactivity": {
@@ -1868,9 +1794,7 @@
         "Unit": "pm"
       },
       "MagneticOrdering": "diamagnetic",
-      "SpinStates": [
-        0.5
-      ],
+      "SpinStates": [ 0.5 ],
       "IsParamagnetic": false,
       "NuclearSpin": 1.0
     },
@@ -1902,21 +1826,13 @@
     "Period": 2,
     "Block": "p",
     "StandardState": "gas",
-    "Color": [
-      0.4,
-      0.6,
-      1.0,
-      0.5
-    ],
+    "Color": [ 0.4, 0.6, 1.0 ],
     "CosmicAbundance": {
       "Value": 0.009,
       "Unit": "fraction of baryonic mass"
     },
     "ElectronConfiguration": "[He] 2s2 2p4",
-    "ElectronShells": [
-      2,
-      6
-    ],
+    "ElectronShells": [ 2, 6 ],
     "ValenceElectrons": 6,
     "Isotopes": [
       {
@@ -1954,7 +1870,7 @@
         "Unit": "K"
       },
       "BoilingPoint": {
-        "Value": 90.2,
+        "Value": 90.20,
         "Unit": "K"
       },
       "TriplePoint": {
@@ -2019,7 +1935,7 @@
             "Unit": "K"
           },
           {
-            "Value": 90.2,
+            "Value": 90.20,
             "Unit": "K"
           }
         ],
@@ -2038,7 +1954,7 @@
       {
         "TemperatureRange": [
           {
-            "Value": 90.2,
+            "Value": 90.20,
             "Unit": "K"
           },
           {
@@ -2065,7 +1981,7 @@
             "Unit": "K"
           },
           {
-            "Value": 100000000.0,
+            "Value": 1e8,
             "Unit": "K"
           }
         ],
@@ -2162,9 +2078,7 @@
         "Unit": "pm"
       },
       "MagneticOrdering": "paramagnetic",
-      "SpinStates": [
-        1
-      ],
+      "SpinStates": [ 1 ],
       "IsParamagnetic": true,
       "NuclearSpin": 0
     },
@@ -2197,21 +2111,13 @@
     "Period": 2,
     "Block": "p",
     "StandardState": "gas",
-    "Color": [
-      0.8,
-      1.0,
-      0.6,
-      0.5
-    ],
+    "Color": [ 0.8, 1.0, 0.6 ],
     "CosmicAbundance": {
-      "Value": 4e-07,
+      "Value": 4e-7,
       "Unit": "fraction of baryonic mass"
     },
     "ElectronConfiguration": "[He] 2s2 2p5",
-    "ElectronShells": [
-      2,
-      7
-    ],
+    "ElectronShells": [ 2, 7 ],
     "ValenceElectrons": 7,
     "Isotopes": [
       {
@@ -2344,7 +2250,7 @@
             "Unit": "K"
           },
           {
-            "Value": 100000000.0,
+            "Value": 1e8,
             "Unit": "K"
           }
         ],
@@ -2421,9 +2327,7 @@
         "Unit": "pm"
       },
       "MagneticOrdering": "diamagnetic",
-      "SpinStates": [
-        0.5
-      ],
+      "SpinStates": [ 0.5 ],
       "IsParamagnetic": false,
       "NuclearSpin": 0.5
     },
@@ -2456,21 +2360,13 @@
     "Period": 2,
     "Block": "p",
     "StandardState": "gas",
-    "Color": [
-      0.7,
-      0.9,
-      1.0,
-      0.5
-    ],
+    "Color": [ 0.7, 0.9, 1.0 ],
     "CosmicAbundance": {
-      "Value": 0.001,
+      "Value": 1e-3,
       "Unit": "fraction of baryonic mass"
     },
     "ElectronConfiguration": "[He] 2s2 2p6",
-    "ElectronShells": [
-      2,
-      8
-    ],
+    "ElectronShells": [ 2, 8 ],
     "ValenceElectrons": 8,
     "Isotopes": [
       {
@@ -2619,7 +2515,7 @@
             "Unit": "K"
           },
           {
-            "Value": 100000000.0,
+            "Value": 1e8,
             "Unit": "K"
           }
         ],
@@ -2707,27 +2603,18 @@
     "Period": 3,
     "Block": "s",
     "StandardState": "solid",
-    "Color": [
-      0.9,
-      0.9,
-      0.8,
-      1.0
-    ],
+    "Color": [ 0.9, 0.9, 0.8 ],
     "CosmicAbundance": {
-      "Value": 0.0002,
+      "Value": 2e-4,
       "Unit": "fraction of baryonic mass"
     },
     "ElectronConfiguration": "[Ne] 3s1",
-    "ElectronShells": [
-      2,
-      8,
-      1
-    ],
+    "ElectronShells": [ 2, 8, 1 ],
     "ValenceElectrons": 1,
     "Isotopes": [
       {
         "Name": "Sodium-23",
-        "MassNumber": 22.99,
+        "MassNumber": 22.990,
         "IsStable": true,
         "NaturalAbundance": 100.0,
         "HalfLife": null,
@@ -2766,7 +2653,7 @@
         "Unit": "W/m*K"
       },
       "EnthalpyOfFusion": {
-        "Value": 2.6,
+        "Value": 2.60,
         "Unit": "kJ/mol"
       },
       "EnthalpyOfVaporization": {
@@ -2855,7 +2742,7 @@
             "Unit": "K"
           },
           {
-            "Value": 100000000.0,
+            "Value": 1e8,
             "Unit": "K"
           }
         ],
@@ -2927,9 +2814,7 @@
         "Unit": "pm"
       },
       "MagneticOrdering": "paramagnetic",
-      "SpinStates": [
-        0.5
-      ],
+      "SpinStates": [ 0.5 ],
       "IsParamagnetic": true,
       "NuclearSpin": 3.5
     },
@@ -2962,22 +2847,13 @@
     "Period": 3,
     "Block": "s",
     "StandardState": "solid",
-    "Color": [
-      0.85,
-      0.85,
-      0.85,
-      1.0
-    ],
+    "Color": [ 0.85, 0.85, 0.85 ],
     "CosmicAbundance": {
-      "Value": 0.0006,
+      "Value": 6.0e-4,
       "Unit": "fraction of baryonic mass"
     },
     "ElectronConfiguration": "[Ne] 3s2",
-    "ElectronShells": [
-      2,
-      8,
-      2
-    ],
+    "ElectronShells": [ 2, 8, 2 ],
     "ValenceElectrons": 2,
     "Isotopes": [
       {
@@ -2992,7 +2868,7 @@
         "Name": "Magnesium-25",
         "MassNumber": 24.986,
         "IsStable": true,
-        "NaturalAbundance": 10.0,
+        "NaturalAbundance": 10.00,
         "HalfLife": null,
         "RadiationType": null
       },
@@ -3126,7 +3002,7 @@
             "Unit": "K"
           },
           {
-            "Value": 100000000.0,
+            "Value": 1e8,
             "Unit": "K"
           }
         ],
@@ -3198,9 +3074,7 @@
         "Unit": "pm"
       },
       "MagneticOrdering": "paramagnetic",
-      "SpinStates": [
-        0.5
-      ],
+      "SpinStates": [ 0.5 ],
       "IsParamagnetic": true,
       "NuclearSpin": 2.5
     },
@@ -3232,22 +3106,13 @@
     "Period": 3,
     "Block": "p",
     "StandardState": "solid",
-    "Color": [
-      0.8,
-      0.85,
-      0.9,
-      1.0
-    ],
+    "Color": [ 0.8, 0.85, 0.9 ],
     "CosmicAbundance": {
-      "Value": 5e-05,
+      "Value": 5e-5,
       "Unit": "fraction of baryonic mass"
     },
     "ElectronConfiguration": "[Ne] 3s2 3p1",
-    "ElectronShells": [
-      2,
-      8,
-      3
-    ],
+    "ElectronShells": [ 2, 8, 3 ],
     "ValenceElectrons": 3,
     "Isotopes": [
       {
@@ -3261,7 +3126,7 @@
     ],
     "PhysicalProperties": {
       "Density": {
-        "Value": 2.7,
+        "Value": 2.70,
         "Unit": "g/cm*"
       },
       "MeltingPoint": {
@@ -3283,7 +3148,7 @@
         }
       },
       "HeatCapacity": {
-        "Value": 24.2,
+        "Value": 24.20,
         "Unit": "J/mol*K"
       },
       "ThermalConductivity": {
@@ -3380,7 +3245,7 @@
             "Unit": "K"
           },
           {
-            "Value": 100000000.0,
+            "Value": 1e8,
             "Unit": "K"
           }
         ],
@@ -3452,9 +3317,7 @@
         "Unit": "pm"
       },
       "MagneticOrdering": "diamagnetic",
-      "SpinStates": [
-        0.5
-      ],
+      "SpinStates": [ 0.5 ],
       "IsParamagnetic": false,
       "NuclearSpin": 2.5
     },
@@ -3486,22 +3349,13 @@
     "Period": 3,
     "Block": "p",
     "StandardState": "solid",
-    "Color": [
-      0.75,
-      0.8,
-      0.8,
-      1.0
-    ],
+    "Color": [ 0.75, 0.8, 0.8 ],
     "CosmicAbundance": {
-      "Value": 0.00065,
+      "Value": 6.5e-4,
       "Unit": "fraction of baryonic mass"
     },
     "ElectronConfiguration": "[Ne] 3s2 3p2",
-    "ElectronShells": [
-      2,
-      8,
-      4
-    ],
+    "ElectronShells": [ 2, 8, 4 ],
     "ValenceElectrons": 4,
     "Isotopes": [
       {
@@ -3524,7 +3378,7 @@
         "Name": "Silicon-30",
         "MassNumber": 29.974,
         "IsStable": true,
-        "NaturalAbundance": 3.1,
+        "NaturalAbundance": 3.10,
         "HalfLife": null,
         "RadiationType": null
       }
@@ -3650,7 +3504,7 @@
             "Unit": "K"
           },
           {
-            "Value": 100000000.0,
+            "Value": 1e8,
             "Unit": "K"
           }
         ],
@@ -3669,7 +3523,7 @@
     ],
     "ChemicalProperties": {
       "Electronegativity": {
-        "Value": 1.9,
+        "Value": 1.90,
         "Unit": "Pauling"
       },
       "IonizationEnergy": {
@@ -3728,9 +3582,7 @@
         "Unit": "pm"
       },
       "MagneticOrdering": "diamagnetic",
-      "SpinStates": [
-        0
-      ],
+      "SpinStates": [ 0 ],
       "IsParamagnetic": false,
       "NuclearSpin": 0
     },
@@ -3761,22 +3613,13 @@
     "Period": 3,
     "Block": "p",
     "StandardState": "solid",
-    "Color": [
-      0.75,
-      0.8,
-      0.8,
-      1.0
-    ],
+    "Color": [ 0.75, 0.8, 0.8 ],
     "CosmicAbundance": {
-      "Value": 0.00065,
+      "Value": 6.5e-4,
       "Unit": "fraction of baryonic mass"
     },
     "ElectronConfiguration": "[Ne] 3s2 3p2",
-    "ElectronShells": [
-      2,
-      8,
-      4
-    ],
+    "ElectronShells": [ 2, 8, 4 ],
     "ValenceElectrons": 4,
     "Isotopes": [
       {
@@ -3799,7 +3642,7 @@
         "Name": "Silicon-30",
         "MassNumber": 29.974,
         "IsStable": true,
-        "NaturalAbundance": 3.1,
+        "NaturalAbundance": 3.10,
         "HalfLife": null,
         "RadiationType": null
       }
@@ -3925,7 +3768,7 @@
             "Unit": "K"
           },
           {
-            "Value": 100000000.0,
+            "Value": 1e8,
             "Unit": "K"
           }
         ],
@@ -3944,7 +3787,7 @@
     ],
     "ChemicalProperties": {
       "Electronegativity": {
-        "Value": 1.9,
+        "Value": 1.90,
         "Unit": "Pauling"
       },
       "IonizationEnergy": {
@@ -4003,9 +3846,7 @@
         "Unit": "pm"
       },
       "MagneticOrdering": "diamagnetic",
-      "SpinStates": [
-        0
-      ],
+      "SpinStates": [ 0 ],
       "IsParamagnetic": false,
       "NuclearSpin": 0
     },
@@ -4036,22 +3877,13 @@
     "Period": 3,
     "Block": "p",
     "StandardState": "solid",
-    "Color": [
-      1.0,
-      1.0,
-      0.6,
-      1.0
-    ],
+    "Color": [ 1.0, 1.0, 0.6 ],
     "CosmicAbundance": {
-      "Value": 1e-05,
+      "Value": 1e-5,
       "Unit": "fraction of baryonic mass"
     },
     "ElectronConfiguration": "[Ne] 3s2 3p3",
-    "ElectronShells": [
-      2,
-      8,
-      5
-    ],
+    "ElectronShells": [ 2, 8, 5 ],
     "ValenceElectrons": 5,
     "Isotopes": [
       {
@@ -4184,7 +4016,7 @@
             "Unit": "K"
           },
           {
-            "Value": 100000000.0,
+            "Value": 1e8,
             "Unit": "K"
           }
         ],
@@ -4265,9 +4097,7 @@
         "Unit": "pm"
       },
       "MagneticOrdering": "diamagnetic",
-      "SpinStates": [
-        0.5
-      ],
+      "SpinStates": [ 0.5 ],
       "IsParamagnetic": false,
       "NuclearSpin": 0.5
     },
@@ -4299,22 +4129,13 @@
     "Period": 3,
     "Block": "p",
     "StandardState": "solid",
-    "Color": [
-      1.0,
-      1.0,
-      0.3,
-      1.0
-    ],
+    "Color": [ 1.0, 1.0, 0.3 ],
     "CosmicAbundance": {
-      "Value": 0.0001,
+      "Value": 1e-4,
       "Unit": "fraction of baryonic mass"
     },
     "ElectronConfiguration": "[Ne] 3s2 3p4",
-    "ElectronShells": [
-      2,
-      8,
-      6
-    ],
+    "ElectronShells": [ 2, 8, 6 ],
     "ValenceElectrons": 6,
     "Isotopes": [
       {
@@ -4471,7 +4292,7 @@
             "Unit": "K"
           },
           {
-            "Value": 100000000.0,
+            "Value": 1e8,
             "Unit": "K"
           }
         ],
@@ -4560,9 +4381,7 @@
         "Unit": "pm"
       },
       "MagneticOrdering": "diamagnetic",
-      "SpinStates": [
-        0
-      ],
+      "SpinStates": [ 0 ],
       "IsParamagnetic": false,
       "NuclearSpin": 0
     },
@@ -4594,22 +4413,13 @@
     "Period": 3,
     "Block": "p",
     "StandardState": "gas",
-    "Color": [
-      0.7,
-      1.0,
-      0.7,
-      0.5
-    ],
+    "Color": [ 0.7, 1.0, 0.7 ],
     "CosmicAbundance": {
-      "Value": 3e-07,
+      "Value": 3e-7,
       "Unit": "fraction of baryonic mass"
     },
     "ElectronConfiguration": "[Ne] 3s2 3p5",
-    "ElectronShells": [
-      2,
-      8,
-      7
-    ],
+    "ElectronShells": [ 2, 8, 7 ],
     "ValenceElectrons": 7,
     "Isotopes": [
       {
@@ -4750,7 +4560,7 @@
             "Unit": "K"
           },
           {
-            "Value": 100000000.0,
+            "Value": 1e8,
             "Unit": "K"
           }
         ],
@@ -4843,9 +4653,7 @@
         "Unit": "pm"
       },
       "MagneticOrdering": "diamagnetic",
-      "SpinStates": [
-        0.5
-      ],
+      "SpinStates": [ 0.5 ],
       "IsParamagnetic": false,
       "NuclearSpin": 1.5
     },
@@ -4877,22 +4685,13 @@
     "Period": 3,
     "Block": "p",
     "StandardState": "gas",
-    "Color": [
-      0.85,
-      1.0,
-      1.0,
-      0.5
-    ],
+    "Color": [ 0.85, 1.0, 1.0 ],
     "CosmicAbundance": {
-      "Value": 3.6e-06,
+      "Value": 3.6e-6,
       "Unit": "fraction of baryonic mass"
     },
     "ElectronConfiguration": "[Ne] 3s2 3p6",
-    "ElectronShells": [
-      2,
-      8,
-      8
-    ],
+    "ElectronShells": [ 2, 8, 8 ],
     "ValenceElectrons": 8,
     "Isotopes": [
       {
@@ -4915,7 +4714,7 @@
         "Name": "Argon-40",
         "MassNumber": 39.962,
         "IsStable": true,
-        "NaturalAbundance": 99.6,
+        "NaturalAbundance": 99.600,
         "HalfLife": null,
         "RadiationType": null
       }
@@ -4930,7 +4729,7 @@
         "Unit": "K"
       },
       "BoilingPoint": {
-        "Value": 87.3,
+        "Value": 87.30,
         "Unit": "K"
       },
       "TriplePoint": {
@@ -4995,7 +4794,7 @@
             "Unit": "K"
           },
           {
-            "Value": 87.3,
+            "Value": 87.30,
             "Unit": "K"
           }
         ],
@@ -5014,7 +4813,7 @@
       {
         "TemperatureRange": [
           {
-            "Value": 87.3,
+            "Value": 87.30,
             "Unit": "K"
           },
           {
@@ -5041,7 +4840,7 @@
             "Unit": "K"
           },
           {
-            "Value": 100000000.0,
+            "Value": 1e8,
             "Unit": "K"
           }
         ],
@@ -5127,23 +4926,13 @@
     "Period": 4,
     "Block": "s",
     "StandardState": "solid",
-    "Color": [
-      0.6,
-      0.6,
-      0.6,
-      1.0
-    ],
+    "Color": [ 0.6, 0.6, 0.6 ],
     "CosmicAbundance": {
-      "Value": 3e-05,
+      "Value": 3e-5,
       "Unit": "fraction of baryonic mass"
     },
     "ElectronConfiguration": "[Ar] 4s1",
-    "ElectronShells": [
-      2,
-      8,
-      8,
-      1
-    ],
+    "ElectronShells": [ 2, 8, 8, 1 ],
     "ValenceElectrons": 1,
     "Isotopes": [
       {
@@ -5160,14 +4949,11 @@
         "IsStable": false,
         "NaturalAbundance": 0.0117,
         "HalfLife": {
-          "Value": 1248000000.0,
+          "Value": 1.248e9,
           "Unit": "years"
         },
         "RadiationType": "beta",
-        "DecayProducts": [
-          "Calcium-40",
-          "Argon-40"
-        ]
+        "DecayProducts": [ "Calcium-40", "Argon-40" ]
       },
       {
         "Name": "Potassium-41",
@@ -5299,7 +5085,7 @@
             "Unit": "K"
           },
           {
-            "Value": 100000000.0,
+            "Value": 1e8,
             "Unit": "K"
           }
         ],
@@ -5371,9 +5157,7 @@
         "Unit": "pm"
       },
       "MagneticOrdering": "paramagnetic",
-      "SpinStates": [
-        0.5
-      ],
+      "SpinStates": [ 0.5 ],
       "IsParamagnetic": true,
       "NuclearSpin": 1.5
     },
@@ -5405,23 +5189,13 @@
     "Period": 4,
     "Block": "s",
     "StandardState": "solid",
-    "Color": [
-      0.9,
-      0.9,
-      0.9,
-      1.0
-    ],
+    "Color": [ 0.9, 0.9, 0.9 ],
     "CosmicAbundance": {
-      "Value": 6e-05,
+      "Value": 6e-5,
       "Unit": "fraction of baryonic mass"
     },
     "ElectronConfiguration": "[Ar] 4s2",
-    "ElectronShells": [
-      2,
-      8,
-      8,
-      2
-    ],
+    "ElectronShells": [ 2, 8, 8, 2 ],
     "ValenceElectrons": 2,
     "Isotopes": [
       {
@@ -5594,7 +5368,7 @@
             "Unit": "K"
           },
           {
-            "Value": 100000000.0,
+            "Value": 1e8,
             "Unit": "K"
           }
         ],
@@ -5666,9 +5440,7 @@
         "Unit": "pm"
       },
       "MagneticOrdering": "paramagnetic",
-      "SpinStates": [
-        0.5
-      ],
+      "SpinStates": [ 0.5 ],
       "IsParamagnetic": true,
       "NuclearSpin": 0
     },
@@ -5700,23 +5472,13 @@
     "Period": 4,
     "Block": "d",
     "StandardState": "solid",
-    "Color": [
-      0.8,
-      0.85,
-      0.9,
-      1.0
-    ],
+    "Color": [ 0.8, 0.85, 0.9 ],
     "CosmicAbundance": {
-      "Value": 3e-07,
+      "Value": 3e-7,
       "Unit": "fraction of baryonic mass"
     },
     "ElectronConfiguration": "[Ar] 3d1 4s2",
-    "ElectronShells": [
-      2,
-      8,
-      9,
-      2
-    ],
+    "ElectronShells": [ 2, 8, 9, 2 ],
     "ValenceElectrons": 3,
     "Isotopes": [
       {
@@ -5849,7 +5611,7 @@
             "Unit": "K"
           },
           {
-            "Value": 100000000.0,
+            "Value": 1e8,
             "Unit": "K"
           }
         ],
@@ -5920,9 +5682,7 @@
         "Unit": "pm"
       },
       "MagneticOrdering": "paramagnetic",
-      "SpinStates": [
-        0.5
-      ],
+      "SpinStates": [ 0.5 ],
       "IsParamagnetic": true,
       "NuclearSpin": 3.5
     },
@@ -5953,23 +5713,13 @@
     "Period": 4,
     "Block": "d",
     "StandardState": "solid",
-    "Color": [
-      0.7,
-      0.8,
-      0.9,
-      1.0
-    ],
+    "Color": [ 0.7, 0.8, 0.9 ],
     "CosmicAbundance": {
-      "Value": 3e-06,
+      "Value": 3e-6,
       "Unit": "fraction of baryonic mass"
     },
     "ElectronConfiguration": "[Ar] 3d2 4s2",
-    "ElectronShells": [
-      2,
-      8,
-      10,
-      2
-    ],
+    "ElectronShells": [ 2, 8, 10, 2 ],
     "ValenceElectrons": 4,
     "Isotopes": [
       {
@@ -6134,7 +5884,7 @@
             "Unit": "K"
           },
           {
-            "Value": 100000000.0,
+            "Value": 1e8,
             "Unit": "K"
           }
         ],
@@ -6214,9 +5964,7 @@
         "Unit": "pm"
       },
       "MagneticOrdering": "paramagnetic",
-      "SpinStates": [
-        0.5
-      ],
+      "SpinStates": [ 0.5 ],
       "IsParamagnetic": true,
       "NuclearSpin": 0.0
     },
@@ -6238,6 +5986,7 @@
         "metal powder ignition risk"
       ]
     }
+
   },
   {
     "Symbol": "V",
@@ -6248,23 +5997,13 @@
     "Period": 4,
     "Block": "d",
     "StandardState": "solid",
-    "Color": [
-      0.7,
-      0.6,
-      0.8,
-      1.0
-    ],
+    "Color": [ 0.7, 0.6, 0.8 ],
     "CosmicAbundance": {
-      "Value": 1e-06,
+      "Value": 1e-6,
       "Unit": "fraction of baryonic mass"
     },
     "ElectronConfiguration": "[Ar] 3d3 4s2",
-    "ElectronShells": [
-      2,
-      8,
-      11,
-      2
-    ],
+    "ElectronShells": [ 2, 8, 11, 2 ],
     "ValenceElectrons": 5,
     "Isotopes": [
       {
@@ -6281,13 +6020,11 @@
         "IsStable": false,
         "NaturalAbundance": 0.25,
         "HalfLife": {
-          "Value": 1.45e+17,
+          "Value": 1.45e17,
           "Unit": "years"
         },
         "RadiationType": "beta",
-        "DecayProducts": [
-          "Chromium-50"
-        ]
+        "DecayProducts": [ "Chromium-50" ]
       }
     ],
     "PhysicalProperties": {
@@ -6401,7 +6138,7 @@
             "Unit": "K"
           },
           {
-            "Value": 100000000.0,
+            "Value": 1e8,
             "Unit": "K"
           }
         ],
@@ -6485,9 +6222,7 @@
         "Unit": "pm"
       },
       "MagneticOrdering": "paramagnetic",
-      "SpinStates": [
-        1.5
-      ],
+      "SpinStates": [ 1.5 ],
       "IsParamagnetic": true,
       "NuclearSpin": 3.5
     },
@@ -6509,6 +6244,7 @@
       ]
     }
   },
+
   {
     "Symbol": "Cr",
     "Name": "Chromium",
@@ -6518,23 +6254,13 @@
     "Period": 4,
     "Block": "d",
     "StandardState": "solid",
-    "Color": [
-      0.65,
-      0.65,
-      0.7,
-      1.0
-    ],
+    "Color": [ 0.65, 0.65, 0.7 ],
     "CosmicAbundance": {
-      "Value": 4e-06,
+      "Value": 4e-6,
       "Unit": "fraction of baryonic mass"
     },
     "ElectronConfiguration": "[Ar] 3d5 4s1",
-    "ElectronShells": [
-      2,
-      8,
-      13,
-      1
-    ],
+    "ElectronShells": [ 2, 8, 13, 1 ],
     "ValenceElectrons": 6,
     "Isotopes": [
       {
@@ -6549,7 +6275,7 @@
         "Name": "Chromium-53",
         "MassNumber": 52.9407,
         "IsStable": true,
-        "NaturalAbundance": 9.5,
+        "NaturalAbundance": 9.50,
         "HalfLife": null,
         "RadiationType": null
       },
@@ -6681,7 +6407,7 @@
             "Unit": "K"
           },
           {
-            "Value": 100000000.0,
+            "Value": 1e8,
             "Unit": "K"
           }
         ],
@@ -6764,9 +6490,7 @@
         "Unit": "pm"
       },
       "MagneticOrdering": "antiferromagnetic (below 38K)",
-      "SpinStates": [
-        0
-      ],
+      "SpinStates": [ 0 ],
       "IsParamagnetic": false,
       "NuclearSpin": 0.0
     },
@@ -6798,23 +6522,13 @@
     "Period": 4,
     "Block": "d",
     "StandardState": "solid",
-    "Color": [
-      0.55,
-      0.5,
-      0.75,
-      1.0
-    ],
+    "Color": [ 0.55, 0.50, 0.75 ],
     "CosmicAbundance": {
-      "Value": 9e-06,
+      "Value": 9e-6,
       "Unit": "fraction of baryonic mass"
     },
     "ElectronConfiguration": "[Ar] 3d5 4s2",
-    "ElectronShells": [
-      2,
-      8,
-      13,
-      2
-    ],
+    "ElectronShells": [ 2, 8, 13, 2 ],
     "ValenceElectrons": 7,
     "Isotopes": [
       {
@@ -6937,7 +6651,7 @@
             "Unit": "K"
           },
           {
-            "Value": 100000000.0,
+            "Value": 1e8,
             "Unit": "K"
           }
         ],
@@ -7021,9 +6735,7 @@
         "Unit": "pm"
       },
       "MagneticOrdering": "paramagnetic",
-      "SpinStates": [
-        2.5
-      ],
+      "SpinStates": [ 2.5 ],
       "IsParamagnetic": true,
       "NuclearSpin": 2.5
     },
@@ -7055,23 +6767,13 @@
     "Period": 4,
     "Block": "d",
     "StandardState": "solid",
-    "Color": [
-      0.7,
-      0.5,
-      0.6,
-      1.0
-    ],
+    "Color": [ 0.7, 0.5, 0.6 ],
     "CosmicAbundance": {
-      "Value": 1e-05,
+      "Value": 1e-5,
       "Unit": "fraction of baryonic mass"
     },
     "ElectronConfiguration": "[Ar] 3d6 4s2",
-    "ElectronShells": [
-      2,
-      8,
-      14,
-      2
-    ],
+    "ElectronShells": [ 2, 8, 14, 2 ],
     "ValenceElectrons": 8,
     "Isotopes": [
       {
@@ -7218,7 +6920,7 @@
             "Unit": "K"
           },
           {
-            "Value": 100000000.0,
+            "Value": 1e8,
             "Unit": "K"
           }
         ],
@@ -7306,9 +7008,7 @@
         "Unit": "pm"
       },
       "MagneticOrdering": "ferromagnetic (below 770K, alpha-Fe)",
-      "SpinStates": [
-        1.0
-      ],
+      "SpinStates": [ 1.0 ],
       "IsParamagnetic": false,
       "NuclearSpin": 0.0
     },
@@ -7340,23 +7040,13 @@
     "Period": 4,
     "Block": "d",
     "StandardState": "solid",
-    "Color": [
-      0.7,
-      0.4,
-      0.5,
-      1.0
-    ],
+    "Color": [ 0.7, 0.4, 0.5 ],
     "CosmicAbundance": {
-      "Value": 4e-06,
+      "Value": 4e-6,
       "Unit": "fraction of baryonic mass"
     },
     "ElectronConfiguration": "[Ar] 3d7 4s2",
-    "ElectronShells": [
-      2,
-      8,
-      15,
-      2
-    ],
+    "ElectronShells": [ 2, 8, 15, 2 ],
     "ValenceElectrons": 9,
     "Isotopes": [
       {
@@ -7370,7 +7060,7 @@
     ],
     "PhysicalProperties": {
       "Density": {
-        "Value": 8.9,
+        "Value": 8.90,
         "Unit": "g/cm*"
       },
       "MeltingPoint": {
@@ -7479,7 +7169,7 @@
             "Unit": "K"
           },
           {
-            "Value": 100000000.0,
+            "Value": 1e8,
             "Unit": "K"
           }
         ],
@@ -7559,9 +7249,7 @@
         "Unit": "pm"
       },
       "MagneticOrdering": "ferromagnetic (alpha-Fe phase analog)",
-      "SpinStates": [
-        1.0
-      ],
+      "SpinStates": [ 1.0 ],
       "IsParamagnetic": false,
       "NuclearSpin": 7.0
     },
@@ -7593,23 +7281,13 @@
     "Period": 4,
     "Block": "d",
     "StandardState": "solid",
-    "Color": [
-      0.6,
-      0.6,
-      0.6,
-      1.0
-    ],
+    "Color": [ 0.6, 0.6, 0.6 ],
     "CosmicAbundance": {
-      "Value": 1e-05,
+      "Value": 1e-5,
       "Unit": "fraction of baryonic mass"
     },
     "ElectronConfiguration": "[Ar] 3d8 4s2",
-    "ElectronShells": [
-      2,
-      8,
-      16,
-      2
-    ],
+    "ElectronShells": [ 2, 8, 16, 2 ],
     "ValenceElectrons": 10,
     "Isotopes": [
       {
@@ -7622,7 +7300,7 @@
       },
       {
         "Name": "Nickel-60",
-        "MassNumber": 59.93,
+        "MassNumber": 59.930,
         "IsStable": true,
         "NaturalAbundance": 26.22,
         "HalfLife": null,
@@ -7764,7 +7442,7 @@
             "Unit": "K"
           },
           {
-            "Value": 100000000.0,
+            "Value": 1e8,
             "Unit": "K"
           }
         ],
@@ -7839,9 +7517,7 @@
         "Unit": "pm"
       },
       "MagneticOrdering": "ferromagnetic (alpha-Fe analog but using ASCII)",
-      "SpinStates": [
-        1.0
-      ],
+      "SpinStates": [ 1.0 ],
       "IsParamagnetic": false,
       "NuclearSpin": 0.0
     },
@@ -7873,23 +7549,13 @@
     "Period": 4,
     "Block": "d",
     "StandardState": "solid",
-    "Color": [
-      0.85,
-      0.5,
-      0.3,
-      1.0
-    ],
+    "Color": [ 0.85, 0.5, 0.3 ],
     "CosmicAbundance": {
-      "Value": 5e-06,
+      "Value": 5e-6,
       "Unit": "fraction of baryonic mass"
     },
     "ElectronConfiguration": "[Ar] 3d10 4s1",
-    "ElectronShells": [
-      2,
-      8,
-      18,
-      1
-    ],
+    "ElectronShells": [ 2, 8, 18, 1 ],
     "ValenceElectrons": 1,
     "Isotopes": [
       {
@@ -8020,7 +7686,7 @@
             "Unit": "K"
           },
           {
-            "Value": 100000000.0,
+            "Value": 1e8,
             "Unit": "K"
           }
         ],
@@ -8039,7 +7705,7 @@
     ],
     "ChemicalProperties": {
       "Electronegativity": {
-        "Value": 1.9,
+        "Value": 1.90,
         "Unit": "Pauling"
       },
       "IonizationEnergy": {
@@ -8095,9 +7761,7 @@
         "Unit": "pm"
       },
       "MagneticOrdering": "ferromagnetic (alpha-Fe analog using ASCII)",
-      "SpinStates": [
-        0.5
-      ],
+      "SpinStates": [ 0.5 ],
       "IsParamagnetic": false,
       "NuclearSpin": 1.5
     },
@@ -8129,23 +7793,13 @@
     "Period": 4,
     "Block": "d",
     "StandardState": "solid",
-    "Color": [
-      0.49,
-      0.5,
-      0.56,
-      1.0
-    ],
+    "Color": [ 0.49, 0.50, 0.56 ],
     "CosmicAbundance": {
-      "Value": 8e-06,
+      "Value": 8e-6,
       "Unit": "fraction of baryonic mass"
     },
     "ElectronConfiguration": "[Ar] 3d10 4s2",
-    "ElectronShells": [
-      2,
-      8,
-      18,
-      2
-    ],
+    "ElectronShells": [ 2, 8, 18, 2 ],
     "ValenceElectrons": 2,
     "Isotopes": [
       {
@@ -8203,7 +7857,7 @@
         "Unit": "K"
       },
       "HeatCapacity": {
-        "Value": 25.42,
+        "Value": 25.420,
         "Unit": "J/mol*K"
       },
       "ThermalConductivity": {
@@ -8300,7 +7954,7 @@
             "Unit": "K"
           },
           {
-            "Value": 100000000.0,
+            "Value": 1e8,
             "Unit": "K"
           }
         ],
@@ -8375,9 +8029,7 @@
         "Unit": "pm"
       },
       "MagneticOrdering": "diamagnetic",
-      "SpinStates": [
-        0
-      ],
+      "SpinStates": [ 0 ],
       "IsParamagnetic": false,
       "NuclearSpin": 0.5
     },
@@ -8409,23 +8061,13 @@
     "Period": 4,
     "Block": "p",
     "StandardState": "solid",
-    "Color": [
-      0.76,
-      0.7,
-      0.68,
-      1.0
-    ],
+    "Color": [ 0.76, 0.70, 0.68 ],
     "CosmicAbundance": {
-      "Value": 6e-07,
+      "Value": 6e-7,
       "Unit": "fraction of baryonic mass"
     },
     "ElectronConfiguration": "[Ar] 3d10 4s2 4p1",
-    "ElectronShells": [
-      2,
-      8,
-      18,
-      3
-    ],
+    "ElectronShells": [ 2, 8, 18, 3 ],
     "ValenceElectrons": 3,
     "Isotopes": [
       {
@@ -8556,7 +8198,7 @@
             "Unit": "K"
           },
           {
-            "Value": 100000000.0,
+            "Value": 1e8,
             "Unit": "K"
           }
         ],
@@ -8631,9 +8273,7 @@
         "Unit": "pm"
       },
       "MagneticOrdering": "diamagnetic",
-      "SpinStates": [
-        0
-      ],
+      "SpinStates": [ 0 ],
       "IsParamagnetic": false,
       "NuclearSpin": 1.5
     },
@@ -8664,23 +8304,13 @@
     "Period": 4,
     "Block": "p",
     "StandardState": "solid",
-    "Color": [
-      0.75,
-      0.75,
-      0.85,
-      1.0
-    ],
+    "Color": [ 0.75, 0.75, 0.85 ],
     "CosmicAbundance": {
-      "Value": 4e-07,
+      "Value": 4e-7,
       "Unit": "fraction of baryonic mass"
     },
     "ElectronConfiguration": "[Ar] 3d10 4s2 4p2",
-    "ElectronShells": [
-      2,
-      8,
-      18,
-      4
-    ],
+    "ElectronShells": [ 2, 8, 18, 4 ],
     "ValenceElectrons": 4,
     "Isotopes": [
       {
@@ -8721,13 +8351,11 @@
         "IsStable": false,
         "NaturalAbundance": 7.4,
         "HalfLife": {
-          "Value": 1.78e+21,
+          "Value": 1.78e21,
           "Unit": "years"
         },
         "RadiationType": "beta",
-        "DecayProducts": [
-          "Selenium-76"
-        ]
+        "DecayProducts": [ "Selenium-76" ]
       }
     ],
     "PhysicalProperties": {
@@ -8736,7 +8364,7 @@
         "Unit": "g/cm*"
       },
       "MeltingPoint": {
-        "Value": 1211.4,
+        "Value": 1211.40,
         "Unit": "K"
       },
       "BoilingPoint": {
@@ -8772,7 +8400,7 @@
             "Unit": "K"
           },
           {
-            "Value": 1211.4,
+            "Value": 1211.40,
             "Unit": "K"
           }
         ],
@@ -8791,7 +8419,7 @@
       {
         "TemperatureRange": [
           {
-            "Value": 1211.4,
+            "Value": 1211.40,
             "Unit": "K"
           },
           {
@@ -8841,7 +8469,7 @@
             "Unit": "K"
           },
           {
-            "Value": 100000000.0,
+            "Value": 1e8,
             "Unit": "K"
           }
         ],
@@ -8920,9 +8548,7 @@
         "Unit": "pm"
       },
       "MagneticOrdering": "diamagnetic",
-      "SpinStates": [
-        0
-      ],
+      "SpinStates": [ 0 ],
       "IsParamagnetic": false,
       "NuclearSpin": 0.0
     },
@@ -8953,23 +8579,13 @@
     "Period": 4,
     "Block": "p",
     "StandardState": "solid",
-    "Color": [
-      0.6,
-      0.6,
-      0.6,
-      1.0
-    ],
+    "Color": [ 0.6, 0.6, 0.6 ],
     "CosmicAbundance": {
-      "Value": 4e-07,
+      "Value": 4e-7,
       "Unit": "fraction of baryonic mass"
     },
     "ElectronConfiguration": "[Ar] 3d10 4s2 4p3",
-    "ElectronShells": [
-      2,
-      8,
-      18,
-      5
-    ],
+    "ElectronShells": [ 2, 8, 18, 5 ],
     "ValenceElectrons": 5,
     "Isotopes": [
       {
@@ -9092,7 +8708,7 @@
             "Unit": "K"
           },
           {
-            "Value": 100000000.0,
+            "Value": 1e8,
             "Unit": "K"
           }
         ],
@@ -9171,9 +8787,7 @@
         "Unit": "pm"
       },
       "MagneticOrdering": "diamagnetic",
-      "SpinStates": [
-        1.5
-      ],
+      "SpinStates": [ 1.5 ],
       "IsParamagnetic": false,
       "NuclearSpin": 1.5
     },
@@ -9205,23 +8819,13 @@
     "Period": 4,
     "Block": "p",
     "StandardState": "solid",
-    "Color": [
-      0.6,
-      0.5,
-      0.6,
-      1.0
-    ],
+    "Color": [ 0.6, 0.5, 0.6 ],
     "CosmicAbundance": {
-      "Value": 3e-07,
+      "Value": 3e-7,
       "Unit": "fraction of baryonic mass"
     },
     "ElectronConfiguration": "[Ar] 3d10 4s2 4p4",
-    "ElectronShells": [
-      2,
-      8,
-      18,
-      6
-    ],
+    "ElectronShells": [ 2, 8, 18, 6 ],
     "ValenceElectrons": 6,
     "Isotopes": [
       {
@@ -9267,7 +8871,7 @@
         "Unit": "J/mol*K"
       },
       "ThermalConductivity": {
-        "Value": 0.52,
+        "Value": 0.520,
         "Unit": "W/m*K"
       },
       "EnthalpyOfFusion": {
@@ -9360,7 +8964,7 @@
             "Unit": "K"
           },
           {
-            "Value": 100000000.0,
+            "Value": 1e8,
             "Unit": "K"
           }
         ],
@@ -9436,9 +9040,7 @@
         "Unit": "pm"
       },
       "MagneticOrdering": "diamagnetic",
-      "SpinStates": [
-        0
-      ],
+      "SpinStates": [ 0 ],
       "IsParamagnetic": false,
       "NuclearSpin": 0.5
     },
@@ -9470,23 +9072,13 @@
     "Period": 4,
     "Block": "p",
     "StandardState": "liquid",
-    "Color": [
-      0.75,
-      0.45,
-      0.35,
-      0.9
-    ],
+    "Color": [ 0.75, 0.45, 0.35 ],
     "CosmicAbundance": {
-      "Value": 3e-07,
+      "Value": 3e-7,
       "Unit": "fraction of baryonic mass"
     },
     "ElectronConfiguration": "[Ar] 3d10 4s2 4p5",
-    "ElectronShells": [
-      2,
-      8,
-      18,
-      7
-    ],
+    "ElectronShells": [ 2, 8, 18, 7 ],
     "ValenceElectrons": 7,
     "Isotopes": [
       {
@@ -9508,7 +9100,7 @@
     ],
     "PhysicalProperties": {
       "Density": {
-        "Value": 3.1,
+        "Value": 3.10,
         "Unit": "g/cm^3"
       },
       "MeltingPoint": {
@@ -9617,7 +9209,7 @@
             "Unit": "K"
           },
           {
-            "Value": 100000000.0,
+            "Value": 1e8,
             "Unit": "K"
           }
         ],
@@ -9701,9 +9293,7 @@
         "Unit": "pm"
       },
       "MagneticOrdering": "diamagnetic",
-      "SpinStates": [
-        0
-      ],
+      "SpinStates": [ 0 ],
       "IsParamagnetic": false,
       "NuclearSpin": 1.5
     },
@@ -9736,23 +9326,13 @@
     "Period": 4,
     "Block": "p",
     "StandardState": "gas",
-    "Color": [
-      0.8,
-      0.9,
-      0.9,
-      0.5
-    ],
+    "Color": [ 0.8, 0.9, 0.9 ],
     "CosmicAbundance": {
-      "Value": 3e-06,
+      "Value": 3e-6,
       "Unit": "fraction of baryonic mass"
     },
     "ElectronConfiguration": "[Ar] 3d10 4s2 4p6",
-    "ElectronShells": [
-      2,
-      8,
-      18,
-      8
-    ],
+    "ElectronShells": [ 2, 8, 18, 8 ],
     "ValenceElectrons": 8,
     "Isotopes": [
       {
@@ -9802,11 +9382,11 @@
         "Unit": "W/m*K"
       },
       "EnthalpyOfFusion": {
-        "Value": 1.0,
+        "Value": 1.00,
         "Unit": "kJ/mol"
       },
       "EnthalpyOfVaporization": {
-        "Value": 6.5,
+        "Value": 6.50,
         "Unit": "kJ/mol"
       },
       "Entropy": {
@@ -9891,7 +9471,7 @@
             "Unit": "K"
           },
           {
-            "Value": 100000000.0,
+            "Value": 1e8,
             "Unit": "K"
           }
         ],
@@ -9977,24 +9557,13 @@
     "Period": 5,
     "Block": "s",
     "StandardState": "solid",
-    "Color": [
-      0.8,
-      0.4,
-      0.4,
-      1.0
-    ],
+    "Color": [ 0.8, 0.4, 0.4 ],
     "CosmicAbundance": {
-      "Value": 2e-07,
+      "Value": 2e-7,
       "Unit": "fraction of baryonic mass"
     },
     "ElectronConfiguration": "[Kr] 5s1",
-    "ElectronShells": [
-      2,
-      8,
-      18,
-      8,
-      1
-    ],
+    "ElectronShells": [ 2, 8, 18, 8, 1 ],
     "ValenceElectrons": 1,
     "Isotopes": [
       {
@@ -10011,13 +9580,11 @@
         "IsStable": false,
         "NaturalAbundance": 27.83,
         "HalfLife": {
-          "Value": 49200000000.0,
+          "Value": 4.92e10,
           "Unit": "years"
         },
         "RadiationType": "beta",
-        "DecayProducts": [
-          "Strontium-87"
-        ]
+        "DecayProducts": [ "Strontium-87" ]
       }
     ],
     "PhysicalProperties": {
@@ -10131,7 +9698,7 @@
             "Unit": "K"
           },
           {
-            "Value": 100000000.0,
+            "Value": 1e8,
             "Unit": "K"
           }
         ],
@@ -10202,9 +9769,7 @@
         "Unit": "pm"
       },
       "MagneticOrdering": "paramagnetic",
-      "SpinStates": [
-        1.5
-      ],
+      "SpinStates": [ 1.5 ],
       "IsParamagnetic": true,
       "NuclearSpin": 2.5
     },
@@ -10236,24 +9801,13 @@
     "Period": 5,
     "Block": "s",
     "StandardState": "solid",
-    "Color": [
-      0.8,
-      0.65,
-      0.55,
-      1.0
-    ],
+    "Color": [ 0.8, 0.65, 0.55 ],
     "CosmicAbundance": {
-      "Value": 2e-07,
+      "Value": 2e-7,
       "Unit": "fraction of baryonic mass"
     },
     "ElectronConfiguration": "[Kr] 5s2",
-    "ElectronShells": [
-      2,
-      8,
-      18,
-      8,
-      2
-    ],
+    "ElectronShells": [ 2, 8, 18, 8, 2 ],
     "ValenceElectrons": 2,
     "Isotopes": [
       {
@@ -10384,7 +9938,7 @@
             "Unit": "K"
           },
           {
-            "Value": 100000000.0,
+            "Value": 1e8,
             "Unit": "K"
           }
         ],
@@ -10455,9 +10009,7 @@
         "Unit": "pm"
       },
       "MagneticOrdering": "paramagnetic",
-      "SpinStates": [
-        0.5
-      ],
+      "SpinStates": [ 0.5 ],
       "IsParamagnetic": true,
       "NuclearSpin": 2.5
     },
@@ -10489,24 +10041,13 @@
     "Period": 5,
     "Block": "d",
     "StandardState": "solid",
-    "Color": [
-      0.78,
-      0.78,
-      0.78,
-      1.0
-    ],
+    "Color": [ 0.78, 0.78, 0.78 ],
     "CosmicAbundance": {
-      "Value": 2e-07,
+      "Value": 2e-7,
       "Unit": "fraction of baryonic mass"
     },
     "ElectronConfiguration": "[Kr] 4d1 5s2",
-    "ElectronShells": [
-      2,
-      8,
-      18,
-      9,
-      2
-    ],
+    "ElectronShells": [ 2, 8, 18, 9, 2 ],
     "ValenceElectrons": 3,
     "Isotopes": [
       {
@@ -10629,7 +10170,7 @@
             "Unit": "K"
           },
           {
-            "Value": 100000000.0,
+            "Value": 1e8,
             "Unit": "K"
           }
         ],
@@ -10699,9 +10240,7 @@
         "Unit": "pm"
       },
       "MagneticOrdering": "paramagnetic",
-      "SpinStates": [
-        1.0
-      ],
+      "SpinStates": [ 1.0 ],
       "IsParamagnetic": true,
       "NuclearSpin": 0.5
     },
@@ -10724,6 +10263,7 @@
       ]
     }
   },
+
   {
     "Symbol": "Zr",
     "Name": "Zirconium",
@@ -10733,24 +10273,13 @@
     "Period": 5,
     "Block": "d",
     "StandardState": "solid",
-    "Color": [
-      0.7,
-      0.7,
-      0.8,
-      1.0
-    ],
+    "Color": [ 0.7, 0.7, 0.8 ],
     "CosmicAbundance": {
-      "Value": 3e-07,
+      "Value": 3e-7,
       "Unit": "fraction of baryonic mass"
     },
     "ElectronConfiguration": "[Kr] 4d2 5s2",
-    "ElectronShells": [
-      2,
-      8,
-      18,
-      10,
-      2
-    ],
+    "ElectronShells": [ 2, 8, 18, 10, 2 ],
     "ValenceElectrons": 4,
     "Isotopes": [
       {
@@ -10889,7 +10418,7 @@
             "Unit": "K"
           },
           {
-            "Value": 100000000.0,
+            "Value": 1e8,
             "Unit": "K"
           }
         ],
@@ -10965,9 +10494,7 @@
         "Unit": "pm"
       },
       "MagneticOrdering": "paramagnetic",
-      "SpinStates": [
-        1.0
-      ],
+      "SpinStates": [ 1.0 ],
       "IsParamagnetic": true,
       "NuclearSpin": 0.5
     },
@@ -10999,24 +10526,13 @@
     "Period": 5,
     "Block": "d",
     "StandardState": "solid",
-    "Color": [
-      0.65,
-      0.65,
-      0.75,
-      1.0
-    ],
+    "Color": [ 0.65, 0.65, 0.75 ],
     "CosmicAbundance": {
-      "Value": 2e-07,
+      "Value": 2e-7,
       "Unit": "fraction of baryonic mass"
     },
     "ElectronConfiguration": "[Kr] 4d4 5s1",
-    "ElectronShells": [
-      2,
-      8,
-      18,
-      13,
-      2
-    ],
+    "ElectronShells": [ 2, 8, 18, 13, 2 ],
     "ValenceElectrons": 5,
     "Isotopes": [
       {
@@ -11139,7 +10655,7 @@
             "Unit": "K"
           },
           {
-            "Value": 100000000.0,
+            "Value": 1e8,
             "Unit": "K"
           }
         ],
@@ -11158,7 +10674,7 @@
     ],
     "ChemicalProperties": {
       "Electronegativity": {
-        "Value": 1.6,
+        "Value": 1.60,
         "Unit": "Pauling"
       },
       "IonizationEnergy": {
@@ -11215,9 +10731,7 @@
         "Unit": "pm"
       },
       "MagneticOrdering": "paramagnetic",
-      "SpinStates": [
-        2.5
-      ],
+      "SpinStates": [ 2.5 ],
       "IsParamagnetic": true,
       "NuclearSpin": 9.5
     },
@@ -11249,24 +10763,13 @@
     "Period": 5,
     "Block": "d",
     "StandardState": "solid",
-    "Color": [
-      0.6,
-      0.6,
-      0.6,
-      1.0
-    ],
+    "Color": [ 0.6, 0.6, 0.6 ],
     "CosmicAbundance": {
-      "Value": 2e-07,
+      "Value": 2e-7,
       "Unit": "fraction of baryonic mass"
     },
     "ElectronConfiguration": "[Kr] 4d5 5s1",
-    "ElectronShells": [
-      2,
-      8,
-      18,
-      13,
-      1
-    ],
+    "ElectronShells": [ 2, 8, 18, 13, 1 ],
     "ValenceElectrons": 6,
     "Isotopes": [
       {
@@ -11389,7 +10892,7 @@
             "Unit": "K"
           },
           {
-            "Value": 100000000.0,
+            "Value": 1e8,
             "Unit": "K"
           }
         ],
@@ -11465,9 +10968,7 @@
         "Unit": "pm"
       },
       "MagneticOrdering": "paramagnetic",
-      "SpinStates": [
-        2.5
-      ],
+      "SpinStates": [ 2.5 ],
       "IsParamagnetic": true,
       "NuclearSpin": 2.5
     },
@@ -11499,24 +11000,13 @@
     "Period": 5,
     "Block": "d",
     "StandardState": "solid",
-    "Color": [
-      0.6,
-      0.6,
-      0.6,
-      1.0
-    ],
+    "Color": [ 0.6, 0.6, 0.6 ],
     "CosmicAbundance": {
       "Value": null,
       "Unit": "fraction of baryonic mass"
     },
     "ElectronConfiguration": "[Kr] 4d5 5s2",
-    "ElectronShells": [
-      2,
-      8,
-      18,
-      13,
-      2
-    ],
+    "ElectronShells": [ 2, 8, 18, 13, 2 ],
     "ValenceElectrons": 7,
     "Isotopes": [
       {
@@ -11525,13 +11015,11 @@
         "IsStable": false,
         "NaturalAbundance": 0.0,
         "HalfLife": {
-          "Value": 211000.0,
+          "Value": 2.11e5,
           "Unit": "years"
         },
         "RadiationType": "beta",
-        "DecayProducts": [
-          "Ruthenium-99"
-        ]
+        "DecayProducts": [ "Ruthenium-99" ]
       }
     ],
     "PhysicalProperties": {
@@ -11645,7 +11133,7 @@
             "Unit": "K"
           },
           {
-            "Value": 100000000.0,
+            "Value": 1e8,
             "Unit": "K"
           }
         ],
@@ -11716,9 +11204,7 @@
         "Unit": "pm"
       },
       "MagneticOrdering": "paramagnetic",
-      "SpinStates": [
-        2.5
-      ],
+      "SpinStates": [ 2.5 ],
       "IsParamagnetic": true,
       "NuclearSpin": 0.5
     },
@@ -11750,24 +11236,13 @@
     "Period": 5,
     "Block": "d",
     "StandardState": "solid",
-    "Color": [
-      0.6,
-      0.6,
-      0.7,
-      1.0
-    ],
+    "Color": [ 0.6, 0.6, 0.7 ],
     "CosmicAbundance": {
-      "Value": 1e-07,
+      "Value": 1e-7,
       "Unit": "fraction of baryonic mass"
     },
     "ElectronConfiguration": "[Kr] 4d7 5s1",
-    "ElectronShells": [
-      2,
-      8,
-      18,
-      14,
-      1
-    ],
+    "ElectronShells": [ 2, 8, 18, 14, 1 ],
     "ValenceElectrons": 8,
     "Isotopes": [
       {
@@ -11890,7 +11365,7 @@
             "Unit": "K"
           },
           {
-            "Value": 100000000.0,
+            "Value": 1e8,
             "Unit": "K"
           }
         ],
@@ -11965,9 +11440,7 @@
         "Unit": "pm"
       },
       "MagneticOrdering": "paramagnetic",
-      "SpinStates": [
-        2.0
-      ],
+      "SpinStates": [ 2.0 ],
       "IsParamagnetic": true,
       "NuclearSpin": 5.5
     },
@@ -11998,24 +11471,13 @@
     "Period": 5,
     "Block": "d",
     "StandardState": "solid",
-    "Color": [
-      0.65,
-      0.65,
-      0.7,
-      1.0
-    ],
+    "Color": [ 0.65, 0.65, 0.7 ],
     "CosmicAbundance": {
-      "Value": 1e-07,
+      "Value": 1e-7,
       "Unit": "fraction of baryonic mass"
     },
     "ElectronConfiguration": "[Kr] 4d8 5s1",
-    "ElectronShells": [
-      2,
-      8,
-      18,
-      16,
-      1
-    ],
+    "ElectronShells": [ 2, 8, 18, 16, 1 ],
     "ValenceElectrons": 9,
     "Isotopes": [
       {
@@ -12138,7 +11600,7 @@
             "Unit": "K"
           },
           {
-            "Value": 100000000.0,
+            "Value": 1e8,
             "Unit": "K"
           }
         ],
@@ -12209,9 +11671,7 @@
         "Unit": "pm"
       },
       "MagneticOrdering": "paramagnetic",
-      "SpinStates": [
-        1.0
-      ],
+      "SpinStates": [ 1.0 ],
       "IsParamagnetic": true,
       "NuclearSpin": 0.0
     },
@@ -12242,24 +11702,13 @@
     "Period": 5,
     "Block": "d",
     "StandardState": "solid",
-    "Color": [
-      0.6,
-      0.6,
-      0.6,
-      1.0
-    ],
+    "Color": [ 0.6, 0.6, 0.6 ],
     "CosmicAbundance": {
-      "Value": 5e-07,
+      "Value": 5e-7,
       "Unit": "fraction of baryonic mass"
     },
     "ElectronConfiguration": "[Kr] 4d10",
-    "ElectronShells": [
-      2,
-      8,
-      18,
-      8,
-      0
-    ],
+    "ElectronShells": [ 2, 8, 18, 8, 0 ],
     "ValenceElectrons": 10,
     "Isotopes": [
       {
@@ -12398,7 +11847,7 @@
             "Unit": "K"
           },
           {
-            "Value": 100000000.0,
+            "Value": 1e8,
             "Unit": "K"
           }
         ],
@@ -12417,7 +11866,7 @@
     ],
     "ChemicalProperties": {
       "Electronegativity": {
-        "Value": 2.2,
+        "Value": 2.20,
         "Unit": "Pauling"
       },
       "IonizationEnergy": {
@@ -12472,9 +11921,7 @@
         "Unit": "pm"
       },
       "MagneticOrdering": "paramagnetic",
-      "SpinStates": [
-        0.5
-      ],
+      "SpinStates": [ 0.5 ],
       "IsParamagnetic": true,
       "NuclearSpin": 0.5
     },
@@ -12505,24 +11952,13 @@
     "Period": 5,
     "Block": "d",
     "StandardState": "solid",
-    "Color": [
-      0.75,
-      0.75,
-      0.8,
-      1.0
-    ],
+    "Color": [ 0.75, 0.75, 0.80 ],
     "CosmicAbundance": {
-      "Value": 5e-07,
+      "Value": 5e-7,
       "Unit": "fraction of baryonic mass"
     },
     "ElectronConfiguration": "[Kr] 4d10 5s1",
-    "ElectronShells": [
-      2,
-      8,
-      18,
-      18,
-      1
-    ],
+    "ElectronShells": [ 2, 8, 18, 18, 1 ],
     "ValenceElectrons": 11,
     "Isotopes": [
       {
@@ -12653,7 +12089,7 @@
             "Unit": "K"
           },
           {
-            "Value": 100000000.0,
+            "Value": 1e8,
             "Unit": "K"
           }
         ],
@@ -12696,7 +12132,7 @@
         }
       ],
       "StandardReductionPotential": {
-        "Value": 0.8,
+        "Value": 0.80,
         "Unit": "V"
       },
       "Reactivity": {
@@ -12728,9 +12164,7 @@
         "Unit": "pm"
       },
       "MagneticOrdering": "paramagnetic",
-      "SpinStates": [
-        1.0
-      ],
+      "SpinStates": [ 1.0 ],
       "IsParamagnetic": false,
       "NuclearSpin": 0.5
     },
@@ -12762,24 +12196,13 @@
     "Period": 5,
     "Block": "d",
     "StandardState": "solid",
-    "Color": [
-      0.6,
-      0.6,
-      0.7,
-      1.0
-    ],
+    "Color": [ 0.6, 0.6, 0.7 ],
     "CosmicAbundance": {
-      "Value": 4e-07,
+      "Value": 4e-7,
       "Unit": "fraction of baryonic mass"
     },
     "ElectronConfiguration": "[Kr] 4d10 5s2",
-    "ElectronShells": [
-      2,
-      8,
-      18,
-      18,
-      2
-    ],
+    "ElectronShells": [ 2, 8, 18, 18, 2 ],
     "ValenceElectrons": 2,
     "Isotopes": [
       {
@@ -12794,15 +12217,13 @@
         "Name": "Cadmium-114m",
         "MassNumber": 113.904,
         "IsStable": false,
-        "NaturalAbundance": 0.0,
+        "NaturalAbundance": 0.00,
         "HalfLife": {
           "Value": 86.0,
           "Unit": "months"
         },
         "RadiationType": "gamma",
-        "DecayProducts": [
-          "Cadmium-114"
-        ]
+        "DecayProducts": [ "Cadmium-114" ]
       }
     ],
     "PhysicalProperties": {
@@ -12916,7 +12337,7 @@
             "Unit": "K"
           },
           {
-            "Value": 100000000.0,
+            "Value": 1e8,
             "Unit": "K"
           }
         ],
@@ -12959,7 +12380,7 @@
         }
       ],
       "StandardReductionPotential": {
-        "Value": -0.4,
+        "Value": -0.40,
         "Unit": "V"
       },
       "Reactivity": {
@@ -12991,9 +12412,7 @@
         "Unit": "pm"
       },
       "MagneticOrdering": "paramagnetic",
-      "SpinStates": [
-        1.0
-      ],
+      "SpinStates": [ 1.0 ],
       "IsParamagnetic": false,
       "NuclearSpin": 0.5
     },
@@ -13026,24 +12445,13 @@
     "Period": 5,
     "Block": "p",
     "StandardState": "solid",
-    "Color": [
-      0.75,
-      0.7,
-      0.8,
-      1.0
-    ],
+    "Color": [ 0.75, 0.7, 0.8 ],
     "CosmicAbundance": {
-      "Value": 4e-07,
+      "Value": 4e-7,
       "Unit": "fraction of baryonic mass"
     },
     "ElectronConfiguration": "[Kr] 4d10 5s2 5p1",
-    "ElectronShells": [
-      2,
-      8,
-      18,
-      18,
-      3
-    ],
+    "ElectronShells": [ 2, 8, 18, 18, 3 ],
     "ValenceElectrons": 3,
     "Isotopes": [
       {
@@ -13174,7 +12582,7 @@
             "Unit": "K"
           },
           {
-            "Value": 100000000.0,
+            "Value": 1e8,
             "Unit": "K"
           }
         ],
@@ -13249,9 +12657,7 @@
         "Unit": "pm"
       },
       "MagneticOrdering": "diamagnetic",
-      "SpinStates": [
-        0
-      ],
+      "SpinStates": [ 0 ],
       "IsParamagnetic": false,
       "NuclearSpin": 4.5
     },
@@ -13283,24 +12689,13 @@
     "Period": 5,
     "Block": "p",
     "StandardState": "solid",
-    "Color": [
-      0.7,
-      0.7,
-      0.8,
-      1.0
-    ],
+    "Color": [ 0.7, 0.7, 0.8 ],
     "CosmicAbundance": {
-      "Value": 2e-07,
+      "Value": 2e-7,
       "Unit": "fraction of baryonic mass"
     },
     "ElectronConfiguration": "[Kr] 4d10 5s2 5p2",
-    "ElectronShells": [
-      2,
-      8,
-      18,
-      18,
-      4
-    ],
+    "ElectronShells": [ 2, 8, 18, 18, 4 ],
     "ValenceElectrons": 4,
     "Isotopes": [
       {
@@ -13431,7 +12826,7 @@
             "Unit": "K"
           },
           {
-            "Value": 100000000.0,
+            "Value": 1e8,
             "Unit": "K"
           }
         ],
@@ -13510,9 +12905,7 @@
         "Unit": "pm"
       },
       "MagneticOrdering": "diamagnetic",
-      "SpinStates": [
-        0
-      ],
+      "SpinStates": [ 0 ],
       "IsParamagnetic": false,
       "NuclearSpin": 0.0
     },
@@ -13539,29 +12932,18 @@
     "Symbol": "Sb",
     "Name": "Antimony",
     "AtomicNumber": 51,
-    "AtomicMass": 121.76,
+    "AtomicMass": 121.760,
     "Group": 15,
     "Period": 5,
     "Block": "p",
     "StandardState": "solid",
-    "Color": [
-      0.7,
-      0.7,
-      0.65,
-      1.0
-    ],
+    "Color": [ 0.7, 0.7, 0.65 ],
     "CosmicAbundance": {
-      "Value": 3e-07,
+      "Value": 3e-7,
       "Unit": "fraction of baryonic mass"
     },
     "ElectronConfiguration": "[Kr] 4d10 5s2 5p3",
-    "ElectronShells": [
-      2,
-      8,
-      18,
-      18,
-      5
-    ],
+    "ElectronShells": [ 2, 8, 18, 18, 5 ],
     "ValenceElectrons": 5,
     "Isotopes": [
       {
@@ -13603,7 +12985,7 @@
         "Unit": "W/m*K"
       },
       "EnthalpyOfFusion": {
-        "Value": 4.6,
+        "Value": 4.60,
         "Unit": "kJ/mol"
       },
       "EnthalpyOfVaporization": {
@@ -13692,7 +13074,7 @@
             "Unit": "K"
           },
           {
-            "Value": 100000000.0,
+            "Value": 1e8,
             "Unit": "K"
           }
         ],
@@ -13739,7 +13121,7 @@
         }
       ],
       "StandardReductionPotential": {
-        "Value": 0.2,
+        "Value": 0.20,
         "Unit": "V"
       },
       "Reactivity": {
@@ -13771,9 +13153,7 @@
         "Unit": "pm"
       },
       "MagneticOrdering": "diamagnetic",
-      "SpinStates": [
-        1.5
-      ],
+      "SpinStates": [ 1.5 ],
       "IsParamagnetic": false,
       "NuclearSpin": 1.5
     },
@@ -13800,34 +13180,23 @@
     "Symbol": "Te",
     "Name": "Tellurium",
     "AtomicNumber": 52,
-    "AtomicMass": 127.6,
+    "AtomicMass": 127.60,
     "Group": 16,
     "Period": 5,
     "Block": "p",
     "StandardState": "solid",
-    "Color": [
-      0.6,
-      0.5,
-      0.6,
-      1.0
-    ],
+    "Color": [ 0.6, 0.5, 0.6 ],
     "CosmicAbundance": {
-      "Value": 3e-07,
+      "Value": 3e-7,
       "Unit": "fraction of baryonic mass"
     },
     "ElectronConfiguration": "[Kr] 4d10 5s2 5p4",
-    "ElectronShells": [
-      2,
-      8,
-      18,
-      18,
-      6
-    ],
+    "ElectronShells": [ 2, 8, 18, 18, 6 ],
     "ValenceElectrons": 6,
     "Isotopes": [
       {
         "Name": "Tellurium-128",
-        "MassNumber": 127.6,
+        "MassNumber": 127.60,
         "IsStable": true,
         "NaturalAbundance": 31.74,
         "HalfLife": null,
@@ -13953,7 +13322,7 @@
             "Unit": "K"
           },
           {
-            "Value": 100000000.0,
+            "Value": 1e8,
             "Unit": "K"
           }
         ],
@@ -13972,7 +13341,7 @@
     ],
     "ChemicalProperties": {
       "Electronegativity": {
-        "Value": 2.1,
+        "Value": 2.10,
         "Unit": "Pauling"
       },
       "IonizationEnergy": {
@@ -13982,7 +13351,7 @@
         }
       },
       "ElectronAffinity": {
-        "Value": 1.97,
+        "Value": 1.970,
         "Unit": "eV"
       },
       "OxidationStates": [
@@ -14029,9 +13398,7 @@
         "Unit": "pm"
       },
       "MagneticOrdering": "diamagnetic",
-      "SpinStates": [
-        0
-      ],
+      "SpinStates": [ 0 ],
       "IsParamagnetic": false,
       "NuclearSpin": 0.5
     },
@@ -14063,24 +13430,13 @@
     "Period": 5,
     "Block": "p",
     "StandardState": "solid",
-    "Color": [
-      0.7,
-      0.4,
-      0.6,
-      1.0
-    ],
+    "Color": [ 0.70, 0.40, 0.60 ],
     "CosmicAbundance": {
-      "Value": 2e-07,
+      "Value": 2e-7,
       "Unit": "fraction of baryonic mass"
     },
     "ElectronConfiguration": "[Kr] 4d10 5s2 5p5",
-    "ElectronShells": [
-      2,
-      8,
-      18,
-      18,
-      7
-    ],
+    "ElectronShells": [ 2, 8, 18, 18, 7 ],
     "ValenceElectrons": 7,
     "Isotopes": [
       {
@@ -14102,7 +13458,7 @@
         "Unit": "K"
       },
       "BoilingPoint": {
-        "Value": 457.4,
+        "Value": 457.40,
         "Unit": "K"
       },
       "HeatCapacity": {
@@ -14157,7 +13513,7 @@
             "Unit": "K"
           },
           {
-            "Value": 457.4,
+            "Value": 457.40,
             "Unit": "K"
           }
         ],
@@ -14176,7 +13532,7 @@
       {
         "TemperatureRange": [
           {
-            "Value": 457.4,
+            "Value": 457.40,
             "Unit": "K"
           },
           {
@@ -14203,7 +13559,7 @@
             "Unit": "K"
           },
           {
-            "Value": 100000000.0,
+            "Value": 1e8,
             "Unit": "K"
           }
         ],
@@ -14258,7 +13614,7 @@
         "Unit": "V"
       },
       "Reactivity": {
-        "Value": 0.9,
+        "Value": 0.90,
         "Scale": "0-1"
       },
       "Bonding": [
@@ -14287,9 +13643,7 @@
         "Unit": "pm"
       },
       "MagneticOrdering": "diamagnetic",
-      "SpinStates": [
-        0
-      ],
+      "SpinStates": [ 0 ],
       "IsParamagnetic": false,
       "NuclearSpin": 2.5
     },
@@ -14321,24 +13675,13 @@
     "Period": 5,
     "Block": "p",
     "StandardState": "gas",
-    "Color": [
-      0.8,
-      0.9,
-      0.95,
-      0.5
-    ],
+    "Color": [ 0.80, 0.90, 0.95 ],
     "CosmicAbundance": {
-      "Value": 8e-07,
+      "Value": 8e-7,
       "Unit": "fraction of baryonic mass"
     },
     "ElectronConfiguration": "[Kr] 4d10 5s2 5p6",
-    "ElectronShells": [
-      2,
-      8,
-      18,
-      18,
-      8
-    ],
+    "ElectronShells": [ 2, 8, 18, 18, 8 ],
     "ValenceElectrons": 8,
     "Isotopes": [
       {
@@ -14364,7 +13707,7 @@
         "Unit": "g/cm*"
       },
       "MeltingPoint": {
-        "Value": 161.4,
+        "Value": 161.40,
         "Unit": "K"
       },
       "BoilingPoint": {
@@ -14380,7 +13723,7 @@
         "Unit": "W/m*K"
       },
       "EnthalpyOfFusion": {
-        "Value": 1.2,
+        "Value": 1.20,
         "Unit": "kJ/mol"
       },
       "EnthalpyOfVaporization": {
@@ -14400,7 +13743,7 @@
             "Unit": "K"
           },
           {
-            "Value": 161.4,
+            "Value": 161.40,
             "Unit": "K"
           }
         ],
@@ -14419,7 +13762,7 @@
       {
         "TemperatureRange": [
           {
-            "Value": 161.4,
+            "Value": 161.40,
             "Unit": "K"
           },
           {
@@ -14469,7 +13812,7 @@
             "Unit": "K"
           },
           {
-            "Value": 100000000.0,
+            "Value": 1e8,
             "Unit": "K"
           }
         ],
@@ -14556,25 +13899,13 @@
     "Period": 6,
     "Block": "s",
     "StandardState": "solid",
-    "Color": [
-      0.8,
-      0.5,
-      0.4,
-      1.0
-    ],
+    "Color": [ 0.8, 0.5, 0.4 ],
     "CosmicAbundance": {
-      "Value": 3e-07,
+      "Value": 3e-7,
       "Unit": "fraction of baryonic mass"
     },
     "ElectronConfiguration": "[Xe] 6s1",
-    "ElectronShells": [
-      2,
-      8,
-      18,
-      18,
-      8,
-      1
-    ],
+    "ElectronShells": [ 2, 8, 18, 18, 8, 1 ],
     "ValenceElectrons": 1,
     "Isotopes": [
       {
@@ -14697,7 +14028,7 @@
             "Unit": "K"
           },
           {
-            "Value": 100000000.0,
+            "Value": 1e8,
             "Unit": "K"
           }
         ],
@@ -14768,9 +14099,7 @@
         "Unit": "pm"
       },
       "MagneticOrdering": "paramagnetic",
-      "SpinStates": [
-        1.5
-      ],
+      "SpinStates": [ 1.5 ],
       "IsParamagnetic": true,
       "NuclearSpin": 7.0
     },
@@ -14803,25 +14132,13 @@
     "Period": 6,
     "Block": "s",
     "StandardState": "solid",
-    "Color": [
-      0.8,
-      0.8,
-      0.5,
-      1.0
-    ],
+    "Color": [ 0.8, 0.8, 0.5 ],
     "CosmicAbundance": {
-      "Value": 3e-07,
+      "Value": 3e-7,
       "Unit": "fraction of baryonic mass"
     },
     "ElectronConfiguration": "[Xe] 6s2",
-    "ElectronShells": [
-      2,
-      8,
-      18,
-      18,
-      8,
-      2
-    ],
+    "ElectronShells": [ 2, 8, 18, 18, 8, 2 ],
     "ValenceElectrons": 2,
     "Isotopes": [
       {
@@ -14952,7 +14269,7 @@
             "Unit": "K"
           },
           {
-            "Value": 100000000.0,
+            "Value": 1e8,
             "Unit": "K"
           }
         ],
@@ -14991,22 +14308,15 @@
         }
       ],
       "StandardReductionPotential": {
-        "Value": -2.9,
+        "Value": -2.90,
         "Unit": "V"
       },
       "Reactivity": {
         "Value": 0.95,
         "Scale": "0-1"
       },
-      "Bonding": [
-        "metallic",
-        "ionic"
-      ],
-      "CommonCompounds": [
-        "BaO",
-        "BaCl2",
-        "BaSO4"
-      ]
+      "Bonding": [ "metallic", "ionic" ],
+      "CommonCompounds": [ "BaO", "BaCl2", "BaSO4" ]
     },
     "QuantumProperties": {
       "AtomicRadius": {
@@ -15022,9 +14332,7 @@
         "Unit": "pm"
       },
       "MagneticOrdering": "paramagnetic",
-      "SpinStates": [
-        1.5
-      ],
+      "SpinStates": [ 1.5 ],
       "IsParamagnetic": true,
       "NuclearSpin": 1.5
     },
@@ -15041,10 +14349,7 @@
       },
       "Toxicity": "toxic; compounds can be hazardous",
       "BiologicalRole": "not essential",
-      "Hazards": [
-        "reacts violently with water",
-        "dust inhalation risk"
-      ]
+      "Hazards": [ "reacts violently with water", "dust inhalation risk" ]
     }
   },
   {
@@ -15056,25 +14361,13 @@
     "Period": 6,
     "Block": "d",
     "StandardState": "solid",
-    "Color": [
-      0.8,
-      0.73,
-      0.55,
-      1.0
-    ],
+    "Color": [ 0.8, 0.73, 0.55 ],
     "CosmicAbundance": {
-      "Value": 3e-07,
+      "Value": 3e-7,
       "Unit": "fraction of baryonic mass"
     },
     "ElectronConfiguration": "[Xe] 5d1 6s2",
-    "ElectronShells": [
-      2,
-      8,
-      18,
-      18,
-      9,
-      2
-    ],
+    "ElectronShells": [ 2, 8, 18, 18, 9, 2 ],
     "ValenceElectrons": 3,
     "Isotopes": [
       {
@@ -15197,7 +14490,7 @@
             "Unit": "K"
           },
           {
-            "Value": 100000000.0,
+            "Value": 1e8,
             "Unit": "K"
           }
         ],
@@ -15216,7 +14509,7 @@
     ],
     "ChemicalProperties": {
       "Electronegativity": {
-        "Value": 1.1,
+        "Value": 1.10,
         "Unit": "Pauling"
       },
       "IonizationEnergy": {
@@ -15247,14 +14540,8 @@
         "Value": 0.75,
         "Scale": "0-1"
       },
-      "Bonding": [
-        "metallic",
-        "ionic"
-      ],
-      "CommonCompounds": [
-        "La2O3",
-        "LaCl3"
-      ]
+      "Bonding": [ "metallic", "ionic" ],
+      "CommonCompounds": [ "La2O3", "LaCl3" ]
     },
     "QuantumProperties": {
       "AtomicRadius": {
@@ -15270,9 +14557,7 @@
         "Unit": "pm"
       },
       "MagneticOrdering": "paramagnetic",
-      "SpinStates": [
-        0.5
-      ],
+      "SpinStates": [ 0.5 ],
       "IsParamagnetic": true,
       "NuclearSpin": 7.0
     },
@@ -15289,9 +14574,7 @@
       },
       "Toxicity": "low; compounds vary",
       "BiologicalRole": "used in electronics and optics",
-      "Hazards": [
-        "fine dust inhalation risk"
-      ]
+      "Hazards": [ "fine dust inhalation risk" ]
     }
   },
   {
@@ -15303,25 +14586,13 @@
     "Period": 6,
     "Block": "f",
     "StandardState": "solid",
-    "Color": [
-      0.7,
-      0.7,
-      0.6,
-      1.0
-    ],
+    "Color": [ 0.7, 0.7, 0.6 ],
     "CosmicAbundance": {
-      "Value": 4e-07,
+      "Value": 4e-7,
       "Unit": "fraction of baryonic mass"
     },
     "ElectronConfiguration": "[Xe] 4f1 5d1 6s2",
-    "ElectronShells": [
-      2,
-      8,
-      18,
-      19,
-      9,
-      2
-    ],
+    "ElectronShells": [ 2, 8, 18, 19, 9, 2 ],
     "ValenceElectrons": 4,
     "Isotopes": [
       {
@@ -15452,7 +14723,7 @@
             "Unit": "K"
           },
           {
-            "Value": 100000000.0,
+            "Value": 1e8,
             "Unit": "K"
           }
         ],
@@ -15506,14 +14777,8 @@
         "Value": 0.7,
         "Scale": "0-1"
       },
-      "Bonding": [
-        "metallic",
-        "ionic"
-      ],
-      "CommonCompounds": [
-        "CeO2",
-        "CeCl3"
-      ]
+      "Bonding": [ "metallic", "ionic" ],
+      "CommonCompounds": [ "CeO2", "CeCl3" ]
     },
     "QuantumProperties": {
       "AtomicRadius": {
@@ -15529,9 +14794,7 @@
         "Unit": "pm"
       },
       "MagneticOrdering": "paramagnetic",
-      "SpinStates": [
-        1.0
-      ],
+      "SpinStates": [ 1.0 ],
       "IsParamagnetic": true,
       "NuclearSpin": 0.0
     },
@@ -15548,9 +14811,7 @@
       },
       "Toxicity": "low; some compounds may be toxic",
       "BiologicalRole": "used in catalysts and ceramics",
-      "Hazards": [
-        "fine dust inhalation risk"
-      ]
+      "Hazards": [ "fine dust inhalation risk" ]
     }
   },
   {
@@ -15562,25 +14823,13 @@
     "Period": 6,
     "Block": "f",
     "StandardState": "solid",
-    "Color": [
-      0.7,
-      0.6,
-      0.6,
-      1.0
-    ],
+    "Color": [ 0.7, 0.6, 0.6 ],
     "CosmicAbundance": {
-      "Value": 3e-07,
+      "Value": 3e-7,
       "Unit": "fraction of baryonic mass"
     },
     "ElectronConfiguration": "[Xe] 4f3 6s2",
-    "ElectronShells": [
-      2,
-      8,
-      18,
-      19,
-      9,
-      2
-    ],
+    "ElectronShells": [ 2, 8, 18, 19, 9, 2 ],
     "ValenceElectrons": 5,
     "Isotopes": [
       {
@@ -15703,7 +14952,7 @@
             "Unit": "K"
           },
           {
-            "Value": 100000000.0,
+            "Value": 1e8,
             "Unit": "K"
           }
         ],
@@ -15753,14 +15002,8 @@
         "Value": 0.75,
         "Scale": "0-1"
       },
-      "Bonding": [
-        "metallic",
-        "ionic"
-      ],
-      "CommonCompounds": [
-        "Pr2O3",
-        "PrCl3"
-      ]
+      "Bonding": [ "metallic", "ionic" ],
+      "CommonCompounds": [ "Pr2O3", "PrCl3" ]
     },
     "QuantumProperties": {
       "AtomicRadius": {
@@ -15776,9 +15019,7 @@
         "Unit": "pm"
       },
       "MagneticOrdering": "paramagnetic",
-      "SpinStates": [
-        1.0
-      ],
+      "SpinStates": [ 1.0 ],
       "IsParamagnetic": true,
       "NuclearSpin": 2.5
     },
@@ -15795,9 +15036,7 @@
       },
       "Toxicity": "low; some compounds may be harmful",
       "BiologicalRole": "used in electronics, catalysts",
-      "Hazards": [
-        "fine dust inhalation risk"
-      ]
+      "Hazards": [ "fine dust inhalation risk" ]
     }
   },
   {
@@ -15809,25 +15048,13 @@
     "Period": 6,
     "Block": "f",
     "StandardState": "solid",
-    "Color": [
-      0.7,
-      0.6,
-      0.7,
-      1.0
-    ],
+    "Color": [ 0.7, 0.6, 0.7 ],
     "CosmicAbundance": {
-      "Value": 3e-07,
+      "Value": 3e-7,
       "Unit": "fraction of baryonic mass"
     },
     "ElectronConfiguration": "[Xe] 4f4 6s2",
-    "ElectronShells": [
-      2,
-      8,
-      18,
-      20,
-      8,
-      2
-    ],
+    "ElectronShells": [ 2, 8, 18, 20, 8, 2 ],
     "ValenceElectrons": 6,
     "Isotopes": [
       {
@@ -15958,7 +15185,7 @@
             "Unit": "K"
           },
           {
-            "Value": 100000000.0,
+            "Value": 1e8,
             "Unit": "K"
           }
         ],
@@ -16008,14 +15235,8 @@
         "Value": 0.75,
         "Scale": "0-1"
       },
-      "Bonding": [
-        "metallic",
-        "ionic"
-      ],
-      "CommonCompounds": [
-        "Nd2O3",
-        "NdCl3"
-      ]
+      "Bonding": [ "metallic", "ionic" ],
+      "CommonCompounds": [ "Nd2O3", "NdCl3" ]
     },
     "QuantumProperties": {
       "AtomicRadius": {
@@ -16031,9 +15252,7 @@
         "Unit": "pm"
       },
       "MagneticOrdering": "paramagnetic",
-      "SpinStates": [
-        1.0
-      ],
+      "SpinStates": [ 1.0 ],
       "IsParamagnetic": true,
       "NuclearSpin": 7.0
     },
@@ -16050,9 +15269,7 @@
       },
       "Toxicity": "low; some compounds may be harmful",
       "BiologicalRole": "used in lasers and magnets",
-      "Hazards": [
-        "fine dust inhalation risk"
-      ]
+      "Hazards": [ "fine dust inhalation risk" ]
     }
   },
   {
@@ -16064,25 +15281,13 @@
     "Period": 6,
     "Block": "f",
     "StandardState": "solid",
-    "Color": [
-      0.7,
-      0.55,
-      0.55,
-      1.0
-    ],
+    "Color": [ 0.7, 0.55, 0.55 ],
     "CosmicAbundance": {
       "Value": null,
       "Unit": "fraction of baryonic mass"
     },
     "ElectronConfiguration": "[Xe] 4f5 6s2",
-    "ElectronShells": [
-      2,
-      8,
-      18,
-      21,
-      8,
-      2
-    ],
+    "ElectronShells": [ 2, 8, 18, 21, 8, 2 ],
     "ValenceElectrons": 5,
     "Isotopes": [
       {
@@ -16095,9 +15300,7 @@
           "Unit": "years"
         },
         "RadiationType": "beta",
-        "DecayProducts": [
-          "Samarium-145"
-        ]
+        "DecayProducts": [ "Samarium-145" ]
       }
     ],
     "PhysicalProperties": {
@@ -16211,7 +15414,7 @@
             "Unit": "K"
           },
           {
-            "Value": 100000000.0,
+            "Value": 1e8,
             "Unit": "K"
           }
         ],
@@ -16311,25 +15514,13 @@
     "Period": 6,
     "Block": "f",
     "StandardState": "solid",
-    "Color": [
-      0.7,
-      0.6,
-      0.6,
-      1.0
-    ],
+    "Color": [ 0.7, 0.6, 0.6 ],
     "CosmicAbundance": {
-      "Value": 3e-07,
+      "Value": 3e-7,
       "Unit": "fraction of baryonic mass"
     },
     "ElectronConfiguration": "[Xe] 4f6 6s2",
-    "ElectronShells": [
-      2,
-      8,
-      18,
-      24,
-      8,
-      2
-    ],
+    "ElectronShells": [ 2, 8, 18, 24, 8, 2 ],
     "ValenceElectrons": 6,
     "Isotopes": [
       {
@@ -16460,7 +15651,7 @@
             "Unit": "K"
           },
           {
-            "Value": 100000000.0,
+            "Value": 1e8,
             "Unit": "K"
           }
         ],
@@ -16503,14 +15694,8 @@
         "Value": 0.75,
         "Scale": "0-1"
       },
-      "Bonding": [
-        "metallic",
-        "ionic"
-      ],
-      "CommonCompounds": [
-        "Sm2O3",
-        "SmCl3"
-      ]
+      "Bonding": [ "metallic", "ionic" ],
+      "CommonCompounds": [ "Sm2O3", "SmCl3" ]
     },
     "QuantumProperties": {
       "AtomicRadius": {
@@ -16526,9 +15711,7 @@
         "Unit": "pm"
       },
       "MagneticOrdering": "paramagnetic",
-      "SpinStates": [
-        1.0
-      ],
+      "SpinStates": [ 1.0 ],
       "IsParamagnetic": true,
       "NuclearSpin": 2.5
     },
@@ -16545,9 +15728,7 @@
       },
       "Toxicity": "low; some compounds may be harmful",
       "BiologicalRole": "used in magnets and lasers",
-      "Hazards": [
-        "fine dust inhalation risk"
-      ]
+      "Hazards": [ "fine dust inhalation risk" ]
     }
   },
   {
@@ -16559,25 +15740,13 @@
     "Period": 6,
     "Block": "f",
     "StandardState": "solid",
-    "Color": [
-      0.7,
-      0.6,
-      0.5,
-      1.0
-    ],
+    "Color": [ 0.7, 0.6, 0.5 ],
     "CosmicAbundance": {
-      "Value": 2e-07,
+      "Value": 2e-7,
       "Unit": "fraction of baryonic mass"
     },
     "ElectronConfiguration": "[Xe] 4f7 6s2",
-    "ElectronShells": [
-      2,
-      8,
-      18,
-      25,
-      8,
-      2
-    ],
+    "ElectronShells": [ 2, 8, 18, 25, 8, 2 ],
     "ValenceElectrons": 8,
     "Isotopes": [
       {
@@ -16708,7 +15877,7 @@
             "Unit": "K"
           },
           {
-            "Value": 100000000.0,
+            "Value": 1e8,
             "Unit": "K"
           }
         ],
@@ -16727,12 +15896,12 @@
     ],
     "ChemicalProperties": {
       "Electronegativity": {
-        "Value": 1.2,
+        "Value": 1.20,
         "Unit": "Pauling"
       },
       "IonizationEnergy": {
         "First": {
-          "Value": 5.67,
+          "Value": 5.670,
           "Unit": "eV"
         }
       },
@@ -16807,25 +15976,13 @@
     "Period": 6,
     "Block": "f",
     "StandardState": "solid",
-    "Color": [
-      0.7,
-      0.6,
-      0.6,
-      1.0
-    ],
+    "Color": [ 0.7, 0.6, 0.6 ],
     "CosmicAbundance": {
-      "Value": 2e-07,
+      "Value": 2e-7,
       "Unit": "fraction of baryonic mass"
     },
     "ElectronConfiguration": "[Xe] 4f7 5d1 6s2",
-    "ElectronShells": [
-      2,
-      8,
-      18,
-      25,
-      9,
-      2
-    ],
+    "ElectronShells": [ 2, 8, 18, 25, 9, 2 ],
     "ValenceElectrons": 9,
     "Isotopes": [
       {
@@ -16847,7 +16004,7 @@
     ],
     "PhysicalProperties": {
       "Density": {
-        "Value": 7.9,
+        "Value": 7.90,
         "Unit": "g/cm*"
       },
       "MeltingPoint": {
@@ -16956,7 +16113,7 @@
             "Unit": "K"
           },
           {
-            "Value": 100000000.0,
+            "Value": 1e8,
             "Unit": "K"
           }
         ],
@@ -16975,7 +16132,7 @@
     ],
     "ChemicalProperties": {
       "Electronegativity": {
-        "Value": 1.2,
+        "Value": 1.20,
         "Unit": "Pauling"
       },
       "IonizationEnergy": {
@@ -17003,14 +16160,8 @@
         "Value": 0.75,
         "Scale": "0-1"
       },
-      "Bonding": [
-        "metallic",
-        "ionic"
-      ],
-      "CommonCompounds": [
-        "Gd2O3",
-        "GdCl3"
-      ]
+      "Bonding": [ "metallic", "ionic" ],
+      "CommonCompounds": [ "Gd2O3", "GdCl3" ]
     },
     "QuantumProperties": {
       "AtomicRadius": {
@@ -17026,9 +16177,7 @@
         "Unit": "pm"
       },
       "MagneticOrdering": "paramagnetic",
-      "SpinStates": [
-        1.5
-      ],
+      "SpinStates": [ 1.5 ],
       "IsParamagnetic": true,
       "NuclearSpin": 3.5
     },
@@ -17045,9 +16194,7 @@
       },
       "Toxicity": "low; some compounds may be harmful",
       "BiologicalRole": "rare earth in magnets and lasers",
-      "Hazards": [
-        "fine dust inhalation risk"
-      ]
+      "Hazards": [ "fine dust inhalation risk" ]
     }
   },
   {
@@ -17059,25 +16206,13 @@
     "Period": 6,
     "Block": "f",
     "StandardState": "solid",
-    "Color": [
-      0.7,
-      0.6,
-      0.5,
-      1.0
-    ],
+    "Color": [ 0.7, 0.6, 0.5 ],
     "CosmicAbundance": {
-      "Value": 2e-07,
+      "Value": 2e-7,
       "Unit": "fraction of baryonic mass"
     },
     "ElectronConfiguration": "[Xe] 4f9 6s2",
-    "ElectronShells": [
-      2,
-      8,
-      18,
-      27,
-      8,
-      2
-    ],
+    "ElectronShells": [ 2, 8, 18, 27, 8, 2 ],
     "ValenceElectrons": 8,
     "Isotopes": [
       {
@@ -17200,7 +16335,7 @@
             "Unit": "K"
           },
           {
-            "Value": 100000000.0,
+            "Value": 1e8,
             "Unit": "K"
           }
         ],
@@ -17243,14 +16378,8 @@
         "Value": 0.75,
         "Scale": "0-1"
       },
-      "Bonding": [
-        "metallic",
-        "ionic"
-      ],
-      "CommonCompounds": [
-        "Tb2O3",
-        "TbCl3"
-      ]
+      "Bonding": [ "metallic", "ionic" ],
+      "CommonCompounds": [ "Tb2O3", "TbCl3" ]
     },
     "QuantumProperties": {
       "AtomicRadius": {
@@ -17266,9 +16395,7 @@
         "Unit": "pm"
       },
       "MagneticOrdering": "paramagnetic",
-      "SpinStates": [
-        1.5
-      ],
+      "SpinStates": [ 1.5 ],
       "IsParamagnetic": true,
       "NuclearSpin": 3.5
     },
@@ -17285,39 +16412,25 @@
       },
       "Toxicity": "low; compounds vary",
       "BiologicalRole": "used in magnets and phosphors",
-      "Hazards": [
-        "fine dust inhalation risk"
-      ]
+      "Hazards": [ "fine dust inhalation risk" ]
     }
   },
   {
     "Symbol": "Dy",
     "Name": "Dysprosium",
     "AtomicNumber": 66,
-    "AtomicMass": 162.5,
+    "AtomicMass": 162.50,
     "Group": 3,
     "Period": 6,
     "Block": "f",
     "StandardState": "solid",
-    "Color": [
-      0.65,
-      0.6,
-      0.55,
-      1.0
-    ],
+    "Color": [ 0.65, 0.6, 0.55 ],
     "CosmicAbundance": {
-      "Value": 2e-07,
+      "Value": 2e-7,
       "Unit": "fraction of baryonic mass"
     },
     "ElectronConfiguration": "[Xe] 4f10 6s2",
-    "ElectronShells": [
-      2,
-      8,
-      18,
-      27,
-      9,
-      2
-    ],
+    "ElectronShells": [ 2, 8, 18, 27, 9, 2 ],
     "ValenceElectrons": 12,
     "Isotopes": [
       {
@@ -17448,7 +16561,7 @@
             "Unit": "K"
           },
           {
-            "Value": 100000000.0,
+            "Value": 1e8,
             "Unit": "K"
           }
         ],
@@ -17491,14 +16604,8 @@
         "Value": 0.8,
         "Scale": "0-1"
       },
-      "Bonding": [
-        "metallic",
-        "ionic"
-      ],
-      "CommonCompounds": [
-        "Dy2O3",
-        "DyCl3"
-      ]
+      "Bonding": [ "metallic", "ionic" ],
+      "CommonCompounds": [ "Dy2O3", "DyCl3" ]
     },
     "QuantumProperties": {
       "AtomicRadius": {
@@ -17514,9 +16621,7 @@
         "Unit": "pm"
       },
       "MagneticOrdering": "paramagnetic",
-      "SpinStates": [
-        2.5
-      ],
+      "SpinStates": [ 2.5 ],
       "IsParamagnetic": true,
       "NuclearSpin": 2.5
     },
@@ -17533,44 +16638,30 @@
       },
       "Toxicity": "low; some compounds may be hazardous",
       "BiologicalRole": "used in magnets and lasers",
-      "Hazards": [
-        "fine dust inhalation risk"
-      ]
+      "Hazards": [ "fine dust inhalation risk" ]
     }
   },
   {
     "Symbol": "Ho",
     "Name": "Holmium",
     "AtomicNumber": 67,
-    "AtomicMass": 164.93,
+    "AtomicMass": 164.930,
     "Group": 3,
     "Period": 6,
     "Block": "f",
     "StandardState": "solid",
-    "Color": [
-      0.65,
-      0.6,
-      0.55,
-      1.0
-    ],
+    "Color": [ 0.65, 0.6, 0.55 ],
     "CosmicAbundance": {
-      "Value": 2e-07,
+      "Value": 2e-7,
       "Unit": "fraction of baryonic mass"
     },
     "ElectronConfiguration": "[Xe] 4f11 6s2",
-    "ElectronShells": [
-      2,
-      8,
-      18,
-      27,
-      10,
-      2
-    ],
+    "ElectronShells": [ 2, 8, 18, 27, 10, 2 ],
     "ValenceElectrons": 13,
     "Isotopes": [
       {
         "Name": "Holmium-165",
-        "MassNumber": 164.93,
+        "MassNumber": 164.930,
         "IsStable": true,
         "NaturalAbundance": 100.0,
         "HalfLife": null,
@@ -17688,7 +16779,7 @@
             "Unit": "K"
           },
           {
-            "Value": 100000000.0,
+            "Value": 1e8,
             "Unit": "K"
           }
         ],
@@ -17731,14 +16822,8 @@
         "Value": 0.8,
         "Scale": "0-1"
       },
-      "Bonding": [
-        "metallic",
-        "ionic"
-      ],
-      "CommonCompounds": [
-        "Ho2O3",
-        "HoCl3"
-      ]
+      "Bonding": [ "metallic", "ionic" ],
+      "CommonCompounds": [ "Ho2O3", "HoCl3" ]
     },
     "QuantumProperties": {
       "AtomicRadius": {
@@ -17754,9 +16839,7 @@
         "Unit": "pm"
       },
       "MagneticOrdering": "paramagnetic",
-      "SpinStates": [
-        2.5
-      ],
+      "SpinStates": [ 2.5 ],
       "IsParamagnetic": true,
       "NuclearSpin": 7.0
     },
@@ -17773,11 +16856,10 @@
       },
       "Toxicity": "low; some compounds may be harmful",
       "BiologicalRole": "used in magnets and lasers",
-      "Hazards": [
-        "fine dust inhalation risk"
-      ]
+      "Hazards": [ "fine dust inhalation risk" ]
     }
   },
+
   {
     "Symbol": "Er",
     "Name": "Erbium",
@@ -17787,30 +16869,18 @@
     "Period": 6,
     "Block": "f",
     "StandardState": "solid",
-    "Color": [
-      0.65,
-      0.6,
-      0.55,
-      1.0
-    ],
+    "Color": [ 0.65, 0.6, 0.55 ],
     "CosmicAbundance": {
-      "Value": 2e-07,
+      "Value": 2e-7,
       "Unit": "fraction of baryonic mass"
     },
     "ElectronConfiguration": "[Xe] 4f12 6s2",
-    "ElectronShells": [
-      2,
-      8,
-      18,
-      27,
-      10,
-      2
-    ],
+    "ElectronShells": [ 2, 8, 18, 27, 10, 2 ],
     "ValenceElectrons": 14,
     "Isotopes": [
       {
         "Name": "Erbium-166",
-        "MassNumber": 165.93,
+        "MassNumber": 165.930,
         "IsStable": true,
         "NaturalAbundance": 33.6,
         "HalfLife": null,
@@ -17936,7 +17006,7 @@
             "Unit": "K"
           },
           {
-            "Value": 100000000.0,
+            "Value": 1e8,
             "Unit": "K"
           }
         ],
@@ -17979,14 +17049,8 @@
         "Value": 0.75,
         "Scale": "0-1"
       },
-      "Bonding": [
-        "metallic",
-        "ionic"
-      ],
-      "CommonCompounds": [
-        "Er2O3",
-        "ErCl3"
-      ]
+      "Bonding": [ "metallic", "ionic" ],
+      "CommonCompounds": [ "Er2O3", "ErCl3" ]
     },
     "QuantumProperties": {
       "AtomicRadius": {
@@ -18002,9 +17066,7 @@
         "Unit": "pm"
       },
       "MagneticOrdering": "paramagnetic",
-      "SpinStates": [
-        1.5
-      ],
+      "SpinStates": [ 1.5 ],
       "IsParamagnetic": true,
       "NuclearSpin": 3.5
     },
@@ -18021,9 +17083,7 @@
       },
       "Toxicity": "low; some compounds may be harmful",
       "BiologicalRole": "rare earth in lasers and optics",
-      "Hazards": [
-        "fine dust inhalation risk"
-      ]
+      "Hazards": [ "fine dust inhalation risk" ]
     }
   },
   {
@@ -18035,25 +17095,13 @@
     "Period": 6,
     "Block": "f",
     "StandardState": "solid",
-    "Color": [
-      0.65,
-      0.55,
-      0.55,
-      1.0
-    ],
+    "Color": [ 0.65, 0.55, 0.55 ],
     "CosmicAbundance": {
-      "Value": 2e-07,
+      "Value": 2e-7,
       "Unit": "fraction of baryonic mass"
     },
     "ElectronConfiguration": "[Xe] 4f13 6s2",
-    "ElectronShells": [
-      2,
-      8,
-      18,
-      27,
-      10,
-      2
-    ],
+    "ElectronShells": [ 2, 8, 18, 27, 10, 2 ],
     "ValenceElectrons": 13,
     "Isotopes": [
       {
@@ -18176,7 +17224,7 @@
             "Unit": "K"
           },
           {
-            "Value": 100000000.0,
+            "Value": 1e8,
             "Unit": "K"
           }
         ],
@@ -18219,14 +17267,8 @@
         "Value": 0.8,
         "Scale": "0-1"
       },
-      "Bonding": [
-        "metallic",
-        "ionic"
-      ],
-      "CommonCompounds": [
-        "Tm2O3",
-        "TmCl3"
-      ]
+      "Bonding": [ "metallic", "ionic" ],
+      "CommonCompounds": [ "Tm2O3", "TmCl3" ]
     },
     "QuantumProperties": {
       "AtomicRadius": {
@@ -18242,9 +17284,7 @@
         "Unit": "pm"
       },
       "MagneticOrdering": "paramagnetic",
-      "SpinStates": [
-        1.5
-      ],
+      "SpinStates": [ 1.5 ],
       "IsParamagnetic": true,
       "NuclearSpin": 3.5
     },
@@ -18261,9 +17301,7 @@
       },
       "Toxicity": "low; some compounds may be harmful",
       "BiologicalRole": "used in lasers and research",
-      "Hazards": [
-        "fine dust inhalation risk"
-      ]
+      "Hazards": [ "fine dust inhalation risk" ]
     }
   },
   {
@@ -18275,25 +17313,13 @@
     "Period": 6,
     "Block": "f",
     "StandardState": "solid",
-    "Color": [
-      0.65,
-      0.6,
-      0.6,
-      1.0
-    ],
+    "Color": [ 0.65, 0.6, 0.6 ],
     "CosmicAbundance": {
-      "Value": 2e-07,
+      "Value": 2e-7,
       "Unit": "fraction of baryonic mass"
     },
     "ElectronConfiguration": "[Xe] 4f14 6s2",
-    "ElectronShells": [
-      2,
-      8,
-      18,
-      27,
-      10,
-      2
-    ],
+    "ElectronShells": [ 2, 8, 18, 27, 10, 2 ],
     "ValenceElectrons": 2,
     "Isotopes": [
       {
@@ -18424,7 +17450,7 @@
             "Unit": "K"
           },
           {
-            "Value": 100000000.0,
+            "Value": 1e8,
             "Unit": "K"
           }
         ],
@@ -18443,7 +17469,7 @@
     ],
     "ChemicalProperties": {
       "Electronegativity": {
-        "Value": 1.1,
+        "Value": 1.10,
         "Unit": "Pauling"
       },
       "IonizationEnergy": {
@@ -18474,14 +17500,8 @@
         "Value": 0.7,
         "Scale": "0-1"
       },
-      "Bonding": [
-        "metallic",
-        "ionic"
-      ],
-      "CommonCompounds": [
-        "Yb2O3",
-        "YbCl3"
-      ]
+      "Bonding": [ "metallic", "ionic" ],
+      "CommonCompounds": [ "Yb2O3", "YbCl3" ]
     },
     "QuantumProperties": {
       "AtomicRadius": {
@@ -18497,9 +17517,7 @@
         "Unit": "pm"
       },
       "MagneticOrdering": "paramagnetic",
-      "SpinStates": [
-        2.5
-      ],
+      "SpinStates": [ 2.5 ],
       "IsParamagnetic": true,
       "NuclearSpin": 0.5
     },
@@ -18516,9 +17534,7 @@
       },
       "Toxicity": "low; compounds vary",
       "BiologicalRole": "used in lasers and alloys",
-      "Hazards": [
-        "fine dust inhalation risk"
-      ]
+      "Hazards": [ "fine dust inhalation risk" ]
     }
   },
   {
@@ -18530,25 +17546,13 @@
     "Period": 6,
     "Block": "f",
     "StandardState": "solid",
-    "Color": [
-      0.65,
-      0.6,
-      0.6,
-      1.0
-    ],
+    "Color": [ 0.65, 0.6, 0.6 ],
     "CosmicAbundance": {
-      "Value": 1e-07,
+      "Value": 1e-7,
       "Unit": "fraction of baryonic mass"
     },
     "ElectronConfiguration": "[Xe] 4f14 5d1 6s2",
-    "ElectronShells": [
-      2,
-      8,
-      18,
-      27,
-      10,
-      3
-    ],
+    "ElectronShells": [ 2, 8, 18, 27, 10, 3 ],
     "ValenceElectrons": 3,
     "Isotopes": [
       {
@@ -18679,7 +17683,7 @@
             "Unit": "K"
           },
           {
-            "Value": 100000000.0,
+            "Value": 1e8,
             "Unit": "K"
           }
         ],
@@ -18729,14 +17733,8 @@
         "Value": 0.75,
         "Scale": "0-1"
       },
-      "Bonding": [
-        "metallic",
-        "ionic"
-      ],
-      "CommonCompounds": [
-        "Lu2O3",
-        "LuCl3"
-      ]
+      "Bonding": [ "metallic", "ionic" ],
+      "CommonCompounds": [ "Lu2O3", "LuCl3" ]
     },
     "QuantumProperties": {
       "AtomicRadius": {
@@ -18752,9 +17750,7 @@
         "Unit": "pm"
       },
       "MagneticOrdering": "paramagnetic",
-      "SpinStates": [
-        1.5
-      ],
+      "SpinStates": [ 1.5 ],
       "IsParamagnetic": true,
       "NuclearSpin": 3.5
     },
@@ -18771,11 +17767,10 @@
       },
       "Toxicity": "low; some compounds may be harmful",
       "BiologicalRole": "rare earth in research",
-      "Hazards": [
-        "fine dust inhalation risk"
-      ]
+      "Hazards": [ "fine dust inhalation risk" ]
     }
   },
+
   {
     "Symbol": "Hf",
     "Name": "Hafnium",
@@ -18785,25 +17780,13 @@
     "Period": 6,
     "Block": "d",
     "StandardState": "solid",
-    "Color": [
-      0.6,
-      0.6,
-      0.7,
-      1.0
-    ],
+    "Color": [ 0.6, 0.6, 0.7 ],
     "CosmicAbundance": {
-      "Value": 3e-07,
+      "Value": 3e-7,
       "Unit": "fraction of baryonic mass"
     },
     "ElectronConfiguration": "[Xe] 4f14 5d2 6s2",
-    "ElectronShells": [
-      2,
-      8,
-      18,
-      32,
-      10,
-      2
-    ],
+    "ElectronShells": [ 2, 8, 18, 32, 10, 2 ],
     "ValenceElectrons": 4,
     "Isotopes": [
       {
@@ -18934,7 +17917,7 @@
             "Unit": "K"
           },
           {
-            "Value": 100000000.0,
+            "Value": 1e8,
             "Unit": "K"
           }
         ],
@@ -18953,7 +17936,7 @@
     ],
     "ChemicalProperties": {
       "Electronegativity": {
-        "Value": 1.3,
+        "Value": 1.30,
         "Unit": "Pauling"
       },
       "IonizationEnergy": {
@@ -18981,14 +17964,8 @@
         "Value": 0.6,
         "Scale": "0-1"
       },
-      "Bonding": [
-        "metallic",
-        "ionic"
-      ],
-      "CommonCompounds": [
-        "HfO2",
-        "HfCl4"
-      ]
+      "Bonding": [ "metallic", "ionic" ],
+      "CommonCompounds": [ "HfO2", "HfCl4" ]
     },
     "QuantumProperties": {
       "AtomicRadius": {
@@ -19004,9 +17981,7 @@
         "Unit": "pm"
       },
       "MagneticOrdering": "paramagnetic",
-      "SpinStates": [
-        1.0
-      ],
+      "SpinStates": [ 1.0 ],
       "IsParamagnetic": true,
       "NuclearSpin": 0.5
     },
@@ -19023,9 +17998,7 @@
       },
       "Toxicity": "low",
       "BiologicalRole": "used in nuclear and electronics",
-      "Hazards": [
-        "fine dust inhalation risk"
-      ]
+      "Hazards": [ "fine dust inhalation risk" ]
     }
   },
   {
@@ -19037,25 +18010,13 @@
     "Period": 6,
     "Block": "d",
     "StandardState": "solid",
-    "Color": [
-      0.6,
-      0.6,
-      0.7,
-      1.0
-    ],
+    "Color": [ 0.6, 0.6, 0.7 ],
     "CosmicAbundance": {
-      "Value": 2e-07,
+      "Value": 2e-7,
       "Unit": "fraction of baryonic mass"
     },
     "ElectronConfiguration": "[Xe] 4f14 5d3 6s2",
-    "ElectronShells": [
-      2,
-      8,
-      18,
-      32,
-      11,
-      2
-    ],
+    "ElectronShells": [ 2, 8, 18, 32, 11, 2 ],
     "ValenceElectrons": 5,
     "Isotopes": [
       {
@@ -19178,7 +18139,7 @@
             "Unit": "K"
           },
           {
-            "Value": 100000000.0,
+            "Value": 1e8,
             "Unit": "K"
           }
         ],
@@ -19197,7 +18158,7 @@
     ],
     "ChemicalProperties": {
       "Electronegativity": {
-        "Value": 1.5,
+        "Value": 1.50,
         "Unit": "Pauling"
       },
       "IonizationEnergy": {
@@ -19229,14 +18190,8 @@
         "Value": 0.6,
         "Scale": "0-1"
       },
-      "Bonding": [
-        "metallic",
-        "ionic"
-      ],
-      "CommonCompounds": [
-        "Ta2O5",
-        "TaCl5"
-      ]
+      "Bonding": [ "metallic", "ionic" ],
+      "CommonCompounds": [ "Ta2O5", "TaCl5" ]
     },
     "QuantumProperties": {
       "AtomicRadius": {
@@ -19252,9 +18207,7 @@
         "Unit": "pm"
       },
       "MagneticOrdering": "paramagnetic",
-      "SpinStates": [
-        2.5
-      ],
+      "SpinStates": [ 2.5 ],
       "IsParamagnetic": true,
       "NuclearSpin": 7.0
     },
@@ -19271,9 +18224,7 @@
       },
       "Toxicity": "low",
       "BiologicalRole": "technical metal in electronics and alloys",
-      "Hazards": [
-        "fine dust inhalation risk"
-      ]
+      "Hazards": [ "fine dust inhalation risk" ]
     }
   },
   {
@@ -19285,25 +18236,13 @@
     "Period": 6,
     "Block": "d",
     "StandardState": "solid",
-    "Color": [
-      0.6,
-      0.6,
-      0.6,
-      1.0
-    ],
+    "Color": [ 0.6, 0.6, 0.6 ],
     "CosmicAbundance": {
-      "Value": 2e-07,
+      "Value": 2e-7,
       "Unit": "fraction of baryonic mass"
     },
     "ElectronConfiguration": "[Xe] 4f14 5d4 6s2",
-    "ElectronShells": [
-      2,
-      8,
-      18,
-      32,
-      12,
-      2
-    ],
+    "ElectronShells": [ 2, 8, 18, 32, 12, 2 ],
     "ValenceElectrons": 6,
     "Isotopes": [
       {
@@ -19426,7 +18365,7 @@
             "Unit": "K"
           },
           {
-            "Value": 100000000.0,
+            "Value": 1e8,
             "Unit": "K"
           }
         ],
@@ -19496,9 +18435,7 @@
         "Unit": "pm"
       },
       "MagneticOrdering": "paramagnetic",
-      "SpinStates": [
-        2.0
-      ],
+      "SpinStates": [ 2.0 ],
       "IsParamagnetic": true,
       "NuclearSpin": 0.5
     },
@@ -19529,32 +18466,20 @@
     "Period": 6,
     "Block": "d",
     "StandardState": "solid",
-    "Color": [
-      0.6,
-      0.6,
-      0.7,
-      1.0
-    ],
+    "Color": [ 0.6, 0.6, 0.7 ],
     "CosmicAbundance": {
-      "Value": 1e-07,
+      "Value": 1e-7,
       "Unit": "fraction of baryonic mass"
     },
     "ElectronConfiguration": "[Xe] 4f14 5d5 6s2",
-    "ElectronShells": [
-      2,
-      8,
-      18,
-      32,
-      13,
-      2
-    ],
+    "ElectronShells": [ 2, 8, 18, 32, 13, 2 ],
     "ValenceElectrons": 7,
     "Isotopes": [
       {
         "Name": "Rhenium-185",
         "MassNumber": 185.0,
         "IsStable": true,
-        "NaturalAbundance": 37.4,
+        "NaturalAbundance": 37.40,
         "HalfLife": null,
         "RadiationType": null
       },
@@ -19562,7 +18487,7 @@
         "Name": "Rhenium-187",
         "MassNumber": 186.207,
         "IsStable": true,
-        "NaturalAbundance": 62.6,
+        "NaturalAbundance": 62.60,
         "HalfLife": null,
         "RadiationType": null
       }
@@ -19678,7 +18603,7 @@
             "Unit": "K"
           },
           {
-            "Value": 100000000.0,
+            "Value": 1e8,
             "Unit": "K"
           }
         ],
@@ -19697,7 +18622,7 @@
     ],
     "ChemicalProperties": {
       "Electronegativity": {
-        "Value": 1.9,
+        "Value": 1.90,
         "Unit": "Pauling"
       },
       "IonizationEnergy": {
@@ -19725,14 +18650,8 @@
         "Value": 0.6,
         "Scale": "0-1"
       },
-      "Bonding": [
-        "metallic",
-        "ionic"
-      ],
-      "CommonCompounds": [
-        "Re2O7",
-        "ReCl6"
-      ]
+      "Bonding": [ "metallic", "ionic" ],
+      "CommonCompounds": [ "Re2O7", "ReCl6" ]
     },
     "QuantumProperties": {
       "AtomicRadius": {
@@ -19748,9 +18667,7 @@
         "Unit": "pm"
       },
       "MagneticOrdering": "paramagnetic",
-      "SpinStates": [
-        3.5
-      ],
+      "SpinStates": [ 3.5 ],
       "IsParamagnetic": true,
       "NuclearSpin": 3.5
     },
@@ -19767,9 +18684,7 @@
       },
       "Toxicity": "low",
       "BiologicalRole": "used in high-temperature alloys",
-      "Hazards": [
-        "fine dust inhalation risk"
-      ]
+      "Hazards": [ "fine dust inhalation risk" ]
     }
   },
   {
@@ -19781,25 +18696,13 @@
     "Period": 6,
     "Block": "d",
     "StandardState": "solid",
-    "Color": [
-      0.55,
-      0.55,
-      0.6,
-      1.0
-    ],
+    "Color": [ 0.55, 0.55, 0.6 ],
     "CosmicAbundance": {
-      "Value": 1e-07,
+      "Value": 1e-7,
       "Unit": "fraction of baryonic mass"
     },
     "ElectronConfiguration": "[Xe] 4f14 5d6 6s2",
-    "ElectronShells": [
-      2,
-      8,
-      18,
-      32,
-      14,
-      2
-    ],
+    "ElectronShells": [ 2, 8, 18, 32, 14, 2 ],
     "ValenceElectrons": 8,
     "Isotopes": [
       {
@@ -19922,7 +18825,7 @@
             "Unit": "K"
           },
           {
-            "Value": 100000000.0,
+            "Value": 1e8,
             "Unit": "K"
           }
         ],
@@ -19941,7 +18844,7 @@
     ],
     "ChemicalProperties": {
       "Electronegativity": {
-        "Value": 2.2,
+        "Value": 2.20,
         "Unit": "Pauling"
       },
       "IonizationEnergy": {
@@ -19969,14 +18872,8 @@
         "Value": 0.6,
         "Scale": "0-1"
       },
-      "Bonding": [
-        "metallic",
-        "ionic"
-      ],
-      "CommonCompounds": [
-        "OsO4",
-        "OsCl4"
-      ]
+      "Bonding": [ "metallic", "ionic" ],
+      "CommonCompounds": [ "OsO4", "OsCl4" ]
     },
     "QuantumProperties": {
       "AtomicRadius": {
@@ -19992,9 +18889,7 @@
         "Unit": "pm"
       },
       "MagneticOrdering": "paramagnetic",
-      "SpinStates": [
-        3.0
-      ],
+      "SpinStates": [ 3.0 ],
       "IsParamagnetic": true,
       "NuclearSpin": 0.5
     },
@@ -20011,10 +18906,7 @@
       },
       "Toxicity": "highly toxic (OsO4 vapor)",
       "BiologicalRole": "none",
-      "Hazards": [
-        "volatile oxide hazard",
-        "dust inhalation risk"
-      ]
+      "Hazards": [ "volatile oxide hazard", "dust inhalation risk" ]
     }
   },
   {
@@ -20026,25 +18918,13 @@
     "Period": 6,
     "Block": "d",
     "StandardState": "solid",
-    "Color": [
-      0.55,
-      0.55,
-      0.6,
-      1.0
-    ],
+    "Color": [ 0.55, 0.55, 0.6 ],
     "CosmicAbundance": {
-      "Value": 1e-07,
+      "Value": 1e-7,
       "Unit": "fraction of baryonic mass"
     },
     "ElectronConfiguration": "[Xe] 4f14 5d7 6s2",
-    "ElectronShells": [
-      2,
-      8,
-      18,
-      32,
-      15,
-      2
-    ],
+    "ElectronShells": [ 2, 8, 18, 32, 15, 2 ],
     "ValenceElectrons": 9,
     "Isotopes": [
       {
@@ -20175,7 +19055,7 @@
             "Unit": "K"
           },
           {
-            "Value": 100000000.0,
+            "Value": 1e8,
             "Unit": "K"
           }
         ],
@@ -20194,7 +19074,7 @@
     ],
     "ChemicalProperties": {
       "Electronegativity": {
-        "Value": 2.2,
+        "Value": 2.20,
         "Unit": "Pauling"
       },
       "IonizationEnergy": {
@@ -20222,14 +19102,8 @@
         "Value": 0.6,
         "Scale": "0-1"
       },
-      "Bonding": [
-        "metallic",
-        "ionic"
-      ],
-      "CommonCompounds": [
-        "IrO2",
-        "IrCl3"
-      ]
+      "Bonding": [ "metallic", "ionic" ],
+      "CommonCompounds": [ "IrO2", "IrCl3" ]
     },
     "QuantumProperties": {
       "AtomicRadius": {
@@ -20245,9 +19119,7 @@
         "Unit": "pm"
       },
       "MagneticOrdering": "paramagnetic",
-      "SpinStates": [
-        2.0
-      ],
+      "SpinStates": [ 2.0 ],
       "IsParamagnetic": true,
       "NuclearSpin": 0.5
     },
@@ -20264,9 +19136,7 @@
       },
       "Toxicity": "low",
       "BiologicalRole": "industrial catalyst metal",
-      "Hazards": [
-        "fine dust inhalation risk"
-      ]
+      "Hazards": [ "fine dust inhalation risk" ]
     }
   },
   {
@@ -20278,25 +19148,13 @@
     "Period": 6,
     "Block": "d",
     "StandardState": "solid",
-    "Color": [
-      0.55,
-      0.55,
-      0.6,
-      1.0
-    ],
+    "Color": [ 0.55, 0.55, 0.6 ],
     "CosmicAbundance": {
-      "Value": 1e-07,
+      "Value": 1e-7,
       "Unit": "fraction of baryonic mass"
     },
     "ElectronConfiguration": "[Xe] 4f14 5d9 6s1",
-    "ElectronShells": [
-      2,
-      8,
-      18,
-      32,
-      16,
-      1
-    ],
+    "ElectronShells": [ 2, 8, 18, 32, 16, 1 ],
     "ValenceElectrons": 10,
     "Isotopes": [
       {
@@ -20419,7 +19277,7 @@
             "Unit": "K"
           },
           {
-            "Value": 100000000.0,
+            "Value": 1e8,
             "Unit": "K"
           }
         ],
@@ -20466,14 +19324,8 @@
         "Value": 0.6,
         "Scale": "0-1"
       },
-      "Bonding": [
-        "metallic",
-        "ionic"
-      ],
-      "CommonCompounds": [
-        "PtCl2",
-        "PtO2"
-      ]
+      "Bonding": [ "metallic", "ionic" ],
+      "CommonCompounds": [ "PtCl2", "PtO2" ]
     },
     "QuantumProperties": {
       "AtomicRadius": {
@@ -20489,9 +19341,7 @@
         "Unit": "pm"
       },
       "MagneticOrdering": "paramagnetic",
-      "SpinStates": [
-        0.5
-      ],
+      "SpinStates": [ 0.5 ],
       "IsParamagnetic": true,
       "NuclearSpin": 0.0
     },
@@ -20508,9 +19358,7 @@
       },
       "Toxicity": "low",
       "BiologicalRole": "important catalyst metal",
-      "Hazards": [
-        "fine dust inhalation risk"
-      ]
+      "Hazards": [ "fine dust inhalation risk" ]
     }
   },
   {
@@ -20522,25 +19370,13 @@
     "Period": 6,
     "Block": "d",
     "StandardState": "solid",
-    "Color": [
-      0.83,
-      0.69,
-      0.21,
-      1.0
-    ],
+    "Color": [ 0.83, 0.69, 0.21 ],
     "CosmicAbundance": {
-      "Value": 1e-07,
+      "Value": 1e-7,
       "Unit": "fraction of baryonic mass"
     },
     "ElectronConfiguration": "[Xe] 4f14 5d10 6s1",
-    "ElectronShells": [
-      2,
-      8,
-      18,
-      32,
-      18,
-      1
-    ],
+    "ElectronShells": [ 2, 8, 18, 32, 18, 1 ],
     "ValenceElectrons": 11,
     "Isotopes": [
       {
@@ -20663,7 +19499,7 @@
             "Unit": "K"
           },
           {
-            "Value": 100000000.0,
+            "Value": 1e8,
             "Unit": "K"
           }
         ],
@@ -20706,21 +19542,15 @@
         }
       ],
       "StandardReductionPotential": {
-        "Value": 1.5,
+        "Value": 1.50,
         "Unit": "V"
       },
       "Reactivity": {
         "Value": 0.3,
         "Scale": "0-1"
       },
-      "Bonding": [
-        "metallic",
-        "ionic"
-      ],
-      "CommonCompounds": [
-        "AuCl3",
-        "Au2O3"
-      ]
+      "Bonding": [ "metallic", "ionic" ],
+      "CommonCompounds": [ "AuCl3", "Au2O3" ]
     },
     "QuantumProperties": {
       "AtomicRadius": {
@@ -20736,9 +19566,7 @@
         "Unit": "pm"
       },
       "MagneticOrdering": "diamagnetic",
-      "SpinStates": [
-        0.5
-      ],
+      "SpinStates": [ 0.5 ],
       "IsParamagnetic": false,
       "NuclearSpin": 1.5
     },
@@ -20755,9 +19583,7 @@
       },
       "Toxicity": "non-toxic",
       "BiologicalRole": "essential trace element in humans",
-      "Hazards": [
-        "fine dust inhalation risk"
-      ]
+      "Hazards": [ "fine dust inhalation risk" ]
     }
   },
   {
@@ -20769,25 +19595,13 @@
     "Period": 6,
     "Block": "d",
     "StandardState": "liquid",
-    "Color": [
-      0.85,
-      0.85,
-      0.95,
-      0.9
-    ],
+    "Color": [ 0.85, 0.85, 0.95 ],
     "CosmicAbundance": {
-      "Value": 1e-07,
+      "Value": 1e-7,
       "Unit": "fraction of baryonic mass"
     },
     "ElectronConfiguration": "[Xe] 4f14 5d10 6s2",
-    "ElectronShells": [
-      2,
-      8,
-      18,
-      32,
-      18,
-      2
-    ],
+    "ElectronShells": [ 2, 8, 18, 32, 18, 2 ],
     "ValenceElectrons": 2,
     "Isotopes": [
       {
@@ -20910,7 +19724,7 @@
             "Unit": "K"
           },
           {
-            "Value": 100000000.0,
+            "Value": 1e8,
             "Unit": "K"
           }
         ],
@@ -20929,7 +19743,7 @@
     ],
     "ChemicalProperties": {
       "Electronegativity": {
-        "Value": 2.0,
+        "Value": 2.00,
         "Unit": "Pauling"
       },
       "IonizationEnergy": {
@@ -20964,14 +19778,8 @@
         "Value": 0.4,
         "Scale": "0-1"
       },
-      "Bonding": [
-        "metallic",
-        "ionic"
-      ],
-      "CommonCompounds": [
-        "HgO",
-        "HgCl2"
-      ]
+      "Bonding": [ "metallic", "ionic" ],
+      "CommonCompounds": [ "HgO", "HgCl2" ]
     },
     "QuantumProperties": {
       "AtomicRadius": {
@@ -20987,9 +19795,7 @@
         "Unit": "pm"
       },
       "MagneticOrdering": "diamagnetic",
-      "SpinStates": [
-        0.0
-      ],
+      "SpinStates": [ 0.0 ],
       "IsParamagnetic": false,
       "NuclearSpin": 0.0
     },
@@ -21006,10 +19812,7 @@
       },
       "Toxicity": "highly toxic; neurotoxin",
       "BiologicalRole": "no beneficial biological role",
-      "Hazards": [
-        "vapor inhalation hazard",
-        "bioaccumulates in organisms"
-      ]
+      "Hazards": [ "vapor inhalation hazard", "bioaccumulates in organisms" ]
     }
   },
   {
@@ -21021,25 +19824,13 @@
     "Period": 6,
     "Block": "p",
     "StandardState": "solid",
-    "Color": [
-      0.65,
-      0.55,
-      0.5,
-      1.0
-    ],
+    "Color": [ 0.65, 0.55, 0.50 ],
     "CosmicAbundance": {
-      "Value": 1e-07,
+      "Value": 1e-7,
       "Unit": "fraction of baryonic mass"
     },
     "ElectronConfiguration": "[Xe] 4f14 5d10 6s2 6p1",
-    "ElectronShells": [
-      2,
-      8,
-      18,
-      32,
-      18,
-      3
-    ],
+    "ElectronShells": [ 2, 8, 18, 32, 18, 3 ],
     "ValenceElectrons": 3,
     "Isotopes": [
       {
@@ -21073,7 +19864,7 @@
         "Unit": "K"
       },
       "HeatCapacity": {
-        "Value": 26.4,
+        "Value": 26.40,
         "Unit": "J/mol*K"
       },
       "ThermalConductivity": {
@@ -21170,7 +19961,7 @@
             "Unit": "K"
           },
           {
-            "Value": 100000000.0,
+            "Value": 1e8,
             "Unit": "K"
           }
         ],
@@ -21224,15 +20015,8 @@
         "Value": 0.8,
         "Scale": "0-1"
       },
-      "Bonding": [
-        "metallic",
-        "ionic",
-        "covalent"
-      ],
-      "CommonCompounds": [
-        "TlCl",
-        "Tl2O3"
-      ]
+      "Bonding": [ "metallic", "ionic", "covalent" ],
+      "CommonCompounds": [ "TlCl", "Tl2O3" ]
     },
     "QuantumProperties": {
       "AtomicRadius": {
@@ -21248,9 +20032,7 @@
         "Unit": "pm"
       },
       "MagneticOrdering": "paramagnetic",
-      "SpinStates": [
-        1.5
-      ],
+      "SpinStates": [ 1.5 ],
       "IsParamagnetic": true,
       "NuclearSpin": 1.5
     },
@@ -21267,10 +20049,7 @@
       },
       "Toxicity": "high; cumulative toxin",
       "BiologicalRole": "no positive role; hazard",
-      "Hazards": [
-        "high toxicity",
-        "bioaccumulation"
-      ]
+      "Hazards": [ "high toxicity", "bioaccumulation" ]
     }
   },
   {
@@ -21282,25 +20061,13 @@
     "Period": 6,
     "Block": "p",
     "StandardState": "solid",
-    "Color": [
-      0.6,
-      0.6,
-      0.6,
-      1.0
-    ],
+    "Color": [ 0.6, 0.6, 0.6 ],
     "CosmicAbundance": {
-      "Value": 1e-06,
+      "Value": 1e-6,
       "Unit": "fraction of baryonic mass"
     },
     "ElectronConfiguration": "[Xe] 4f14 5d10 6s2 6p2",
-    "ElectronShells": [
-      2,
-      8,
-      18,
-      32,
-      18,
-      4
-    ],
+    "ElectronShells": [ 2, 8, 18, 32, 18, 4 ],
     "ValenceElectrons": 4,
     "Isotopes": [
       {
@@ -21431,7 +20198,7 @@
             "Unit": "K"
           },
           {
-            "Value": 100000000.0,
+            "Value": 1e8,
             "Unit": "K"
           }
         ],
@@ -21481,14 +20248,8 @@
         "Value": 0.4,
         "Scale": "0-1"
       },
-      "Bonding": [
-        "metallic",
-        "ionic"
-      ],
-      "CommonCompounds": [
-        "PbO",
-        "PbCl2"
-      ]
+      "Bonding": [ "metallic", "ionic" ],
+      "CommonCompounds": [ "PbO", "PbCl2" ]
     },
     "QuantumProperties": {
       "AtomicRadius": {
@@ -21504,9 +20265,7 @@
         "Unit": "pm"
       },
       "MagneticOrdering": "diamagnetic",
-      "SpinStates": [
-        0.0
-      ],
+      "SpinStates": [ 0.0 ],
       "IsParamagnetic": false,
       "NuclearSpin": 0.0
     },
@@ -21523,45 +20282,30 @@
       },
       "Toxicity": "high; cumulative neurotoxin",
       "BiologicalRole": "no known beneficial role",
-      "Hazards": [
-        "heavy metal toxicity",
-        "bioaccumulation hazard"
-      ]
+      "Hazards": [ "heavy metal toxicity", "bioaccumulation hazard" ]
     }
   },
   {
     "Symbol": "Bi",
     "Name": "Bismuth",
     "AtomicNumber": 83,
-    "AtomicMass": 208.98,
+    "AtomicMass": 208.980,
     "Group": 15,
     "Period": 6,
     "Block": "p",
     "StandardState": "solid",
-    "Color": [
-      0.6,
-      0.55,
-      0.55,
-      1.0
-    ],
+    "Color": [ 0.60, 0.55, 0.55 ],
     "CosmicAbundance": {
-      "Value": 1e-06,
+      "Value": 1e-6,
       "Unit": "fraction of baryonic mass"
     },
     "ElectronConfiguration": "[Xe] 4f14 5d10 6s2 6p3",
-    "ElectronShells": [
-      2,
-      8,
-      18,
-      32,
-      18,
-      5
-    ],
+    "ElectronShells": [ 2, 8, 18, 32, 18, 5 ],
     "ValenceElectrons": 5,
     "Isotopes": [
       {
         "Name": "Bismuth-209",
-        "MassNumber": 208.98,
+        "MassNumber": 208.980,
         "IsStable": true,
         "NaturalAbundance": 100.0,
         "HalfLife": null,
@@ -21679,7 +20423,7 @@
             "Unit": "K"
           },
           {
-            "Value": 100000000.0,
+            "Value": 1e8,
             "Unit": "K"
           }
         ],
@@ -21729,14 +20473,8 @@
         "Value": 0.5,
         "Scale": "0-1"
       },
-      "Bonding": [
-        "metallic",
-        "ionic"
-      ],
-      "CommonCompounds": [
-        "Bi2O3",
-        "BiCl3"
-      ]
+      "Bonding": [ "metallic", "ionic" ],
+      "CommonCompounds": [ "Bi2O3", "BiCl3" ]
     },
     "QuantumProperties": {
       "AtomicRadius": {
@@ -21752,9 +20490,7 @@
         "Unit": "pm"
       },
       "MagneticOrdering": "diamagnetic",
-      "SpinStates": [
-        1.5
-      ],
+      "SpinStates": [ 1.5 ],
       "IsParamagnetic": false,
       "NuclearSpin": 4.5
     },
@@ -21771,10 +20507,7 @@
       },
       "Toxicity": "moderately toxic; cumulative",
       "BiologicalRole": "none",
-      "Hazards": [
-        "heavy metal toxicity",
-        "bioaccumulation"
-      ]
+      "Hazards": [ "heavy metal toxicity", "bioaccumulation" ]
     }
   },
   {
@@ -21786,25 +20519,13 @@
     "Period": 6,
     "Block": "p",
     "StandardState": "solid",
-    "Color": [
-      0.6,
-      0.5,
-      0.5,
-      1.0
-    ],
+    "Color": [ 0.6, 0.5, 0.5 ],
     "CosmicAbundance": {
       "Value": null,
       "Unit": "fraction of baryonic mass"
     },
     "ElectronConfiguration": "[Xe] 4f14 5d10 6s2 6p4",
-    "ElectronShells": [
-      2,
-      8,
-      18,
-      32,
-      18,
-      6
-    ],
+    "ElectronShells": [ 2, 8, 18, 32, 18, 6 ],
     "ValenceElectrons": 6,
     "Isotopes": [
       {
@@ -21817,9 +20538,7 @@
           "Unit": "days"
         },
         "RadiationType": "alpha",
-        "DecayProducts": [
-          "Lead-206"
-        ]
+        "DecayProducts": [ "Lead-206" ]
       }
     ],
     "PhysicalProperties": {
@@ -21933,7 +20652,7 @@
             "Unit": "K"
           },
           {
-            "Value": 100000000.0,
+            "Value": 1e8,
             "Unit": "K"
           }
         ],
@@ -21980,14 +20699,8 @@
         "Value": 0.8,
         "Scale": "0-1"
       },
-      "Bonding": [
-        "metallic",
-        "ionic"
-      ],
-      "CommonCompounds": [
-        "PoO2",
-        "PoCl2"
-      ]
+      "Bonding": [ "metallic", "ionic" ],
+      "CommonCompounds": [ "PoO2", "PoCl2" ]
     },
     "QuantumProperties": {
       "AtomicRadius": {
@@ -22003,9 +20716,7 @@
         "Unit": "pm"
       },
       "MagneticOrdering": "paramagnetic",
-      "SpinStates": [
-        0.0
-      ],
+      "SpinStates": [ 0.0 ],
       "IsParamagnetic": false,
       "NuclearSpin": 0.0
     },
@@ -22022,10 +20733,7 @@
       },
       "Toxicity": "extremely toxic and radioactive",
       "BiologicalRole": "none; health hazard",
-      "Hazards": [
-        "alpha radiation hazard",
-        "heavy metal toxicity"
-      ]
+      "Hazards": [ "alpha radiation hazard", "heavy metal toxicity" ]
     }
   },
   {
@@ -22037,25 +20745,13 @@
     "Period": 6,
     "Block": "p",
     "StandardState": "solid",
-    "Color": [
-      0.6,
-      0.5,
-      0.6,
-      1.0
-    ],
+    "Color": [ 0.6, 0.5, 0.6 ],
     "CosmicAbundance": {
       "Value": null,
       "Unit": "fraction of baryonic mass"
     },
     "ElectronConfiguration": "[Xe] 4f14 5d10 6s2 6p5",
-    "ElectronShells": [
-      2,
-      8,
-      18,
-      32,
-      18,
-      5
-    ],
+    "ElectronShells": [ 2, 8, 18, 32, 18, 5 ],
     "ValenceElectrons": 7,
     "Isotopes": [
       {
@@ -22068,10 +20764,7 @@
           "Unit": "hours"
         },
         "RadiationType": "alpha",
-        "DecayProducts": [
-          "Bismuth-206",
-          "Polonium-206"
-        ]
+        "DecayProducts": [ "Bismuth-206", "Polonium-206" ]
       }
     ],
     "PhysicalProperties": {
@@ -22185,7 +20878,7 @@
             "Unit": "K"
           },
           {
-            "Value": 100000000.0,
+            "Value": 1e8,
             "Unit": "K"
           }
         ],
@@ -22240,14 +20933,8 @@
         "Value": 0.9,
         "Scale": "0-1"
       },
-      "Bonding": [
-        "covalent",
-        "ionic"
-      ],
-      "CommonCompounds": [
-        "At^-",
-        "AtOX"
-      ]
+      "Bonding": [ "covalent", "ionic" ],
+      "CommonCompounds": [ "At^-", "AtOX" ]
     },
     "QuantumProperties": {
       "AtomicRadius": {
@@ -22263,9 +20950,7 @@
         "Unit": "pm"
       },
       "MagneticOrdering": "paramagnetic",
-      "SpinStates": [
-        2.5
-      ],
+      "SpinStates": [ 2.5 ],
       "IsParamagnetic": true,
       "NuclearSpin": 3.5
     },
@@ -22282,10 +20967,7 @@
       },
       "Toxicity": "extremely radioactive; volatile",
       "BiologicalRole": "highly hazardous alpha emitter",
-      "Hazards": [
-        "alpha-emitter radiation hazard",
-        "volatile contamination"
-      ]
+      "Hazards": [ "alpha-emitter radiation hazard", "volatile contamination" ]
     }
   },
   {
@@ -22297,25 +20979,13 @@
     "Period": 6,
     "Block": "p",
     "StandardState": "gas",
-    "Color": [
-      0.9,
-      0.9,
-      0.95,
-      0.5
-    ],
+    "Color": [ 0.90, 0.90, 0.95 ],
     "CosmicAbundance": {
       "Value": null,
       "Unit": "fraction of baryonic mass"
     },
     "ElectronConfiguration": "[Xe] 4f14 5d10 6s2 6p6",
-    "ElectronShells": [
-      2,
-      8,
-      18,
-      32,
-      18,
-      8
-    ],
+    "ElectronShells": [ 2, 8, 18, 32, 18, 8 ],
     "ValenceElectrons": 8,
     "Isotopes": [
       {
@@ -22328,9 +20998,7 @@
           "Unit": "days"
         },
         "RadiationType": "alpha",
-        "DecayProducts": [
-          "Polonium-218"
-        ]
+        "DecayProducts": [ "Polonium-218" ]
       }
     ],
     "PhysicalProperties": {
@@ -22444,7 +21112,7 @@
             "Unit": "K"
           },
           {
-            "Value": 100000000.0,
+            "Value": 1e8,
             "Unit": "K"
           }
         ],
@@ -22463,7 +21131,7 @@
     ],
     "ChemicalProperties": {
       "Electronegativity": {
-        "Value": 2.6,
+        "Value": 2.60,
         "Unit": "Pauling"
       },
       "IonizationEnergy": {
@@ -22487,13 +21155,8 @@
         "Value": 0.9,
         "Scale": "0-1"
       },
-      "Bonding": [
-        "none"
-      ],
-      "CommonCompounds": [
-        "RnF2",
-        "RnO3"
-      ]
+      "Bonding": [ "none" ],
+      "CommonCompounds": [ "RnF2", "RnO3" ]
     },
     "QuantumProperties": {
       "AtomicRadius": {
@@ -22526,10 +21189,7 @@
       },
       "Toxicity": "radioactive carcinogen",
       "BiologicalRole": "none; health hazard",
-      "Hazards": [
-        "alpha radiation exposure",
-        "lung cancer risk"
-      ]
+      "Hazards": [ "alpha radiation exposure", "lung cancer risk" ]
     }
   },
   {
@@ -22541,26 +21201,13 @@
     "Period": 7,
     "Block": "s",
     "StandardState": "solid",
-    "Color": [
-      0.8,
-      0.8,
-      0.9,
-      1.0
-    ],
+    "Color": [ 0.8, 0.8, 0.9 ],
     "CosmicAbundance": {
       "Value": null,
       "Unit": "fraction of baryonic mass"
     },
     "ElectronConfiguration": "[Rn] 7s1",
-    "ElectronShells": [
-      2,
-      8,
-      18,
-      32,
-      18,
-      8,
-      1
-    ],
+    "ElectronShells": [ 2, 8, 18, 32, 18, 8, 1 ],
     "ValenceElectrons": 1,
     "Isotopes": [
       {
@@ -22573,9 +21220,7 @@
           "Unit": "minutes"
         },
         "RadiationType": "beta",
-        "DecayProducts": [
-          "Radium-223"
-        ]
+        "DecayProducts": [ "Radium-223" ]
       }
     ],
     "PhysicalProperties": {
@@ -22689,7 +21334,7 @@
             "Unit": "K"
           },
           {
-            "Value": 100000000.0,
+            "Value": 1e8,
             "Unit": "K"
           }
         ],
@@ -22735,14 +21380,8 @@
         "Value": 0.9,
         "Scale": "0-1"
       },
-      "Bonding": [
-        "metallic",
-        "ionic"
-      ],
-      "CommonCompounds": [
-        "FrCl",
-        "FrBr"
-      ]
+      "Bonding": [ "metallic", "ionic" ],
+      "CommonCompounds": [ "FrCl", "FrBr" ]
     },
     "QuantumProperties": {
       "AtomicRadius": {
@@ -22758,9 +21397,7 @@
         "Unit": "pm"
       },
       "MagneticOrdering": "paramagnetic",
-      "SpinStates": [
-        1.5
-      ],
+      "SpinStates": [ 1.5 ],
       "IsParamagnetic": true,
       "NuclearSpin": 3.5
     },
@@ -22777,10 +21414,7 @@
       },
       "Toxicity": "highly radioactive; no biological role",
       "BiologicalRole": null,
-      "Hazards": [
-        "radioactive decay hazard",
-        "chemical reactivity"
-      ]
+      "Hazards": [ "radioactive decay hazard", "chemical reactivity" ]
     }
   },
   {
@@ -22792,26 +21426,13 @@
     "Period": 7,
     "Block": "s",
     "StandardState": "solid",
-    "Color": [
-      0.75,
-      0.75,
-      0.65,
-      1.0
-    ],
+    "Color": [ 0.75, 0.75, 0.65 ],
     "CosmicAbundance": {
       "Value": null,
       "Unit": "fraction of baryonic mass"
     },
     "ElectronConfiguration": "[Rn] 7s2",
-    "ElectronShells": [
-      2,
-      8,
-      18,
-      32,
-      18,
-      8,
-      2
-    ],
+    "ElectronShells": [ 2, 8, 18, 32, 18, 8, 2 ],
     "ValenceElectrons": 2,
     "Isotopes": [
       {
@@ -22824,9 +21445,7 @@
           "Unit": "years"
         },
         "RadiationType": "alpha",
-        "DecayProducts": [
-          "Radon-222"
-        ]
+        "DecayProducts": [ "Radon-222" ]
       }
     ],
     "PhysicalProperties": {
@@ -22940,7 +21559,7 @@
             "Unit": "K"
           },
           {
-            "Value": 100000000.0,
+            "Value": 1e8,
             "Unit": "K"
           }
         ],
@@ -22979,21 +21598,15 @@
         }
       ],
       "StandardReductionPotential": {
-        "Value": -2.9,
+        "Value": -2.90,
         "Unit": "V"
       },
       "Reactivity": {
         "Value": 0.9,
         "Scale": "0-1"
       },
-      "Bonding": [
-        "metallic",
-        "ionic"
-      ],
-      "CommonCompounds": [
-        "RaCl2",
-        "RaSO4"
-      ]
+      "Bonding": [ "metallic", "ionic" ],
+      "CommonCompounds": [ "RaCl2", "RaSO4" ]
     },
     "QuantumProperties": {
       "AtomicRadius": {
@@ -23009,9 +21622,7 @@
         "Unit": "pm"
       },
       "MagneticOrdering": "non-magnetic",
-      "SpinStates": [
-        2.5
-      ],
+      "SpinStates": [ 2.5 ],
       "IsParamagnetic": false,
       "NuclearSpin": 2.5
     },
@@ -23028,10 +21639,7 @@
       },
       "Toxicity": "highly radioactive; strong health hazard",
       "BiologicalRole": "none",
-      "Hazards": [
-        "alpha radiation hazard",
-        "radionuclide toxicity"
-      ]
+      "Hazards": [ "alpha radiation hazard", "radionuclide toxicity" ]
     }
   },
   {
@@ -23043,26 +21651,13 @@
     "Period": 7,
     "Block": "f",
     "StandardState": "solid",
-    "Color": [
-      0.7,
-      0.6,
-      0.6,
-      1.0
-    ],
+    "Color": [ 0.70, 0.60, 0.60 ],
     "CosmicAbundance": {
       "Value": null,
       "Unit": "fraction of baryonic mass"
     },
     "ElectronConfiguration": "[Rn] 6d1 7s2",
-    "ElectronShells": [
-      2,
-      8,
-      18,
-      32,
-      18,
-      9,
-      2
-    ],
+    "ElectronShells": [ 2, 8, 18, 32, 18, 9, 2 ],
     "ValenceElectrons": 3,
     "Isotopes": [
       {
@@ -23075,9 +21670,7 @@
           "Unit": "years"
         },
         "RadiationType": "beta",
-        "DecayProducts": [
-          "Thorium-227"
-        ]
+        "DecayProducts": [ "Thorium-227" ]
       }
     ],
     "PhysicalProperties": {
@@ -23191,7 +21784,7 @@
             "Unit": "K"
           },
           {
-            "Value": 100000000.0,
+            "Value": 1e8,
             "Unit": "K"
           }
         ],
@@ -23238,14 +21831,8 @@
         "Value": 0.8,
         "Scale": "0-1"
       },
-      "Bonding": [
-        "metallic",
-        "ionic"
-      ],
-      "CommonCompounds": [
-        "Ac2O3",
-        "AcCl3"
-      ]
+      "Bonding": [ "metallic", "ionic" ],
+      "CommonCompounds": [ "Ac2O3", "AcCl3" ]
     },
     "QuantumProperties": {
       "AtomicRadius": {
@@ -23261,9 +21848,7 @@
         "Unit": "pm"
       },
       "MagneticOrdering": "paramagnetic",
-      "SpinStates": [
-        1.5
-      ],
+      "SpinStates": [ 1.5 ],
       "IsParamagnetic": true,
       "NuclearSpin": 1.5
     },
@@ -23280,10 +21865,7 @@
       },
       "Toxicity": "radioactive; high radiotoxicity",
       "BiologicalRole": "none",
-      "Hazards": [
-        "alpha-emitter radiation hazard",
-        "radioactive contamination"
-      ]
+      "Hazards": [ "alpha-emitter radiation hazard", "radioactive contamination" ]
     }
   },
   {
@@ -23295,26 +21877,13 @@
     "Period": 7,
     "Block": "f",
     "StandardState": "solid",
-    "Color": [
-      0.7,
-      0.6,
-      0.6,
-      1.0
-    ],
+    "Color": [ 0.70, 0.60, 0.60 ],
     "CosmicAbundance": {
       "Value": null,
       "Unit": "fraction of baryonic mass"
     },
     "ElectronConfiguration": "[Rn] 6d2 7s2",
-    "ElectronShells": [
-      2,
-      8,
-      18,
-      32,
-      18,
-      10,
-      2
-    ],
+    "ElectronShells": [ 2, 8, 18, 32, 18, 10, 2 ],
     "ValenceElectrons": 4,
     "Isotopes": [
       {
@@ -23323,13 +21892,11 @@
         "IsStable": false,
         "NaturalAbundance": 100.0,
         "HalfLife": {
-          "Value": 14050000000.0,
+          "Value": 1.405e10,
           "Unit": "years"
         },
         "RadiationType": "alpha",
-        "DecayProducts": [
-          "Radium-228"
-        ]
+        "DecayProducts": [ "Radium-228" ]
       }
     ],
     "PhysicalProperties": {
@@ -23443,7 +22010,7 @@
             "Unit": "K"
           },
           {
-            "Value": 100000000.0,
+            "Value": 1e8,
             "Unit": "K"
           }
         ],
@@ -23490,14 +22057,8 @@
         "Value": 0.8,
         "Scale": "0-1"
       },
-      "Bonding": [
-        "metallic",
-        "ionic"
-      ],
-      "CommonCompounds": [
-        "ThO2",
-        "ThCl4"
-      ]
+      "Bonding": [ "metallic", "ionic" ],
+      "CommonCompounds": [ "ThO2", "ThCl4" ]
     },
     "QuantumProperties": {
       "AtomicRadius": {
@@ -23513,9 +22074,7 @@
         "Unit": "pm"
       },
       "MagneticOrdering": "paramagnetic",
-      "SpinStates": [
-        1.0
-      ],
+      "SpinStates": [ 1.0 ],
       "IsParamagnetic": true,
       "NuclearSpin": 0.0
     },
@@ -23532,10 +22091,7 @@
       },
       "Toxicity": "radioactive; high radiotoxicity",
       "BiologicalRole": "none",
-      "Hazards": [
-        "alpha radiation hazard",
-        "radioactive contamination"
-      ]
+      "Hazards": [ "alpha radiation hazard", "radioactive contamination" ]
     }
   },
   {
@@ -23547,26 +22103,13 @@
     "Period": 7,
     "Block": "f",
     "StandardState": "solid",
-    "Color": [
-      0.7,
-      0.6,
-      0.6,
-      1.0
-    ],
+    "Color": [ 0.7, 0.6, 0.6 ],
     "CosmicAbundance": {
       "Value": null,
       "Unit": "fraction of baryonic mass"
     },
     "ElectronConfiguration": "[Rn] 5f2 6d1 7s2",
-    "ElectronShells": [
-      2,
-      8,
-      18,
-      32,
-      18,
-      10,
-      3
-    ],
+    "ElectronShells": [ 2, 8, 18, 32, 18, 10, 3 ],
     "ValenceElectrons": 3,
     "Isotopes": [
       {
@@ -23579,9 +22122,7 @@
           "Unit": "years"
         },
         "RadiationType": "alpha",
-        "DecayProducts": [
-          "Actinium-227"
-        ]
+        "DecayProducts": [ "Actinium-227" ]
       }
     ],
     "PhysicalProperties": {
@@ -23695,7 +22236,7 @@
             "Unit": "K"
           },
           {
-            "Value": 100000000.0,
+            "Value": 1e8,
             "Unit": "K"
           }
         ],
@@ -23742,14 +22283,8 @@
         "Value": 0.9,
         "Scale": "0-1"
       },
-      "Bonding": [
-        "metallic",
-        "ionic"
-      ],
-      "CommonCompounds": [
-        "PaO2",
-        "PaCl5"
-      ]
+      "Bonding": [ "metallic", "ionic" ],
+      "CommonCompounds": [ "PaO2", "PaCl5" ]
     },
     "QuantumProperties": {
       "AtomicRadius": {
@@ -23765,9 +22300,7 @@
         "Unit": "pm"
       },
       "MagneticOrdering": "paramagnetic",
-      "SpinStates": [
-        1.0
-      ],
+      "SpinStates": [ 1.0 ],
       "IsParamagnetic": true,
       "NuclearSpin": 1.0
     },
@@ -23784,10 +22317,7 @@
       },
       "Toxicity": "radioactive; significant radiotoxicity",
       "BiologicalRole": "none",
-      "Hazards": [
-        "alpha-radiation hazard",
-        "radioactive contamination"
-      ]
+      "Hazards": [ "alpha-radiation hazard", "radioactive contamination" ]
     }
   },
   {
@@ -23799,26 +22329,13 @@
     "Period": 7,
     "Block": "f",
     "StandardState": "solid",
-    "Color": [
-      0.65,
-      0.55,
-      0.5,
-      1.0
-    ],
+    "Color": [ 0.65, 0.55, 0.50 ],
     "CosmicAbundance": {
-      "Value": 4e-09,
+      "Value": 4e-9,
       "Unit": "fraction of baryonic mass"
     },
     "ElectronConfiguration": "[Rn] 5f3 6d1 7s2",
-    "ElectronShells": [
-      2,
-      8,
-      18,
-      32,
-      18,
-      12,
-      2
-    ],
+    "ElectronShells": [ 2, 8, 18, 32, 18, 12, 2 ],
     "ValenceElectrons": 6,
     "Isotopes": [
       {
@@ -23827,27 +22344,23 @@
         "IsStable": false,
         "NaturalAbundance": 99.274,
         "HalfLife": {
-          "Value": 4468000000.0,
+          "Value": 4.468e9,
           "Unit": "years"
         },
         "RadiationType": "alpha",
-        "DecayProducts": [
-          "Thorium-234"
-        ]
+        "DecayProducts": [ "Thorium-234" ]
       },
       {
         "Name": "Uranium-235",
         "MassNumber": 235.043,
         "IsStable": false,
-        "NaturalAbundance": 0.72,
+        "NaturalAbundance": 0.720,
         "HalfLife": {
-          "Value": 704000000.0,
+          "Value": 7.04e8,
           "Unit": "years"
         },
         "RadiationType": "alpha",
-        "DecayProducts": [
-          "Thorium-231"
-        ]
+        "DecayProducts": [ "Thorium-231" ]
       }
     ],
     "PhysicalProperties": {
@@ -23961,7 +22474,7 @@
             "Unit": "K"
           },
           {
-            "Value": 100000000.0,
+            "Value": 1e8,
             "Unit": "K"
           }
         ],
@@ -24008,14 +22521,8 @@
         "Value": 0.9,
         "Scale": "0-1"
       },
-      "Bonding": [
-        "metallic",
-        "ionic"
-      ],
-      "CommonCompounds": [
-        "UO2",
-        "UCl4"
-      ]
+      "Bonding": [ "metallic", "ionic" ],
+      "CommonCompounds": [ "UO2", "UCl4" ]
     },
     "QuantumProperties": {
       "AtomicRadius": {
@@ -24031,9 +22538,7 @@
         "Unit": "pm"
       },
       "MagneticOrdering": "paramagnetic",
-      "SpinStates": [
-        2.5
-      ],
+      "SpinStates": [ 2.5 ],
       "IsParamagnetic": true,
       "NuclearSpin": 0.0
     },
@@ -24066,26 +22571,13 @@
     "Period": 7,
     "Block": "f",
     "StandardState": "solid",
-    "Color": [
-      0.7,
-      0.6,
-      0.55,
-      1.0
-    ],
+    "Color": [ 0.70, 0.60, 0.55 ],
     "CosmicAbundance": {
       "Value": null,
       "Unit": "fraction of baryonic mass"
     },
     "ElectronConfiguration": "[Rn] 5f4 6d1 7s2",
-    "ElectronShells": [
-      2,
-      8,
-      18,
-      32,
-      18,
-      13,
-      2
-    ],
+    "ElectronShells": [ 2, 8, 18, 32, 18, 13, 2 ],
     "ValenceElectrons": 5,
     "Isotopes": [
       {
@@ -24094,13 +22586,11 @@
         "IsStable": false,
         "NaturalAbundance": 0.0,
         "HalfLife": {
-          "Value": 2144000.0,
+          "Value": 2.144e6,
           "Unit": "years"
         },
         "RadiationType": "alpha",
-        "DecayProducts": [
-          "Protactinium-233"
-        ]
+        "DecayProducts": [ "Protactinium-233" ]
       }
     ],
     "PhysicalProperties": {
@@ -24214,7 +22704,7 @@
             "Unit": "K"
           },
           {
-            "Value": 100000000.0,
+            "Value": 1e8,
             "Unit": "K"
           }
         ],
@@ -24261,14 +22751,8 @@
         "Value": 0.9,
         "Scale": "0-1"
       },
-      "Bonding": [
-        "metallic",
-        "ionic"
-      ],
-      "CommonCompounds": [
-        "NpO2",
-        "NpCl4"
-      ]
+      "Bonding": [ "metallic", "ionic" ],
+      "CommonCompounds": [ "NpO2", "NpCl4" ]
     },
     "QuantumProperties": {
       "AtomicRadius": {
@@ -24284,9 +22768,7 @@
         "Unit": "pm"
       },
       "MagneticOrdering": "paramagnetic",
-      "SpinStates": [
-        1.0
-      ],
+      "SpinStates": [ 1.0 ],
       "IsParamagnetic": true,
       "NuclearSpin": 4.5
     },
@@ -24303,10 +22785,7 @@
       },
       "Toxicity": "radioactive; highly radiotoxic",
       "BiologicalRole": "none",
-      "Hazards": [
-        "alpha radiation exposure",
-        "radioactive contamination"
-      ]
+      "Hazards": [ "alpha radiation exposure", "radioactive contamination" ]
     }
   },
   {
@@ -24318,26 +22797,13 @@
     "Period": 7,
     "Block": "f",
     "StandardState": "solid",
-    "Color": [
-      0.7,
-      0.55,
-      0.55,
-      1.0
-    ],
+    "Color": [ 0.70, 0.55, 0.55 ],
     "CosmicAbundance": {
       "Value": null,
       "Unit": "fraction of baryonic mass"
     },
     "ElectronConfiguration": "[Rn] 5f6 7s2",
-    "ElectronShells": [
-      2,
-      8,
-      18,
-      32,
-      18,
-      12,
-      2
-    ],
+    "ElectronShells": [ 2, 8, 18, 32, 18, 12, 2 ],
     "ValenceElectrons": 8,
     "Isotopes": [
       {
@@ -24350,9 +22816,7 @@
           "Unit": "years"
         },
         "RadiationType": "alpha",
-        "DecayProducts": [
-          "Uranium-235"
-        ]
+        "DecayProducts": [ "Uranium-235" ]
       }
     ],
     "PhysicalProperties": {
@@ -24466,7 +22930,7 @@
             "Unit": "K"
           },
           {
-            "Value": 100000000.0,
+            "Value": 1e8,
             "Unit": "K"
           }
         ],
@@ -24513,14 +22977,8 @@
         "Value": 0.9,
         "Scale": "0-1"
       },
-      "Bonding": [
-        "metallic",
-        "ionic"
-      ],
-      "CommonCompounds": [
-        "PuO2",
-        "PuCl4"
-      ]
+      "Bonding": [ "metallic", "ionic" ],
+      "CommonCompounds": [ "PuO2", "PuCl4" ]
     },
     "QuantumProperties": {
       "AtomicRadius": {
@@ -24536,9 +22994,7 @@
         "Unit": "pm"
       },
       "MagneticOrdering": "paramagnetic",
-      "SpinStates": [
-        1.0
-      ],
+      "SpinStates": [ 1.0 ],
       "IsParamagnetic": true,
       "NuclearSpin": 0.0
     },
@@ -24555,10 +23011,7 @@
       },
       "Toxicity": "radioactive; extremely hazardous",
       "BiologicalRole": "none",
-      "Hazards": [
-        "alpha radiation hazard",
-        "radioactive contamination"
-      ]
+      "Hazards": [ "alpha radiation hazard", "radioactive contamination" ]
     }
   },
   {
@@ -24570,26 +23023,13 @@
     "Period": 7,
     "Block": "f",
     "StandardState": "solid",
-    "Color": [
-      0.7,
-      0.55,
-      0.55,
-      1.0
-    ],
+    "Color": [ 0.70, 0.55, 0.55 ],
     "CosmicAbundance": {
       "Value": null,
       "Unit": "fraction of baryonic mass"
     },
     "ElectronConfiguration": "[Rn] 5f7 7s2",
-    "ElectronShells": [
-      2,
-      8,
-      18,
-      32,
-      18,
-      13,
-      2
-    ],
+    "ElectronShells": [ 2, 8, 18, 32, 18, 13, 2 ],
     "ValenceElectrons": 9,
     "Isotopes": [
       {
@@ -24602,9 +23042,7 @@
           "Unit": "years"
         },
         "RadiationType": "alpha",
-        "DecayProducts": [
-          "Neptunium-237"
-        ]
+        "DecayProducts": [ "Neptunium-237" ]
       }
     ],
     "PhysicalProperties": {
@@ -24718,7 +23156,7 @@
             "Unit": "K"
           },
           {
-            "Value": 100000000.0,
+            "Value": 1e8,
             "Unit": "K"
           }
         ],
@@ -24765,14 +23203,8 @@
         "Value": 0.9,
         "Scale": "0-1"
       },
-      "Bonding": [
-        "metallic",
-        "ionic"
-      ],
-      "CommonCompounds": [
-        "AmO2",
-        "AmCl3"
-      ]
+      "Bonding": [ "metallic", "ionic" ],
+      "CommonCompounds": [ "AmO2", "AmCl3" ]
     },
     "QuantumProperties": {
       "AtomicRadius": {
@@ -24788,9 +23220,7 @@
         "Unit": "pm"
       },
       "MagneticOrdering": "paramagnetic",
-      "SpinStates": [
-        1.0
-      ],
+      "SpinStates": [ 1.0 ],
       "IsParamagnetic": true,
       "NuclearSpin": 2.5
     },
@@ -24807,10 +23237,7 @@
       },
       "Toxicity": "radioactive; highly toxic",
       "BiologicalRole": "none",
-      "Hazards": [
-        "alpha radiation hazard",
-        "radioactive contamination"
-      ]
+      "Hazards": [ "alpha radiation hazard", "radioactive contamination" ]
     }
   },
   {
@@ -24822,26 +23249,13 @@
     "Period": 7,
     "Block": "f",
     "StandardState": "solid",
-    "Color": [
-      0.7,
-      0.55,
-      0.5,
-      1.0
-    ],
+    "Color": [ 0.70, 0.55, 0.50 ],
     "CosmicAbundance": {
       "Value": null,
       "Unit": "fraction of baryonic mass"
     },
     "ElectronConfiguration": "[Rn] 5f7 6d1 7s2",
-    "ElectronShells": [
-      2,
-      8,
-      18,
-      32,
-      18,
-      13,
-      2
-    ],
+    "ElectronShells": [ 2, 8, 18, 32, 18, 13, 2 ],
     "ValenceElectrons": 8,
     "Isotopes": [
       {
@@ -24854,9 +23268,7 @@
           "Unit": "years"
         },
         "RadiationType": "alpha",
-        "DecayProducts": [
-          "Plutonium-240"
-        ]
+        "DecayProducts": [ "Plutonium-240" ]
       }
     ],
     "PhysicalProperties": {
@@ -24970,7 +23382,7 @@
             "Unit": "K"
           },
           {
-            "Value": 100000000.0,
+            "Value": 1e8,
             "Unit": "K"
           }
         ],
@@ -25017,14 +23429,8 @@
         "Value": 0.9,
         "Scale": "0-1"
       },
-      "Bonding": [
-        "metallic",
-        "ionic"
-      ],
-      "CommonCompounds": [
-        "CmO2",
-        "CmCl3"
-      ]
+      "Bonding": [ "metallic", "ionic" ],
+      "CommonCompounds": [ "CmO2", "CmCl3" ]
     },
     "QuantumProperties": {
       "AtomicRadius": {
@@ -25040,9 +23446,7 @@
         "Unit": "pm"
       },
       "MagneticOrdering": "paramagnetic",
-      "SpinStates": [
-        1.0
-      ],
+      "SpinStates": [ 1.0 ],
       "IsParamagnetic": true,
       "NuclearSpin": 7.0
     },
@@ -25059,12 +23463,10 @@
       },
       "Toxicity": "radioactive; extremely hazardous",
       "BiologicalRole": "none",
-      "Hazards": [
-        "alpha radiation hazard",
-        "radioactive contamination"
-      ]
+      "Hazards": [ "alpha radiation hazard", "radioactive contamination" ]
     }
   },
+
   {
     "Symbol": "Bk",
     "Name": "Berkelium",
@@ -25074,26 +23476,13 @@
     "Period": 7,
     "Block": "f",
     "StandardState": "solid",
-    "Color": [
-      0.7,
-      0.6,
-      0.5,
-      1.0
-    ],
+    "Color": [ 0.70, 0.60, 0.50 ],
     "CosmicAbundance": {
       "Value": null,
       "Unit": "fraction of baryonic mass"
     },
     "ElectronConfiguration": "[Rn] 5f9 7s2",
-    "ElectronShells": [
-      2,
-      8,
-      18,
-      32,
-      18,
-      13,
-      2
-    ],
+    "ElectronShells": [ 2, 8, 18, 32, 18, 13, 2 ],
     "ValenceElectrons": 11,
     "Isotopes": [
       {
@@ -25106,9 +23495,7 @@
           "Unit": "years"
         },
         "RadiationType": "alpha",
-        "DecayProducts": [
-          "Californium-247"
-        ]
+        "DecayProducts": [ "Californium-247" ]
       }
     ],
     "PhysicalProperties": {
@@ -25222,7 +23609,7 @@
             "Unit": "K"
           },
           {
-            "Value": 100000000.0,
+            "Value": 1e8,
             "Unit": "K"
           }
         ],
@@ -25269,14 +23656,8 @@
         "Value": 0.9,
         "Scale": "0-1"
       },
-      "Bonding": [
-        "metallic",
-        "ionic"
-      ],
-      "CommonCompounds": [
-        "BkO2",
-        "BkCl3"
-      ]
+      "Bonding": [ "metallic", "ionic" ],
+      "CommonCompounds": [ "BkO2", "BkCl3" ]
     },
     "QuantumProperties": {
       "AtomicRadius": {
@@ -25292,9 +23673,7 @@
         "Unit": "pm"
       },
       "MagneticOrdering": "paramagnetic",
-      "SpinStates": [
-        1.0
-      ],
+      "SpinStates": [ 1.0 ],
       "IsParamagnetic": true,
       "NuclearSpin": 3.5
     },
@@ -25311,10 +23690,7 @@
       },
       "Toxicity": "radioactive; very hazardous",
       "BiologicalRole": "none",
-      "Hazards": [
-        "alpha radiation hazard",
-        "radioactive contamination"
-      ]
+      "Hazards": [ "alpha radiation hazard", "radioactive contamination" ]
     }
   },
   {
@@ -25326,26 +23702,13 @@
     "Period": 7,
     "Block": "f",
     "StandardState": "solid",
-    "Color": [
-      0.7,
-      0.6,
-      0.5,
-      1.0
-    ],
+    "Color": [ 0.70, 0.60, 0.50 ],
     "CosmicAbundance": {
       "Value": null,
       "Unit": "fraction of baryonic mass"
     },
     "ElectronConfiguration": "[Rn] 5f10 7s2",
-    "ElectronShells": [
-      2,
-      8,
-      18,
-      32,
-      18,
-      13,
-      2
-    ],
+    "ElectronShells": [ 2, 8, 18, 32, 18, 13, 2 ],
     "ValenceElectrons": 12,
     "Isotopes": [
       {
@@ -25358,9 +23721,7 @@
           "Unit": "years"
         },
         "RadiationType": "alpha",
-        "DecayProducts": [
-          "Curium-248"
-        ]
+        "DecayProducts": [ "Curium-248" ]
       }
     ],
     "PhysicalProperties": {
@@ -25474,7 +23835,7 @@
             "Unit": "K"
           },
           {
-            "Value": 100000000.0,
+            "Value": 1e8,
             "Unit": "K"
           }
         ],
@@ -25521,14 +23882,8 @@
         "Value": 0.9,
         "Scale": "0-1"
       },
-      "Bonding": [
-        "metallic",
-        "ionic"
-      ],
-      "CommonCompounds": [
-        "CfO2",
-        "CfCl3"
-      ]
+      "Bonding": [ "metallic", "ionic" ],
+      "CommonCompounds": [ "CfO2", "CfCl3" ]
     },
     "QuantumProperties": {
       "AtomicRadius": {
@@ -25544,9 +23899,7 @@
         "Unit": "pm"
       },
       "MagneticOrdering": "paramagnetic",
-      "SpinStates": [
-        1.0
-      ],
+      "SpinStates": [ 1.0 ],
       "IsParamagnetic": true,
       "NuclearSpin": 0.0
     },
@@ -25563,10 +23916,7 @@
       },
       "Toxicity": "radioactive; extremely hazardous",
       "BiologicalRole": "none",
-      "Hazards": [
-        "alpha radiation hazard",
-        "radioactive contamination"
-      ]
+      "Hazards": [ "alpha radiation hazard", "radioactive contamination" ]
     }
   },
   {
@@ -25578,26 +23928,13 @@
     "Period": 7,
     "Block": "f",
     "StandardState": "solid",
-    "Color": [
-      0.7,
-      0.55,
-      0.55,
-      1.0
-    ],
+    "Color": [ 0.70, 0.55, 0.55 ],
     "CosmicAbundance": {
       "Value": null,
       "Unit": "fraction of baryonic mass"
     },
     "ElectronConfiguration": "[Rn] 5f11 7s2",
-    "ElectronShells": [
-      2,
-      8,
-      18,
-      32,
-      18,
-      13,
-      2
-    ],
+    "ElectronShells": [ 2, 8, 18, 32, 18, 13, 2 ],
     "ValenceElectrons": 11,
     "Isotopes": [
       {
@@ -25610,9 +23947,7 @@
           "Unit": "days"
         },
         "RadiationType": "alpha",
-        "DecayProducts": [
-          "Berkelium-249"
-        ]
+        "DecayProducts": [ "Berkelium-249" ]
       }
     ],
     "PhysicalProperties": {
@@ -25726,7 +24061,7 @@
             "Unit": "K"
           },
           {
-            "Value": 100000000.0,
+            "Value": 1e8,
             "Unit": "K"
           }
         ],
@@ -25750,7 +24085,7 @@
       },
       "IonizationEnergy": {
         "First": {
-          "Value": 6.0,
+          "Value": 6.00,
           "Unit": "eV"
         }
       },
@@ -25769,14 +24104,8 @@
         "Value": 0.9,
         "Scale": "0-1"
       },
-      "Bonding": [
-        "metallic",
-        "ionic"
-      ],
-      "CommonCompounds": [
-        "EsO2",
-        "EsCl3"
-      ]
+      "Bonding": [ "metallic", "ionic" ],
+      "CommonCompounds": [ "EsO2", "EsCl3" ]
     },
     "QuantumProperties": {
       "AtomicRadius": {
@@ -25792,9 +24121,7 @@
         "Unit": "pm"
       },
       "MagneticOrdering": "paramagnetic",
-      "SpinStates": [
-        1.0
-      ],
+      "SpinStates": [ 1.0 ],
       "IsParamagnetic": true,
       "NuclearSpin": 0.0
     },
@@ -25811,10 +24138,7 @@
       },
       "Toxicity": "radioactive; extremely hazardous",
       "BiologicalRole": "none",
-      "Hazards": [
-        "alpha radiation hazard",
-        "radioactive contamination"
-      ]
+      "Hazards": [ "alpha radiation hazard", "radioactive contamination" ]
     }
   },
   {
@@ -25826,26 +24150,13 @@
     "Period": 7,
     "Block": "f",
     "StandardState": "solid",
-    "Color": [
-      0.7,
-      0.55,
-      0.5,
-      1.0
-    ],
+    "Color": [ 0.70, 0.55, 0.50 ],
     "CosmicAbundance": {
       "Value": null,
       "Unit": "fraction of baryonic mass"
     },
     "ElectronConfiguration": "[Rn] 5f12 7s2",
-    "ElectronShells": [
-      2,
-      8,
-      18,
-      32,
-      18,
-      13,
-      2
-    ],
+    "ElectronShells": [ 2, 8, 18, 32, 18, 13, 2 ],
     "ValenceElectrons": 12,
     "Isotopes": [
       {
@@ -25858,9 +24169,7 @@
           "Unit": "days"
         },
         "RadiationType": "alpha",
-        "DecayProducts": [
-          "Californium-253"
-        ]
+        "DecayProducts": [ "Californium-253" ]
       }
     ],
     "PhysicalProperties": {
@@ -25974,7 +24283,7 @@
             "Unit": "K"
           },
           {
-            "Value": 100000000.0,
+            "Value": 1e8,
             "Unit": "K"
           }
         ],
@@ -26017,14 +24326,8 @@
         "Value": 0.9,
         "Scale": "0-1"
       },
-      "Bonding": [
-        "metallic",
-        "ionic"
-      ],
-      "CommonCompounds": [
-        "FmO2",
-        "FmCl3"
-      ]
+      "Bonding": [ "metallic", "ionic" ],
+      "CommonCompounds": [ "FmO2", "FmCl3" ]
     },
     "QuantumProperties": {
       "AtomicRadius": {
@@ -26040,9 +24343,7 @@
         "Unit": "pm"
       },
       "MagneticOrdering": "paramagnetic",
-      "SpinStates": [
-        1.0
-      ],
+      "SpinStates": [ 1.0 ],
       "IsParamagnetic": true,
       "NuclearSpin": 0.0
     },
@@ -26059,10 +24360,7 @@
       },
       "Toxicity": "radioactive; extremely hazardous",
       "BiologicalRole": "none",
-      "Hazards": [
-        "alpha radiation hazard",
-        "radioactive contamination"
-      ]
+      "Hazards": [ "alpha radiation hazard", "radioactive contamination" ]
     }
   },
   {
@@ -26074,26 +24372,13 @@
     "Period": 7,
     "Block": "f",
     "StandardState": "solid",
-    "Color": [
-      0.7,
-      0.55,
-      0.5,
-      1.0
-    ],
+    "Color": [ 0.70, 0.55, 0.50 ],
     "CosmicAbundance": {
       "Value": null,
       "Unit": "fraction of baryonic mass"
     },
     "ElectronConfiguration": "[Rn] 5f13 7s2",
-    "ElectronShells": [
-      2,
-      8,
-      18,
-      32,
-      18,
-      13,
-      2
-    ],
+    "ElectronShells": [ 2, 8, 18, 32, 18, 13, 2 ],
     "ValenceElectrons": 12,
     "Isotopes": [
       {
@@ -26106,9 +24391,7 @@
           "Unit": "days"
         },
         "RadiationType": "alpha",
-        "DecayProducts": [
-          "Einsteinium-254"
-        ]
+        "DecayProducts": [ "Einsteinium-254" ]
       }
     ],
     "PhysicalProperties": {
@@ -26222,7 +24505,7 @@
             "Unit": "K"
           },
           {
-            "Value": 100000000.0,
+            "Value": 1e8,
             "Unit": "K"
           }
         ],
@@ -26265,14 +24548,8 @@
         "Value": 0.9,
         "Scale": "0-1"
       },
-      "Bonding": [
-        "metallic",
-        "ionic"
-      ],
-      "CommonCompounds": [
-        "MdO2",
-        "MdCl3"
-      ]
+      "Bonding": [ "metallic", "ionic" ],
+      "CommonCompounds": [ "MdO2", "MdCl3" ]
     },
     "QuantumProperties": {
       "AtomicRadius": {
@@ -26288,9 +24565,7 @@
         "Unit": "pm"
       },
       "MagneticOrdering": "paramagnetic",
-      "SpinStates": [
-        1.0
-      ],
+      "SpinStates": [ 1.0 ],
       "IsParamagnetic": true,
       "NuclearSpin": 0.0
     },
@@ -26307,10 +24582,7 @@
       },
       "Toxicity": "radioactive; extremely hazardous",
       "BiologicalRole": "none",
-      "Hazards": [
-        "alpha radiation hazard",
-        "radioactive contamination"
-      ]
+      "Hazards": [ "alpha radiation hazard", "radioactive contamination" ]
     }
   },
   {
@@ -26322,26 +24594,13 @@
     "Period": 7,
     "Block": "f",
     "StandardState": "solid",
-    "Color": [
-      0.7,
-      0.55,
-      0.5,
-      1.0
-    ],
+    "Color": [ 0.70, 0.55, 0.50 ],
     "CosmicAbundance": {
       "Value": null,
       "Unit": "fraction of baryonic mass"
     },
     "ElectronConfiguration": "[Rn] 5f14 7s2",
-    "ElectronShells": [
-      2,
-      8,
-      18,
-      32,
-      18,
-      13,
-      2
-    ],
+    "ElectronShells": [ 2, 8, 18, 32, 18, 13, 2 ],
     "ValenceElectrons": 16,
     "Isotopes": [
       {
@@ -26354,9 +24613,7 @@
           "Unit": "minutes"
         },
         "RadiationType": "alpha",
-        "DecayProducts": [
-          "Fermium-255"
-        ]
+        "DecayProducts": [ "Fermium-255" ]
       }
     ],
     "PhysicalProperties": {
@@ -26470,7 +24727,7 @@
             "Unit": "K"
           },
           {
-            "Value": 100000000.0,
+            "Value": 1e8,
             "Unit": "K"
           }
         ],
@@ -26517,14 +24774,8 @@
         "Value": 0.9,
         "Scale": "0-1"
       },
-      "Bonding": [
-        "metallic",
-        "ionic"
-      ],
-      "CommonCompounds": [
-        "NoO2",
-        "NoCl3"
-      ]
+      "Bonding": [ "metallic", "ionic" ],
+      "CommonCompounds": [ "NoO2", "NoCl3" ]
     },
     "QuantumProperties": {
       "AtomicRadius": {
@@ -26540,9 +24791,7 @@
         "Unit": "pm"
       },
       "MagneticOrdering": "paramagnetic",
-      "SpinStates": [
-        1.0
-      ],
+      "SpinStates": [ 1.0 ],
       "IsParamagnetic": true,
       "NuclearSpin": 0.0
     },
@@ -26559,10 +24808,7 @@
       },
       "Toxicity": "radioactive; extremely hazardous",
       "BiologicalRole": "none",
-      "Hazards": [
-        "alpha radiation hazard",
-        "radioactive contamination"
-      ]
+      "Hazards": [ "alpha radiation hazard", "radioactive contamination" ]
     }
   },
   {
@@ -26574,26 +24820,13 @@
     "Period": 7,
     "Block": "f",
     "StandardState": "solid",
-    "Color": [
-      0.7,
-      0.55,
-      0.5,
-      1.0
-    ],
+    "Color": [ 0.70, 0.55, 0.50 ],
     "CosmicAbundance": {
       "Value": null,
       "Unit": "fraction of baryonic mass"
     },
     "ElectronConfiguration": "[Rn] 5f14 7s2 7p1",
-    "ElectronShells": [
-      2,
-      8,
-      18,
-      32,
-      18,
-      13,
-      3
-    ],
+    "ElectronShells": [ 2, 8, 18, 32, 18, 13, 3 ],
     "ValenceElectrons": 3,
     "Isotopes": [
       {
@@ -26606,9 +24839,7 @@
           "Unit": "hours"
         },
         "RadiationType": "alpha",
-        "DecayProducts": [
-          "Nobelium-262"
-        ]
+        "DecayProducts": [ "Nobelium-262" ]
       }
     ],
     "PhysicalProperties": {
@@ -26722,7 +24953,7 @@
             "Unit": "K"
           },
           {
-            "Value": 100000000.0,
+            "Value": 1e8,
             "Unit": "K"
           }
         ],
@@ -26765,14 +24996,8 @@
         "Value": 0.9,
         "Scale": "0-1"
       },
-      "Bonding": [
-        "metallic",
-        "ionic"
-      ],
-      "CommonCompounds": [
-        "LrCl3",
-        "LrO3"
-      ]
+      "Bonding": [ "metallic", "ionic" ],
+      "CommonCompounds": [ "LrCl3", "LrO3" ]
     },
     "QuantumProperties": {
       "AtomicRadius": {
@@ -26788,9 +25013,7 @@
         "Unit": "pm"
       },
       "MagneticOrdering": "paramagnetic",
-      "SpinStates": [
-        1.0
-      ],
+      "SpinStates": [ 1.0 ],
       "IsParamagnetic": true,
       "NuclearSpin": 0.0
     },
@@ -26807,10 +25030,7 @@
       },
       "Toxicity": "radioactive; extremely hazardous",
       "BiologicalRole": "none",
-      "Hazards": [
-        "alpha radiation hazard",
-        "radioactive contamination"
-      ]
+      "Hazards": [ "alpha radiation hazard", "radioactive contamination" ]
     }
   },
   {
@@ -26822,26 +25042,13 @@
     "Period": 7,
     "Block": "d",
     "StandardState": "solid",
-    "Color": [
-      0.7,
-      0.6,
-      0.5,
-      1.0
-    ],
+    "Color": [ 0.70, 0.60, 0.50 ],
     "CosmicAbundance": {
       "Value": null,
       "Unit": "fraction of baryonic mass"
     },
     "ElectronConfiguration": "[Rn] 5f14 6d2 7s2",
-    "ElectronShells": [
-      2,
-      8,
-      18,
-      32,
-      18,
-      13,
-      2
-    ],
+    "ElectronShells": [ 2, 8, 18, 32, 18, 13, 2 ],
     "ValenceElectrons": 4,
     "Isotopes": [
       {
@@ -26854,9 +25061,7 @@
           "Unit": "hours"
         },
         "RadiationType": "alpha",
-        "DecayProducts": [
-          "Lawrencium-267"
-        ]
+        "DecayProducts": [ "Lawrencium-267" ]
       }
     ],
     "PhysicalProperties": {
@@ -26970,7 +25175,7 @@
             "Unit": "K"
           },
           {
-            "Value": 100000000.0,
+            "Value": 1e8,
             "Unit": "K"
           }
         ],
@@ -27017,14 +25222,8 @@
         "Value": 0.9,
         "Scale": "0-1"
       },
-      "Bonding": [
-        "metallic",
-        "ionic"
-      ],
-      "CommonCompounds": [
-        "RfO2",
-        "RfCl4"
-      ]
+      "Bonding": [ "metallic", "ionic" ],
+      "CommonCompounds": [ "RfO2", "RfCl4" ]
     },
     "QuantumProperties": {
       "AtomicRadius": {
@@ -27040,9 +25239,7 @@
         "Unit": "pm"
       },
       "MagneticOrdering": "paramagnetic",
-      "SpinStates": [
-        1.0
-      ],
+      "SpinStates": [ 1.0 ],
       "IsParamagnetic": true,
       "NuclearSpin": 0.0
     },
@@ -27059,10 +25256,7 @@
       },
       "Toxicity": "radioactive; extremely hazardous",
       "BiologicalRole": "none",
-      "Hazards": [
-        "alpha radiation hazard",
-        "radioactive contamination"
-      ]
+      "Hazards": [ "alpha radiation hazard", "radioactive contamination" ]
     }
   },
   {
@@ -27074,26 +25268,13 @@
     "Period": 7,
     "Block": "d",
     "StandardState": "solid",
-    "Color": [
-      0.7,
-      0.6,
-      0.5,
-      1.0
-    ],
+    "Color": [ 0.70, 0.60, 0.50 ],
     "CosmicAbundance": {
       "Value": null,
       "Unit": "fraction of baryonic mass"
     },
     "ElectronConfiguration": "[Rn] 5f14 6d3 7s2",
-    "ElectronShells": [
-      2,
-      8,
-      18,
-      32,
-      18,
-      13,
-      2
-    ],
+    "ElectronShells": [ 2, 8, 18, 32, 18, 13, 2 ],
     "ValenceElectrons": 5,
     "Isotopes": [
       {
@@ -27106,9 +25287,7 @@
           "Unit": "hours"
         },
         "RadiationType": "alpha",
-        "DecayProducts": [
-          "Lawrencium-264"
-        ]
+        "DecayProducts": [ "Lawrencium-264" ]
       }
     ],
     "PhysicalProperties": {
@@ -27222,7 +25401,7 @@
             "Unit": "K"
           },
           {
-            "Value": 100000000.0,
+            "Value": 1e8,
             "Unit": "K"
           }
         ],
@@ -27269,14 +25448,8 @@
         "Value": 0.9,
         "Scale": "0-1"
       },
-      "Bonding": [
-        "metallic",
-        "ionic"
-      ],
-      "CommonCompounds": [
-        "DbO3",
-        "DbCl5"
-      ]
+      "Bonding": [ "metallic", "ionic" ],
+      "CommonCompounds": [ "DbO3", "DbCl5" ]
     },
     "QuantumProperties": {
       "AtomicRadius": {
@@ -27292,9 +25465,7 @@
         "Unit": "pm"
       },
       "MagneticOrdering": "paramagnetic",
-      "SpinStates": [
-        1.0
-      ],
+      "SpinStates": [ 1.0 ],
       "IsParamagnetic": true,
       "NuclearSpin": 0.0
     },
@@ -27311,10 +25482,7 @@
       },
       "Toxicity": "radioactive; extremely hazardous",
       "BiologicalRole": "none",
-      "Hazards": [
-        "alpha radiation hazard",
-        "radioactive contamination"
-      ]
+      "Hazards": [ "alpha radiation hazard", "radioactive contamination" ]
     }
   },
   {
@@ -27326,26 +25494,13 @@
     "Period": 7,
     "Block": "d",
     "StandardState": "solid",
-    "Color": [
-      0.7,
-      0.6,
-      0.5,
-      1.0
-    ],
+    "Color": [ 0.70, 0.60, 0.50 ],
     "CosmicAbundance": {
       "Value": null,
       "Unit": "fraction of baryonic mass"
     },
     "ElectronConfiguration": "[Rn] 5f14 6d4 7s2",
-    "ElectronShells": [
-      2,
-      8,
-      18,
-      32,
-      18,
-      13,
-      2
-    ],
+    "ElectronShells": [ 2, 8, 18, 32, 18, 13, 2 ],
     "ValenceElectrons": 6,
     "Isotopes": [
       {
@@ -27358,9 +25513,7 @@
           "Unit": "minutes"
         },
         "RadiationType": "alpha",
-        "DecayProducts": [
-          "Meitnerium-267"
-        ]
+        "DecayProducts": [ "Meitnerium-267" ]
       }
     ],
     "PhysicalProperties": {
@@ -27474,7 +25627,7 @@
             "Unit": "K"
           },
           {
-            "Value": 100000000.0,
+            "Value": 1e8,
             "Unit": "K"
           }
         ],
@@ -27521,14 +25674,8 @@
         "Value": 0.9,
         "Scale": "0-1"
       },
-      "Bonding": [
-        "metallic",
-        "ionic"
-      ],
-      "CommonCompounds": [
-        "SgO2",
-        "SgCl4"
-      ]
+      "Bonding": [ "metallic", "ionic" ],
+      "CommonCompounds": [ "SgO2", "SgCl4" ]
     },
     "QuantumProperties": {
       "AtomicRadius": {
@@ -27544,9 +25691,7 @@
         "Unit": "pm"
       },
       "MagneticOrdering": "paramagnetic",
-      "SpinStates": [
-        1.0
-      ],
+      "SpinStates": [ 1.0 ],
       "IsParamagnetic": true,
       "NuclearSpin": 0.0
     },
@@ -27563,10 +25708,7 @@
       },
       "Toxicity": "radioactive; extremely hazardous",
       "BiologicalRole": "none",
-      "Hazards": [
-        "alpha radiation hazard",
-        "radioactive contamination"
-      ]
+      "Hazards": [ "alpha radiation hazard", "radioactive contamination" ]
     }
   },
   {
@@ -27578,26 +25720,13 @@
     "Period": 7,
     "Block": "d",
     "StandardState": "solid",
-    "Color": [
-      0.7,
-      0.6,
-      0.5,
-      1.0
-    ],
+    "Color": [ 0.70, 0.60, 0.50 ],
     "CosmicAbundance": {
       "Value": null,
       "Unit": "fraction of baryonic mass"
     },
     "ElectronConfiguration": "[Rn] 5f14 6d5 7s2",
-    "ElectronShells": [
-      2,
-      8,
-      18,
-      32,
-      18,
-      13,
-      2
-    ],
+    "ElectronShells": [ 2, 8, 18, 32, 18, 13, 2 ],
     "ValenceElectrons": 7,
     "Isotopes": [
       {
@@ -27610,9 +25739,7 @@
           "Unit": "seconds"
         },
         "RadiationType": "alpha",
-        "DecayProducts": [
-          "Dubnium-266"
-        ]
+        "DecayProducts": [ "Dubnium-266" ]
       }
     ],
     "PhysicalProperties": {
@@ -27726,7 +25853,7 @@
             "Unit": "K"
           },
           {
-            "Value": 100000000.0,
+            "Value": 1e8,
             "Unit": "K"
           }
         ],
@@ -27773,14 +25900,8 @@
         "Value": 0.9,
         "Scale": "0-1"
       },
-      "Bonding": [
-        "metallic",
-        "ionic"
-      ],
-      "CommonCompounds": [
-        "BhO3",
-        "BhCl7"
-      ]
+      "Bonding": [ "metallic", "ionic" ],
+      "CommonCompounds": [ "BhO3", "BhCl7" ]
     },
     "QuantumProperties": {
       "AtomicRadius": {
@@ -27796,9 +25917,7 @@
         "Unit": "pm"
       },
       "MagneticOrdering": "paramagnetic",
-      "SpinStates": [
-        1.0
-      ],
+      "SpinStates": [ 1.0 ],
       "IsParamagnetic": true,
       "NuclearSpin": 0.0
     },
@@ -27815,10 +25934,7 @@
       },
       "Toxicity": "radioactive; extremely hazardous",
       "BiologicalRole": "none",
-      "Hazards": [
-        "alpha radiation hazard",
-        "radioactive contamination"
-      ]
+      "Hazards": [ "alpha radiation hazard", "radioactive contamination" ]
     }
   },
   {
@@ -27830,26 +25946,13 @@
     "Period": 7,
     "Block": "d",
     "StandardState": "solid",
-    "Color": [
-      0.7,
-      0.6,
-      0.5,
-      1.0
-    ],
+    "Color": [ 0.70, 0.60, 0.50 ],
     "CosmicAbundance": {
       "Value": null,
       "Unit": "fraction of baryonic mass"
     },
     "ElectronConfiguration": "[Rn] 5f14 6d6 7s2",
-    "ElectronShells": [
-      2,
-      8,
-      18,
-      32,
-      18,
-      13,
-      2
-    ],
+    "ElectronShells": [ 2, 8, 18, 32, 18, 13, 2 ],
     "ValenceElectrons": 8,
     "Isotopes": [
       {
@@ -27862,9 +25965,7 @@
           "Unit": "seconds"
         },
         "RadiationType": "alpha",
-        "DecayProducts": [
-          "Meitnerium-277"
-        ]
+        "DecayProducts": [ "Meitnerium-277" ]
       }
     ],
     "PhysicalProperties": {
@@ -27978,7 +26079,7 @@
             "Unit": "K"
           },
           {
-            "Value": 100000000.0,
+            "Value": 1e8,
             "Unit": "K"
           }
         ],
@@ -28021,14 +26122,8 @@
         "Value": 0.9,
         "Scale": "0-1"
       },
-      "Bonding": [
-        "metallic",
-        "ionic"
-      ],
-      "CommonCompounds": [
-        "HsO4",
-        "HsCl6"
-      ]
+      "Bonding": [ "metallic", "ionic" ],
+      "CommonCompounds": [ "HsO4", "HsCl6" ]
     },
     "QuantumProperties": {
       "AtomicRadius": {
@@ -28044,9 +26139,7 @@
         "Unit": "pm"
       },
       "MagneticOrdering": "paramagnetic",
-      "SpinStates": [
-        1.0
-      ],
+      "SpinStates": [ 1.0 ],
       "IsParamagnetic": true,
       "NuclearSpin": 0.0
     },
@@ -28063,10 +26156,7 @@
       },
       "Toxicity": "radioactive; extremely hazardous",
       "BiologicalRole": "none",
-      "Hazards": [
-        "alpha radiation hazard",
-        "radioactive contamination"
-      ]
+      "Hazards": [ "alpha radiation hazard", "radioactive contamination" ]
     }
   },
   {
@@ -28078,26 +26168,13 @@
     "Period": 7,
     "Block": "d",
     "StandardState": "solid",
-    "Color": [
-      0.7,
-      0.6,
-      0.5,
-      1.0
-    ],
+    "Color": [ 0.70, 0.60, 0.50 ],
     "CosmicAbundance": {
       "Value": null,
       "Unit": "fraction of baryonic mass"
     },
     "ElectronConfiguration": "[Rn] 5f14 6d7 7s2",
-    "ElectronShells": [
-      2,
-      8,
-      18,
-      32,
-      18,
-      13,
-      2
-    ],
+    "ElectronShells": [ 2, 8, 18, 32, 18, 13, 2 ],
     "ValenceElectrons": 9,
     "Isotopes": [
       {
@@ -28110,9 +26187,7 @@
           "Unit": "seconds"
         },
         "RadiationType": "alpha",
-        "DecayProducts": [
-          "Hassium-274"
-        ]
+        "DecayProducts": [ "Hassium-274" ]
       }
     ],
     "PhysicalProperties": {
@@ -28226,7 +26301,7 @@
             "Unit": "K"
           },
           {
-            "Value": 100000000.0,
+            "Value": 1e8,
             "Unit": "K"
           }
         ],
@@ -28273,14 +26348,8 @@
         "Value": 0.9,
         "Scale": "0-1"
       },
-      "Bonding": [
-        "metallic",
-        "ionic"
-      ],
-      "CommonCompounds": [
-        "MtO3",
-        "MtCl5"
-      ]
+      "Bonding": [ "metallic", "ionic" ],
+      "CommonCompounds": [ "MtO3", "MtCl5" ]
     },
     "QuantumProperties": {
       "AtomicRadius": {
@@ -28296,9 +26365,7 @@
         "Unit": "pm"
       },
       "MagneticOrdering": "paramagnetic",
-      "SpinStates": [
-        1.0
-      ],
+      "SpinStates": [ 1.0 ],
       "IsParamagnetic": true,
       "NuclearSpin": 0.0
     },
@@ -28315,10 +26382,7 @@
       },
       "Toxicity": "radioactive; extremely hazardous",
       "BiologicalRole": "none",
-      "Hazards": [
-        "alpha radiation hazard",
-        "radioactive contamination"
-      ]
+      "Hazards": [ "alpha radiation hazard", "radioactive contamination" ]
     }
   },
   {
@@ -28330,26 +26394,13 @@
     "Period": 7,
     "Block": "d",
     "StandardState": "solid",
-    "Color": [
-      0.7,
-      0.6,
-      0.5,
-      1.0
-    ],
+    "Color": [ 0.70, 0.60, 0.50 ],
     "CosmicAbundance": {
       "Value": null,
       "Unit": "fraction of baryonic mass"
     },
     "ElectronConfiguration": "[Rn] 5f14 6d8 7s2",
-    "ElectronShells": [
-      2,
-      8,
-      18,
-      32,
-      18,
-      13,
-      2
-    ],
+    "ElectronShells": [ 2, 8, 18, 32, 18, 13, 2 ],
     "ValenceElectrons": 10,
     "Isotopes": [
       {
@@ -28362,9 +26413,7 @@
           "Unit": "seconds"
         },
         "RadiationType": "alpha",
-        "DecayProducts": [
-          "Meitnerium-277"
-        ]
+        "DecayProducts": [ "Meitnerium-277" ]
       }
     ],
     "PhysicalProperties": {
@@ -28478,7 +26527,7 @@
             "Unit": "K"
           },
           {
-            "Value": 100000000.0,
+            "Value": 1e8,
             "Unit": "K"
           }
         ],
@@ -28502,7 +26551,7 @@
       },
       "IonizationEnergy": {
         "First": {
-          "Value": 6.9,
+          "Value": 6.90,
           "Unit": "eV"
         }
       },
@@ -28525,14 +26574,8 @@
         "Value": 0.9,
         "Scale": "0-1"
       },
-      "Bonding": [
-        "metallic",
-        "ionic"
-      ],
-      "CommonCompounds": [
-        "DsO2",
-        "DsCl6"
-      ]
+      "Bonding": [ "metallic", "ionic" ],
+      "CommonCompounds": [ "DsO2", "DsCl6" ]
     },
     "QuantumProperties": {
       "AtomicRadius": {
@@ -28548,9 +26591,7 @@
         "Unit": "pm"
       },
       "MagneticOrdering": "paramagnetic",
-      "SpinStates": [
-        1.0
-      ],
+      "SpinStates": [ 1.0 ],
       "IsParamagnetic": true,
       "NuclearSpin": 0.0
     },
@@ -28567,10 +26608,7 @@
       },
       "Toxicity": "radioactive; extremely hazardous",
       "BiologicalRole": "none",
-      "Hazards": [
-        "alpha radiation hazard",
-        "radioactive contamination"
-      ]
+      "Hazards": [ "alpha radiation hazard", "radioactive contamination" ]
     }
   },
   {
@@ -28582,26 +26620,13 @@
     "Period": 7,
     "Block": "d",
     "StandardState": "solid",
-    "Color": [
-      0.7,
-      0.6,
-      0.5,
-      1.0
-    ],
+    "Color": [ 0.70, 0.60, 0.50 ],
     "CosmicAbundance": {
       "Value": null,
       "Unit": "fraction of baryonic mass"
     },
     "ElectronConfiguration": "[Rn] 5f14 6d10 7s1",
-    "ElectronShells": [
-      2,
-      8,
-      18,
-      32,
-      18,
-      13,
-      2
-    ],
+    "ElectronShells": [ 2, 8, 18, 32, 18, 13, 2 ],
     "ValenceElectrons": 11,
     "Isotopes": [
       {
@@ -28614,9 +26639,7 @@
           "Unit": "minutes"
         },
         "RadiationType": "alpha",
-        "DecayProducts": [
-          "Copernicium-278"
-        ]
+        "DecayProducts": [ "Copernicium-278" ]
       }
     ],
     "PhysicalProperties": {
@@ -28730,7 +26753,7 @@
             "Unit": "K"
           },
           {
-            "Value": 100000000.0,
+            "Value": 1e8,
             "Unit": "K"
           }
         ],
@@ -28754,7 +26777,7 @@
       },
       "IonizationEnergy": {
         "First": {
-          "Value": 6.9,
+          "Value": 6.90,
           "Unit": "eV"
         }
       },
@@ -28773,14 +26796,8 @@
         "Value": 0.9,
         "Scale": "0-1"
       },
-      "Bonding": [
-        "metallic",
-        "ionic"
-      ],
-      "CommonCompounds": [
-        "RgCl",
-        "RgO"
-      ]
+      "Bonding": [ "metallic", "ionic" ],
+      "CommonCompounds": [ "RgCl", "RgO" ]
     },
     "QuantumProperties": {
       "AtomicRadius": {
@@ -28796,9 +26813,7 @@
         "Unit": "pm"
       },
       "MagneticOrdering": "paramagnetic",
-      "SpinStates": [
-        1.0
-      ],
+      "SpinStates": [ 1.0 ],
       "IsParamagnetic": true,
       "NuclearSpin": 0.0
     },
@@ -28815,10 +26830,7 @@
       },
       "Toxicity": "radioactive; extremely hazardous",
       "BiologicalRole": "none",
-      "Hazards": [
-        "alpha radiation hazard",
-        "radioactive contamination"
-      ]
+      "Hazards": [ "alpha radiation hazard", "radioactive contamination" ]
     }
   },
   {
@@ -28830,26 +26842,13 @@
     "Period": 7,
     "Block": "d",
     "StandardState": "solid",
-    "Color": [
-      0.7,
-      0.6,
-      0.5,
-      1.0
-    ],
+    "Color": [ 0.70, 0.60, 0.50 ],
     "CosmicAbundance": {
       "Value": null,
       "Unit": "fraction of baryonic mass"
     },
     "ElectronConfiguration": "[Rn] 5f14 6d10 7s2",
-    "ElectronShells": [
-      2,
-      8,
-      18,
-      32,
-      18,
-      13,
-      2
-    ],
+    "ElectronShells": [ 2, 8, 18, 32, 18, 13, 2 ],
     "ValenceElectrons": 12,
     "Isotopes": [
       {
@@ -28862,9 +26861,7 @@
           "Unit": "seconds"
         },
         "RadiationType": "alpha",
-        "DecayProducts": [
-          "Roentgenium-281"
-        ]
+        "DecayProducts": [ "Roentgenium-281" ]
       }
     ],
     "PhysicalProperties": {
@@ -28978,7 +26975,7 @@
             "Unit": "K"
           },
           {
-            "Value": 100000000.0,
+            "Value": 1e8,
             "Unit": "K"
           }
         ],
@@ -29002,7 +26999,7 @@
       },
       "IonizationEnergy": {
         "First": {
-          "Value": 7.1,
+          "Value": 7.10,
           "Unit": "eV"
         }
       },
@@ -29021,14 +27018,8 @@
         "Value": 0.9,
         "Scale": "0-1"
       },
-      "Bonding": [
-        "metallic",
-        "ionic"
-      ],
-      "CommonCompounds": [
-        "CnCl2",
-        "CnO2"
-      ]
+      "Bonding": [ "metallic", "ionic" ],
+      "CommonCompounds": [ "CnCl2", "CnO2" ]
     },
     "QuantumProperties": {
       "AtomicRadius": {
@@ -29044,9 +27035,7 @@
         "Unit": "pm"
       },
       "MagneticOrdering": "paramagnetic",
-      "SpinStates": [
-        1.0
-      ],
+      "SpinStates": [ 1.0 ],
       "IsParamagnetic": true,
       "NuclearSpin": 0.0
     },
@@ -29063,10 +27052,7 @@
       },
       "Toxicity": "radioactive; extremely hazardous",
       "BiologicalRole": "none",
-      "Hazards": [
-        "alpha radiation hazard",
-        "radioactive contamination"
-      ]
+      "Hazards": [ "alpha radiation hazard", "radioactive contamination" ]
     }
   },
   {
@@ -29078,26 +27064,13 @@
     "Period": 7,
     "Block": "p",
     "StandardState": "solid",
-    "Color": [
-      0.7,
-      0.6,
-      0.5,
-      1.0
-    ],
+    "Color": [ 0.70, 0.60, 0.50 ],
     "CosmicAbundance": {
       "Value": null,
       "Unit": "fraction of baryonic mass"
     },
     "ElectronConfiguration": "[Rn] 5f14 6d10 7s2 7p1",
-    "ElectronShells": [
-      2,
-      8,
-      18,
-      32,
-      18,
-      13,
-      3
-    ],
+    "ElectronShells": [ 2, 8, 18, 32, 18, 13, 3 ],
     "ValenceElectrons": 3,
     "Isotopes": [
       {
@@ -29110,9 +27083,7 @@
           "Unit": "seconds"
         },
         "RadiationType": "alpha",
-        "DecayProducts": [
-          "Copernicium-282"
-        ]
+        "DecayProducts": [ "Copernicium-282" ]
       }
     ],
     "PhysicalProperties": {
@@ -29226,7 +27197,7 @@
             "Unit": "K"
           },
           {
-            "Value": 100000000.0,
+            "Value": 1e8,
             "Unit": "K"
           }
         ],
@@ -29250,7 +27221,7 @@
       },
       "IonizationEnergy": {
         "First": {
-          "Value": 7.1,
+          "Value": 7.10,
           "Unit": "eV"
         }
       },
@@ -29273,14 +27244,8 @@
         "Value": 0.9,
         "Scale": "0-1"
       },
-      "Bonding": [
-        "metallic",
-        "ionic"
-      ],
-      "CommonCompounds": [
-        "NhCl",
-        "NhO"
-      ]
+      "Bonding": [ "metallic", "ionic" ],
+      "CommonCompounds": [ "NhCl", "NhO" ]
     },
     "QuantumProperties": {
       "AtomicRadius": {
@@ -29296,9 +27261,7 @@
         "Unit": "pm"
       },
       "MagneticOrdering": "paramagnetic",
-      "SpinStates": [
-        1.0
-      ],
+      "SpinStates": [ 1.0 ],
       "IsParamagnetic": true,
       "NuclearSpin": 0.0
     },
@@ -29315,10 +27278,7 @@
       },
       "Toxicity": "radioactive; extremely hazardous",
       "BiologicalRole": "none",
-      "Hazards": [
-        "alpha radiation hazard",
-        "radioactive contamination"
-      ]
+      "Hazards": [ "alpha radiation hazard", "radioactive contamination" ]
     }
   },
   {
@@ -29330,26 +27290,13 @@
     "Period": 7,
     "Block": "p",
     "StandardState": "solid",
-    "Color": [
-      0.7,
-      0.6,
-      0.5,
-      1.0
-    ],
+    "Color": [ 0.70, 0.60, 0.50 ],
     "CosmicAbundance": {
       "Value": null,
       "Unit": "fraction of baryonic mass"
     },
     "ElectronConfiguration": "[Rn] 5f14 6d10 7s2 7p2",
-    "ElectronShells": [
-      2,
-      8,
-      18,
-      32,
-      18,
-      13,
-      2
-    ],
+    "ElectronShells": [ 2, 8, 18, 32, 18, 13, 2 ],
     "ValenceElectrons": 4,
     "Isotopes": [
       {
@@ -29362,9 +27309,7 @@
           "Unit": "seconds"
         },
         "RadiationType": "alpha",
-        "DecayProducts": [
-          "Copernicium-285"
-        ]
+        "DecayProducts": [ "Copernicium-285" ]
       }
     ],
     "PhysicalProperties": {
@@ -29478,7 +27423,7 @@
             "Unit": "K"
           },
           {
-            "Value": 100000000.0,
+            "Value": 1e8,
             "Unit": "K"
           }
         ],
@@ -29502,7 +27447,7 @@
       },
       "IonizationEnergy": {
         "First": {
-          "Value": 7.1,
+          "Value": 7.10,
           "Unit": "eV"
         }
       },
@@ -29525,14 +27470,8 @@
         "Value": 0.9,
         "Scale": "0-1"
       },
-      "Bonding": [
-        "metallic",
-        "ionic"
-      ],
-      "CommonCompounds": [
-        "FlO2",
-        "FlCl4"
-      ]
+      "Bonding": [ "metallic", "ionic" ],
+      "CommonCompounds": [ "FlO2", "FlCl4" ]
     },
     "QuantumProperties": {
       "AtomicRadius": {
@@ -29548,9 +27487,7 @@
         "Unit": "pm"
       },
       "MagneticOrdering": "paramagnetic",
-      "SpinStates": [
-        1.0
-      ],
+      "SpinStates": [ 1.0 ],
       "IsParamagnetic": true,
       "NuclearSpin": 0.0
     },
@@ -29567,10 +27504,7 @@
       },
       "Toxicity": "radioactive; extremely hazardous",
       "BiologicalRole": "none",
-      "Hazards": [
-        "alpha radiation hazard",
-        "radioactive contamination"
-      ]
+      "Hazards": [ "alpha radiation hazard", "radioactive contamination" ]
     }
   },
   {
@@ -29582,26 +27516,13 @@
     "Period": 7,
     "Block": "p",
     "StandardState": "solid",
-    "Color": [
-      0.7,
-      0.6,
-      0.5,
-      1.0
-    ],
+    "Color": [ 0.70, 0.60, 0.50 ],
     "CosmicAbundance": {
       "Value": null,
       "Unit": "fraction of baryonic mass"
     },
     "ElectronConfiguration": "[Rn] 5f14 6d10 7s2 7p3",
-    "ElectronShells": [
-      2,
-      8,
-      18,
-      32,
-      18,
-      13,
-      3
-    ],
+    "ElectronShells": [ 2, 8, 18, 32, 18, 13, 3 ],
     "ValenceElectrons": 5,
     "Isotopes": [
       {
@@ -29614,9 +27535,7 @@
           "Unit": "seconds"
         },
         "RadiationType": "alpha",
-        "DecayProducts": [
-          "Flerovium-286"
-        ]
+        "DecayProducts": [ "Flerovium-286" ]
       }
     ],
     "PhysicalProperties": {
@@ -29730,7 +27649,7 @@
             "Unit": "K"
           },
           {
-            "Value": 100000000.0,
+            "Value": 1e8,
             "Unit": "K"
           }
         ],
@@ -29777,14 +27696,8 @@
         "Value": 0.9,
         "Scale": "0-1"
       },
-      "Bonding": [
-        "metallic",
-        "ionic"
-      ],
-      "CommonCompounds": [
-        "McO2",
-        "McCl5"
-      ]
+      "Bonding": [ "metallic", "ionic" ],
+      "CommonCompounds": [ "McO2", "McCl5" ]
     },
     "QuantumProperties": {
       "AtomicRadius": {
@@ -29800,9 +27713,7 @@
         "Unit": "pm"
       },
       "MagneticOrdering": "paramagnetic",
-      "SpinStates": [
-        1.0
-      ],
+      "SpinStates": [ 1.0 ],
       "IsParamagnetic": true,
       "NuclearSpin": 0.0
     },
@@ -29819,10 +27730,7 @@
       },
       "Toxicity": "radioactive; extremely hazardous",
       "BiologicalRole": "none",
-      "Hazards": [
-        "alpha radiation hazard",
-        "radioactive contamination"
-      ]
+      "Hazards": [ "alpha radiation hazard", "radioactive contamination" ]
     }
   },
   {
@@ -29834,26 +27742,13 @@
     "Period": 7,
     "Block": "p",
     "StandardState": "solid",
-    "Color": [
-      0.7,
-      0.6,
-      0.5,
-      1.0
-    ],
+    "Color": [ 0.70, 0.60, 0.50 ],
     "CosmicAbundance": {
       "Value": null,
       "Unit": "fraction of baryonic mass"
     },
     "ElectronConfiguration": "[Rn] 5f14 6d10 7s2 7p4",
-    "ElectronShells": [
-      2,
-      8,
-      18,
-      32,
-      18,
-      13,
-      4
-    ],
+    "ElectronShells": [ 2, 8, 18, 32, 18, 13, 4 ],
     "ValenceElectrons": 6,
     "Isotopes": [
       {
@@ -29866,9 +27761,7 @@
           "Unit": "seconds"
         },
         "RadiationType": "alpha",
-        "DecayProducts": [
-          "Moscovium-289"
-        ]
+        "DecayProducts": [ "Moscovium-289" ]
       }
     ],
     "PhysicalProperties": {
@@ -29982,7 +27875,7 @@
             "Unit": "K"
           },
           {
-            "Value": 100000000.0,
+            "Value": 1e8,
             "Unit": "K"
           }
         ],
@@ -30006,7 +27899,7 @@
       },
       "IonizationEnergy": {
         "First": {
-          "Value": 7.2,
+          "Value": 7.20,
           "Unit": "eV"
         }
       },
@@ -30029,14 +27922,8 @@
         "Value": 0.9,
         "Scale": "0-1"
       },
-      "Bonding": [
-        "metallic",
-        "ionic"
-      ],
-      "CommonCompounds": [
-        "LvO2",
-        "LvCl4"
-      ]
+      "Bonding": [ "metallic", "ionic" ],
+      "CommonCompounds": [ "LvO2", "LvCl4" ]
     },
     "QuantumProperties": {
       "AtomicRadius": {
@@ -30052,9 +27939,7 @@
         "Unit": "pm"
       },
       "MagneticOrdering": "paramagnetic",
-      "SpinStates": [
-        1.0
-      ],
+      "SpinStates": [ 1.0 ],
       "IsParamagnetic": true,
       "NuclearSpin": 0.0
     },
@@ -30071,10 +27956,7 @@
       },
       "Toxicity": "radioactive; extremely hazardous",
       "BiologicalRole": "none",
-      "Hazards": [
-        "alpha radiation hazard",
-        "radioactive contamination"
-      ]
+      "Hazards": [ "alpha radiation hazard", "radioactive contamination" ]
     }
   },
   {
@@ -30086,26 +27968,13 @@
     "Period": 7,
     "Block": "p",
     "StandardState": "solid",
-    "Color": [
-      0.7,
-      0.6,
-      0.5,
-      1.0
-    ],
+    "Color": [ 0.70, 0.60, 0.50 ],
     "CosmicAbundance": {
       "Value": null,
       "Unit": "fraction of baryonic mass"
     },
     "ElectronConfiguration": "[Rn] 5f14 6d10 7s2 7p5",
-    "ElectronShells": [
-      2,
-      8,
-      18,
-      32,
-      18,
-      13,
-      5
-    ],
+    "ElectronShells": [ 2, 8, 18, 32, 18, 13, 5 ],
     "ValenceElectrons": 7,
     "Isotopes": [
       {
@@ -30118,9 +27987,7 @@
           "Unit": "seconds"
         },
         "RadiationType": "alpha",
-        "DecayProducts": [
-          "Livermorium-290"
-        ]
+        "DecayProducts": [ "Livermorium-290" ]
       }
     ],
     "PhysicalProperties": {
@@ -30234,7 +28101,7 @@
             "Unit": "K"
           },
           {
-            "Value": 100000000.0,
+            "Value": 1e8,
             "Unit": "K"
           }
         ],
@@ -30281,14 +28148,8 @@
         "Value": 0.9,
         "Scale": "0-1"
       },
-      "Bonding": [
-        "covalent",
-        "ionic"
-      ],
-      "CommonCompounds": [
-        "TsCl5",
-        "TsF5"
-      ]
+      "Bonding": [ "covalent", "ionic" ],
+      "CommonCompounds": [ "TsCl5", "TsF5" ]
     },
     "QuantumProperties": {
       "AtomicRadius": {
@@ -30304,9 +28165,7 @@
         "Unit": "pm"
       },
       "MagneticOrdering": "paramagnetic",
-      "SpinStates": [
-        1.0
-      ],
+      "SpinStates": [ 1.0 ],
       "IsParamagnetic": true,
       "NuclearSpin": 0.0
     },
@@ -30323,10 +28182,7 @@
       },
       "Toxicity": "radioactive; extremely hazardous",
       "BiologicalRole": "none",
-      "Hazards": [
-        "alpha radiation hazard",
-        "radioactive contamination"
-      ]
+      "Hazards": [ "alpha radiation hazard", "radioactive contamination" ]
     }
   },
   {
@@ -30338,26 +28194,13 @@
     "Period": 7,
     "Block": "p",
     "StandardState": "solid",
-    "Color": [
-      0.7,
-      0.6,
-      0.5,
-      1.0
-    ],
+    "Color": [ 0.70, 0.60, 0.50 ],
     "CosmicAbundance": {
       "Value": null,
       "Unit": "fraction of baryonic mass"
     },
     "ElectronConfiguration": "[Rn] 5f14 6d10 7s2 7p6",
-    "ElectronShells": [
-      2,
-      8,
-      18,
-      32,
-      18,
-      13,
-      6
-    ],
+    "ElectronShells": [ 2, 8, 18, 32, 18, 13, 6 ],
     "ValenceElectrons": 8,
     "Isotopes": [
       {
@@ -30370,9 +28213,7 @@
           "Unit": "milliseconds"
         },
         "RadiationType": "alpha",
-        "DecayProducts": [
-          "Livermorium-290"
-        ]
+        "DecayProducts": [ "Livermorium-290" ]
       }
     ],
     "PhysicalProperties": {
@@ -30486,7 +28327,7 @@
             "Unit": "K"
           },
           {
-            "Value": 100000000.0,
+            "Value": 1e8,
             "Unit": "K"
           }
         ],
@@ -30510,7 +28351,7 @@
       },
       "IonizationEnergy": {
         "First": {
-          "Value": 7.3,
+          "Value": 7.30,
           "Unit": "eV"
         }
       },
@@ -30529,9 +28370,7 @@
         "Value": 0.9,
         "Scale": "0-1"
       },
-      "Bonding": [
-        "none"
-      ],
+      "Bonding": [ "none" ],
       "CommonCompounds": []
     },
     "QuantumProperties": {
@@ -30548,9 +28387,7 @@
         "Unit": "pm"
       },
       "MagneticOrdering": "paramagnetic",
-      "SpinStates": [
-        1.0
-      ],
+      "SpinStates": [ 1.0 ],
       "IsParamagnetic": true,
       "NuclearSpin": 0.0
     },
@@ -30567,10 +28404,7 @@
       },
       "Toxicity": "radioactive; extremely hazardous",
       "BiologicalRole": "none",
-      "Hazards": [
-        "alpha radiation hazard",
-        "radioactive contamination"
-      ]
+      "Hazards": [ "alpha radiation hazard", "radioactive contamination" ]
     }
   },
   {
@@ -30582,27 +28416,13 @@
     "Period": 8,
     "Block": "s",
     "StandardState": "solid",
-    "Color": [
-      0.7,
-      0.6,
-      0.5,
-      1.0
-    ],
+    "Color": [ 0.70, 0.60, 0.50 ],
     "CosmicAbundance": {
       "Value": null,
       "Unit": "fraction of baryonic mass"
     },
     "ElectronConfiguration": "[Og] 8s1",
-    "ElectronShells": [
-      2,
-      8,
-      18,
-      32,
-      32,
-      18,
-      8,
-      1
-    ],
+    "ElectronShells": [ 2, 8, 18, 32, 32, 18, 8, 1 ],
     "ValenceElectrons": 1,
     "Isotopes": [],
     "PhysicalProperties": {
@@ -30716,7 +28536,7 @@
             "Unit": "K"
           },
           {
-            "Value": 100000000.0,
+            "Value": 1e8,
             "Unit": "K"
           }
         ],
@@ -30759,14 +28579,8 @@
         "Value": 1.0,
         "Scale": "0-1"
       },
-      "Bonding": [
-        "metallic",
-        "ionic"
-      ],
-      "CommonCompounds": [
-        "UueCl",
-        "UueOH"
-      ]
+      "Bonding": [ "metallic", "ionic" ],
+      "CommonCompounds": [ "UueCl", "UueOH" ]
     },
     "QuantumProperties": {
       "AtomicRadius": {
@@ -30799,10 +28613,7 @@
       },
       "Toxicity": "radioactive; unobserved",
       "BiologicalRole": "none",
-      "Hazards": [
-        "predicted instability",
-        "radioactive decay"
-      ]
+      "Hazards": [ "predicted instability", "radioactive decay" ]
     }
   },
   {
@@ -30814,27 +28625,13 @@
     "Period": 8,
     "Block": "s",
     "StandardState": "solid",
-    "Color": [
-      0.7,
-      0.6,
-      0.5,
-      1.0
-    ],
+    "Color": [ 0.70, 0.60, 0.50 ],
     "CosmicAbundance": {
       "Value": null,
       "Unit": "fraction of baryonic mass"
     },
     "ElectronConfiguration": "[Og] 8s2",
-    "ElectronShells": [
-      2,
-      8,
-      18,
-      32,
-      32,
-      18,
-      8,
-      2
-    ],
+    "ElectronShells": [ 2, 8, 18, 32, 32, 18, 8, 2 ],
     "ValenceElectrons": 2,
     "Isotopes": [],
     "PhysicalProperties": {
@@ -30948,7 +28745,7 @@
             "Unit": "K"
           },
           {
-            "Value": 100000000.0,
+            "Value": 1e8,
             "Unit": "K"
           }
         ],
@@ -30991,14 +28788,8 @@
         "Value": 1.0,
         "Scale": "0-1"
       },
-      "Bonding": [
-        "metallic",
-        "ionic"
-      ],
-      "CommonCompounds": [
-        "UbnCl2",
-        "UbnO"
-      ]
+      "Bonding": [ "metallic", "ionic" ],
+      "CommonCompounds": [ "UbnCl2", "UbnO" ]
     },
     "QuantumProperties": {
       "AtomicRadius": {
@@ -31031,10 +28822,7 @@
       },
       "Toxicity": "radioactive; unobserved",
       "BiologicalRole": "none",
-      "Hazards": [
-        "predicted instability",
-        "radioactive decay"
-      ]
+      "Hazards": [ "predicted instability", "radioactive decay" ]
     }
   }
 ]
