@@ -83,5 +83,8 @@ build/
 # Vulkan
 *.gfxr
 
+# Doxygen-erated
+docs/html/
+
 Interstellar/assets/temp/*
 Interstellar/logs
