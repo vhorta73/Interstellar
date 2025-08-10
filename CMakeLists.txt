@@ -10,17 +10,13 @@ option(WARNINGS_AS_ERRORS "Treat warnings as errors (recommended in CI)" OFF)
 
 # ---------- Encoding-checker tool ----------
 add_executable(utf8_check tools/utf8_check/main.cpp)
-target_compile_features(utf8_check PRIVATE cxx_std_17)  # C++17 for filesystem support
+target_compile_features(utf8_check PRIVATE cxx_std_17) # filesystem
 
 add_custom_target(check-encoding
-  COMMAND utf8_check "${CMAKE_SOURCE_DIR}"
+  COMMAND utf8_check "${CMAKE_SOURCE_DIR}" "${CMAKE_BINARY_DIR}"
   WORKING_DIRECTORY "${CMAKE_SOURCE_DIR}"
   COMMENT "Checking file encoding (UTF-8 without BOM)"
 )
-
-# Make it available as a CTest
-include(CTest)
-add_test(NAME EncodingCheck COMMAND utf8_check "${CMAKE_SOURCE_DIR}")
 
 # ---------- Global toolchain niceties ----------
 if(SILENCE_THIRD_PARTY_WARNINGS)
@@ -31,9 +27,7 @@ endif()
 set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_POSITION_INDEPENDENT_CODE ON)
-
-# LTO in Release when supported
-set(CMAKE_INTERPROCEDURAL_OPTIMIZATION_RELEASE ON)
+set(CMAKE_INTERPROCEDURAL_OPTIMIZATION_RELEASE ON) # LTO in Release
 
 if(MSVC)
   add_compile_options(/utf-8)
@@ -46,6 +40,7 @@ if(MSVC)
   set(CMAKE_MSVC_DEBUG_INFORMATION_FORMAT "$<$<CONFIG:Release>:ProgramDatabase>")
 endif()
 
+# Default install prefix (presets override)
 if(CMAKE_INSTALL_PREFIX_INITIALIZED_TO_DEFAULT)
   set(CMAKE_INSTALL_PREFIX "${CMAKE_BINARY_DIR}/package" CACHE PATH "Install prefix" FORCE)
 endif()
@@ -103,22 +98,41 @@ elseif(UNIX)
   set(CMAKE_INSTALL_RPATH "$ORIGIN;$ORIGIN/../${CMAKE_INSTALL_LIBDIR}")
 endif()
 
+# ---------- Tests ----------
+include(CTest)
+if(BUILD_TESTING)
+  # GoogleTest
+  FetchContent_Declare(
+    googletest
+    GIT_REPOSITORY https://github.com/google/googletest.git
+    GIT_TAG        v1.14.0
+    GIT_SHALLOW    TRUE
+    GIT_PROGRESS   TRUE
+  )
+  if(MSVC)
+    set(gtest_force_shared_crt ON CACHE BOOL "" FORCE)
+  endif()
+  FetchContent_MakeAvailable(googletest)
+
+  # Add your tests tree (expects tests/CMakeLists.txt to add EngineTests etc.)
+  add_subdirectory(tests)
+endif()
+
 # ---------- Subprojects ----------
 if (EXISTS "${CMAKE_CURRENT_SOURCE_DIR}/Utils/CMakeLists.txt")
   add_subdirectory(Utils)
 endif()
-
 add_subdirectory(Engine)
 add_subdirectory(Interstellar)
 
-# Ensure encoding check runs before primary targets
+# Run encoding check before key targets
 add_dependencies(Engine        check-encoding)
 add_dependencies(Interstellar  check-encoding)
 if (TARGET EngineTests)
   add_dependencies(EngineTests check-encoding)
 endif()
 
-# ---------- Optional Docs ----------
+# ---------- Docs (optional) ----------
 if(BUILD_DOCS)
   find_package(Doxygen REQUIRED)
   set(DOXYGEN_IN "${CMAKE_SOURCE_DIR}/docs/Doxyfile")
