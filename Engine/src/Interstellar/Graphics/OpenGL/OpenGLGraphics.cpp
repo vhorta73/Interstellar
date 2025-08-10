@@ -5,6 +5,7 @@
 #include "OpenGLTexture.hpp"
 #include "Interstellar/Core/Logging.hpp"
 
+#include <cstdint>
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
 
@@ -191,7 +192,15 @@ void OpenGLGraphics::SubmitMesh(
     auto oglPipeline = std::static_pointer_cast<OpenGLPipeline>(pipeline);
     auto glShader = std::static_pointer_cast<OpenGLShader>(pipeline->GetShader());
 
-    unsigned int programID = reinterpret_cast<GLuint>(glShader->GetNativeHandle());
+    // 1) Grab the native handle (void*)...
+    void* nativeHandle = glShader->GetNativeHandle();
+
+    // 2) Reinterpret it as an integer type guaranteed to hold a pointer
+    uintptr_t handleInt = reinterpret_cast<uintptr_t>(nativeHandle);
+
+    // 3) Then downcast to GLuint safely
+    GLuint programID = static_cast<GLuint>(handleInt);
+
     glUseProgram(programID);
 
     // Set texture sampler uniform (texture unit 0)

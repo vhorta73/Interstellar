@@ -1,5 +1,3 @@
-#pragma once
-
 #include "Interstellar/Core/AppConfig.hpp"
 #include <CLI/CLI.hpp>
 #include <nlohmann/json.hpp>

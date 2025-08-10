@@ -2,6 +2,7 @@
 
 #include <vulkan/vulkan.h>
 #include <vector>
+#include <cstring>
 #include <algorithm>
 
 namespace Interstellar {

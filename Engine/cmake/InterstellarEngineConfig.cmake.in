@@ -1,0 +1,10 @@
+@PACKAGE_INIT@
+include(CMakeFindDependencyMacro)
+
+# Add find_dependency() calls here ONLY for deps that are PUBLIC above.
+find_dependency(nlohmann_json)
+find_dependency(glm)
+find_dependency(Vulkan)
+find_dependency(CLI11)
+
+include("${CMAKE_CURRENT_LIST_DIR}/InterstellarEngineTargets.cmake")
