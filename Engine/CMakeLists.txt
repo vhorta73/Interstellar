@@ -1,81 +1,83 @@
 cmake_minimum_required(VERSION 3.21)
+project(EngineProj LANGUAGES CXX)
 
-# ---- Sources ----
-file(GLOB_RECURSE ENGINE_SOURCES "${CMAKE_CURRENT_SOURCE_DIR}/src/*.cpp")
+# ---- Library ----
+file(GLOB_RECURSE ENGINE_SOURCES CONFIGURE_DEPENDS "${CMAKE_CURRENT_SOURCE_DIR}/src/*.cpp")
 add_library(Engine STATIC ${ENGINE_SOURCES})
+target_compile_features(Engine PUBLIC cxx_std_20)
 
-# Compiled spdlog
+# Compiled spdlog (consumer code must see this)
 target_compile_definitions(Engine PUBLIC SPDLOG_COMPILED_LIB)
 
 # Public/Private includes
 target_include_directories(Engine
   PUBLIC
     $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
-    $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/src>
     $<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}>
   PRIVATE
     ${CMAKE_CURRENT_SOURCE_DIR}/src
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/Interstellar/Graphics/OpenGL/stb
 )
 
-# ---- Warnings (your code only) ----
+# ---- Warnings ----
+option(WARNINGS_AS_ERRORS "Treat warnings as errors" OFF)
 if(MSVC)
-  target_compile_options(Engine PRIVATE /permissive- /W4)
+  target_compile_options(Engine PRIVATE /permissive- /W4 $<$<BOOL:${WARNINGS_AS_ERRORS}>:/WX>)
 else()
-  target_compile_options(Engine PRIVATE -Wall -Wextra -Wpedantic)
-endif()
-if(WARNINGS_AS_ERRORS)
-  if(MSVC)
-    target_compile_options(Engine PRIVATE /WX)
-  else()
-    target_compile_options(Engine PRIVATE -Werror)
-  endif()
+  target_compile_options(Engine PRIVATE -Wall -Wextra -Wpedantic $<$<BOOL:${WARNINGS_AS_ERRORS}>:-Werror>)
 endif()
 
 # ---- Dependencies via FetchContent ----
 include(FetchContent)
-set(BUILD_SHARED_LIBS OFF CACHE BOOL "" FORCE)
 
-# GLFW knobs
-set(GLFW_BUILD_EXAMPLES OFF CACHE BOOL "" FORCE)
-set(GLFW_BUILD_TESTS    OFF CACHE BOOL "" FORCE)
-set(GLFW_BUILD_DOCS     OFF CACHE BOOL "" FORCE)
-set(GLFW_INSTALL        OFF CACHE BOOL "" FORCE)
-
-# fmt v9.1.0 (public in headers) + spdlog that uses external fmt
+# fmt (public headers) + spdlog (uses external fmt)
 FetchContent_Declare(fmt
   GIT_REPOSITORY https://github.com/fmtlib/fmt.git
   GIT_TAG        9.1.0
   GIT_SHALLOW    TRUE
   GIT_PROGRESS   TRUE
 )
-FetchContent_GetProperties(fmt)
-if(NOT fmt_POPULATED)
-  FetchContent_Populate(fmt)
-  add_subdirectory(${fmt_SOURCE_DIR} ${fmt_BINARY_DIR} EXCLUDE_FROM_ALL)
-endif()
-set(fmt_DIR "${fmt_BINARY_DIR}" CACHE PATH "" FORCE)
-
-set(SPDLOG_BUILD_SHARED OFF CACHE BOOL "" FORCE)
-set(SPDLOG_FMT_EXTERNAL ON  CACHE BOOL "" FORCE)
 FetchContent_Declare(spdlog
   GIT_REPOSITORY https://github.com/gabime/spdlog.git
   GIT_TAG        v1.11.0
   GIT_SHALLOW    TRUE
   GIT_PROGRESS   TRUE
 )
-
-FetchContent_Declare(nlohmann_json GIT_REPOSITORY https://github.com/nlohmann/json.git  GIT_TAG v3.11.2 GIT_SHALLOW TRUE GIT_PROGRESS TRUE)
+# mp-units
+FetchContent_Declare(mp_units
+  GIT_REPOSITORY https://github.com/mpusz/units.git
+  GIT_TAG        v2.4.0
+  GIT_SHALLOW    TRUE
+  GIT_PROGRESS   TRUE
+  SOURCE_SUBDIR  src
+)
+# Other deps
+FetchContent_Declare(nlohmann_json GIT_REPOSITORY https://github.com/nlohmann/json.git  GIT_TAG v3.11.2  GIT_SHALLOW TRUE GIT_PROGRESS TRUE)
 FetchContent_Declare(glad          GIT_REPOSITORY https://github.com/Dav1dde/glad.git   GIT_TAG v0.1.36  GIT_SHALLOW TRUE GIT_PROGRESS TRUE)
 FetchContent_Declare(glm           GIT_REPOSITORY https://github.com/g-truc/glm.git     GIT_TAG 0.9.9.8  GIT_SHALLOW TRUE GIT_PROGRESS TRUE)
 FetchContent_Declare(glfw          GIT_REPOSITORY https://github.com/glfw/glfw.git      GIT_TAG 3.3.8    GIT_SHALLOW TRUE GIT_PROGRESS TRUE)
 FetchContent_Declare(CLI11         GIT_REPOSITORY https://github.com/CLIUtils/CLI11.git GIT_TAG v2.3.1   GIT_SHALLOW TRUE GIT_PROGRESS TRUE)
 
-FetchContent_MakeAvailable(spdlog nlohmann_json glad glm glfw CLI11)
+# Per-dep options (scoped, no global FORCE)
+set(SPDLOG_BUILD_SHARED OFF CACHE BOOL "" FORCE)
+set(SPDLOG_FMT_EXTERNAL ON  CACHE BOOL "" FORCE)
 
-# Vulkan
+set(MP_UNITS_BUILD_MODULES    OFF CACHE BOOL "" FORCE)
+set(MP_UNITS_BUILD_TESTING    OFF CACHE BOOL "" FORCE)
+set(MP_UNITS_BUILD_BENCHMARKS OFF CACHE BOOL "" FORCE)
+set(MP_UNITS_BUILD_EXAMPLES   OFF CACHE BOOL "" FORCE)
+
+set(GLFW_BUILD_EXAMPLES OFF CACHE BOOL "" FORCE)
+set(GLFW_BUILD_TESTS    OFF CACHE BOOL "" FORCE)
+set(GLFW_BUILD_DOCS     OFF CACHE BOOL "" FORCE)
+set(GLFW_INSTALL        OFF CACHE BOOL "" FORCE)
+
+FetchContent_MakeAvailable(fmt spdlog mp_units nlohmann_json glad glm glfw CLI11)
+
+# ---- Vulkan ----
 find_package(Vulkan REQUIRED)
 
-# Linkage
+# ---- Linkage ----
 target_link_libraries(Engine
   PUBLIC
     mp-units::mp-units
@@ -85,20 +87,16 @@ target_link_libraries(Engine
     glm::glm
     Vulkan::Vulkan
     CLI11::CLI11
-    Utils
+    Utils            # assumes this target exists elsewhere
   PRIVATE
     glfw
     glad
 )
 
-# (Remove if not present)
-target_include_directories(Engine PRIVATE
-  ${CMAKE_CURRENT_SOURCE_DIR}/src/Interstellar/Graphics/OpenGL/stb
-)
-
 # ---- Install ----
 include(GNUInstallDirs)
 install(TARGETS Engine
+  EXPORT EngineTargets
   RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
   LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
   ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR}
