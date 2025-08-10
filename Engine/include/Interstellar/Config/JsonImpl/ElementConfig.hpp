@@ -7,7 +7,8 @@
 #include <string>
 #include <regex>
 #include <iostream>
-#include "Interstellar/Utils/StringUtils.hpp"
+#include <optional>
+#include "Interstellar/Utils/String/StringUtils.hpp"
 #include "Interstellar/Core/Logging.hpp"
 
 /**
@@ -35,88 +36,6 @@ namespace Interstellar::Config::JsonImpl {
     struct FloatUnit {
         std::optional<float> Value;      ///< Optional float value.
         std::optional<std::string> Unit; ///< Unit of measurement.
-    };
-
-    /**
-     * @struct ConfigCosmicAbundance
-     * @ingroup InterstellarConfig
-     * @brief Stores cosmic abundance data for an element.
-     */
-    struct ConfigCosmicAbundance {
-        float Value = 0.0f;      ///< Abundance value.
-        std::string Unit;        ///< Unit of abundance.
-    };
-
-    /**
-     * @struct ConfigOrbital
-     * @ingroup InterstellarConfig
-     * @brief Represents an orbital and its electron count.
-     */
-    struct ConfigOrbital {
-        std::string Orbital; ///< Orbital name (e.g., "2p").
-        int Electrons = 0;   ///< Number of electrons in the orbital.
-    };
-
-    /**
-     * @struct ConfigElectronConfiguration
-     * @ingroup InterstellarConfig
-     * @brief Parsed electron configuration data used in atomic modeling.
-     */
-    struct ConfigElectronConfiguration {
-        std::string NobleGas; ///< Noble gas shorthand notation (e.g., "[Ne]").
-        std::string Display; ///< Original configuration string.
-        std::vector<ConfigOrbital> Orbitals; ///< Parsed orbitals.
-    };
-
-    /**
-     * @struct ConfigIsotope
-     * @ingroup InterstellarConfig
-     * @brief Describes an isotope of a chemical element.
-     */
-    struct ConfigIsotope {
-        std::string Name; ///< Isotope name.
-        float MassNumber = 0.0f; ///< Mass number.
-        bool IsStable = false; ///< Stability flag.
-        float NaturalAbundance = 0.0f; ///< Abundance percentage.
-        std::optional<float> HalfLife; ///< Half-life in seconds.
-        std::optional<std::string> RadiationType; ///< Type of radiation emitted, if any.
-    };
-
-    /**
-     * @struct PropertyWithUnit
-     * @ingroup InterstellarConfig
-     * @brief Represents a physical property with an optional value and unit.
-     */
-    struct PropertyWithUnit {
-        std::optional<float> Value; ///< Property value.
-        std::string Unit; ///< Unit of the property.
-    };
-
-    /**
-     * @struct TriplePoint
-     * @ingroup InterstellarConfig
-     * @brief Describes the triple point of a substance.
-     */
-    struct TriplePoint {
-        PropertyWithUnit Temperature; ///< Triple point temperature.
-        PropertyWithUnit Pressure;    ///< Triple point pressure.
-    };
-
-    /**
-     * @struct PhysicalPropertiesBlock
-     * @ingroup InterstellarConfig
-     * @brief Groups all physical properties of an element.
-     */
-    struct PhysicalPropertiesBlock {
-        PropertyWithUnit Density;
-        PropertyWithUnit MeltingPoint;
-        PropertyWithUnit BoilingPoint;
-        TriplePoint TriplePoint;
-        PropertyWithUnit HeatCapacity;
-        PropertyWithUnit ThermalConductivity;
-        PropertyWithUnit EnthalpyOfFusion;
-        PropertyWithUnit EnthalpyOfVaporization;
-        PropertyWithUnit Entropy;
     };
 
     /**
@@ -288,13 +207,13 @@ namespace Interstellar::Config::JsonImpl {
          * @param input Human-readable electron configuration.
          * @return Parsed configuration structure.
          */
-        ConfigElectronConfiguration parseElectronConfiguration(const std::string& input);
+        Interstellar::Data::ElectronConfiguration parseElectronConfiguration(const std::string& input);
 
         /// @brief Returns the top-level namespace used in JSON.
         std::string getNamespace() const override { return "data"; }
 
         /// @brief Returns the name of the JSON file to load.
-        std::string getFilename() const override;// override { return "elements_all.json"; }
+        std::string getFilename() const override;
 
     private:
         /**
@@ -308,25 +227,27 @@ namespace Interstellar::Config::JsonImpl {
         int AtomicNumber = 0;           ///< Number of protons.
         float AtomicMass = 0.f;         ///< Atomic mass (unified atomic mass units).
 
-        // === Periodic Table ===
-        int Group = 0;                  ///< Periodic table group number.
+         //=== Periodic Table ===
+        std::optional<int> Group;       ///< Periodic table group number - null if not applicable.
+        std::optional<Interstellar::Data::ElementSeries> Series; // in ElementData
+
         int Period = 0;                 ///< Periodic table period number.
         std::string Block;              ///< Block classification (s, p, d, f).
         std::string StandardState;      ///< State under standard conditions.
 
-        glm::vec3 Color = { 1.f, 1.f, 1.f }; ///< Display color (used for visualizations).
+        glm::vec4 Colour = { 1.f, 1.f, 1.f, 1.f }; ///< Display color (used for visualizations).
 
         // === Scientific Properties ===
-        ConfigCosmicAbundance CosmicAbundance; ///< Abundance in the universe.
-        ConfigElectronConfiguration ElectronConfiguration; ///< Electron shell structure.
+        Interstellar::Data::CosmicAbundance CosmicAbundance; ///< Abundance in the universe.
+        Interstellar::Data::ElectronConfiguration ElectronConfiguration; ///< Electron shell structure.
         std::vector<int> ElectronShells; ///< Population of each shell.
         int ValenceElectrons = 0; ///< Number of valence electrons.
-        std::vector<ConfigIsotope> Isotopes; ///< List of isotopic data.
-        PhysicalPropertiesBlock PhysicalProperties; ///< Physical constants.
-        std::vector<StateRange> StateRanges; ///< Phase behavior by temperature/pressure.
-        ChemicalProperties Chemical; ///< Reactivity, bonds, oxidation, etc.
-        QuantumProperties Quantum; ///< Radius, magnetism, spins.
-        EnvironmentalProperties EnvironmentalProp; ///< Behavior in nature and bio systems.
+        std::vector<Interstellar::Data::ElementIsotope> Isotopes; ///< List of isotopic data.
+        Interstellar::Data::PhysicalProperties PhysicalProperties; ///< Physical constants.
+        //std::vector<StateRange> StateRanges; ///< Phase behavior by temperature/pressure.
+        //ChemicalProperties Chemical; ///< Reactivity, bonds, oxidation, etc.
+        //QuantumProperties Quantum; ///< Radius, magnetism, spins.
+        //EnvironmentalProperties EnvironmentalProp; ///< Behavior in nature and bio systems.
     };
 
 }

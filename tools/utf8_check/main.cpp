@@ -91,6 +91,5 @@ int main(int argc, char** argv) {
         return 1;
     }
 
-    std::cout << " == ENCODING CHECKED! [Y] All checked files are UTF-8 without BOM\n";
     return 0;
 }

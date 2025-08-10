@@ -124,6 +124,9 @@ if (EXISTS "${CMAKE_CURRENT_SOURCE_DIR}/Utils/CMakeLists.txt")
 endif()
 add_subdirectory(Engine)
 add_subdirectory(Interstellar)
+add_subdirectory(IO)
+# If Engine or Interstellar app needs IO:
+# target_link_libraries(Engine PRIVATE Interstellar::IO)
 
 # Run encoding check before key targets
 add_dependencies(Engine        check-encoding)
