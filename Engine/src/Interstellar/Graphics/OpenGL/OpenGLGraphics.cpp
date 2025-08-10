@@ -192,7 +192,7 @@ void OpenGLGraphics::SubmitMesh(
     auto oglPipeline = std::static_pointer_cast<OpenGLPipeline>(pipeline);
     auto glShader = std::static_pointer_cast<OpenGLShader>(pipeline->GetShader());
 
-    // 1) Grab the native handle (void*)…
+    // 1) Grab the native handle (void*)...
     void* nativeHandle = glShader->GetNativeHandle();
 
     // 2) Reinterpret it as an integer type guaranteed to hold a pointer

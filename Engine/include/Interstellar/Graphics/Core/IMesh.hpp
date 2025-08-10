@@ -41,7 +41,7 @@ namespace Interstellar::Graphics::Core {
         * @return True if the name was set successfully, and false otherwise or not supported.
         * @since 1.0
         */
-        virtual bool SetDebugName(std::string name) { return false; } // not supported by default
+        virtual bool SetDebugName(std::string /*name*/) { return false; } // not supported by default
 
         /**
         * @brief Gets the total number of vertices in the mesh.

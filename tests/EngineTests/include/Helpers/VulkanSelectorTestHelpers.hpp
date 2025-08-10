@@ -24,7 +24,7 @@ namespace TestHelpers {
             if (std::find(availableLayers.begin(), availableLayers.end(), layerName)
                 != availableLayers.end())
             {
-                // pick the highest priority extension that’s present
+                // pick the highest priority extension that's present
                 for (auto const& extNameC : extPrefs) {
                     const std::string extName = extNameC;
                     if (std::find(availableExts.begin(), availableExts.end(), extName)
