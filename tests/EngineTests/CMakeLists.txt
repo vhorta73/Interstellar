@@ -25,6 +25,7 @@ if(ENGINE_TEST_SOURCES)
       Engine
       Utils
       gtest_main
+      mp-units::mp-units
   )
 
   set_target_properties(EngineTests PROPERTIES

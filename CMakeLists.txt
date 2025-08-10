@@ -39,7 +39,58 @@ if(CMAKE_INSTALL_PREFIX_INITIALIZED_TO_DEFAULT)
   set(CMAKE_INSTALL_PREFIX "${CMAKE_BINARY_DIR}/package" CACHE PATH "Install prefix" FORCE)
 endif()
 
-# Portable install dirs + rpaths
+# ---------- Third-party via FetchContent ----------
+include(FetchContent)
+
+# ---- gsl-lite (auto) ----
+FetchContent_Declare(
+  gsl_lite
+  GIT_REPOSITORY https://github.com/gsl-lite/gsl-lite.git
+  GIT_TAG        v1.0.1
+  GIT_SHALLOW    TRUE
+  GIT_PROGRESS   TRUE
+)
+FetchContent_GetProperties(gsl_lite)
+if(NOT gsl_lite_POPULATED)
+  FetchContent_Populate(gsl_lite)
+
+  # Provide the exact target mp-units expects, as an IMPORTED INTERFACE target
+  file(WRITE "${gsl_lite_BINARY_DIR}/gsl-lite-config.cmake" [=[
+    if(NOT TARGET gsl::gsl-lite)
+      add_library(gsl::gsl-lite INTERFACE IMPORTED)
+      set_target_properties(gsl::gsl-lite PROPERTIES
+        INTERFACE_INCLUDE_DIRECTORIES "@GSL_LITE_INCLUDE_DIR@")
+    endif()
+  ]=])
+  set(GSL_LITE_INCLUDE_DIR "${gsl_lite_SOURCE_DIR}/include")
+  file(READ  "${gsl_lite_BINARY_DIR}/gsl-lite-config.cmake" _cfg)
+  string(REPLACE "@GSL_LITE_INCLUDE_DIR@" "${GSL_LITE_INCLUDE_DIR}" _cfg "${_cfg}")
+  file(WRITE "${gsl_lite_BINARY_DIR}/gsl-lite-config.cmake" "${_cfg}")
+
+  # Let find_package(gsl-lite CONFIG) pick up our config
+  set(gsl-lite_DIR "${gsl_lite_BINARY_DIR}" CACHE PATH "" FORCE)
+endif()
+
+# ---- mp-units (header-only) ----
+FetchContent_Declare(
+  mp_units
+  GIT_REPOSITORY https://github.com/mpusz/units.git
+  GIT_TAG        v2.4.0
+  GIT_SHALLOW    TRUE
+  GIT_PROGRESS   TRUE
+  SOURCE_SUBDIR  src          # IMPORTANT: use their src/ entry point
+)
+
+# Optional: toggle features BEFORE MakeAvailable
+set(MP_UNITS_BUILD_MODULES     OFF CACHE BOOL "" FORCE)
+set(MP_UNITS_BUILD_TESTING     OFF CACHE BOOL "" FORCE)
+set(MP_UNITS_BUILD_BENCHMARKS  OFF CACHE BOOL "" FORCE)
+set(MP_UNITS_BUILD_EXAMPLES    OFF CACHE BOOL "" FORCE)
+# set(MP_UNITS_WARNINGS_AS_ERRORS OFF CACHE BOOL "" FORCE)
+
+FetchContent_MakeAvailable(mp_units)
+
+# ---------- Portable install dirs + rpaths ----------
 include(GNUInstallDirs)
 set(CMAKE_BUILD_WITH_INSTALL_RPATH OFF)
 set(CMAKE_INSTALL_RPATH_USE_LINK_PATH ON)
@@ -57,8 +108,9 @@ endif()
 if (EXISTS "${CMAKE_CURRENT_SOURCE_DIR}/tests/AppTests/CMakeLists.txt}")
   add_subdirectory(tests/AppTests)
 endif()
+
 if(BUILD_TESTING)
-  include(FetchContent)
+  # googletest (already fetched here; no need for a second include(FetchContent))
   FetchContent_Declare(
     googletest
     GIT_REPOSITORY https://github.com/google/googletest.git
@@ -79,7 +131,6 @@ if(BUILD_TESTING)
 endif()
 
 # ---------- Subprojects ----------
-# Utils (header-only or static lib)
 if (EXISTS "${CMAKE_CURRENT_SOURCE_DIR}/Utils/CMakeLists.txt")
   add_subdirectory(Utils)
 endif()

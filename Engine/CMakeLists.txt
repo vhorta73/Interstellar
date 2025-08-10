@@ -78,6 +78,7 @@ find_package(Vulkan REQUIRED)
 # Linkage
 target_link_libraries(Engine
   PUBLIC
+    mp-units::mp-units
     fmt::fmt
     spdlog::spdlog
     nlohmann_json::nlohmann_json
