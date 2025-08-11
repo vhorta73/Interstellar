@@ -11,6 +11,8 @@ option(WARNINGS_AS_ERRORS "Treat warnings as errors (recommended in CI)" OFF)
 # ---------- Encoding-checker tool ----------
 add_executable(utf8_check tools/utf8_check/main.cpp)
 target_compile_features(utf8_check PRIVATE cxx_std_17) # filesystem
+add_compile_definitions(gsl_FEATURE_GSL_COMPATIBILITY_MODE=1)
+
 
 add_custom_target(check-encoding
   COMMAND utf8_check "${CMAKE_SOURCE_DIR}" "${CMAKE_BINARY_DIR}"
@@ -125,8 +127,12 @@ endif()
 add_subdirectory(Engine)
 add_subdirectory(Interstellar)
 add_subdirectory(IO)
+add_subdirectory(Units)
+
 # If Engine or Interstellar app needs IO:
 # target_link_libraries(Engine PRIVATE Interstellar::IO)
+# Engine needs Units headers => link it:
+target_link_libraries(Engine PRIVATE Interstellar::Units)
 
 # Run encoding check before key targets
 add_dependencies(Engine        check-encoding)

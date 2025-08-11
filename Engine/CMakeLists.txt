@@ -88,6 +88,7 @@ target_link_libraries(Engine
     Vulkan::Vulkan
     CLI11::CLI11
     Utils            # assumes this target exists elsewhere
+    Interstellar::Units
   PRIVATE
     glfw
     glad
