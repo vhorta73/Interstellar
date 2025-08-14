@@ -1,41 +1,46 @@
 cmake_minimum_required(VERSION 3.21)
-project(InterstellarUnits LANGUAGES CXX)
 
-# ---- Sources (simple + placeholder if empty) ----
-file(GLOB_RECURSE UNITS_SOURCES CONFIGURE_DEPENDS
-  "${CMAKE_CURRENT_SOURCE_DIR}/src/*.cpp"
-  "${CMAKE_CURRENT_SOURCE_DIR}/src/*.cxx"
-  "${CMAKE_CURRENT_SOURCE_DIR}/src/*.cc"
-)
-if(UNITS_SOURCES STREQUAL "")
-  set(_units_placeholder "${CMAKE_CURRENT_BINARY_DIR}/interstellar_units_placeholder.cpp")
-  file(WRITE "${_units_placeholder}" "/* placeholder */ void interstellar_units_placeholder(){}")
-  list(APPEND UNITS_SOURCES "${_units_placeholder}")
+# Inherit the root version; fall back for standalone use
+if(NOT DEFINED Interstellar_VERSION)
+  set(Interstellar_VERSION 0.0.0)
 endif()
 
-# ---- Library ----
-add_library(InterstellarUnits STATIC ${UNITS_SOURCES})
+project(InterstellarUnits VERSION ${Interstellar_VERSION} LANGUAGES CXX)
+
+include(GNUInstallDirs)
+include(CMakePackageConfigHelpers)
+
+# ---- Library (header-only) ----
+add_library(InterstellarUnits INTERFACE)
 add_library(Interstellar::Units ALIAS InterstellarUnits)
-target_compile_features(InterstellarUnits PUBLIC cxx_std_20)
 
-# ---- Includes ----
-target_include_directories(InterstellarUnits
-  PUBLIC
-    $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
-    $<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}>
-  PRIVATE
-    ${CMAKE_CURRENT_SOURCE_DIR}/src
+# Public headers during build live in repo "include/", installed under include/Interstellar
+set(INTERSTELLAR_UNITS_INSTALL_INCLUDE_DIR "${CMAKE_INSTALL_INCLUDEDIR}/Interstellar")
+
+target_include_directories(InterstellarUnits INTERFACE
+  $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
+  $<INSTALL_INTERFACE:${INTERSTELLAR_UNITS_INSTALL_INCLUDE_DIR}>
 )
 
-# ---- Warnings (kept lightweight) ----
-option(UNITS_WARNINGS_AS_ERRORS "Treat warnings as errors for Interstellar::Units" OFF)
-if(MSVC)
-  target_compile_options(InterstellarUnits PRIVATE /permissive- /W4 $<$<BOOL:${UNITS_WARNINGS_AS_ERRORS}>:/WX>)
-else()
-  target_compile_options(InterstellarUnits PRIVATE -Wall -Wextra -Wpedantic $<$<BOOL:${UNITS_WARNINGS_AS_ERRORS}>:-Werror>)
-endif()
+# If headers use C++20 features, declare it for consumers
+target_compile_features(InterstellarUnits INTERFACE cxx_std_20)
 
-# ---- Detect mp-units target name ----
+# ---- Scalar type configuration (cache-safe & validated) ----
+set(UNITS_SCALAR "double" CACHE STRING "Scalar type for Interstellar::Units")
+set_property(CACHE UNITS_SCALAR PROPERTY STRINGS "float;double")
+# Validate to avoid odd values creeping in from cache/presets
+if(NOT UNITS_SCALAR IN_LIST _ok_scalars)
+  set(_ok_scalars float double)
+endif()
+list(FIND _ok_scalars "${UNITS_SCALAR}" _idx)
+if(_idx EQUAL -1)
+  message(FATAL_ERROR "UNITS_SCALAR must be one of: ${_ok_scalars}; got: '${UNITS_SCALAR}'")
+endif()
+# Re-store with correct type (STRING) in case it previously existed as another type
+set(UNITS_SCALAR "${UNITS_SCALAR}" CACHE STRING "Scalar type for Interstellar::Units" FORCE)
+target_compile_definitions(InterstellarUnits INTERFACE INTERSTELLAR_UNITS_SCALAR=${UNITS_SCALAR})
+
+# ---- mp-units (link to whichever target name exists) ----
 set(_mpu_target "")
 foreach(_cand mp-units::units mp-units::mp-units mp-units units)
   if(TARGET ${_cand})
@@ -43,31 +48,52 @@ foreach(_cand mp-units::units mp-units::mp-units mp-units units)
     break()
   endif()
 endforeach()
-
 if(NOT _mpu_target)
-  message(FATAL_ERROR
-    "mp-units target not found. Ensure FetchContent_MakeAvailable(mp_units) ran "
-    "BEFORE add_subdirectory(Units), or install/find mp-units."
-  )
+  message(FATAL_ERROR "mp-units target not found. Ensure it's available before add_subdirectory(Units).")
 endif()
+target_link_libraries(InterstellarUnits INTERFACE ${_mpu_target})
 
-# ---- Link dependencies ----
-target_link_libraries(InterstellarUnits
-  PUBLIC
-    ${_mpu_target}
-)
-
-
-# ---- Install (optional, compact) ----
-include(GNUInstallDirs)
+# ---- Install (headers + export + package files) ----
 install(TARGETS InterstellarUnits
   EXPORT InterstellarUnitsTargets
-  ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR}
 )
-install(DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/include/
-  DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}
+
+# Install public headers preserving folder structure
+install(DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}/include/"
+  DESTINATION "${INTERSTELLAR_UNITS_INSTALL_INCLUDE_DIR}"
+  FILES_MATCHING PATTERN "*.h" PATTERN "*.hpp" PATTERN "*.hh" PATTERN "*.hxx"
 )
+
+# Exported targets file (so other projects can import Interstellar::Units)
 install(EXPORT InterstellarUnitsTargets
   NAMESPACE Interstellar::
-  DESTINATION ${CMAKE_INSTALL_LIBDIR}/cmake/InterstellarUnits
+  FILE InterstellarUnitsTargets.cmake
+  DESTINATION "${CMAKE_INSTALL_LIBDIR}/cmake/InterstellarUnits"
 )
+
+# Package config (find_package(InterstellarUnits))
+write_basic_package_version_file(
+  "${CMAKE_CURRENT_BINARY_DIR}/InterstellarUnitsConfigVersion.cmake"
+  VERSION "${PROJECT_VERSION}"
+  COMPATIBILITY SameMajorVersion
+)
+file(WRITE "${CMAKE_CURRENT_BINARY_DIR}/InterstellarUnitsConfig.cmake" [=[
+# Minimal config: import targets; dependencies like mp-units are baked into link interface
+include("${CMAKE_CURRENT_LIST_DIR}/InterstellarUnitsTargets.cmake")
+]=])
+install(FILES
+  "${CMAKE_CURRENT_BINARY_DIR}/InterstellarUnitsConfig.cmake"
+  "${CMAKE_CURRENT_BINARY_DIR}/InterstellarUnitsConfigVersion.cmake"
+  DESTINATION "${CMAKE_INSTALL_LIBDIR}/cmake/InterstellarUnits"
+)
+
+# ---- Tests (via helper) ----
+option(UNITS_BUILD_TESTS "Build Units tests" ${BUILD_TESTING})
+if(UNITS_BUILD_TESTS AND BUILD_TESTING)
+  include(SubprojectTesting)  # provided by root via CMAKE_MODULE_PATH
+  if(COMMAND add_subproject_tests)
+    add_subproject_tests(TARGET InterstellarUnits NAME Units)
+  else()
+    message(WARNING "SubprojectTesting found but add_subproject_tests() undefined; skipping Units test wiring.")
+  endif()
+endif()
