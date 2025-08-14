@@ -84,12 +84,10 @@ endif()
 
 set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
-# PIC for non-Windows shared usage
 if(UNIX)
   set(CMAKE_POSITION_INDEPENDENT_CODE ON)
 endif()
 
-# LTO only in optimized configs
 set(CMAKE_INTERPROCEDURAL_OPTIMIZATION_RELEASE ON)
 set(CMAKE_INTERPROCEDURAL_OPTIMIZATION_RELWITHDEBINFO ON)
 
@@ -131,7 +129,7 @@ if(NOT gsl_lite_POPULATED)
   add_library(gsl::gsl-lite ALIAS gsl_lite_headers)
 endif()
 
-# mp-units
+# mp-units (trim extras; valid contracts: NONE;GSL-LITE;MS-GSL)
 FetchContent_Declare(
   mp_units
   GIT_REPOSITORY https://github.com/mpusz/units.git
@@ -140,17 +138,30 @@ FetchContent_Declare(
   GIT_PROGRESS   TRUE
   SOURCE_SUBDIR  src
 )
-
-# Turn off extras that create export-time dependencies
 set(MP_UNITS_BUILD_MODULES     OFF  CACHE BOOL   "" FORCE)
 set(MP_UNITS_BUILD_TESTING     OFF  CACHE BOOL   "" FORCE)
 set(MP_UNITS_BUILD_BENCHMARKS  OFF  CACHE BOOL   "" FORCE)
 set(MP_UNITS_BUILD_EXAMPLES    OFF  CACHE BOOL   "" FORCE)
-
-# Use NONE (valid values: NONE;GSL-LITE;MS-GSL)
 set(MP_UNITS_API_CONTRACTS     NONE CACHE STRING "" FORCE)
 
-FetchContent_MakeAvailable(mp_units)
+# fmt + spdlog moved to ROOT so Logging can link spdlog::spdlog
+set(SPDLOG_BUILD_SHARED OFF CACHE BOOL "" FORCE)
+set(SPDLOG_FMT_EXTERNAL ON  CACHE BOOL "" FORCE)
+FetchContent_Declare(fmt
+  GIT_REPOSITORY https://github.com/fmtlib/fmt.git
+  GIT_TAG        9.1.0
+  GIT_SHALLOW    TRUE
+  GIT_PROGRESS   TRUE
+)
+FetchContent_Declare(spdlog
+  GIT_REPOSITORY https://github.com/gabime/spdlog.git
+  GIT_TAG        v1.11.0
+  GIT_SHALLOW    TRUE
+  GIT_PROGRESS   TRUE
+)
+
+# Make the third-parties available BEFORE subprojects
+FetchContent_MakeAvailable(fmt spdlog mp_units)
 
 # ============================================================
 # Portable install dirs / rpaths
@@ -188,19 +199,19 @@ endif()
 # ============================================================
 list(APPEND CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/cmake")
 include(EnsureSources)        # shared empty-TU helper
-# SubprojectTesting is included inside subprojects when needed
 
 # ============================================================
 # Subprojects
 # ============================================================
-# Per-subproject toggles follow global BUILD_TESTING by default
 set(UNITS_BUILD_TESTS        ${BUILD_TESTING} CACHE BOOL "" FORCE)
 set(UTILS_BUILD_TESTS        ${BUILD_TESTING} CACHE BOOL "" FORCE)
 set(ENGINE_BUILD_TESTS       ${BUILD_TESTING} CACHE BOOL "" FORCE)
 set(IO_BUILD_TESTS           ${BUILD_TESTING} CACHE BOOL "" FORCE)
 set(DATA_BUILD_TESTS         ${BUILD_TESTING} CACHE BOOL "" FORCE)
 set(INTERSTELLAR_BUILD_TESTS ${BUILD_TESTING} CACHE BOOL "" FORCE)
+set(LOGGING_BUILD_TESTS      ${BUILD_TESTING} CACHE BOOL "" FORCE)
 
+add_subdirectory(Logging)
 add_subdirectory(Units)
 add_subdirectory(Utils)
 add_subdirectory(Engine)
@@ -233,8 +244,7 @@ endfunction()
 
 function(_interstellar_try_unity_batch target)
   if(ENABLE_UNITY AND TARGET ${target})
-    # Keep global batch size unless you need custom tuning per target:
-    # set_property(TARGET ${target} PROPERTY UNITY_BUILD_BATCH_SIZE 8)
+    # set_property(TARGET ${target} PROPERTY UNITY_BUILD_BATCH_SIZE 8) # optional per-target
   endif()
 endfunction()
 
@@ -244,16 +254,13 @@ foreach(_pair
   "InterstellarUtils;Utils"
   "InterstellarIO;IO"
   "InterstellarData;Data"
+  "InterstellarLogging;Logging"
 )
   list(GET _pair 0 _target)
   list(GET _pair 1 _subdir)
   _interstellar_try_pch(${_target} ${_subdir})
   _interstellar_try_unity_batch(${_target})
 endforeach()
-
-# ============================================================
-# Docs (optional) — unchanged (keep your Doxygen logic here if any)
-# ============================================================
 
 # ============================================================
 # Packaging
