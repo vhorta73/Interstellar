@@ -1,3 +1,18 @@
+/**
+ * @file
+ * @brief Implementation of the Interstellar logging facade.
+ * @details
+ * Initializes spdlog's global policy once per process (flush_on(err),
+ * flush_every(2s), pattern) and materializes the four global logger instances.
+ *
+ * @env INTERSTELLAR_LOG_DIR
+ *      If set, log files will be created under this directory.
+ *      Otherwise logs are written under the working directory in `./logs`.
+ *
+ * @thread_safety
+ * All logging calls are thread-safe (multithreaded sinks).
+ */
+
 #include "Interstellar/Logging/Logging.hpp"
 #include "Interstellar/Logging/LogLevel.hpp"
 
