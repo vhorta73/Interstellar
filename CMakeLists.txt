@@ -1,37 +1,69 @@
 cmake_minimum_required(VERSION 3.21)
 project(Interstellar VERSION 1.0 LANGUAGES CXX)
 
-# ---------- Options ----------
-option(BUILD_TESTING                 "Enable building of tests" ON)
-option(BUILD_DOCS                    "Build API documentation with Doxygen" OFF)
-option(INSTALL_TESTS                 "Install test executables and a CTest file into the install tree" ON)
-option(SILENCE_THIRD_PARTY_WARNINGS  "Silence deprecation/developer warnings from third-party projects" ON)
-option(WARNINGS_AS_ERRORS            "Treat warnings as errors (recommended in CI)" OFF)
+# ============================================================
+# Turbo build options (root-only, on by default)
+# ============================================================
+option(ENABLE_SCCACHE          "Use sccache compiler cache"                     ON)
+option(ENABLE_UNITY            "Unity/Jumbo builds (CMAKE_UNITY_BUILD)"         ON)
+option(ENABLE_PCH              "Enable precompiled headers where available"     ON)
+option(ENABLE_FASTLINK_DEBUG   "MSVC /DEBUG:FASTLINK in Debug"                  ON)
+option(MSVC_EXTERNAL_SILENCE   "Silence MSVC warnings from external headers"    ON)
+option(DISABLE_GLAD_REGEN      "Prevent GLAD from regenerating each configure"  ON)
 
-# ---------- Helper modules path ----------
-# Make cmake/ modules discoverable by subprojects (e.g., SubprojectTesting.cmake)
-list(PREPEND CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/cmake")
-
-# Bootstrap a safe stub if SubprojectTesting.cmake is missing
-if(NOT EXISTS "${CMAKE_SOURCE_DIR}/cmake/SubprojectTesting.cmake")
-  file(MAKE_DIRECTORY "${CMAKE_BINARY_DIR}/cmake")
-  set(_stub "${CMAKE_BINARY_DIR}/cmake/SubprojectTesting.cmake")
-  file(WRITE "${_stub}" [=[
-# Auto-generated fallback stub. Replace with your real cmake/SubprojectTesting.cmake when available.
-if(NOT COMMAND add_subproject_tests)
-  function(add_subproject_tests target_name)
-    if(BUILD_TESTING AND TARGET ${target_name})
-      # No-op placeholder. Real implementation can add tests or wire CTest here.
-      # Example idea:
-      # add_test(NAME ${target_name}.selftest COMMAND $<TARGET_FILE:${target_name}> --gtest_color=yes)
-    endif()
-  endfunction()
-endif()
-]=])
-  list(PREPEND CMAKE_MODULE_PATH "${CMAKE_BINARY_DIR}/cmake")
+# -- sccache (compiler cache) --
+if(ENABLE_SCCACHE)
+  find_program(SCCACHE_PROGRAM sccache)
+  if(SCCACHE_PROGRAM)
+    message(STATUS "Using sccache: ${SCCACHE_PROGRAM}")
+    set(CMAKE_CXX_COMPILER_LAUNCHER "${SCCACHE_PROGRAM}")
+    set(CMAKE_C_COMPILER_LAUNCHER  "${SCCACHE_PROGRAM}")
+  else()
+    message(STATUS "sccache not found; disable ENABLE_SCCACHE or install sccache")
+  endif()
 endif()
 
-# ---------- Tools ----------
+# -- Unity/Jumbo builds (global default) --
+if(ENABLE_UNITY)
+  set(CMAKE_UNITY_BUILD ON)
+  set(CMAKE_UNITY_BUILD_BATCH_SIZE 8) # tune if needed
+endif()
+
+# -- Fast MSVC debug linking --
+if(MSVC AND ENABLE_FASTLINK_DEBUG)
+  add_link_options("$<$<CONFIG:Debug>:/DEBUG:FASTLINK;/INCREMENTAL>")
+endif()
+
+# -- Silence external headers on MSVC --
+if(MSVC AND MSVC_EXTERNAL_SILENCE)
+  add_compile_options(
+    /experimental:external
+    /external:W0
+    /external:anglebrackets
+  )
+endif()
+
+# -- Stop GLAD from regenerating (applies before Engine/FetchContent) --
+if(DISABLE_GLAD_REGEN)
+  set(GLAD_INSTALL    OFF CACHE BOOL   "" FORCE)
+  set(GLAD_REGENERATE OFF CACHE BOOL   "" FORCE)
+  set(GLAD_GENERATOR  c   CACHE STRING "" FORCE)
+  set(GLAD_API        "gl=4.6" CACHE STRING "" FORCE)
+  set(GLAD_PROFILE    "core"  CACHE STRING "" FORCE)
+endif()
+
+# ============================================================
+# Root build options (your existing ones)
+# ============================================================
+option(BUILD_TESTING "Enable building of tests" ON)
+option(BUILD_DOCS "Build API documentation with Doxygen" OFF)
+option(INSTALL_TESTS "Install test executables and a CTest file into the install tree" ON)
+option(SILENCE_THIRD_PARTY_WARNINGS "Silence deprecation/developer warnings from third-party projects" ON)
+option(WARNINGS_AS_ERRORS "Treat warnings as errors (recommended in CI)" OFF)
+
+# ============================================================
+# Tools
+# ============================================================
 add_executable(utf8_check EXCLUDE_FROM_ALL tools/utf8_check/main.cpp)
 target_compile_features(utf8_check PRIVATE cxx_std_17)
 
@@ -42,7 +74,9 @@ add_custom_target(check-encoding
   DEPENDS utf8_check
 )
 
-# ---------- Global toolchain niceties ----------
+# ============================================================
+# Toolchain niceties
+# ============================================================
 if(SILENCE_THIRD_PARTY_WARNINGS)
   set(CMAKE_WARN_DEPRECATED OFF CACHE BOOL "" FORCE)
   set(CMAKE_SUPPRESS_DEVELOPER_WARNINGS 1 CACHE INTERNAL "")
@@ -50,13 +84,13 @@ endif()
 
 set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
-
+# PIC for non-Windows shared usage
 if(UNIX)
   set(CMAKE_POSITION_INDEPENDENT_CODE ON)
 endif()
 
-# Enable IPO/LTO for Release and RelWithDebInfo (keep off in Debug)
-set(CMAKE_INTERPROCEDURAL_OPTIMIZATION_RELEASE        ON)
+# LTO only in optimized configs
+set(CMAKE_INTERPROCEDURAL_OPTIMIZATION_RELEASE ON)
 set(CMAKE_INTERPROCEDURAL_OPTIMIZATION_RELWITHDEBINFO ON)
 
 if(MSVC)
@@ -70,15 +104,17 @@ if(MSVC)
   set(CMAKE_MSVC_DEBUG_INFORMATION_FORMAT "$<$<CONFIG:Release>:ProgramDatabase>")
 endif()
 
-# Default install prefix (presets can override)
+# Default install prefix
 if(CMAKE_INSTALL_PREFIX_INITIALIZED_TO_DEFAULT)
   set(CMAKE_INSTALL_PREFIX "${CMAKE_BINARY_DIR}/package" CACHE PATH "Install prefix" FORCE)
 endif()
 
-# ---------- Third-party via FetchContent ----------
+# ============================================================
+# Third-party (via FetchContent)
+# ============================================================
 include(FetchContent)
 
-# ---------- gsl-lite as IMPORTED target ----------
+# gsl-lite headers via minimal interface
 FetchContent_Declare(
   gsl_lite
   GIT_REPOSITORY https://github.com/gsl-lite/gsl-lite.git
@@ -89,16 +125,13 @@ FetchContent_Declare(
 FetchContent_GetProperties(gsl_lite)
 if(NOT gsl_lite_POPULATED)
   FetchContent_Populate(gsl_lite)
-  # Create an IMPORTED INTERFACE target so that downstream exports (mp-units)
-  # don't try to re-export it.
-  add_library(gsl::gsl-lite INTERFACE IMPORTED)
-  set_target_properties(gsl::gsl-lite PROPERTIES
-    INTERFACE_INCLUDE_DIRECTORIES "${gsl_lite_SOURCE_DIR}/include"
-    INTERFACE_COMPILE_DEFINITIONS "gsl_FEATURE_GSL_COMPATIBILITY_MODE=1"
-  )
+  add_library(gsl_lite_headers INTERFACE)
+  target_include_directories(gsl_lite_headers INTERFACE "${gsl_lite_SOURCE_DIR}/include")
+  target_compile_definitions(gsl_lite_headers INTERFACE gsl_FEATURE_GSL_COMPATIBILITY_MODE=1)
+  add_library(gsl::gsl-lite ALIAS gsl_lite_headers)
 endif()
 
-# mp-units (header-only, with extras disabled)
+# mp-units
 FetchContent_Declare(
   mp_units
   GIT_REPOSITORY https://github.com/mpusz/units.git
@@ -107,13 +140,21 @@ FetchContent_Declare(
   GIT_PROGRESS   TRUE
   SOURCE_SUBDIR  src
 )
-set(MP_UNITS_BUILD_MODULES     OFF CACHE BOOL "" FORCE)
-set(MP_UNITS_BUILD_TESTING     OFF CACHE BOOL "" FORCE)
-set(MP_UNITS_BUILD_BENCHMARKS  OFF CACHE BOOL "" FORCE)
-set(MP_UNITS_BUILD_EXAMPLES    OFF CACHE BOOL "" FORCE)
+
+# Turn off extras that create export-time dependencies
+set(MP_UNITS_BUILD_MODULES     OFF  CACHE BOOL   "" FORCE)
+set(MP_UNITS_BUILD_TESTING     OFF  CACHE BOOL   "" FORCE)
+set(MP_UNITS_BUILD_BENCHMARKS  OFF  CACHE BOOL   "" FORCE)
+set(MP_UNITS_BUILD_EXAMPLES    OFF  CACHE BOOL   "" FORCE)
+
+# Use NONE (valid values: NONE;GSL-LITE;MS-GSL)
+set(MP_UNITS_API_CONTRACTS     NONE CACHE STRING "" FORCE)
+
 FetchContent_MakeAvailable(mp_units)
 
-# ---------- Portable install dirs / rpaths ----------
+# ============================================================
+# Portable install dirs / rpaths
+# ============================================================
 include(GNUInstallDirs)
 set(CMAKE_BUILD_WITH_INSTALL_RPATH OFF)
 set(CMAKE_INSTALL_RPATH_USE_LINK_PATH OFF)
@@ -123,7 +164,9 @@ elseif(UNIX)
   set(CMAKE_INSTALL_RPATH "$ORIGIN;$ORIGIN/../${CMAKE_INSTALL_LIBDIR}")
 endif()
 
-# ---------- Tests (global) ----------
+# ============================================================
+# Testing (global)
+# ============================================================
 include(CTest)
 if(BUILD_TESTING)
   FetchContent_Declare(
@@ -140,8 +183,24 @@ if(BUILD_TESTING)
   FetchContent_MakeAvailable(googletest)
 endif()
 
-# ---------- Subprojects ----------
-# (comment out lines for folders you don't have yet)
+# ============================================================
+# Make helper modules discoverable
+# ============================================================
+list(APPEND CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/cmake")
+include(EnsureSources)        # shared empty-TU helper
+# SubprojectTesting is included inside subprojects when needed
+
+# ============================================================
+# Subprojects
+# ============================================================
+# Per-subproject toggles follow global BUILD_TESTING by default
+set(UNITS_BUILD_TESTS        ${BUILD_TESTING} CACHE BOOL "" FORCE)
+set(UTILS_BUILD_TESTS        ${BUILD_TESTING} CACHE BOOL "" FORCE)
+set(ENGINE_BUILD_TESTS       ${BUILD_TESTING} CACHE BOOL "" FORCE)
+set(IO_BUILD_TESTS           ${BUILD_TESTING} CACHE BOOL "" FORCE)
+set(DATA_BUILD_TESTS         ${BUILD_TESTING} CACHE BOOL "" FORCE)
+set(INTERSTELLAR_BUILD_TESTS ${BUILD_TESTING} CACHE BOOL "" FORCE)
+
 add_subdirectory(Units)
 add_subdirectory(Utils)
 add_subdirectory(Engine)
@@ -149,44 +208,80 @@ add_subdirectory(Interstellar)
 add_subdirectory(IO)
 add_subdirectory(Data)
 
-# Ensure encoding check runs before key targets (only if they actually exist)
-foreach(t IN ITEMS Engine Interstellar)
-  if(TARGET ${t})
-    add_dependencies(${t} check-encoding)
-  else()
-    message(STATUS "Target '${t}' not found; skipping encoding dependency for it.")
+# Run encoding check before key targets
+add_dependencies(Engine       check-encoding)
+add_dependencies(Interstellar check-encoding)
+
+# ============================================================
+# Post-subdirs: apply PCH (if src/pch.hpp exists) & per-target unity tweaks
+# ============================================================
+function(_interstellar_try_pch target subdir)
+  if(NOT ENABLE_PCH)
+    return()
   endif()
+  if(NOT TARGET ${target})
+    return()
+  endif()
+  set(_pch "${CMAKE_SOURCE_DIR}/${subdir}/src/pch.hpp")
+  if(EXISTS "${_pch}")
+    message(STATUS "[PCH] ${target} -> ${_pch}")
+    target_precompile_headers(${target} PRIVATE
+      "$<$<COMPILE_LANGUAGE:CXX>:${_pch}>"
+    )
+  endif()
+endfunction()
+
+function(_interstellar_try_unity_batch target)
+  if(ENABLE_UNITY AND TARGET ${target})
+    # Keep global batch size unless you need custom tuning per target:
+    # set_property(TARGET ${target} PROPERTY UNITY_BUILD_BATCH_SIZE 8)
+  endif()
+endfunction()
+
+foreach(_pair
+  "Engine;Engine"
+  "Interstellar;Interstellar"
+  "InterstellarUtils;Utils"
+  "InterstellarIO;IO"
+  "InterstellarData;Data"
+)
+  list(GET _pair 0 _target)
+  list(GET _pair 1 _subdir)
+  _interstellar_try_pch(${_target} ${_subdir})
+  _interstellar_try_unity_batch(${_target})
 endforeach()
 
-# ---------- Packaging ----------
+# ============================================================
+# Docs (optional) — unchanged (keep your Doxygen logic here if any)
+# ============================================================
+
+# ============================================================
+# Packaging
+# ============================================================
 include(InstallRequiredSystemLibraries)
-set(CPACK_PACKAGE_NAME    "Interstellar")
-set(CPACK_PACKAGE_VENDOR  "Imagine")
+set(CPACK_PACKAGE_NAME "Interstellar")
+set(CPACK_PACKAGE_VENDOR "Imagine")
 set(CPACK_PACKAGE_VERSION "${PROJECT_VERSION}")
 set(CPACK_GENERATOR "ZIP")
 set(CPACK_INCLUDE_TOPLEVEL_DIRECTORY OFF)
 include(CPack)
 
-# ---------- Installed-tests index ----------
+# ============================================================
+# Installed-tests index (kept)
+# ============================================================
 if(INSTALL_TESTS)
   install(CODE [[
-    set(prefix "$ENV{DESTDIR}${CMAKE_INSTALL_PREFIX}")
-    file(MAKE_DIRECTORY "${prefix}/tests")
-    set(ctestfile "${prefix}/tests/CTestTestfile.cmake")
-    file(WRITE "${ctestfile}" "")
-    if(WIN32)
-      set(_exe_ext ".exe")
-    else()
-      set(_exe_ext "")
-    endif()
+    file(MAKE_DIRECTORY "${CMAKE_INSTALL_PREFIX}/tests")
+    file(WRITE "${CMAKE_INSTALL_PREFIX}/tests/CTestTestfile.cmake" "")
     function(_add_installed_test name)
-      set(_exe "${CMAKE_INSTALL_PREFIX}/tests/bin/${name}${_exe_ext}")
+      set(_exe "${CMAKE_INSTALL_PREFIX}/tests/bin/${name}$<$<PLATFORM_ID:Windows>:.exe>")
       set(_wd  "${CMAKE_INSTALL_PREFIX}/bin")
-      file(APPEND "${ctestfile}"
+      file(APPEND "${CMAKE_INSTALL_PREFIX}/tests/CTestTestfile.cmake"
         "add_test(NAME Installed.${name} COMMAND \"${_exe}\" --gtest_color=yes)\n"
         "set_tests_properties(Installed.${name} PROPERTIES WORKING_DIRECTORY \"${_wd}\")\n"
       )
     endfunction()
     _add_installed_test("EngineTests")
+    # _add_installed_test("AppTests")
   ]])
 endif()
