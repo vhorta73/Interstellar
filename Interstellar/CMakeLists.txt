@@ -2,16 +2,12 @@ cmake_minimum_required(VERSION 3.21)
 project(InterstellarApp LANGUAGES CXX)
 
 # ---------------- Sources ----------------
+include(EnsureSources)
 file(GLOB_RECURSE APP_SOURCES CONFIGURE_DEPENDS
   "${CMAKE_CURRENT_SOURCE_DIR}/src/*.cpp"
 )
-
-# ODR-safe placeholder if temporarily empty (keeps IDE projects alive)
-if(APP_SOURCES STREQUAL "")
-  set(_placeholder "${CMAKE_CURRENT_BINARY_DIR}/app_placeholder.cpp")
-  file(WRITE "${_placeholder}" "namespace{static void interstellar_app_placeholder_13579(){} }")
-  list(APPEND APP_SOURCES "${_placeholder}")
-endif()
+# DRY helper: injects an empty TU if needed (no C4505)
+interstellar_ensure_sources(APP_SOURCES app)
 
 add_executable(Interstellar ${APP_SOURCES})
 target_compile_features(Interstellar PRIVATE cxx_std_20)
@@ -26,35 +22,23 @@ target_include_directories(Interstellar PRIVATE
 )
 
 # ---------------- Linkage ----------------
-# Link only to the public engine target (and any other public libs you *intend* to expose).
-# Engine should carry glfw/glad privately; app should not link them directly.
+# Engine should carry glfw/glad privately; the app shouldn’t need to link them directly.
 target_link_libraries(Interstellar
   PRIVATE
     Interstellar::Engine
-    Interstellar::Utils          # if the app uses Utils public API
-    Interstellar::IO             # if the app uses IO public API
+    Interstellar::Utils
+    Interstellar::IO
 )
-
-# Windows OpenGL system lib only if your app calls WGL/OpenGL directly (usually not needed if Engine encapsulates it)
-if(MSVC)
-  # target_link_libraries(Interstellar PRIVATE opengl32) # uncomment only if the app itself includes <GL/...>
-endif()
 
 # ---------------- Warnings ----------------
 if(MSVC)
-  target_compile_options(Interstellar PRIVATE /permissive- /W4)
-  if(WARNINGS_AS_ERRORS)
-    target_compile_options(Interstellar PRIVATE /WX)
-  endif()
+  target_compile_options(Interstellar PRIVATE /permissive- /W4 $<$<BOOL:${WARNINGS_AS_ERRORS}>:/WX>)
 else()
-  target_compile_options(Interstellar PRIVATE -Wall -Wextra -Wpedantic)
-  if(WARNINGS_AS_ERRORS)
-    target_compile_options(Interstellar PRIVATE -Werror)
-  endif()
+  target_compile_options(Interstellar PRIVATE -Wall -Wextra -Wpedantic $<$<BOOL:${WARNINGS_AS_ERRORS}>:-Werror>)
 endif()
 
 # ---------------- VS debugger working dir ----------------
-if (MSVC)
+if(MSVC)
   set_target_properties(Interstellar PROPERTIES
     VS_DEBUGGER_WORKING_DIRECTORY "$<TARGET_FILE_DIR:Interstellar>"
   )
@@ -101,38 +85,27 @@ endif()
 
 # ---------------- Install app ----------------
 include(GNUInstallDirs)
-
 install(TARGETS Interstellar
   RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
-  ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR}  # helpful if you ever export import libs on Windows
+  ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR}
 )
-
-# Install runtime DLLs (harmless if none)
 if (WIN32 AND CMAKE_VERSION VERSION_GREATER_EQUAL "3.21")
   install(FILES $<TARGET_RUNTIME_DLLS:Interstellar> DESTINATION ${CMAKE_INSTALL_BINDIR})
 endif()
-
-# Install assets if present
 if(EXISTS "${CMAKE_CURRENT_SOURCE_DIR}/assets")
   install(DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}/assets/"
           DESTINATION "${CMAKE_INSTALL_BINDIR}/assets"
           FILES_MATCHING
             PATTERN "*"
-            PATTERN "*.psd" EXCLUDE
-  )
+            PATTERN "*.psd" EXCLUDE)
 endif()
-
-# Ship PDBs (useful for release crash logs)
 if (MSVC)
   install(FILES "$<TARGET_PDB_FILE:Interstellar>" DESTINATION ${CMAKE_INSTALL_BINDIR} OPTIONAL)
 endif()
 
 # ---------------- Tests (via helper) ----------------
+option(INTERSTELLAR_BUILD_TESTS "Build Interstellar tests" ${BUILD_TESTING})
 if(INTERSTELLAR_BUILD_TESTS AND BUILD_TESTING)
-  include(SubprojectTesting)  # provided by root
-  if(COMMAND add_subproject_tests)
-    add_subproject_tests(TARGET Interstellar NAME Interstellar)
-  else()
-    message(STATUS "SubprojectTesting not available; skipping app test wiring.")
-  endif()
+  include(SubprojectTesting)
+  add_subproject_tests(TARGET Interstellar NAME Interstellar)
 endif()

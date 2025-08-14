@@ -28,15 +28,15 @@ target_compile_features(InterstellarUnits INTERFACE cxx_std_20)
 # ---- Scalar type configuration (cache-safe & validated) ----
 set(UNITS_SCALAR "double" CACHE STRING "Scalar type for Interstellar::Units")
 set_property(CACHE UNITS_SCALAR PROPERTY STRINGS "float;double")
-# Validate to avoid odd values creeping in from cache/presets
-if(NOT UNITS_SCALAR IN_LIST _ok_scalars)
-  set(_ok_scalars float double)
-endif()
+
+# Validate
+set(_ok_scalars float double)
 list(FIND _ok_scalars "${UNITS_SCALAR}" _idx)
 if(_idx EQUAL -1)
   message(FATAL_ERROR "UNITS_SCALAR must be one of: ${_ok_scalars}; got: '${UNITS_SCALAR}'")
 endif()
-# Re-store with correct type (STRING) in case it previously existed as another type
+
+# Ensure cache type is STRING
 set(UNITS_SCALAR "${UNITS_SCALAR}" CACHE STRING "Scalar type for Interstellar::Units" FORCE)
 target_compile_definitions(InterstellarUnits INTERFACE INTERSTELLAR_UNITS_SCALAR=${UNITS_SCALAR})
 
@@ -58,13 +58,11 @@ install(TARGETS InterstellarUnits
   EXPORT InterstellarUnitsTargets
 )
 
-# Install public headers preserving folder structure
 install(DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}/include/"
   DESTINATION "${INTERSTELLAR_UNITS_INSTALL_INCLUDE_DIR}"
   FILES_MATCHING PATTERN "*.h" PATTERN "*.hpp" PATTERN "*.hh" PATTERN "*.hxx"
 )
 
-# Exported targets file (so other projects can import Interstellar::Units)
 install(EXPORT InterstellarUnitsTargets
   NAMESPACE Interstellar::
   FILE InterstellarUnitsTargets.cmake
@@ -78,7 +76,7 @@ write_basic_package_version_file(
   COMPATIBILITY SameMajorVersion
 )
 file(WRITE "${CMAKE_CURRENT_BINARY_DIR}/InterstellarUnitsConfig.cmake" [=[
-# Minimal config: import targets; dependencies like mp-units are baked into link interface
+# Minimal config: import targets; dependencies like mp-units are in the link interface
 include("${CMAKE_CURRENT_LIST_DIR}/InterstellarUnitsTargets.cmake")
 ]=])
 install(FILES
@@ -91,9 +89,5 @@ install(FILES
 option(UNITS_BUILD_TESTS "Build Units tests" ${BUILD_TESTING})
 if(UNITS_BUILD_TESTS AND BUILD_TESTING)
   include(SubprojectTesting)  # provided by root via CMAKE_MODULE_PATH
-  if(COMMAND add_subproject_tests)
-    add_subproject_tests(TARGET InterstellarUnits NAME Units)
-  else()
-    message(WARNING "SubprojectTesting found but add_subproject_tests() undefined; skipping Units test wiring.")
-  endif()
+  add_subproject_tests(TARGET InterstellarUnits NAME Units)
 endif()

@@ -1,18 +1,17 @@
 cmake_minimum_required(VERSION 3.21)
 project(InterstellarData LANGUAGES CXX)
 
+include(GNUInstallDirs)
+include(EnsureSources)  # DRY helper
+
 # ---- Sources ----
 file(GLOB_RECURSE DATA_SOURCES CONFIGURE_DEPENDS
   "${CMAKE_CURRENT_SOURCE_DIR}/src/*.cpp"
   "${CMAKE_CURRENT_SOURCE_DIR}/src/*.cc"
   "${CMAKE_CURRENT_SOURCE_DIR}/src/*.cxx"
 )
-
-if(DATA_SOURCES STREQUAL "")
-  set(_placeholder "${CMAKE_CURRENT_BINARY_DIR}/data_placeholder.cpp")
-  file(WRITE "${_placeholder}" "void interstellar_data_placeholder(){}")
-  list(APPEND DATA_SOURCES "${_placeholder}")
-endif()
+# If empty, inject an empty TU; on MSVC apply /wd4505 just to that file
+interstellar_ensure_sources(DATA_SOURCES data)
 
 # ---- Library ----
 add_library(InterstellarData STATIC ${DATA_SOURCES})
@@ -36,13 +35,12 @@ target_link_libraries(InterstellarData
 
 # ---- Warnings ----
 if(MSVC)
-  target_compile_options(InterstellarData PRIVATE /permissive- /W4)
+  target_compile_options(InterstellarData PRIVATE /permissive- /W4 $<$<BOOL:${WARNINGS_AS_ERRORS}>:/WX>)
 else()
-  target_compile_options(InterstellarData PRIVATE -Wall -Wextra -Wpedantic)
+  target_compile_options(InterstellarData PRIVATE -Wall -Wextra -Wpedantic $<$<BOOL:${WARNINGS_AS_ERRORS}>:-Werror>)
 endif()
 
 # ---- Install ----
-include(GNUInstallDirs)
 install(TARGETS InterstellarData
   EXPORT InterstellarDataTargets
   RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
@@ -52,9 +50,9 @@ install(TARGETS InterstellarData
 install(DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}/include/"
         DESTINATION ${CMAKE_INSTALL_INCLUDEDIR})
 
-# ---- Tests (via helper; no Data/tests/CMakeLists.txt needed) ----
+# ---- Tests ----
 option(DATA_BUILD_TESTS "Build Data tests" ${BUILD_TESTING})
 if(DATA_BUILD_TESTS AND BUILD_TESTING)
-  include(SubprojectTesting)           # root sets CMAKE_MODULE_PATH to /cmake
+  include(SubprojectTesting)
   add_subproject_tests(TARGET InterstellarData NAME Data)
 endif()

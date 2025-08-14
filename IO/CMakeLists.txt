@@ -9,6 +9,7 @@ project(InterstellarIOProj VERSION ${Interstellar_VERSION} LANGUAGES CXX)
 
 include(GNUInstallDirs)
 include(CMakePackageConfigHelpers)
+include(EnsureSources)  # <- DRY placeholder helper
 
 # ---------------- Sources ----------------
 file(GLOB_RECURSE IO_SOURCES CONFIGURE_DEPENDS
@@ -16,13 +17,8 @@ file(GLOB_RECURSE IO_SOURCES CONFIGURE_DEPENDS
   "${CMAKE_CURRENT_SOURCE_DIR}/src/*.cc"
   "${CMAKE_CURRENT_SOURCE_DIR}/src/*.cxx"
 )
-
-# ODR-safe placeholder if temporarily empty
-if(IO_SOURCES STREQUAL "")
-  set(_placeholder "${CMAKE_CURRENT_BINARY_DIR}/io_placeholder.cpp")
-  file(WRITE "${_placeholder}" "namespace{static void interstellar_io_placeholder_24680(){} }")
-  list(APPEND IO_SOURCES "${_placeholder}")
-endif()
+# Inject a truly-empty TU if none found (helper also applies /wd4505 on MSVC)
+interstellar_ensure_sources(IO_SOURCES io)
 
 # ---------------- Target ----------------
 add_library(InterstellarIO STATIC ${IO_SOURCES})
@@ -56,10 +52,8 @@ endif()
 option(IO_ENABLE_PACKAGE "Install CMake package for Interstellar::IO (requires system packages for deps)" OFF)
 
 if(IO_ENABLE_PACKAGE)
-  # Package mode: require imported packages (no build-tree deps in export)
   find_package(simdjson CONFIG REQUIRED) # provides simdjson::simdjson
 else()
-  # Dev mode: FetchContent (safe for local builds; no export)
   include(FetchContent)
   if(NOT TARGET simdjson::simdjson)
     FetchContent_Declare(simdjson
@@ -72,13 +66,9 @@ else()
   endif()
 endif()
 
-target_link_libraries(InterstellarIO
-  PUBLIC
-    simdjson::simdjson
-)
+target_link_libraries(InterstellarIO PUBLIC simdjson::simdjson)
 
 # ---------------- Install ----------------
-# Always install the built binary + headers (useful even in dev mode)
 install(TARGETS InterstellarIO
   RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
   LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
@@ -89,7 +79,6 @@ install(DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}/include/"
         DESTINATION "${INTERSTELLAR_IO_INSTALL_INCLUDE_DIR}"
         FILES_MATCHING PATTERN "*.h" PATTERN "*.hpp" PATTERN "*.hh" PATTERN "*.hxx")
 
-# Only export a CMake package when explicitly enabled
 if(IO_ENABLE_PACKAGE)
   install(EXPORT InterstellarIOTargets
     NAMESPACE Interstellar::
@@ -119,10 +108,6 @@ endif()
 # ---------------- Tests ----------------
 option(IO_BUILD_TESTS "Build IO tests" ${BUILD_TESTING})
 if(IO_BUILD_TESTS AND BUILD_TESTING)
-  include(SubprojectTesting) # provided by root
-  if(COMMAND add_subproject_tests)
-    add_subproject_tests(TARGET InterstellarIO NAME IO)
-  else()
-    message(STATUS "SubprojectTesting not available; skipping IO test wiring.")
-  endif()
+  include(SubprojectTesting)
+  add_subproject_tests(TARGET InterstellarIO NAME IO)
 endif()

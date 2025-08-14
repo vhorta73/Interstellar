@@ -9,24 +9,18 @@ project(EngineProj VERSION ${Interstellar_VERSION} LANGUAGES CXX)
 
 include(GNUInstallDirs)
 include(CMakePackageConfigHelpers)
+include(EnsureSources)  # <- DRY helper
 
 # ---------------- Sources ----------------
 file(GLOB_RECURSE ENGINE_SOURCES CONFIGURE_DEPENDS
   "${CMAKE_CURRENT_SOURCE_DIR}/src/*.cpp"
 )
-
-# Placeholder to keep target buildable if sources are momentarily empty
-if(ENGINE_SOURCES STREQUAL "")
-  set(_placeholder "${CMAKE_CURRENT_BINARY_DIR}/engine_placeholder.cpp")
-  file(WRITE "${_placeholder}" "namespace{static void interstellar_engine_placeholder_98765(){} }")
-  list(APPEND ENGINE_SOURCES "${_placeholder}")
-endif()
+# If empty, inject an empty TU (no C4505; /wd4505 applied to that file only on MSVC)
+interstellar_ensure_sources(ENGINE_SOURCES engine)
 
 # ---------------- Library ----------------
 add_library(Engine STATIC ${ENGINE_SOURCES})
 add_library(Interstellar::Engine ALIAS Engine)
-
-# Consumers need C++20 if public headers use it
 target_compile_features(Engine PUBLIC cxx_std_20)
 
 # Allow linking this static lib into shared libs on UNIX
@@ -59,18 +53,9 @@ endif()
 # ---------------- Dependencies ----------------
 include(FetchContent)
 
-# Helper: use existing target if available; otherwise FetchContent it
-function(_ensure_target_exists target_name fc_name)
-  if(TARGET ${target_name})
-    return()
-  endif()
-  FetchContent_MakeAvailable(${fc_name})
-endfunction()
-
 # fmt + spdlog (spdlog uses external fmt)
 set(SPDLOG_BUILD_SHARED OFF CACHE BOOL "" FORCE)
 set(SPDLOG_FMT_EXTERNAL ON  CACHE BOOL "" FORCE)
-
 if(NOT TARGET fmt::fmt)
   FetchContent_Declare(fmt
     GIT_REPOSITORY https://github.com/fmtlib/fmt.git
@@ -88,7 +73,7 @@ if(NOT TARGET spdlog::spdlog)
   )
 endif()
 
-# mp-units (assumed provided by root; declare only if missing)
+# mp-units
 set(MP_UNITS_BUILD_MODULES     OFF CACHE BOOL "" FORCE)
 set(MP_UNITS_BUILD_TESTING     OFF CACHE BOOL "" FORCE)
 set(MP_UNITS_BUILD_BENCHMARKS  OFF CACHE BOOL "" FORCE)
@@ -158,14 +143,12 @@ if(NOT TARGET CLI11::CLI11)
 endif()
 
 # Make available any not already present
-# (safe if top-level already did so; no-ops for existing targets)
 FetchContent_MakeAvailable(fmt spdlog mp_units nlohmann_json glad glm glfw CLI11)
 
 # Vulkan SDK (required)
 find_package(Vulkan REQUIRED)
 
-# Linkage
-# Prefer mp-units canonical target name if available
+# Linkage (prefer canonical mp-units name)
 set(_mpu_target "")
 foreach(_cand mp-units::mp-units mp-units::units)
   if(TARGET ${_cand})
@@ -193,8 +176,6 @@ target_link_libraries(Engine
 )
 
 # ---------------- Install ----------------
-include(GNUInstallDirs)
-
 option(ENGINE_ENABLE_PACKAGE "Install CMake package for Interstellar::Engine (requires system packages for deps)" OFF)
 
 install(TARGETS Engine
@@ -204,15 +185,11 @@ install(TARGETS Engine
 )
 
 # Install public headers under include/Interstellar
-set(INTERSTELLAR_ENGINE_INSTALL_INCLUDE_DIR "${CMAKE_INSTALL_INCLUDEDIR}/Interstellar")
 install(DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}/include/"
         DESTINATION "${INTERSTELLAR_ENGINE_INSTALL_INCLUDE_DIR}"
         FILES_MATCHING PATTERN "*.h" PATTERN "*.hpp" PATTERN "*.hh" PATTERN "*.hxx")
 
 if(ENGINE_ENABLE_PACKAGE)
-  # ---- Only in package mode do we export targets and write a config ----
-  include(CMakePackageConfigHelpers)
-
   install(EXPORT EngineTargets
     NAMESPACE Interstellar::
     FILE EngineTargets.cmake
@@ -225,7 +202,6 @@ if(ENGINE_ENABLE_PACKAGE)
     COMPATIBILITY SameMajorVersion
   )
 
-  # In package mode we assume consumers have deps via find_package(...)
   file(WRITE "${CMAKE_CURRENT_BINARY_DIR}/InterstellarEngineConfig.cmake" [=[
 include(CMakeFindDependencyMacro)
 find_dependency(fmt)
@@ -234,7 +210,6 @@ find_dependency(nlohmann_json)
 find_dependency(glm)
 find_dependency(Vulkan)
 find_dependency(CLI11)
-# mp-units config mode
 find_package(mp-units CONFIG REQUIRED)
 include("${CMAKE_CURRENT_LIST_DIR}/EngineTargets.cmake")
 ]=])
@@ -246,8 +221,8 @@ include("${CMAKE_CURRENT_LIST_DIR}/EngineTargets.cmake")
   )
 endif()
 
-
 # ---------------- Tests ----------------
+option(ENGINE_BUILD_TESTS "Build Engine tests" ${BUILD_TESTING})
 if(ENGINE_BUILD_TESTS AND BUILD_TESTING)
   include(SubprojectTesting)
   add_subproject_tests(TARGET Engine NAME Engine)
