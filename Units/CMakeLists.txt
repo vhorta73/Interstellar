@@ -38,6 +38,7 @@ endif()
 
 # Ensure cache type is STRING
 set(UNITS_SCALAR "${UNITS_SCALAR}" CACHE STRING "Scalar type for Interstellar::Units" FORCE)
+target_compile_definitions(InterstellarUnits INTERFACE ISL_MP_UNITS_HAVE_UNDERSCORE=1)
 target_compile_definitions(InterstellarUnits INTERFACE INTERSTELLAR_UNITS_SCALAR=${UNITS_SCALAR})
 
 # ---- mp-units (link to whichever target name exists) ----
@@ -90,4 +91,10 @@ option(UNITS_BUILD_TESTS "Build Units tests" ${BUILD_TESTING})
 if(UNITS_BUILD_TESTS AND BUILD_TESTING)
   include(SubprojectTesting)  # provided by root via CMAKE_MODULE_PATH
   add_subproject_tests(TARGET InterstellarUnits NAME Units)
+  if(TARGET UnitsTests)
+    target_include_directories(UnitsTests PRIVATE
+      ${CMAKE_CURRENT_SOURCE_DIR}/tests
+      ${CMAKE_CURRENT_SOURCE_DIR}/tests/helpers
+  )
+  endif()
 endif()
