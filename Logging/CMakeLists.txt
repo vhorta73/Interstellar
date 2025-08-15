@@ -68,7 +68,7 @@ target_include_directories(InterstellarLogging
 )
 
 # Link spdlog publicly so consumers of Logging get it transitively
-target_link_libraries(InterstellarLogging PUBLIC spdlog::spdlog)
+target_link_libraries(InterstellarLogging PUBLIC spdlog::spdlog fmt::fmt)
 
 # Warnings
 if(MSVC)

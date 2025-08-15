@@ -8,6 +8,7 @@
 #include <string_view>
 #include <optional>
 #include <ostream>
+#include <stdexcept> // std::invalid_argument
 
 namespace Interstellar::Logging {
 
@@ -49,25 +50,34 @@ namespace Interstellar::Logging {
         return "INFO";
     }
 
+    // --- internal: ASCII case-insensitive compare (no locale) ----------------
+    namespace detail {
+        // Keep these constexpr; they're fine on MSVC. The public parsers below are inline (non-constexpr).
+        constexpr char ascii_tolower(char c) noexcept {
+            return (c >= 'A' && c <= 'Z') ? static_cast<char>(c | 0x20) : c;
+        }
+        constexpr bool iequals(std::string_view a, std::string_view b) noexcept {
+            if (a.size() != b.size()) return false;
+            for (size_t i = 0; i < a.size(); ++i) {
+                if (ascii_tolower(a[i]) != ascii_tolower(b[i])) return false;
+            }
+            return true;
+        }
+    } // namespace detail
+
     /**
-     * @brief Parse a level name (ASCII case-insensitive) into a LogLevel.
-     * @param s Accepted: "trace","debug","info","warn","warning","error","critical","fatal"
-     *           and short aliases "err","crit".
-     * @return The parsed level, or std::nullopt if not recognized.
-     * @note Parsing is ASCII only (not locale aware) and does not trim whitespace.
+     * @brief ASCII case-insensitive parse to LogLevel.
+     * @details
+     * Accepted values:
+     * - long names: "trace","debug","info","warn","warning","error","critical","fatal"
+     * - short aliases: **"err"** -> Error, **"crit"** -> Critical
+     *
+     * @return parsed level or std::nullopt if not recognized.
      * @ingroup logging_api
      * @since 1.0
      */
-    [[nodiscard]] constexpr std::optional<LogLevel> FromString(std::string_view s) noexcept {
-        auto ieq = [](char a, char b) { return (a | 0x20) == (b | 0x20); }; // ASCII case-fold compare
-        auto iequals = [&](std::string_view a, std::string_view b) {
-            if (a.size() != b.size()) return false;
-            for (size_t i = 0; i < a.size(); ++i) {
-                if (!ieq(a[i], b[i])) return false;
-            }
-            return true;
-            };
-
+    constexpr std::optional<LogLevel> TryParseLogLevel(std::string_view s) noexcept {
+        using detail::iequals;
         if (iequals(s, "trace"))                         return LogLevel::Trace;
         if (iequals(s, "debug"))                         return LogLevel::Debug;
         if (iequals(s, "info"))                          return LogLevel::Info;
@@ -75,8 +85,39 @@ namespace Interstellar::Logging {
         if (iequals(s, "error") || iequals(s, "err"))    return LogLevel::Error;
         if (iequals(s, "critical") || iequals(s, "fatal") || iequals(s, "crit"))
             return LogLevel::Critical;
-
         return std::nullopt;
+    }
+
+    /**
+    * @brief Back-compat: parse a level name into a LogLevel.
+    * @return The parsed level, or std::nullopt if not recognized.
+    * @note ASCII-only, does not trim whitespace.
+    * @ingroup logging_api
+    * 
+    * @since 1.0
+    */
+    constexpr std::optional<LogLevel> FromString(std::string_view s) noexcept {
+        return TryParseLogLevel(s);
+    }
+
+    /**
+    * @brief Parse to LogLevel or return a fallback if unrecognized.
+    * @ingroup logging_api
+    * @since 1.0
+    */
+    constexpr LogLevel ParseLogLevelOr(std::string_view s, LogLevel fallback) noexcept {
+        if (auto v = TryParseLogLevel(s)) return *v;
+        return fallback;
+    }
+
+    /**
+     * @brief Parse to LogLevel or throw std::invalid_argument if unrecognized.
+     * @ingroup logging_api
+     * @since 1.0
+     */
+    inline LogLevel ParseLogLevel(std::string_view s) {
+        if (auto v = TryParseLogLevel(s)) return *v;
+        throw std::invalid_argument("Unknown log level: '" + std::string(s) + "'");
     }
 
     /**
