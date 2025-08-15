@@ -2,6 +2,10 @@
 #include <gtest/gtest.h>
 
 #include <sstream>
+#include <filesystem>
+#include <fstream>
+#include <optional>
+#include <cstdlib> // setenv/_putenv_s
 #include <spdlog/spdlog.h>
 #include <spdlog/sinks/ostream_sink.h>
 #include <spdlog/sinks/daily_file_sink.h>
@@ -12,7 +16,8 @@
 
 namespace Interstellar::Logging {
 
-    // helper: unique, spdlog-safe logger names per test
+    // --- helpers -------------------------------------------------------------
+
     inline std::string UniqueName(const ::testing::TestInfo& ti, std::string suffix = {}) {
         std::string n = std::string(ti.test_suite_name()) + "." + ti.name();
         if (!suffix.empty()) n += "." + suffix;
@@ -20,12 +25,43 @@ namespace Interstellar::Logging {
         return n;
     }
 
-    struct LoggerFixture : ::testing::Test {
-        void TearDown() override {
-            // Clean the spdlog registry between tests (ok even if nothing is registered)
-            spdlog::drop_all();
+    // RAII env var setter so tests don't leak process state
+    struct EnvVarGuard {
+        std::string key;
+        std::optional<std::string> old;
+        EnvVarGuard(const std::string& k, const std::string& v) : key(k) {
+#ifdef _WIN32
+            size_t len = 0; char* buf = nullptr;
+            if (_dupenv_s(&buf, &len, key.c_str()) == 0 && buf) { old = std::string(buf); free(buf); }
+            _putenv_s(key.c_str(), v.c_str());
+#else
+            if (const char* o = std::getenv(key.c_str())) old = std::string(o);
+            ::setenv(key.c_str(), v.c_str(), 1);
+#endif
+        }
+        ~EnvVarGuard() {
+#ifdef _WIN32
+            if (old) _putenv_s(key.c_str(), old->c_str());
+            else _putenv_s(key.c_str(), "");
+#else
+            if (old) ::setenv(key.c_str(), old->c_str(), 1);
+            else ::unsetenv(key.c_str());
+#endif
         }
     };
+
+    static void RemoveAllQuiet(const std::filesystem::path& p) {
+        std::error_code ec;
+        std::filesystem::remove_all(p, ec);
+    }
+
+    struct LoggerFixture : ::testing::Test {
+        void TearDown() override {
+            spdlog::drop_all(); // close files & clear registry between tests
+        }
+    };
+
+    // --- your existing tests -------------------------------------------------
 
     TEST_F(LoggerFixture, RegistersNamedLogger) {
         const auto& info = *::testing::UnitTest::GetInstance()->current_test_info();
@@ -164,4 +200,76 @@ namespace Interstellar::Logging {
         EXPECT_NE(std::string::npos, oss.str().find("pattern smoke"));
     }
 
-} // namespace Interstellar::Logging::tests
+    // --- additions -----------------------------------------------------------
+
+    TEST_F(LoggerFixture, DestructorFlushesInfoMessages) {
+        const auto& info = *::testing::UnitTest::GetInstance()->current_test_info();
+        const auto name = UniqueName(info, "dtorflush");
+
+        std::ostringstream oss;
+        auto sink = std::make_shared<spdlog::sinks::ostream_sink_mt>(oss);
+        auto spd = std::make_shared<spdlog::logger>(name, sink);
+        spd->set_level(spdlog::level::info);
+        spdlog::register_logger(spd);
+
+        {
+            Interstellar::Logging::Logger logger(name);
+            logger.LogInfo("flushed by dtor");
+        } // ~Logger flushes
+
+        EXPECT_NE(std::string::npos, oss.str().find("flushed by dtor"));
+    }
+
+    TEST_F(LoggerFixture, AdoptsRequestedLevelForPreRegisteredLogger) {
+        const auto& info = *::testing::UnitTest::GetInstance()->current_test_info();
+        const auto name = UniqueName(info, "adoptlvl");
+
+        auto sink = std::make_shared<spdlog::sinks::stdout_color_sink_mt>();
+        auto spd = std::make_shared<spdlog::logger>(name, sink);
+        spd->set_level(spdlog::level::info); // pre-existing at INFO
+        spdlog::register_logger(spd);
+
+        Interstellar::Logging::Logger wrapper(name, Interstellar::Logging::LogLevel::Error);
+        EXPECT_EQ(spdlog::level::err, spd->level()); // wrapper should update it to ERR
+    }
+
+    TEST_F(LoggerFixture, HonorsEnvironmentLogDir) {
+        const auto& info = *::testing::UnitTest::GetInstance()->current_test_info();
+        const auto name = UniqueName(info, "envdir");
+
+        // Short relative dir to avoid Windows path quirks
+        const auto dir = std::filesystem::path("test_logs_envdir") / name;
+        RemoveAllQuiet(dir);
+        std::filesystem::create_directories(dir);
+
+        EnvVarGuard guard("INTERSTELLAR_LOG_DIR", dir.string());
+
+        {
+            Interstellar::Logging::Logger logger(name, Interstellar::Logging::LogLevel::Info);
+            logger.LogInfo("to-file");
+            if (auto spd = spdlog::get(name)) spd->flush();  // determinism
+        }
+
+        spdlog::drop_all();
+
+        const auto base = dir / (name + ".log");
+        bool exists = std::filesystem::exists(base);
+
+        if (!exists) {
+            // Fallback: look for any rotated/variant file (e.g., daily sink moved it)
+            for (auto& entry : std::filesystem::directory_iterator(dir)) {
+                const auto& p = entry.path().filename().string();
+                if (p.rfind(name, 0) == 0 && p.size() >= 4 && p.substr(p.size() - 4) == ".log") {
+                    exists = true;
+                    break;
+                }
+            }
+        }
+
+        EXPECT_TRUE(exists) << "Expected log file at (or variant under): " << base.string();
+
+        RemoveAllQuiet(dir.parent_path());
+    }
+
+
+} // namespace Interstellar::Logging

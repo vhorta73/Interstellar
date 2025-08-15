@@ -2,8 +2,11 @@
  * @file
  * @brief Implementation of the Interstellar logging facade.
  * @details
- * Initializes spdlog's global policy once per process (flush_on(err),
- * flush_every(2s), pattern) and materializes the four global logger instances.
+ * Initializes spdlog's global policy once per process:
+ *  - flush_on(err)
+ *  - flush_every(2s)  // spawns a lightweight background flusher thread
+ *  - uniform output pattern
+ * and materializes the four global logger instances.
  *
  * @env INTERSTELLAR_LOG_DIR
  *      If set, log files will be created under this directory.
@@ -11,6 +14,9 @@
  *
  * @thread_safety
  * All logging calls are thread-safe (multithreaded sinks).
+ *
+ * @note If the file sink cannot be created (e.g., permission denied),
+ *       logging silently falls back to console-only.
  */
 
 #include "Interstellar/Logging/Logging.hpp"
@@ -25,7 +31,9 @@
 #include <mutex>
 #include <vector>
 #include <optional>
-#include <cstdlib>   // getenv / free on Windows
+#include <cstdlib>     // getenv/_dupenv_s
+#include <string>
+#include <string_view>
 
 namespace {
 
@@ -34,7 +42,6 @@ namespace {
 
     void EnsureSpdlogGlobalPolicyInitialized() {
         std::call_once(g_spdlog_policy_flag, [] {
-            // Flush on errors immediately and also every 2s to keep buffers moving
             spdlog::flush_on(spdlog::level::err);
             spdlog::flush_every(std::chrono::seconds(2));
             spdlog::set_pattern("[%Y-%m-%d %H:%M:%S] [%n] [%^%l%$] %v");
@@ -101,19 +108,45 @@ namespace Interstellar::Logging {
 
         m_Logger = spdlog::get(nameStr);
         if (!m_Logger) {
-            std::filesystem::create_directories("logs");
+            // Ensure directory exists (respect env override); don't throw on failure
+            const auto dir = LogsDir();
+            std::error_code ec;
+            std::filesystem::create_directories(dir, ec);
 
+            // Always have console sink
             auto consoleSink = std::make_shared<spdlog::sinks::stdout_color_sink_mt>();
-            auto fileSink = std::make_shared<spdlog::sinks::daily_file_sink_mt>("logs/" + nameStr + ".log", 0, 0);
 
-            std::vector<spdlog::sink_ptr> sinks{ consoleSink, fileSink };
+            std::vector<spdlog::sink_ptr> sinks;
+            sinks.push_back(consoleSink);
+
+            // Try to add daily file sink; if it fails, keep console-only
+            try {
+                const auto filePath = (dir / (nameStr + ".log")).string();
+                auto fileSink = std::make_shared<spdlog::sinks::daily_file_sink_mt>(filePath, 0, 0);
+                sinks.push_back(fileSink);
+            }
+            catch (...) {
+                // Optional: one-off diagnostic could be printed to stderr if desired.
+            }
+
             m_Logger = std::make_shared<spdlog::logger>(nameStr, sinks.begin(), sinks.end());
             m_Logger->set_level(spdLevel);
             spdlog::register_logger(m_Logger);
         }
+        else {
+            // Predictable behavior: adopt the level requested by the wrapper
+            m_Logger->set_level(spdLevel);
+        }
 
         if (loggerName == LOG_GENERIC) {
             spdlog::set_default_logger(m_Logger);
+        }
+    }
+
+    Logger::~Logger() noexcept {
+        if (m_Logger) {
+            try { m_Logger->flush(); }
+            catch (...) { /* honor noexcept */ }
         }
     }
 
@@ -130,4 +163,5 @@ namespace Interstellar::Logging {
     const Logger logInit{ LOG_INIT,    GetDefaultLevelForLogger(LOG_INIT) };
     const Logger logConfig{ LOG_CONFIG,  GetDefaultLevelForLogger(LOG_CONFIG) };
     const Logger logGraphic{ LOG_GRAPHIC, GetDefaultLevelForLogger(LOG_GRAPHIC) };
-}
+
+} // namespace Interstellar::Logging

@@ -3,23 +3,25 @@
  * @file
  * @brief Interstellar logging facade built on top of spdlog.
  *
- * This header declares the @ref Interstellar::Logging::Logger class and a set of
- * named global logger instances for common categories (generic, init, config, graphics).
- *
  * @details
- * - Thread-safety: spdlog is thread-safe with the multithreaded sinks used here.
- * - Global policy (flush pattern, periodic flushing) is initialized once per process,
- *   in the implementation file.
- * - Log files are written under the process working directory by default (./logs).
- *   You can override the directory with the environment variable
- *   `INTERSTELLAR_LOG_DIR` (absolute or relative path).
+ * Public, category-based logging API used across the Interstellar codebase.
+ * This header documents the public contract:
+ * - **Thread-safety:** logging calls are thread-safe (multithreaded sinks).
+ * - **Flush semantics:** errors (and above) flush promptly; a periodic background
+ *   flush is enabled; destructors flush as a last safeguard.
+ * - **Log files:** by default, files go under `./logs` (relative to the process
+ *   working directory). Set `INTERSTELLAR_LOG_DIR` to override the directory.
+ *
+ * @since 1.0
  */
 
-#include <spdlog/spdlog.h>
-#include <chrono>
 #include <memory>
 #include <string>
 #include <string_view>
+#include <utility>
+#include <fmt/format.h>
+#include <spdlog/spdlog.h>
+
 #include "Interstellar/Logging/LogLevel.hpp"
 
 namespace Interstellar::Logging {
@@ -27,140 +29,78 @@ namespace Interstellar::Logging {
     /**
      * @defgroup logging_api Logging API
      * @brief Public logging facilities for the Interstellar codebase.
+     * @since 1.0
      * @{
      */
 
      /**
       * @name Well-known logger names
       * @brief Category names used by the global logger instances.
+      * @since 1.0
       * @{
       */
-
-      /// Default logger name for general-purpose logging.
-    inline constexpr std::string_view LOG_GENERIC = "Interstellar";
-
-    /// Logger name for system or engine initialization events.
-    inline constexpr std::string_view LOG_INIT = "Initialisation";
-
-    /// Logger name for configuration-related messages.
-    inline constexpr std::string_view LOG_CONFIG = "Config";
-
-    /// Logger name for graphics / rendering messages.
-    inline constexpr std::string_view LOG_GRAPHIC = "Graphic";
-
-    /** @} */ // end of logger names
+    inline constexpr std::string_view LOG_GENERIC = "Interstellar";   ///< @since 1.0
+    inline constexpr std::string_view LOG_INIT = "Initialisation"; ///< @since 1.0
+    inline constexpr std::string_view LOG_CONFIG = "Config";         ///< @since 1.0
+    inline constexpr std::string_view LOG_GRAPHIC = "Graphic";        ///< @since 1.0
+    /** @} */
 
     /**
      * @class Logger
-     * @brief Thin facade around spdlog to provide a consistent, category-based API.
+     * @ingroup logging_api
+     * @brief Thin facade over spdlog providing a consistent, category-based API.
      *
      * @par Flush semantics
-     * - Errors `LogError()` and above will be flushed promptly due to the global policy
-     *   set in the implementation (`flush_on(err)` and periodic `flush_every(2s)`).
-     * - The destructor also flushes the underlying logger instance as a final safeguard.
+     * - Error and higher severities flush promptly.
+     * - A periodic background flush is enabled to keep buffers moving.
+     * - The destructor flushes the underlying logger as a final safeguard.
      *
-     * @par Performance
-     * - Logging calls are cheap when disabled by level.
-     * - For hot paths, prefer `LogDebug/LogTrace` and set levels accordingly.
+     * @par Files & environment
+     * - Log files are written under `./logs` by default.
+     * - Set `INTERSTELLAR_LOG_DIR` (absolute or relative) to change the directory.
      *
-     * @par Environment
-     * - `INTERSTELLAR_LOG_DIR` - if set, log files are written to this directory instead of `./logs`.
+     * @par Example
+     * @code
+     *   using namespace Interstellar::Logging;
+     *   logConfig.LogInfo("Loaded {} entries", count);
+     *   Logger custom("AI", LogLevel::Warn);
+     *   custom.LogWarn("Pathfinding took {} ms", dt_ms);
+     * @endcode
      *
-     * @see LOG_GENERIC, LOG_INIT, LOG_CONFIG, LOG_GRAPHIC
+     * @since 1.0
      */
     class Logger {
     public:
-        /// Create a logger bound to @ref LOG_GENERIC with its default level.
+        /// Create a logger bound to @ref LOG_GENERIC with its default level. @since 1.0
         Logger();
 
-        /// Destructor flushes any pending data (no-throw).
-        ~Logger() noexcept {
-            if (m_Logger) m_Logger->flush();
-        }
+        /// Destructor flushes any pending data (no-throw). @since 1.0
+        ~Logger() noexcept;
 
-        /**
-         * @brief Construct a logger for a specific @p loggerName and @p level.
-         * @param loggerName Category name (e.g., @ref LOG_CONFIG).
-         * @param level      Minimum level for this logger.
-         */
+        /// Construct a logger for a specific @p loggerName and @p level. @since 1.0
         explicit Logger(std::string_view loggerName, LogLevel level);
-
-        /**
-         * @brief Construct a logger for a specific @p loggerName using that category's default level.
-         * @param loggerName Category name (e.g., @ref LOG_GRAPHIC).
-         */
+        /// Construct a logger for @p loggerName using that category's default level. @since 1.0
         explicit Logger(std::string_view loggerName);
-
-        /// Construct a logger with @p level bound to @ref LOG_GENERIC.
+        /// Construct a logger with @p level bound to @ref LOG_GENERIC. @since 1.0
         explicit Logger(LogLevel level);
 
         // -------- Unformatted (basic) logging --------
-
-        /// Log a critical-level message (always flushed by global policy).
-        void LogCritical(const std::string& msg) const;
-
-        /// Log an error-level message (flushed promptly by global policy).
-        void LogError(const std::string& msg) const;
-
-        /// Log a warning-level message.
-        void LogWarn(const std::string& msg) const;
-
-        /// Log a debug-level message.
-        void LogDebug(const std::string& msg) const;
-
-        /// Log an info-level message.
-        void LogInfo(const std::string& msg) const;
-
-        /// Log a trace-level message.
-        void LogTrace(const std::string& msg) const;
+        void LogCritical(const std::string& msg) const; ///< @since 1.0
+        void LogError(const std::string& msg) const;    ///< @since 1.0
+        void LogWarn(const std::string& msg) const;     ///< @since 1.0
+        void LogDebug(const std::string& msg) const;    ///< @since 1.0
+        void LogInfo(const std::string& msg) const;     ///< @since 1.0
+        void LogTrace(const std::string& msg) const;    ///< @since 1.0
 
         // -------- Formatted logging (fmt-safe) --------
+        template <typename... Args> void LogCritical(fmt::format_string<Args...> f, Args&&... a) const { m_Logger->critical(f, std::forward<Args>(a)...); } ///< @since 1.0
+        template <typename... Args> void LogError(fmt::format_string<Args...> f, Args&&... a) const { m_Logger->error(f, std::forward<Args>(a)...); } ///< @since 1.0
+        template <typename... Args> void LogWarn(fmt::format_string<Args...> f, Args&&... a) const { m_Logger->warn(f, std::forward<Args>(a)...); } ///< @since 1.0
+        template <typename... Args> void LogDebug(fmt::format_string<Args...> f, Args&&... a) const { m_Logger->debug(f, std::forward<Args>(a)...); } ///< @since 1.0
+        template <typename... Args> void LogInfo(fmt::format_string<Args...> f, Args&&... a) const { m_Logger->info(f, std::forward<Args>(a)...); } ///< @since 1.0
+        template <typename... Args> void LogTrace(fmt::format_string<Args...> f, Args&&... a) const { m_Logger->trace(f, std::forward<Args>(a)...); } ///< @since 1.0
 
-        /**
-         * @brief Log a critical-level message with formatting.
-         * @tparam Args Parameter pack for format arguments.
-         * @param fmt   Compile-time checked format string.
-         * @param args  Arguments referenced by @p fmt.
-         */
-        template <typename... Args>
-        void LogCritical(fmt::format_string<Args...> fmt, Args&&... args) const {
-            m_Logger->critical(fmt, std::forward<Args>(args)...);
-        }
-
-        /// Log an error-level formatted message.
-        template <typename... Args>
-        void LogError(fmt::format_string<Args...> fmt, Args&&... args) const {
-            m_Logger->error(fmt, std::forward<Args>(args)...);
-        }
-
-        /// Log a warning-level formatted message.
-        template <typename... Args>
-        void LogWarn(fmt::format_string<Args...> fmt, Args&&... args) const {
-            m_Logger->warn(fmt, std::forward<Args>(args)...);
-        }
-
-        /// Log a debug-level formatted message.
-        template <typename... Args>
-        void LogDebug(fmt::format_string<Args...> fmt, Args&&... args) const {
-            m_Logger->debug(fmt, std::forward<Args>(args)...);
-        }
-
-        /// Log an info-level formatted message.
-        template <typename... Args>
-        void LogInfo(fmt::format_string<Args...> fmt, Args&&... args) const {
-            m_Logger->info(fmt, std::forward<Args>(args)...);
-        }
-
-        /// Log a trace-level formatted message.
-        template <typename... Args>
-        void LogTrace(fmt::format_string<Args...> fmt, Args&&... args) const {
-            m_Logger->trace(fmt, std::forward<Args>(args)...);
-        }
-
-        /**
-         * @brief Access the underlying spdlog logger.
-         * @return Shared pointer to the spdlog logger.
-         */
+        /// Access the underlying spdlog logger. @since 1.0
         [[nodiscard]] std::shared_ptr<spdlog::logger> GetSpdLogger() const noexcept { return m_Logger; }
 
     private:
@@ -169,31 +109,27 @@ namespace Interstellar::Logging {
 
     /**
      * @name Global category loggers
+     * @ingroup logging_api
      * @brief One process-wide instance per well-known category.
-     * @details
-     * These are defined in `Logging.cpp` and can be used directly:
-     * @code
-     *   using namespace Interstellar::Logging;
-     *   logConfig.LogInfo("Loaded {} entries", count);
-     *   logGraphic.LogError("Failed to compile shader: {}", reason);
-     * @endcode
+     * @since 1.0
      * @{
      */
-    extern const Logger logGeneric;  ///< Logger bound to @ref LOG_GENERIC.
-    extern const Logger logInit;     ///< Logger bound to @ref LOG_INIT.
-    extern const Logger logConfig;   ///< Logger bound to @ref LOG_CONFIG.
-    extern const Logger logGraphic;  ///< Logger bound to @ref LOG_GRAPHIC.
-    /** @} */ // end global loggers
+    extern const Logger logGeneric;  ///< Logger bound to @ref LOG_GENERIC. @since 1.0
+    extern const Logger logInit;     ///< Logger bound to @ref LOG_INIT.    @since 1.0
+    extern const Logger logConfig;   ///< Logger bound to @ref LOG_CONFIG.  @since 1.0
+    extern const Logger logGraphic;  ///< Logger bound to @ref LOG_GRAPHIC. @since 1.0
+    /** @} */
 
     /**
      * @name Convenience accessors
-     * @brief Header-only references if you prefer function syntax.
+     * @ingroup logging_api
+     * @since 1.0
      * @{
      */
-    inline const Logger& LogGeneric() { return logGeneric; }
-    inline const Logger& LogInit() { return logInit; }
-    inline const Logger& LogConfig() { return logConfig; }
-    inline const Logger& LogGraphic() { return logGraphic; }
+    inline const Logger& LogGeneric() { return logGeneric; } ///< @since 1.0
+    inline const Logger& LogInit() { return logInit; }    ///< @since 1.0
+    inline const Logger& LogConfig() { return logConfig; }  ///< @since 1.0
+    inline const Logger& LogGraphic() { return logGraphic; } ///< @since 1.0
     /** @} */
 
     /** @} */ // end of group logging_api
