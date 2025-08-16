@@ -39,4 +39,7 @@ namespace Interstellar::Units {
     inline constexpr auto GM_Earth =
         3.986004418e14 * sym::m3 / (sym::s * sym::s);
 
+    // Solar constant (top of atmosphere) in W/m^2
+    inline constexpr auto S0 = 1361.0;
+
 } // namespace Interstellar::Units
