@@ -20,7 +20,7 @@ namespace UnitsFluidsTests {
         const auto rho = kilograms(1000.0) / cubic_meters(1.0); // Density
         const auto h = meters(10.0);
 
-        const auto dP = hydrostatic_pressure(rho, g0, h);
+        const auto dP = hydrostatic_pressure(rho, kStandardGravity, h);
         // Expect 98.0665 kPa at 10 m depth (ignoring atmosphere)
         EXPECT_NEAR_Q(dP, U::Pa, 98066.5, 1e-3);
     }

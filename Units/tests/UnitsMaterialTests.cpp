@@ -5,6 +5,7 @@
 #include "Interstellar/Units/Math.hpp"
 #include "Interstellar/Units/Constants.hpp"
 #include "helpers/UnitsTestHelpers.hpp" // EXPECT_NEAR_Q
+#include "helpers/UnitsStream.hpp"
 
 using namespace Interstellar::Units;
 using namespace Interstellar::Units::mass;
@@ -34,7 +35,7 @@ namespace UnitsMaterialsTests {
     TEST(UnitsMaterialsTests, friction_force_has_newton_units_and_correct_magnitude) {
         // Normal force N = m * g0  (quantity)
         const auto m = kilograms(80.0);
-        const auto N = m * g0; // newtons
+        const auto N = m * kStandardGravity; // newtons
 
         // Friction force F_f = mi * N, mi is scalar
         const double mu_dynamic = 0.50;
@@ -57,12 +58,13 @@ namespace UnitsMaterialsTests {
         EXPECT_NEAR_Q(Fd, U::N, 6.125, 1e-12);
     }
 
-    TEST(UnitsMaterials, albedo_affects_equilibrium_temperature_monotonically) {
+    TEST(UnitsMaterialsTests, albedo_affects_equilibrium_temperature_monotonically) {
         // *** IMPORTANT: use W/m^2 (irradiance), not W (power) ***
-        const auto S_flux = S0 * U::W_per_m2;  // irradiance in W*m^-2
+        const auto S_flux = kSolarConstant;  // irradiance in W*m^-2
 
         // A = 0 -> +/-278.3 K
         const auto T_A0 = equilibrium_temp(S_flux, 0.0);
+        // Always prints (even if tests pass)
         EXPECT_NEAR(thermo::in_K(T_A0), 278.3, 0.6);
 
         // Earth-like A approx 0.3 -> +/-254 K (no greenhouse)
