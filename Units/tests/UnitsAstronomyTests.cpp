@@ -12,20 +12,37 @@
  * @ingroup UnitsTests
  */
 
-using namespace Interstellar::Units;
+namespace interstellar::test::units {
 
-namespace UnitsAstronomyTests {
+    using namespace Interstellar::Units;
 
-    TEST(UnitsAstronomyTests, g0_greater_than_one_mps2) {
+    // --- Compile-time dimensional checks (avoid exact-type equality) ---
+    static_assert(std::same_as<
+        decltype(kStandardGravity / (1.0 * U::m_per_s2)),
+        decltype(1.0 * ::mp_units::one)>);
+
+    static_assert(std::same_as<
+        decltype(kEarthMu / (1.0 * (U::m3 / U::s2))),
+        decltype(1.0 * ::mp_units::one)>);
+
+    static_assert(std::same_as<
+        decltype(kEarthRadius / (1.0 * U::m)),
+        decltype(1.0 * ::mp_units::one)>);
+
+    TEST(UnitsAstronomy, g0_greater_than_one_mps2) {
         // Compare using quantities to keep dimensional safety.
         const auto one_m_per_s2 = mech::meters_per_second2(1.0);
         EXPECT_GT(kStandardGravity, one_m_per_s2);
     }
 
-    TEST(UnitsAstronomyTests, earth_escape_velocity_near_surface_approx_11186_m_s) {
+    TEST(UnitsAstronomy, earth_escape_velocity_near_surface_approx_11186_m_s) {
         const auto ve = escape_velocity(kEarthMu, kEarthRadius);   // quantity (m/s)
-        // Four args: (q, unit, expected, rel_tol)
-        EXPECT_NEAR_Q(ve, U::m_per_s, 11186.0, 0.02);             // +/-2% is fine for coarse check
+
+        // Optional: print computed value on failure
+        SCOPED_TRACE(::testing::Message() << "ve = " << ve);
+
+        // Relative check: 11,186 m/s, tolerance = +/-2%
+        EXPECT_NEAR_Q_REL(ve, U::m_per_s, 11186.0, 0.02);
     }
 
-} // namespace UnitsAstronomyTests
+} // namespace interstellar::test::units

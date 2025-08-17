@@ -100,12 +100,14 @@ namespace Interstellar::Units {
             inline constexpr auto mol = detail::sym::mol;
             inline constexpr auto K = detail::sym::K;
             inline constexpr auto Pa = detail::sym::Pa;
+            inline constexpr auto one = detail::mu::one;
 
             // derived units
             inline constexpr auto m2 = detail::sym::m2;
             inline constexpr auto m3 = detail::sym::m3;
             inline constexpr auto m_per_s = detail::sym::m / detail::sym::s;
             inline constexpr auto m_per_s2 = detail::sym::m / (detail::sym::s * detail::sym::s);
+            inline constexpr auto s2 = detail::sym::s * detail::sym::s;
             inline constexpr auto N = detail::sym::N;
             inline constexpr auto J = detail::sym::J;
             inline constexpr auto W = detail::sym::W;
