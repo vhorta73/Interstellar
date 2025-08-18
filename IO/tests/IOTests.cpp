@@ -1,3 +1,20 @@
+/**
+ * @file io_tests.cpp
+ * @brief End-to-end tests for Interstellar::IO (FileIO + Filesystems + Container + Serializers).
+ *
+ * What's covered:
+ *  - Roundtrip with LocalFilesystem using container header (magic/version/CRC).
+ *  - Version mismatch detection.
+ *  - CRC corruption detection (flip a payload byte).
+ *  - Raw payload mode (no container).
+ *  - MemoryFilesystem roundtrip.
+ *  - JSON serializer fast load via simdjson; pretty save with correct escaping and to_chars.
+ *
+ * Notes:
+ *  - The binary serializer uses **little-endian** integers and IEEE-754 double bits (LE).
+ *  - The container header is 20 bytes in the hardened implementation; tests use that constant.
+ */
+
 #include <gtest/gtest.h>
 
 #include <filesystem>
@@ -5,19 +22,26 @@
 #include <vector>
 #include <span>
 #include <cstring>
+#include <charconv>
+#include <bit>
+#include <cmath>      // std::isfinite
+#include <cstdint>
+
 #include <simdjson.h>
 
 #include "Interstellar/IO/FileIO.hpp"
 #include "Interstellar/IO/IFilesystem.hpp"
+#include "Interstellar/IO/Container.hpp"   // for ContainerHeader size constant equivalent if available
 
-// pull in the factory (avoids MSVC's ::unexpected clash)
+ // Avoid MSVC's ::unexpected clash
 using Interstellar::IO::make_unexpected;
 
 using namespace Interstellar::IO;
+using Interstellar::IO::kHeaderSize;
 
-// -------------------------
+// -----------------------------------------------------------------------------
 // Test domain types
-// -------------------------
+// -----------------------------------------------------------------------------
 struct Element {
     int           AtomicNumber{};
     std::string   Symbol;
@@ -25,9 +49,65 @@ struct Element {
     double        AtomicMass{};
 };
 
-// -------------------------
-// Minimal binary serializer (test helper)
-// -------------------------
+// -----------------------------------------------------------------------------
+// GTest helpers for expected<...>
+// -----------------------------------------------------------------------------
+template <class T>
+static ::testing::AssertionResult AssertOk(const expected<T, Error>& r) {
+    if (r) return ::testing::AssertionSuccess();
+    return ::testing::AssertionFailure()
+        << "expected<T,Error> not ok. code=" << static_cast<int>(r.error().code)
+        << " msg=\"" << r.error().message << "\"";
+}
+static ::testing::AssertionResult AssertOk(const expected<void, Error>& r) {
+    if (r) return ::testing::AssertionSuccess();
+    return ::testing::AssertionFailure()
+        << "expected<void,Error> not ok. code=" << static_cast<int>(r.error().code)
+        << " msg=\"" << r.error().message << "\"";
+}
+#define ASSERT_OK(x) ASSERT_TRUE(AssertOk(x))
+#define EXPECT_OK(x) EXPECT_TRUE(AssertOk(x))
+
+// -----------------------------------------------------------------------------
+// Little-endian helpers (mirrors container approach)
+// -----------------------------------------------------------------------------
+static inline void put_u32_le(std::vector<std::byte>& out, uint32_t v) {
+    const size_t i = out.size(); out.resize(i + 4);
+    std::byte* p = out.data() + i;
+    p[0] = std::byte(v & 0xFFu); p[1] = std::byte((v >> 8) & 0xFFu);
+    p[2] = std::byte((v >> 16) & 0xFFu); p[3] = std::byte((v >> 24) & 0xFFu);
+}
+static inline expected<uint32_t, Error> get_u32_le(const std::byte*& p, const std::byte* end) {
+    if (end - p < 4) return make_unexpected(Error{ ErrorCode::InvalidData, "eof u32" });
+    uint32_t v = 0;
+    v |= uint32_t(std::to_integer<uint8_t>(p[0]));
+    v |= uint32_t(std::to_integer<uint8_t>(p[1])) << 8;
+    v |= uint32_t(std::to_integer<uint8_t>(p[2])) << 16;
+    v |= uint32_t(std::to_integer<uint8_t>(p[3])) << 24;
+    p += 4; return v;
+}
+static inline void put_f64_le(std::vector<std::byte>& out, double d) {
+    static_assert(sizeof(double) == 8, "IEEE-754 64-bit required");
+    uint64_t bits = std::bit_cast<uint64_t>(d);
+    const size_t i = out.size(); out.resize(i + 8);
+    std::byte* p = out.data() + i;
+    for (int k = 0; k < 8; ++k) p[k] = std::byte((bits >> (8 * k)) & 0xFFu);
+}
+static inline expected<double, Error> get_f64_le(const std::byte*& p, const std::byte* end) {
+    if (end - p < 8) return make_unexpected(Error{ ErrorCode::InvalidData, "eof f64" });
+    uint64_t bits = 0;
+    for (int k = 0; k < 8; ++k) bits |= uint64_t(std::to_integer<uint8_t>(p[k])) << (8 * k);
+    p += 8;
+    return std::bit_cast<double>(bits);
+}
+
+// -----------------------------------------------------------------------------
+// Minimal binary serializer (test helper) - endian safe
+// Layout per element:
+//   [count:u32] {
+//     [AtomicNumber:u32][Symbol: u32(len) | bytes][Name: u32(len) | bytes][AtomicMass: f64-LE]
+//   } * count
+// -----------------------------------------------------------------------------
 class ElementBinSer : public ISerializer<Element> {
 public:
     uint32_t schema_version() const override { return 1u; }
@@ -36,63 +116,64 @@ public:
     expected<std::vector<std::byte>, Error>
         serialize(std::span<const Element> items) const override {
         std::vector<std::byte> out;
-        auto put_u32 = [&](uint32_t v) { size_t i = out.size(); out.resize(i + 4); std::memcpy(out.data() + i, &v, 4); };
-        auto put_f64 = [&](double   v) { size_t i = out.size(); out.resize(i + 8); std::memcpy(out.data() + i, &v, 8); };
-        auto put_str = [&](const std::string& s) {
-            put_u32(static_cast<uint32_t>(s.size()));
-            size_t i = out.size(); out.resize(i + s.size());
-            std::memcpy(out.data() + i, s.data(), s.size());
-            };
+        out.reserve(items.size() * 64);
 
-        put_u32(static_cast<uint32_t>(items.size()));
+        if (items.size() > 0xFFFFFFFFu) {
+            return make_unexpected(Error{ ErrorCode::InvalidArgument, "Too many elements" });
+        }
+
+        put_u32_le(out, static_cast<uint32_t>(items.size()));
         for (const auto& e : items) {
-            put_u32(static_cast<uint32_t>(e.AtomicNumber));
-            put_str(e.Symbol);
-            put_str(e.Name);
-            put_f64(e.AtomicMass);
+            put_u32_le(out, static_cast<uint32_t>(e.AtomicNumber));
+            // Symbol
+            if (e.Symbol.size() > 0xFFFFFFFFu) return make_unexpected(Error{ ErrorCode::InvalidData, "Symbol too long" });
+            put_u32_le(out, static_cast<uint32_t>(e.Symbol.size()));
+            out.insert(out.end(), reinterpret_cast<const std::byte*>(e.Symbol.data()),
+                reinterpret_cast<const std::byte*>(e.Symbol.data() + e.Symbol.size()));
+            // Name
+            if (e.Name.size() > 0xFFFFFFFFu) return make_unexpected(Error{ ErrorCode::InvalidData, "Name too long" });
+            put_u32_le(out, static_cast<uint32_t>(e.Name.size()));
+            out.insert(out.end(), reinterpret_cast<const std::byte*>(e.Name.data()),
+                reinterpret_cast<const std::byte*>(e.Name.data() + e.Name.size()));
+            // Mass
+            put_f64_le(out, e.AtomicMass);
         }
         return out;
     }
 
     expected<std::vector<Element>, Error>
         deserialize(std::span<const std::byte> bytes) const override {
-        const uint8_t* p = reinterpret_cast<const uint8_t*>(bytes.data());
-        const uint8_t* end = p + bytes.size();
+        const std::byte* p = bytes.data();
+        const std::byte* end = p + bytes.size();
 
-        auto get_u32 = [&]() -> expected<uint32_t, Error> {
-            if (end - p < 4) return make_unexpected(Error{ ErrorCode::InvalidData, "eof u32" });
-            uint32_t v; std::memcpy(&v, p, 4); p += 4; return v;
-            };
-        auto get_f64 = [&]() -> expected<double, Error> {
-            if (end - p < 8) return make_unexpected(Error{ ErrorCode::InvalidData, "eof f64" });
-            double v; std::memcpy(&v, p, 8); p += 8; return v;
-            };
-        auto get_str = [&]() -> expected<std::string, Error> {
-            auto lenR = get_u32(); if (!lenR) return make_unexpected(lenR.error());
+        auto get_str = [&](std::string& s) -> expected<void, Error> {
+            auto lenR = get_u32_le(p, end); if (!lenR) return make_unexpected(lenR.error());
             uint32_t len = lenR.value();
             if (static_cast<size_t>(end - p) < len) return make_unexpected(Error{ ErrorCode::InvalidData, "eof str" });
-            std::string s(reinterpret_cast<const char*>(p), reinterpret_cast<const char*>(p) + len);
-            p += len; return s;
+            s.assign(reinterpret_cast<const char*>(p), reinterpret_cast<const char*>(p) + len);
+            p += len; return {};
             };
 
-        std::vector<Element> out;
-        auto nR = get_u32(); if (!nR) return make_unexpected(nR.error());
-        out.reserve(nR.value());
+        auto nR = get_u32_le(p, end); if (!nR) return make_unexpected(nR.error());
+        std::vector<Element> out; out.reserve(nR.value());
         for (uint32_t i = 0; i < nR.value(); ++i) {
-            auto zR = get_u32(); if (!zR)    return make_unexpected(zR.error());
-            auto symR = get_str(); if (!symR)  return make_unexpected(symR.error());
-            auto nameR = get_str(); if (!nameR) return make_unexpected(nameR.error());
-            auto massR = get_f64(); if (!massR) return make_unexpected(massR.error());
-            out.push_back(Element{ static_cast<int>(zR.value()), symR.value(), nameR.value(), massR.value() });
+            auto zR = get_u32_le(p, end); if (!zR) return make_unexpected(zR.error());
+            Element e{};
+            e.AtomicNumber = static_cast<int>(zR.value());
+            if (auto ok = get_str(e.Symbol); !ok) return make_unexpected(ok.error());
+            if (auto ok = get_str(e.Name);   !ok) return make_unexpected(ok.error());
+            auto mR = get_f64_le(p, end);    if (!mR) return make_unexpected(mR.error());
+            e.AtomicMass = mR.value();
+            out.push_back(std::move(e));
         }
         if (p != end) return make_unexpected(Error{ ErrorCode::InvalidData, "trailing bytes" });
         return out;
     }
 };
 
-// -------------------------
-// JSON serializer (fast-load via simdjson, pretty-save via minimal JSON)
-// -------------------------
+// -----------------------------------------------------------------------------
+// JSON serializer (fast-load via simdjson, robust pretty-save)
+// -----------------------------------------------------------------------------
 class ElementJsonSer : public ISerializer<Element> {
 public:
     uint32_t schema_version() const override { return 1u; }
@@ -101,18 +182,58 @@ public:
     expected<std::vector<std::byte>, Error>
         serialize(std::span<const Element> items) const override {
         std::string s;
-        s += "[";
+        s.reserve(items.size() * 64);
+
+        auto escape = [](std::string_view in) {
+            std::string out; out.reserve(in.size() + 8);
+            for (unsigned char ch : in) {
+                switch (ch) {
+                case '\"': out += "\\\""; break;
+                case '\\': out += "\\\\"; break;
+                case '\b': out += "\\b";  break;
+                case '\f': out += "\\f";  break;
+                case '\n': out += "\\n";  break;
+                case '\r': out += "\\r";  break;
+                case '\t': out += "\\t";  break;
+                default:
+                    if (ch < 0x20) {
+                        char buf[7];
+                        std::snprintf(buf, sizeof(buf), "\\u%04X", ch);
+                        out += buf;
+                    }
+                    else {
+                        out.push_back(static_cast<char>(ch));
+                    }
+                }
+            }
+            return out;
+            };
+
+        auto append_number = [&](double v) -> bool {
+            if (!std::isfinite(v)) return false; // JSON: no NaN/Inf
+            char buf[64];
+            auto [ptr, ec] = std::to_chars(buf, buf + sizeof(buf), v, std::chars_format::general, 15);
+            if (ec != std::errc{}) return false;
+            s.append(buf, ptr);
+            return true;
+            };
+
+        s.push_back('[');
         for (size_t i = 0; i < items.size(); ++i) {
             const auto& e = items[i];
-            s += "{";
-            s += "\"Symbol\":\"" + e.Symbol + "\",";
-            s += "\"Name\":\"" + e.Name + "\",";
-            s += "\"AtomicNumber\":" + std::to_string(e.AtomicNumber) + ",";
-            s += "\"AtomicMass\":" + std::to_string(e.AtomicMass);
-            s += "}";
-            if (i + 1 < items.size()) s += ",";
+            s.push_back('{');
+            s += "\"Symbol\":\""; s += escape(e.Symbol); s += "\",";
+            s += "\"Name\":\"";   s += escape(e.Name);   s += "\",";
+            s += "\"AtomicNumber\":"; s += std::to_string(e.AtomicNumber); s += ",";
+            s += "\"AtomicMass\":";
+            if (!append_number(e.AtomicMass)) {
+                return make_unexpected(Error{ ErrorCode::InvalidData, "AtomicMass not finite or to_chars failed" });
+            }
+            s.push_back('}');
+            if (i + 1 < items.size()) s.push_back(',');
         }
-        s += "]";
+        s.push_back(']');
+
         std::vector<std::byte> out(s.size());
         std::memcpy(out.data(), s.data(), s.size());
         return out;
@@ -120,66 +241,44 @@ public:
 
     expected<std::vector<Element>, Error>
         deserialize(std::span<const std::byte> bytes) const override {
-        // --- 1) Skip UTF-8 BOM and leading whitespace (if any)
+        // 1) Skip BOM and leading whitespace
         const uint8_t* b = reinterpret_cast<const uint8_t*>(bytes.data());
         size_t n = bytes.size();
+        if (n >= 3 && b[0] == 0xEF && b[1] == 0xBB && b[2] == 0xBF) { b += 3; n -= 3; }
+        while (n && (*b == ' ' || *b == '\t' || *b == '\r' || *b == '\n')) { ++b; --n; }
+        if (!n) return make_unexpected(Error{ ErrorCode::InvalidData, "Empty JSON after trimming" });
 
-        // UTF-8 BOM: EF BB BF
-        if (n >= 3 && b[0] == 0xEF && b[1] == 0xBB && b[2] == 0xBF) {
-            b += 3; n -= 3;
-        }
-
-        // Skip ASCII whitespace (space, tab, CR, LF)
-        while (n > 0 && (*b == ' ' || *b == '\t' || *b == '\r' || *b == '\n')) {
-            ++b; --n;
-        }
-
-        // Quick sanity check
-        if (n == 0) {
-            return make_unexpected(Error{ ErrorCode::InvalidData, "Empty JSON after trimming" });
-        }
-
-        // --- 2) Make a padded copy for ondemand (portable across simdjson versions)
-        simdjson::padded_string ps(n);            // allocates n + SIMDJSON_PADDING
-        std::memcpy(ps.data(), b, n);             // copy JSON bytes
+        // 2) Padded copy as required by simdjson
+        simdjson::padded_string ps(n);
+        std::memcpy(ps.data(), b, n);
 
         simdjson::ondemand::parser parser;
         auto doc_result = parser.iterate(ps);
         if (doc_result.error()) {
-            return make_unexpected(Error{ ErrorCode::InvalidData, "Invalid JSON (iterate)" });
+            return make_unexpected(Error{ ErrorCode::InvalidData,
+                                          std::string("Invalid JSON: ") +
+                                          simdjson::error_message(doc_result.error()) });
         }
-        // document is move-only - take it by move
         simdjson::ondemand::document doc = std::move(doc_result.value());
 
         std::vector<Element> out;
-
-        // --- 3) Detect top-level type and parse
         auto t_res = doc.type();
-        if (t_res.error()) {
-            return make_unexpected(Error{ ErrorCode::InvalidData, "Invalid JSON (type())" });
-        }
-        auto t = t_res.value();
+        if (t_res.error()) return make_unexpected(Error{ ErrorCode::InvalidData, "Invalid JSON: type()" });
 
-        if (t == simdjson::ondemand::json_type::array) {
+        if (t_res.value() == simdjson::ondemand::json_type::array) {
             auto arr_res = doc.get_array();
-            if (arr_res.error()) {
-                return make_unexpected(Error{ ErrorCode::InvalidData, "Invalid JSON array" });
-            }
+            if (arr_res.error()) return make_unexpected(Error{ ErrorCode::InvalidData, "Invalid JSON array" });
             for (auto v : arr_res.value()) {
                 auto obj_res = v.get_object();
-                if (obj_res.error()) {
-                    return make_unexpected(Error{ ErrorCode::InvalidData, "Array element not object" });
-                }
+                if (obj_res.error()) return make_unexpected(Error{ ErrorCode::InvalidData, "Array element not object" });
                 auto eR = parse_one(obj_res.value());
                 if (!eR) return make_unexpected(eR.error());
                 out.push_back(std::move(eR.value()));
             }
         }
-        else if (t == simdjson::ondemand::json_type::object) {
+        else if (t_res.value() == simdjson::ondemand::json_type::object) {
             auto obj_res = doc.get_object();
-            if (obj_res.error()) {
-                return make_unexpected(Error{ ErrorCode::InvalidData, "Invalid JSON object" });
-            }
+            if (obj_res.error()) return make_unexpected(Error{ ErrorCode::InvalidData, "Invalid JSON object" });
             auto eR = parse_one(obj_res.value());
             if (!eR) return make_unexpected(eR.error());
             out.push_back(std::move(eR.value()));
@@ -187,7 +286,6 @@ public:
         else {
             return make_unexpected(Error{ ErrorCode::InvalidData, "JSON must be object or array" });
         }
-
         return out;
     }
 
@@ -215,17 +313,35 @@ private:
     }
 };
 
-// -------------------------
-// Tests
-// -------------------------
+// -----------------------------------------------------------------------------
+// Test fixture: creates a unique temp dir per test and cleans it up
+// -----------------------------------------------------------------------------
+class IoTempDir : public ::testing::Test {
+protected:
+    std::filesystem::path dir_;
+    void SetUp() override {
+        auto base = std::filesystem::temp_directory_path() / "io_test";
+        dir_ = base / std::to_string(reinterpret_cast<std::uintptr_t>(this));
+        std::error_code ec;
+        std::filesystem::create_directories(dir_, ec);
+    }
+    void TearDown() override {
+        std::error_code ec;
+        std::filesystem::remove_all(dir_, ec);
+    }
+};
 
-TEST(IO, Roundtrip_Local_Binary_With_Container) {
+// -----------------------------------------------------------------------------
+// Tests
+// -----------------------------------------------------------------------------
+
+TEST_F(IoTempDir, Roundtrip_Local_Binary_With_Container) {
     LocalFilesystem lfs;
     FileIO io(lfs);
     ElementBinSer ser;
 
     std::vector<Element> elems{ {1,"H","Hydrogen",1.008},{2,"He","Helium",4.0026} };
-    auto path = std::filesystem::temp_directory_path() / "io_test" / "elements.bin";
+    auto path = dir_ / "elements.bin";
 
     SaveOptions sopt{};
     sopt.wrap_with_container = true;
@@ -234,27 +350,27 @@ TEST(IO, Roundtrip_Local_Binary_With_Container) {
     LoadOptions lopt{};
     lopt.expect_container = true;
 
-    ASSERT_TRUE(io.save<Element>(path, elems, ser, sopt));
+    ASSERT_OK(io.save<Element>(path, elems, ser, sopt));
     auto loaded = io.load(path, ser, lopt);
-    ASSERT_TRUE(loaded);
+    ASSERT_OK(loaded);
     const auto& items = loaded.value();
     EXPECT_EQ(items.size(), elems.size());
     EXPECT_EQ(items.at(0).Symbol, "H");
 }
 
-TEST(IO, VersionMismatch) {
+TEST_F(IoTempDir, VersionMismatch) {
     LocalFilesystem lfs; FileIO io(lfs);
     struct V2Ser final : ElementBinSer { uint32_t schema_version() const override { return 2u; } } v2;
     ElementBinSer v1;
 
-    auto path = std::filesystem::temp_directory_path() / "io_test" / "v2.bin";
+    auto path = dir_ / "v2.bin";
     std::vector<Element> elems{ {1,"H","Hydrogen",1.008} };
 
     SaveOptions sopt{};
     sopt.wrap_with_container = true;
     sopt.ensure_directories = true;
 
-    ASSERT_TRUE(io.save<Element>(path, elems, v2, sopt));
+    ASSERT_OK(io.save<Element>(path, elems, v2, sopt));
 
     LoadOptions lopt{};
     lopt.expect_container = true;
@@ -264,26 +380,26 @@ TEST(IO, VersionMismatch) {
     EXPECT_EQ(ld.error().code, ErrorCode::VersionMismatch);
 }
 
-TEST(IO, CRC_Corruption_Detected) {
+TEST_F(IoTempDir, CRC_Corruption_Detected) {
     LocalFilesystem lfs; FileIO io(lfs); ElementBinSer ser;
-    auto path = std::filesystem::temp_directory_path() / "io_test" / "corrupt.bin";
+    auto path = dir_ / "corrupt.bin";
     std::vector<Element> elems{ {1,"H","Hydrogen",1.008},{2,"He","Helium",4.0026} };
 
     SaveOptions sopt{};
     sopt.wrap_with_container = true;
     sopt.ensure_directories = true;
 
-    ASSERT_TRUE(io.save<Element>(path, elems, ser, sopt));
+    ASSERT_OK(io.save<Element>(path, elems, ser, sopt));
 
     auto bytes = lfs.read_all_bytes(path);
-    ASSERT_TRUE(bytes);
+    ASSERT_OK(bytes);
 
-    // flip a byte in payload
+    // Flip a byte in payload (after fixed 20-byte header)
     auto& buf = bytes.value();
-    buf.at(sizeof(ContainerHeader) + 5) = std::byte{
-        static_cast<unsigned char>(~(unsigned char)buf.at(sizeof(ContainerHeader) + 5))
+    buf.at(kHeaderSize + 5) = std::byte{
+        static_cast<unsigned char>(~std::to_integer<unsigned char>(buf.at(kHeaderSize + 5)))
     };
-    ASSERT_TRUE(lfs.write_all_bytes_atomic(path, buf, true));
+    ASSERT_OK(lfs.write_all_bytes_atomic(path, buf, true));
 
     LoadOptions lopt{};
     lopt.expect_container = true;
@@ -293,22 +409,22 @@ TEST(IO, CRC_Corruption_Detected) {
     EXPECT_EQ(ld.error().code, ErrorCode::Corrupted);
 }
 
-TEST(IO, RawPayload_Mode) {
+TEST_F(IoTempDir, RawPayload_Mode) {
     LocalFilesystem lfs; FileIO io(lfs); ElementBinSer ser;
-    auto path = std::filesystem::temp_directory_path() / "io_test" / "raw.bin";
+    auto path = dir_ / "raw.bin";
     std::vector<Element> elems{ {3,"Li","Lithium",6.94} };
 
     SaveOptions sopt{};
     sopt.wrap_with_container = false;
     sopt.ensure_directories = true;
 
-    ASSERT_TRUE(io.save<Element>(path, elems, ser, sopt));
+    ASSERT_OK(io.save<Element>(path, elems, ser, sopt));
 
     LoadOptions lopt{};
     lopt.expect_container = false;
 
     auto ld = io.load(path, ser, lopt);
-    ASSERT_TRUE(ld);
+    ASSERT_OK(ld);
     const auto& data = ld.value();
     EXPECT_EQ(data.size(), 1u);
     EXPECT_EQ(data.at(0).Symbol, "Li");
@@ -317,15 +433,15 @@ TEST(IO, RawPayload_Mode) {
 TEST(IO, MemoryFilesystem) {
     MemoryFilesystem mfs; FileIO io(mfs); ElementBinSer ser;
     std::vector<Element> elems{ {10,"Ne","Neon",20.1797} };
-    ASSERT_TRUE(io.save<Element>("/mem/elements.bin", elems, ser));
+    ASSERT_OK(io.save<Element>("/mem/elements.bin", elems, ser));
 
     auto ld = io.load("/mem/elements.bin", ser);
-    ASSERT_TRUE(ld);
+    ASSERT_OK(ld);
     const auto& data = ld.value();
     EXPECT_EQ(data.at(0).Symbol, "Ne");
 }
 
-TEST(IO, JsonFastLoad_With_Container) {
+TEST_F(IoTempDir, JsonFastLoad_With_Container) {
     // Minimal subset of JSON used by ElementJsonSer
     LocalFilesystem lfs;
     FileIO io(lfs);
@@ -343,7 +459,7 @@ TEST(IO, JsonFastLoad_With_Container) {
     // Save as-container (exercise header path)
     {
         std::vector<Element> elems{ {1,"H","Hydrogen",1.008} };
-        auto path = std::filesystem::temp_directory_path() / "io_test" / "elements.jsonc";
+        auto path = dir_ / "elements.jsonc";
 
         SaveOptions sopt{};
         sopt.wrap_with_container = true;
@@ -352,14 +468,14 @@ TEST(IO, JsonFastLoad_With_Container) {
         LoadOptions lopt{};
         lopt.expect_container = true;
 
-        ASSERT_TRUE(io.save<Element>(path, elems, jser, sopt));
+        ASSERT_OK(io.save<Element>(path, elems, jser, sopt));
 
         auto out = io.load(path, jser, lopt);
         if (!out) {
             ADD_FAILURE() << "load() failed. code=" << static_cast<int>(out.error().code)
                 << " msg=" << out.error().message;
         }
-        ASSERT_TRUE(out);
+        ASSERT_OK(out);
 
         const auto& data = out.value();
         EXPECT_EQ(data.size(), 1u);
@@ -368,16 +484,16 @@ TEST(IO, JsonFastLoad_With_Container) {
 
     // Direct-load from raw (no container), feeding the object string
     {
-        auto path = std::filesystem::temp_directory_path() / "io_test" / "one_obj.json";
-        std::vector<std::byte> raw(strlen(hydrogen));
+        auto path = dir_ / "one_obj.json";
+        std::vector<std::byte> raw(std::strlen(hydrogen));
         std::memcpy(raw.data(), hydrogen, raw.size());
-        ASSERT_TRUE(lfs.write_all_bytes_atomic(path, raw, true));
+        ASSERT_OK(lfs.write_all_bytes_atomic(path, raw, true));
 
         LoadOptions lopt{};
         lopt.expect_container = false;
 
         auto out = io.load(path, jser, lopt);
-        ASSERT_TRUE(out);
+        ASSERT_OK(out);
         const auto& data = out.value();
         EXPECT_EQ(data.size(), 1u);
         EXPECT_EQ(data.at(0).AtomicNumber, 1);
