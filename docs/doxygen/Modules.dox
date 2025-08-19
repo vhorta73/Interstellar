@@ -1,36 +1,220 @@
 /**
  * @file
- * @brief Doxygen module definitions for Interstellar.
+ * @ingroup InterstellarDocs
+ * @brief Doxygen group definitions for all Interstellar subsystems.
+ * @since 1.0
  */
 
 /**
- * @defgroup interstellar_sdk Interstellar SDK
- * @brief Top-level documentation group for all Interstellar modules.
+ * @defgroup InterstellarDocs Interstellar Documentation
+ * @brief Meta-group for all Doxygen group definitions and documentation conventions.
+ * @since 1.0
+ *
+ * High-level organizational groupings for the Interstellar game engine.
+ * Use these modules to navigate core subsystems and their public interfaces.
+ */
+
+/* =========================
+ * Core
+ * ========================= */
+
+/**
+ * @defgroup InterstellarCore Interstellar Core
+ * @ingroup InterstellarDocs
+ * @brief Foundational engine utilities (logging, diagnostics, bootstrapping).
+ * @since 1.0
+ *
+ * Includes core runtime services and lifecycle hooks shared across modules
+ * (data, config, input, rendering, etc.).
  */
 
 /**
- * @defgroup logging_api Logging API
- * @ingroup interstellar_sdk
- * @brief Public, category-based logging facilities for the Interstellar codebase.
+ * @defgroup LoggingSystem Logging System
+ * @ingroup InterstellarCore
+ * @brief Engine-wide logging interfaces and adaptive flushing mechanisms.
+ * @since 1.0
  *
- * Thin facade over spdlog that provides named loggers, consistent patterns,
- * and predictable flush behavior.
+ * Defines the `Logger` interface, log categories, appenders/sinks, and flush
+ * strategies keyed by severity.
  */
 
 /**
- * @defgroup io_api IO API
- * @ingroup interstellar_sdk
- * @brief Filesystem abstraction and data serialization helpers.
+ * @defgroup LogLevelUtils Log Level Utilities
+ * @ingroup InterstellarCore
+ * @brief String parsing and formatting helpers for log levels.
+ * @since 1.0
+ */
+
+/**
+ * @defgroup Initialization Initialization Utilities
+ * @ingroup InterstellarCore
+ * @brief Engine startup routines and bootstrap interfaces.
+ * @since 1.0
+ */
+
+/* =========================
+ * Input
+ * ========================= */
+
+/**
+ * @defgroup InputSystem Input System (Legacy Name)
+ * @ingroup InterstellarDocs
+ * @brief Compatibility alias of @ref Input for older references.
+ * @since 1.0
+ */
+
+/**
+ * @defgroup Input Input
+ * @ingroup InterstellarDocs
+ * @brief Core module for handling user input (keyboard, mouse, etc.).
+ * @since 1.0
  *
- * The IO module provides:
- * - `IFilesystem`: an abstract interface for file operations
- * - `LocalFilesystem`: production implementation using the OS filesystem
- * - `MemoryFilesystem`: in-memory mock useful for tests/tools
- * - `FileIO`: high-level wrapper for safe load/save with serializers
- * - `ISerializer<T>`: pluggable serializer interface for arbitrary data types
- * - Container packing/unpacking with CRC32 validation
+ * Abstracts platform-specific devices and exposes device-agnostic APIs for
+ * querying real-time states and frame-based transitions.
+ */
+
+/**
+ * @defgroup GameInterfaces Game Interfaces
+ * @ingroup Input
+ * @brief Public input interfaces used directly by game logic.
+ * @since 1.0
+ */
+
+/**
+ * @defgroup EngineInterfaces Engine Interfaces
+ * @ingroup Input
+ * @brief Internal abstract extensions and service-facing input APIs.
+ * @since 1.0
+ */
+
+/**
+ * @defgroup KeyCodes KeyCode Definitions
+ * @ingroup Input
+ * @brief Enumerates unified key identifiers for cross-platform input.
+ * @since 1.0
  *
- * Together these components allow game systems to read and write structured
- * data in a format- and filesystem-agnostic way, with safety against
- * corruption and version mismatches.
+ * `KeyCode` enables consistent input mapping across supported platforms.
+ */
+
+/**
+ * @defgroup InputTranslators Key Code Translators
+ * @ingroup Input
+ * @brief Bridges between platform-specific key identifiers and engine `KeyCode`.
+ * @since 1.0
+ *
+ * Implementations include GLFW, SDL, Win32, X11, and Cocoa. Consumed via
+ * `IKeyCodeTranslator`.
+ */
+
+/**
+ * @defgroup Devices Devices
+ * @ingroup Input
+ * @brief Concrete device-facing managers and helpers.
+ * @since 1.0
+ *
+ * Includes:
+ * - Keyboard managers (GLFW-backed and future backends).
+ * - Mouse managers (GLFW-backed and future backends).
+ * - Focus-loss/reset semantics to prevent stuck states.
+ *
+ * Devices expose per-frame edge queries (WasPressed/WasReleased),
+ * continuous state (IsDown), and higher-level abstractions such as
+ * drag detection and scroll accumulation.
+ *
+ * All device managers follow a contract of:
+ * - Feeding platform callbacks into `On*` entry points.
+ * - Calling `Update()` once per frame to commit snapshots.
+ */
+ 
+/**
+ * @defgroup PlatformImplementations Platform Implementations
+ * @ingroup Input
+ * @brief Concrete input backends for specific platforms (GLFW, SDL, etc.).
+ * @since 1.0
+ */
+
+/* =========================
+ * Data & Config
+ * ========================= */
+
+/**
+ * @defgroup InterstellarData Interstellar Data
+ * @ingroup InterstellarDocs
+ * @brief Shared scientific, physical, and domain-specific game data.
+ * @since 1.0
+ *
+ * Definitions such as chemical elements, planetary constants, material
+ * properties, and scientific references used in simulation/rendering.
+ */
+
+/**
+ * @defgroup InterstellarConfig Interstellar Config
+ * @ingroup InterstellarDocs
+ * @brief Configuration framework for serializing/deserializing game data.
+ * @since 1.0
+ *
+ * JSON-driven configuration management, file IO abstraction, editor
+ * serialization, and persistent runtime settings.
+ */
+
+/**
+ * @defgroup ConfigStorage Config Storage
+ * @ingroup InterstellarConfig
+ * @brief Abstract file system interfaces for reading and writing configs.
+ * @since 1.0
+ *
+ * Includes `IConfigStorage`, `FileSystem`, and related components.
+ */
+
+/**
+ * @defgroup JsonConfig JSON Configuration
+ * @ingroup InterstellarConfig
+ * @brief Interfaces and utilities for JSON-based configuration objects.
+ * @since 1.0
+ *
+ * Includes `IJsonConfig`, `JsonConfigBase`, `JsonManager`, and `AppConfig`.
+ */
+
+/* =========================
+ * Reserved/Planned Systems
+ * ========================= */
+
+/**
+ * @defgroup RenderingSystem Rendering System
+ * @ingroup InterstellarDocs
+ * @brief Placeholder for rendering pipeline interfaces and systems.
+ * @since 1.0
+ * @todo Fill in once the rendering API is stabilized.
+ */
+
+/**
+ * @defgroup SimulationSystem Simulation System
+ * @ingroup InterstellarDocs
+ * @brief Placeholder for simulation, AI, and logic orchestration.
+ * @since 1.0
+ * @todo Document simulation services and update strategy.
+ */
+
+/**
+ * @defgroup AudioSystem Audio System
+ * @ingroup InterstellarDocs
+ * @brief Placeholder for audio device interfaces, mixing, and playback.
+ * @since 1.0
+ * @todo Add audio graph and bus layout docs.
+ */
+
+/**
+ * @defgroup UISystem UI System
+ * @ingroup InterstellarDocs
+ * @brief Placeholder for UI frameworks, widgets, and layout.
+ * @since 1.0
+ * @todo Document UI layer once components are defined.
+ */
+
+/**
+ * @defgroup SaveLoadSystem Save/Load System
+ * @ingroup InterstellarDocs
+ * @brief Placeholder for game state persistence and serialization.
+ * @since 1.0
+ * @todo Define save formats and transactional guarantees.
  */
