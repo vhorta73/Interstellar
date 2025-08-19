@@ -8,9 +8,6 @@ namespace Interstellar {
 
             using Interstellar::Input::KeyCode;
 
-            [[nodiscard]] static int K(KeyCode k) noexcept { return static_cast<int>(k); }
-            [[nodiscard]] static KeyCode KC(int /*x*/) noexcept { return KeyCode::Unknown; } // placeholder to keep style uniform
-
             KeyCode GLFWKeyMap::FromPlatform(int key) const noexcept
             {
                 switch (key)
