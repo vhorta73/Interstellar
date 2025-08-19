@@ -210,6 +210,7 @@ set(IO_BUILD_TESTS           ${BUILD_TESTING} CACHE BOOL "" FORCE)
 set(DATA_BUILD_TESTS         ${BUILD_TESTING} CACHE BOOL "" FORCE)
 set(INTERSTELLAR_BUILD_TESTS ${BUILD_TESTING} CACHE BOOL "" FORCE)
 set(LOGGING_BUILD_TESTS      ${BUILD_TESTING} CACHE BOOL "" FORCE)
+set(INPUT_BUILD_TESTS        ${BUILD_TESTING} CACHE BOOL "" FORCE)
 
 add_subdirectory(Logging)
 add_subdirectory(Units)
@@ -217,6 +218,7 @@ add_subdirectory(Utils)
 add_subdirectory(Engine)
 add_subdirectory(Interstellar)
 add_subdirectory(IO)
+add_subdirectory(Input)
 add_subdirectory(Data)
 
 # Run encoding check before key targets
@@ -253,6 +255,7 @@ foreach(_pair
   "Interstellar;Interstellar"
   "InterstellarUtils;Utils"
   "InterstellarIO;IO"
+  "InterstellarInput;Input"
   "InterstellarData;Data"
   "InterstellarLogging;Logging"
 )
