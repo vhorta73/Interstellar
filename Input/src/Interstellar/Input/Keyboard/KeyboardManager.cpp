@@ -1,14 +1,17 @@
 // File: src/Interstellar/Input/Keyboard/KeyboardManager.cpp
 
 #include "Interstellar/Input/Keyboard/KeyboardManager.hpp"
+#include "Interstellar/Logging/Logging.hpp";
 
 #include <GLFW/glfw3.h>
 #include <cstddef> // for std::size_t
 #include <cstring> // optional if you later use memcpy
 
+
 namespace Interstellar {
     namespace Input {
         namespace Keyboard {
+            using namespace Interstellar::Logging;
 
             static inline std::size_t ToIndex(KeyCode k) noexcept
             {

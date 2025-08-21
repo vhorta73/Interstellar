@@ -1,37 +1,37 @@
 #include <iostream>
 
 #include "Interstellar/Interstellar.hpp"
-#include "Interstellar/Core/Logging.hpp"
+#include "Interstellar/Logging/Logging.hpp"
 
 namespace Interstellar {
 
-    static const Core::Logger s_Logger(Core::LOG_INIT);
+    using Interstellar::Logging::LogInit;
 
     Game::Game() {
-        s_Logger.LogDebug("Game constructed.");
+        LogInit().LogDebug("Game constructed.");
     }
 
     Game::~Game() {
-        s_Logger.LogDebug("Game destructed.");
+        LogInit().LogDebug("Game destructed.");
     }
 
     void Game::loadConfig() {
-        s_Logger.LogInfo("Loading config...");
+        LogInit().LogInfo("Loading config...");
         // Load your config here.
     }
 
     void Game::buildComponents() {
-        s_Logger.LogInfo("Building components...");
+        LogInit().LogInfo("Building components...");
         // Setup systems.
     }
 
     void Game::start() {
-        s_Logger.LogInfo("Game started!");
+        LogInit().LogInfo("Game started!");
         // Main loop.
     }
 
     void Game::shutdown() {
-        s_Logger.LogInfo("Game shutting down!");
+        LogInit().LogInfo("Game shutting down!");
         // Shutting down.
     }
 

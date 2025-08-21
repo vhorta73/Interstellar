@@ -9,7 +9,7 @@
 #include <iostream>
 #include <optional>
 #include "Interstellar/Utils/String/StringUtils.hpp"
-#include "Interstellar/Core/Logging.hpp"
+#include "Interstellar/Logging/Logging.hpp"
 
 /**
  * @file ElementConfig.hpp

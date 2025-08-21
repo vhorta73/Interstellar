@@ -83,7 +83,12 @@ if(INPUT_BACKEND_GLFW)
 
   find_package(glfw3 CONFIG QUIET)
   if(glfw3_FOUND)
-    target_link_libraries(InterstellarInput PUBLIC glfw)
+    target_link_libraries(InterstellarInput
+      PUBLIC
+        glfw
+      PRIVATE
+        Interstellar::Logging
+    )
   else()
     include(FetchContent)
     if(NOT TARGET glfw)
@@ -98,7 +103,12 @@ if(INPUT_BACKEND_GLFW)
       set(GLFW_BUILD_TESTS    OFF CACHE BOOL "" FORCE)
       FetchContent_MakeAvailable(glfw)
     endif()
-    target_link_libraries(InterstellarInput PUBLIC glfw)
+    target_link_libraries(InterstellarInput
+      PUBLIC
+        glfw
+      PRIVATE
+        Interstellar::Logging
+    )
   endif()
 endif()
 

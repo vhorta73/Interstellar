@@ -28,6 +28,9 @@ target_link_libraries(Interstellar
     Interstellar::Engine
     Interstellar::Utils
     Interstellar::IO
+    Interstellar::Renderers
+    Interstellar::Graphics
+    Interstellar::Input
 )
 
 # ---------------- Warnings ----------------
