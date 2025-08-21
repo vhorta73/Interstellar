@@ -163,6 +163,7 @@ endif()
 target_link_libraries(Engine
   PUBLIC
     Interstellar::Logging
+    Interstellar::Logging
     ${_mpu_target}
     fmt::fmt
     spdlog::spdlog
