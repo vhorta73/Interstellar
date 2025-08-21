@@ -220,6 +220,8 @@ add_subdirectory(Interstellar)
 add_subdirectory(IO)
 add_subdirectory(Input)
 add_subdirectory(Data)
+add_subdirectory(Graphics)
+add_subdirectory(Renderers)
 
 # Run encoding check before key targets
 add_dependencies(Engine       check-encoding)
@@ -258,6 +260,8 @@ foreach(_pair
   "InterstellarInput;Input"
   "InterstellarData;Data"
   "InterstellarLogging;Logging"
+  "InterstellarGraphics;Graphics"
+  "InterstellarRenderers;Renderers"
 )
   list(GET _pair 0 _target)
   list(GET _pair 1 _subdir)
