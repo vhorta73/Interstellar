@@ -212,6 +212,16 @@ namespace Interstellar::IO {
             return serializer.deserialize(bytes);
         }
 
+        /**
+         * @brief Convenience overload of save() for initializer_list input.
+         * @tparam T Item type.
+         * @param path [in] Destination file path.
+         * @param items [in] Items to persist (copied into a span view).
+         * @param serializer [in] Serializer implementation for T.
+         * @param opt [in] Save behavior toggles (container, directory creation).
+         * @return expected<void, Error> - Success or Error.
+         * @since 1.0
+         */
         template <class T>
         expected<void, Error>
             save(const std::filesystem::path& path,
