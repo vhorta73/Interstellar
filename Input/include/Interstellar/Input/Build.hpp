@@ -13,7 +13,7 @@ namespace Interstellar::Input {
      * @brief Query compile-time feature flags for the Input module.
      * @details Returns a snapshot of features the module was compiled with (e.g., GLFW support).
      *          Use this to branch at runtime without relying on preprocessor defines.
-     * @return BuildInfo — Value object describing available integrations and features.
+     * @return BuildInfo - Value object describing available integrations and features.
      * @throws None
      * @pre None
      * @post None

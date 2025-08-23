@@ -1,24 +1,33 @@
 #type vertex
 #version 330 core
 
-layout(location = 0) in vec3 aPos;
-layout(location = 1) in vec2 aTex;
+layout(location = 0) in vec3 a_Position;
+layout(location = 1) in vec2 a_TexCoord;
 
-out vec2 vTex;
+uniform vec2  u_Offset; // movement offset from CPU
+uniform float u_Zoom;   // zoom scale factor
+
+out vec2 v_TexCoord;
 
 void main() {
-    vTex = aTex;
-    gl_Position = vec4(aPos, 1.0);
+    // Scale the position around the origin (centered)
+    vec2 zoomedPosition = a_Position.xy * u_Zoom;
+
+    // Apply movement offset after scaling
+    gl_Position = vec4(zoomedPosition + u_Offset, a_Position.z, 1.0);
+
+    // Pass through texture coordinates
+    v_TexCoord = a_TexCoord;
 }
 
 #type fragment
 #version 330 core
 
-in vec2 vTex;
+in vec2 v_TexCoord;
 out vec4 FragColor;
 
 uniform sampler2D u_Texture;
 
 void main() {
-    FragColor = texture(u_Texture, vTex);
+    FragColor = texture(u_Texture, v_TexCoord);
 }

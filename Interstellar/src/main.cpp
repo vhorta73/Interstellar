@@ -6,17 +6,15 @@
 #include "Interstellar/Graphics/ITexture.hpp"
 #include "Interstellar/Logging/Logging.hpp"
 #include "Interstellar/Renderers/OpenGL/OpenGLGraphics.hpp"
-#include "Interstellar/Input/IInputManager.hpp"
-#include "Interstellar/Input/IKeyboardManager.hpp"
-#include "Interstellar/Input/IMouseManager.hpp"
-#include "Interstellar/Input/KeyCode.hpp"
 #include "Interstellar/Graphics/IShader.hpp"
+#include <Interstellar/Input/Input.hpp>
 #include "Interstellar/Core/fmt_optional.hpp"
 
+#include "Interstellar/Renderers/OpenGL/OpenGLShader.hpp"
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
 #include <glm/glm.hpp>
-#include "Interstellar/Input/KeyCodeTranslator/GlfwKeyMap.hpp"
+//#include "Interstellar/Input/KeyCodeTranslator/GlfwKeyMap.hpp"
 namespace {
     constexpr const char* TEXTURE_PATH = "assets/textures/texture_01.png";
 
@@ -231,9 +229,17 @@ int main() {
     }
 
     auto window = static_cast<GLFWwindow*>(graphics->GetNativeWindow());
-    auto input = Interstellar::Input::IInputManager::Create(window);
-    auto& keyboard = input->GetKeyboardManager();
-    auto& mouse = input->GetMouseManager();
+    InputConfig cfg;
+    cfg.nativeWindow = window;
+    cfg.backend = InputConfig::Backend::GLFW;
+
+    auto input = InputSystem::Create(cfg);
+    auto build = GetBuildInfo();
+    std::cout << "[Input] Active backend=" << BackendName(input->backend())
+        << " | GLFW compiled: " << (build.haveGLFW ? "yes" : "no")
+        << "\n";
+    auto& keyboard = input->keyboard();
+    auto& mouse = input->mouse();
 
     auto shader = graphics->CreateShader("TriangleShader");
     auto mesh = graphics->CreateMesh(vertices, sizeof(vertices), indices, sizeof(indices));
@@ -248,12 +254,30 @@ int main() {
         return -2;
     }
 
-    // Temporary FPS tracking
+    // Acquire GL program id and cache uniform locations once
+    const GLuint programID = static_cast<GLuint>(reinterpret_cast<uintptr_t>(shader->GetNativeHandle()));
+    glUseProgram(programID);
+
+    const GLint uOffset = glGetUniformLocation(programID, "u_Offset");
+    const GLint uZoom = glGetUniformLocation(programID, "u_Zoom");
+    const GLint uTex = glGetUniformLocation(programID, "u_Texture");
+
+    if (uOffset < 0) LogInit().LogWarn("Uniform 'u_Offset' not found (optimized out or wrong program).");
+    if (uZoom < 0) LogInit().LogWarn("Uniform 'u_Zoom' not found (optimized out or wrong program).");
+    if (uTex < 0) LogInit().LogWarn("Uniform 'u_Texture' not found (optimized out or wrong program).");
+
+    // Bind texture sampler to texture unit 0 once
+    if (uTex >= 0) glUniform1i(uTex, 0);
+
+    // --- Frame timing ---
     double lastTime = glfwGetTime();
     double fpsAvg = 0.0;
-    static double timeAccumulator = 0.0;
+    double timeAccumulator = 0.0;
 
+    MouseFilter smooth{ 0.5f };
     while (!graphics->ShouldClose()) {
+        input->pump();
+
         // Frame timing
         double currentTime = glfwGetTime();
         double deltaTime = currentTime - lastTime;
@@ -266,76 +290,50 @@ int main() {
             LogInit().LogDebug("FPS: {} | Avg: {} ",fps, fpsAvg);
           timeAccumulator = 0.0;
         }
-        input->Update(); // Refresh input states
-
-        float scrollY = static_cast<float>(mouse.GetScrollOffsetY());
-        if (scrollY != 0.0f) {
-
-            float zoomDelta = scrollY * 0.5f;
-            zoom = zoomDelta;
-            zoom = std::clamp(zoom, 0.1f, 5000.0f);
-        }
+        input->beginFrame(deltaTime);
 
         // Keyboard movement
         float moveSpeed = 0.5f * static_cast<float>(deltaTime);
-        if (keyboard.IsKeyDown(KeyCode::ArrowLeft))  triangleOffset.x -= moveSpeed;
-        if (keyboard.IsKeyDown(KeyCode::ArrowRight)) triangleOffset.x += moveSpeed;
-        if (keyboard.IsKeyDown(KeyCode::ArrowUp))    triangleOffset.y += moveSpeed;
-        if (keyboard.IsKeyDown(KeyCode::ArrowDown))  triangleOffset.y -= moveSpeed;
+        if (keyboard.isDown(KeyCode::ArrowLeft))  triangleOffset.x -= moveSpeed;
+        if (keyboard.isDown(KeyCode::ArrowRight)) triangleOffset.x += moveSpeed;
+        if (keyboard.isDown(KeyCode::ArrowUp))    triangleOffset.y += moveSpeed;
+        if (keyboard.isDown(KeyCode::ArrowDown))  triangleOffset.y -= moveSpeed;
 
-        // Mouse drag
-        if (mouse.IsButtonDown(MouseButton::Left)) {
-            glm::vec2 current = glm::vec2(mouse.GetX(), mouse.GetY());
+        // Zoom from wheel (requires the patches above)
+        zoom = WheelZoom(mouse, zoom, 0.15f, 0.1f, 5000.0f);
 
-            if (!dragging) {
-                dragging = true;
-                dragStart = current;
-            }
-
-            if (mouse.IsDragging()) {
-                glm::vec2 delta = (current - dragStart) / glm::vec2(windowWidth, windowHeight);
-                delta.y *= -1.0f; // Invert Y for OpenGL
-                triangleOffset += delta * 2.0f;
-                dragStart = current;
-            }
+        // Pan with LMB using mouse delta
+        if (mouse.isDown(MouseButton::Left)) {
+            triangleOffset += smooth.apply(mouse, windowWidth, windowHeight);
         }
         else {
-            dragging = false;
+            smooth.reset();
         }
+
         // Render
         graphics->BeginFrame();
 
-        // Manually bind texture to unit 0
-        glActiveTexture(GL_TEXTURE0);
+        // Send u_Offset to the shader
+        glUseProgram(programID);
+
+        if (uOffset >= 0) glUniform2f(uOffset, triangleOffset.x, triangleOffset.y);
+        if (uZoom >= 0) glUniform1f(uZoom, zoom);
+
+        // Bind texture to unit 0
         if (texture) {
-            auto native = texture->GetNativeHandle();
-            if (native) {
+            if (auto native = texture->GetNativeHandle()) {
+                glActiveTexture(GL_TEXTURE0);
                 glBindTexture(GL_TEXTURE_2D, static_cast<GLuint>(reinterpret_cast<uintptr_t>(native)));
             }
             else {
-                LogInit().LogWarn("Texture '{}' has no valid native handle!");// , texture->GetName());
+                LogInit().LogWarn("Texture has no valid native handle!");
             }
-        }
-        else {
-            LogInit().LogWarn("Texture was not created (nullptr).");
-        }
-
-        // Send u_Offset to the shader
-        //auto glShader = std::static_pointer_cast<Interstellar::Graphics::OpenGL::OpenGLShader>(shader);
-        GLuint programID = static_cast<GLuint>(reinterpret_cast<uintptr_t>(shader->GetNativeHandle()));
-        glUseProgram(programID);
-        GLint offsetLoc = glGetUniformLocation(programID, "u_Offset");
-        if (offsetLoc >= 0) {
-            glUniform2f(offsetLoc, triangleOffset.x, triangleOffset.y);
-        }
-        GLint zoomLoc = glGetUniformLocation(programID, "u_Zoom");
-        if (zoomLoc >= 0) {
-            glUniform1f(zoomLoc, zoom);
         }
 
 
         graphics->SubmitMesh(mesh, pipeline);
         graphics->EndFrame();
+        input->endFrame();
     }
 
     graphics->Shutdown();
@@ -343,8 +341,6 @@ int main() {
     //// ==== END OF TEMPORARY TEST CODE ====
 
     //// ==== GAME INIT (NOT YET REACHED) ====
-    //const auto genericLogger = Interstellar::Core::Logger();
-
     Interstellar::Game game;
 
     try {
