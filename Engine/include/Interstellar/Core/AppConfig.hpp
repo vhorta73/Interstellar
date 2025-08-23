@@ -2,10 +2,11 @@
 
 #include <string>
 
-#include "Interstellar/Core/LogLevelUtils.hpp"
+#include "Interstellar/Logging/LogLevel.hpp"
 
-namespace Interstellar::Core
-{
+namespace Interstellar::Core {
+    using namespace Interstellar::Logging;
+
     /// Holds all startup configuration, loaded from a JSON file and overridden by CLI.
     struct AppConfig
     {

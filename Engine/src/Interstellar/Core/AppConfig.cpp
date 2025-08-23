@@ -6,9 +6,11 @@
 #include <map>
 #include <algorithm>
 
-#include "Interstellar/Core/LogLevelUtils.hpp"
+#include "Interstellar/Logging/LogLevel.hpp"
+
 namespace Interstellar::Core {
 
+    using namespace Interstellar::Logging;
     AppConfig AppConfig::LoadFromArgs(int argc, char** argv)
     {
         AppConfig config;

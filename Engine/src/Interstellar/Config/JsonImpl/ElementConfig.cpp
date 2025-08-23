@@ -11,11 +11,7 @@ namespace Interstellar::Config::JsonImpl {
     using namespace Interstellar::Utils::Json;
     using namespace Interstellar::Utils;
     using namespace Interstellar::Data;
-
-    /**
-     * @brief Logger instance for ElementConfig operations.
-     */
-    inline auto s_Logger = Interstellar::Core::Logger(Interstellar::Core::LOG_CONFIG);
+    using Interstellar::Logging::LogConfig;
 
     /**
      * @brief Constructs the ElementConfig object and registers all JSON fields.
@@ -110,7 +106,7 @@ namespace Interstellar::Config::JsonImpl {
                     Colour.b = v[2].get<float>();
                     Colour.a = v.size() >= 4 ? v[3].get<float>() : 1.0f;
 
-                    s_Logger.LogCritical("Loaded color for {}: {}, {}, {}, {}",
+                    LogConfig().LogCritical("Loaded color for {}: {}, {}, {}, {}",
                         Symbol, Colour.r, Colour.g, Colour.b, Colour.a);
                 }
             }
@@ -864,7 +860,7 @@ namespace Interstellar::Config::JsonImpl {
                     config.orbitals.push_back(orb);
                 }
                 else {
-                    s_Logger.LogWarn("Warning: Unrecognized token: {}",token);
+                    LogConfig().LogWarn("Warning: Unrecognized token: {}",token);
                 }
             }
         }

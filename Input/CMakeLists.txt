@@ -11,6 +11,9 @@ include(GNUInstallDirs)
 include(CMakePackageConfigHelpers)
 include(EnsureSources)   # same helper you use in IO
 
+# Always have FetchContent available (needed for GLFW fallback or GLM)
+include(FetchContent)
+
 # ---------------- Options ----------------
 option(INPUT_WARNINGS_AS_ERRORS "Treat warnings as errors for Input" OFF)
 option(INPUT_ENABLE_PACKAGE     "Install CMake package for Interstellar::Input (use system deps)" OFF)
@@ -29,13 +32,9 @@ file(GLOB_RECURSE INPUT_SOURCES CONFIGURE_DEPENDS
 )
 
 # Exclude backend files that are disabled (by filename hints)
-#if(NOT INPUT_BACKEND_SDL)
-#  list(FILTER INPUT_SOURCES EXCLUDE REGEX ".*/(SDL|Sdl)[^/]*\\.(c|cc|cpp|cxx)$")
-#endif()
 if(NOT INPUT_BACKEND_GLFW)
   list(FILTER INPUT_SOURCES EXCLUDE REGEX ".*/(GLFW|Glfw)[^/]*\\.(c|cc|cpp|cxx)$")
 endif()
-# Exclude Windows-only backends if disabled or on non-Windows
 if(NOT WIN32 OR NOT INPUT_BACKEND_WIN32)
   list(FILTER INPUT_SOURCES EXCLUDE REGEX ".*/(Win32|Windows|RawInput)[^/]*\\.(c|cc|cpp|cxx)$")
 endif()
@@ -62,10 +61,11 @@ target_include_directories(InterstellarInput
   PUBLIC
     $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
     $<INSTALL_INTERFACE:${INTERSTELLAR_INPUT_INSTALL_INCLUDE_DIR}>
-  INTERFACE
-    $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/src>  # build-tree only
+  # Note: do not leak src to consumers. Keep it PRIVATE.
   PRIVATE
     ${CMAKE_CURRENT_SOURCE_DIR}/src
+  INTERFACE
+    $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/src>
 )
 
 # ---------------- Warnings ----------------
@@ -79,14 +79,28 @@ endif()
 
 # GLFW backend
 if(INPUT_BACKEND_GLFW)
+  message(STATUS "[InterstellarInput] Backend requested: GLFW")
   target_compile_definitions(InterstellarInput PUBLIC INTERSTELLAR_INPUT_BACKEND_GLFW=1)
 
+  # Try config package first
   find_package(glfw3 CONFIG QUIET)
+
+  set(_HAVE_GLFW FALSE)
+  unset(GLFW_TARGET)
+
   if(glfw3_FOUND)
-    target_link_libraries(InterstellarInput PUBLIC glfw)
+    if(TARGET glfw)
+      set(GLFW_TARGET glfw)
+    elseif(TARGET glfw_shared)
+      set(GLFW_TARGET glfw_shared)
+    elseif(TARGET glfw3)
+      set(GLFW_TARGET glfw3)
+    endif()
+    if(GLFW_TARGET)
+      set(_HAVE_GLFW TRUE)
+    endif()
   else()
-    include(FetchContent)
-    if(NOT TARGET glfw)
+    if(NOT TARGET glfw AND NOT TARGET glfw_shared AND NOT TARGET glfw3)
       FetchContent_Declare(glfw
         GIT_REPOSITORY https://github.com/glfw/glfw.git
         GIT_TAG        3.3.9
@@ -98,53 +112,77 @@ if(INPUT_BACKEND_GLFW)
       set(GLFW_BUILD_TESTS    OFF CACHE BOOL "" FORCE)
       FetchContent_MakeAvailable(glfw)
     endif()
-    target_link_libraries(InterstellarInput PUBLIC glfw)
+
+    if(TARGET glfw)
+      set(GLFW_TARGET glfw)
+      set(_HAVE_GLFW TRUE)
+    elseif(TARGET glfw_shared)
+      set(GLFW_TARGET glfw_shared)
+      set(_HAVE_GLFW TRUE)
+    elseif(TARGET glfw3)
+      set(GLFW_TARGET glfw3)
+      set(_HAVE_GLFW TRUE)
+    endif()
+  endif()
+
+  if(_HAVE_GLFW)
+    message(STATUS "[InterstellarInput] GLFW found: target=${GLFW_TARGET}")
+    # Correct macro name used by your code
+    target_compile_definitions(InterstellarInput PUBLIC INTERSTELLAR_INPUT_HAVE_GLFW=1)
+
+    target_link_libraries(InterstellarInput
+      PUBLIC
+        ${GLFW_TARGET}
+      PRIVATE
+        Interstellar::Logging
+    )
+  else()
+    message(WARNING "[InterstellarInput] GLFW NOT FOUND. Building without GLFW backend (factory will fall back to Null).")
+  endif()
+else()
+  message(STATUS "[InterstellarInput] Backend requested: NULL/others-disabled")
+endif()
+
+# GLM (header-only). Prefer a config package; otherwise fetch.
+unset(GLM_TARGET)
+find_package(glm CONFIG QUIET)
+if(glm_FOUND)
+  if(TARGET glm::glm)
+    set(GLM_TARGET glm::glm)
+  elseif(TARGET glm)
+    # Some older glm exports only 'glm'; make a namespaced alias.
+    add_library(glm::glm INTERFACE IMPORTED)
+    set_target_properties(glm::glm PROPERTIES INTERFACE_LINK_LIBRARIES glm)
+    set(GLM_TARGET glm::glm)
   endif()
 endif()
 
-# SDL2 backend (opt-in)
-#if(INPUT_BACKEND_SDL)
-#  target_compile_definitions(InterstellarInput PUBLIC INTERSTELLAR_INPUT_BACKEND_SDL=1)
-#
-#  if(INPUT_ENABLE_PACKAGE)
-#    find_package(SDL2 CONFIG QUIET)
-#    if(NOT SDL2_FOUND)
-#      find_package(SDL2 REQUIRED) # will use FindSDL2.cmake if provided
-#    endif()
-#  else()
-#    include(FetchContent)
-#    if(NOT TARGET SDL2::SDL2 AND NOT TARGET SDL2)
-#      FetchContent_Declare(SDL2
-#        GIT_REPOSITORY https://github.com/libsdl-org/SDL.git
-#        GIT_TAG        release-2.30.5
-#        GIT_SHALLOW    TRUE
-#        GIT_PROGRESS   TRUE
-#        CMAKE_ARGS
-#          -DCMAKE_UNITY_BUILD=OFF   # avoid unity build ODR issues inside SDL
-#          -DSDL_TEST=OFF
-#          -DSDL2_DISABLE_INSTALL=ON
-#          -DSDL_INSTALL=OFF
-#      )
-#      # Keep the build lean (older/newer toggles)
-#      set(SDL_TEST             OFF CACHE BOOL "" FORCE)
-#      set(SDL2_DISABLE_INSTALL ON  CACHE BOOL "" FORCE)
-#      set(SDL_INSTALL          OFF CACHE BOOL "" FORCE)
-#      FetchContent_MakeAvailable(SDL2)
-#    endif()
-#  endif()
-#
-#  # Link to whichever target SDL exposes
-#  if(TARGET SDL2::SDL2)
-#    target_link_libraries(InterstellarInput PUBLIC SDL2::SDL2)
-#  elseif(TARGET SDL2)
-#    target_link_libraries(InterstellarInput PUBLIC SDL2)
-#  elseif(DEFINED SDL2_LIBRARIES)
-#    target_include_directories(InterstellarInput PUBLIC ${SDL2_INCLUDE_DIRS})
-#    target_link_libraries(InterstellarInput PUBLIC ${SDL2_LIBRARIES})
-#  else()
-#    message(FATAL_ERROR "Could not locate SDL2. Set -DINPUT_BACKEND_SDL=OFF or provide SDL2.")
-#  endif()
-#endif()
+if(NOT GLM_TARGET)
+  # Fetch header-only glm
+  if(NOT TARGET glm AND NOT TARGET glm::glm)
+    FetchContent_Declare(glm
+      GIT_REPOSITORY https://github.com/g-truc/glm.git
+      GIT_TAG        0.9.9.8
+      GIT_SHALLOW    TRUE
+      GIT_PROGRESS   TRUE
+    )
+    FetchContent_MakeAvailable(glm)
+  endif()
+
+  if(TARGET glm::glm)
+    set(GLM_TARGET glm::glm)
+  elseif(TARGET glm)
+    add_library(glm::glm INTERFACE IMPORTED)
+    set_target_properties(glm::glm PROPERTIES INTERFACE_LINK_LIBRARIES glm)
+    set(GLM_TARGET glm::glm)
+  endif()
+endif()
+
+if(GLM_TARGET)
+  target_link_libraries(InterstellarInput PUBLIC ${GLM_TARGET})
+else()
+  message(FATAL_ERROR "[InterstellarInput] glm not found and could not be fetched.")
+endif()
 
 # Win32 Raw Input backend (Windows only)
 if(WIN32 AND INPUT_BACKEND_WIN32)
@@ -186,16 +224,12 @@ if(INPUT_ENABLE_PACKAGE)
     COMPATIBILITY SameMajorVersion
   )
 
-  # Generate InterstellarInputConfig.cmake with conditional dependencies
   set(_INPUT_CFG "${CMAKE_CURRENT_BINARY_DIR}/InterstellarInputConfig.cmake")
   file(WRITE "${_INPUT_CFG}" "include(CMakeFindDependencyMacro)\n")
-#  if(INPUT_BACKEND_SDL)
-#    file(APPEND "${_INPUT_CFG}" "find_dependency(SDL2 REQUIRED)\n")
-#  endif()
   if(INPUT_BACKEND_GLFW)
     file(APPEND "${_INPUT_CFG}" "find_dependency(glfw3 REQUIRED)\n")
   endif()
-  file(APPEND "${_INPUT_CFG}" "include(\"\${CMAKE_CURRENT_LIST_DIR}/InterstellarInputTargets.cmake\")\n")
+  file(APPEND "${_INPUT_CFG}" "include(\"${CMAKE_CURRENT_LIST_DIR}/InterstellarInputTargets.cmake\")\n")
 
   install(FILES
     "${_INPUT_CFG}"

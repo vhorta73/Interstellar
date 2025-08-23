@@ -1,48 +1,46 @@
-//#include <iostream>
-//#include <sstream>
-//#include <algorithm>
-//
-//#include "Interstellar/Interstellar.hpp"
-//#include "Interstellar/Graphics/Core/ITexture.hpp"
-//#include "Interstellar/Core/Logging.hpp"
-//#include "Interstellar/Graphics/OpenGL/OpenGLGraphics.hpp"
-//#include "Interstellar/Input/IInputManager.hpp"
-//#include "Interstellar/Input/IKeyboardManager.hpp"
-//#include "Interstellar/Input/IMouseManager.hpp"
-//#include "Interstellar/Graphics/Core/IShader.hpp"
-//#include "Interstellar/Core/fmt_optional.hpp"
-//
-//#include <glad/glad.h>
-//#include <GLFW/glfw3.h>
-//#include <glm/glm.hpp>
-//
-//namespace {
-//    constexpr auto LOG_CATEGORY = Interstellar::Core::LOG_INIT;
-//    constexpr const char* TEXTURE_PATH = "assets/textures/texture_01.png";
-//
-//    // Vertex layout: position (x, y, z), UV (u, v)
-//    constexpr float vertices[] = {
-//        -0.5f, -0.5f, 0.0f,   0.0f, 0.0f,
-//        0.5f, -0.5f, 0.0f,   1.0f, 0.0f,
-//        0.0f,  0.5f, 0.0f,   0.5f, 1.0f,
-//    };
-//
-//    unsigned int indices[] = { 0, 1, 2 };
-//}
-//
+#include <iostream>
+#include <sstream>
+#include <algorithm>
+
+#include "Interstellar/Interstellar.hpp"
+#include "Interstellar/Graphics/ITexture.hpp"
+#include "Interstellar/Logging/Logging.hpp"
+#include "Interstellar/Renderers/OpenGL/OpenGLGraphics.hpp"
+#include "Interstellar/Graphics/IShader.hpp"
+#include <Interstellar/Input/Input.hpp>
+#include "Interstellar/Core/fmt_optional.hpp"
+
+#include "Interstellar/Renderers/OpenGL/OpenGLShader.hpp"
+#include <glad/glad.h>
+#include <GLFW/glfw3.h>
+#include <glm/glm.hpp>
+//#include "Interstellar/Input/KeyCodeTranslator/GlfwKeyMap.hpp"
+namespace {
+    constexpr const char* TEXTURE_PATH = "assets/textures/texture_01.png";
+
+    // Vertex layout: position (x, y, z), UV (u, v)
+    constexpr float vertices[] = {
+        -0.5f, -0.5f, 0.0f,   0.0f, 0.0f,
+        0.5f, -0.5f, 0.0f,   1.0f, 0.0f,
+        0.0f,  0.5f, 0.0f,   0.5f, 1.0f,
+    };
+
+    unsigned int indices[] = { 0, 1, 2 };
+}
+
 //#include "Interstellar/Config/JsonImpl/ElementConfig.hpp"
 //#include "Interstellar/Config/JsonImpl/ElementDatabase.hpp"
 //#include <string>
 //#include "Interstellar/Data/ElementData.hpp"
 int main() {
-    //glm::vec2 triangleOffset = glm::vec2(0.0f);
-    //glm::vec2 dragStart = glm::vec2(0.0f);
-    //bool dragging = false;
-    //float zoom = 1.0f; // Default zoom level
 
-    //const auto s_Logger = Interstellar::Core::Logger(LOG_CATEGORY);
+    using Interstellar::Logging::LogInit;
+    using namespace Interstellar::Input;
+    glm::vec2 triangleOffset = glm::vec2(0.0f);
+    glm::vec2 dragStart = glm::vec2(0.0f);
+    bool dragging = false;
+    float zoom = 1.0f; // Default zoom level
 
-    //s_Logger.LogInfo("Interstellar Engine Initialisation...");
     //Interstellar::Config::JsonImpl::ElementDatabase elementDb;
     //if (!elementDb.loadFromFile("assets/data/elements_all.json")) {
     //    s_Logger.LogError("Failed to load element database from 'assets/data/elements_all.json'.");
@@ -221,144 +219,142 @@ int main() {
 
     ////Interstellar::Core::Logger s_Logger(LOG_CATEGORY);
     //// ==== TEMPORARY TEST CODE ====
-    //constexpr int windowWidth = 1200;
-    //constexpr int windowHeight = 860;
+    constexpr int windowWidth = 1200;
+    constexpr int windowHeight = 860;
 
-    //auto graphics = std::make_unique<Interstellar::Graphics::OpenGL::OpenGLGraphics>();
-    //if (!graphics->Initialise(windowWidth, windowHeight, false)) {
-    //    std::cerr << "[Error] Failed to initialise OpenGL graphics backend.\n";
-    //    return -1;
-    //}
+    auto graphics = std::make_unique<Interstellar::Renderers::OpenGL::OpenGLGraphics>();
+    if (!graphics->Initialise(windowWidth, windowHeight, false)) {
+        std::cerr << "[Error] Failed to initialise OpenGL graphics backend.\n";
+        return -1;
+    }
 
-    //auto window = static_cast<GLFWwindow*>(graphics->GetNativeWindow());
-    //auto input = Interstellar::Input::IInputManager::Create(window);
-    //auto& keyboard = input->GetKeyboardManager();
-    //auto& mouse = input->GetMouseManager();
+    auto window = static_cast<GLFWwindow*>(graphics->GetNativeWindow());
+    InputConfig cfg;
+    cfg.nativeWindow = window;
+    cfg.backend = InputConfig::Backend::GLFW;
 
-    //auto shader = graphics->CreateShader("TriangleShader");
-    //auto mesh = graphics->CreateMesh(vertices, sizeof(vertices), indices, sizeof(indices));
-    //auto pipeline = graphics->CreatePipeline(shader);
-    //auto texture = graphics->CreateTexture(TEXTURE_PATH);
+    auto input = InputSystem::Create(cfg);
+    auto build = GetBuildInfo();
+    std::cout << "[Input] Active backend=" << BackendName(input->backend())
+        << " | GLFW compiled: " << (build.haveGLFW ? "yes" : "no")
+        << "\n";
+    auto& keyboard = input->keyboard();
+    auto& mouse = input->mouse();
 
-    //if (!shader || !mesh || !pipeline || !texture) {
-    //    if (!shader)   s_Logger.LogError("Shader failed to compile or load.");
-    //    if (!mesh)     s_Logger.LogError("Mesh failed to initialize.");
-    //    if (!pipeline) s_Logger.LogError("Pipeline creation failed.");
-    //    if (!texture)  s_Logger.LogError("Texture loading failed.");
-    //    return -2;
-    //}
+    auto shader = graphics->CreateShader("TriangleShader");
+    auto mesh = graphics->CreateMesh(vertices, sizeof(vertices), indices, sizeof(indices));
+    auto pipeline = graphics->CreatePipeline(shader);
+    auto texture = graphics->CreateTexture(TEXTURE_PATH);
 
-    //// Temporary FPS tracking
-    //double lastTime = glfwGetTime();
-    //double fpsAvg = 0.0;
-    //static double timeAccumulator = 0.0;
+    if (!shader || !mesh || !pipeline || !texture) {
+        if (!shader)   LogInit().LogError("Shader failed to compile or load.");
+        if (!mesh)     LogInit().LogError("Mesh failed to initialize.");
+        if (!pipeline) LogInit().LogError("Pipeline creation failed.");
+        if (!texture)  LogInit().LogError("Texture loading failed.");
+        return -2;
+    }
 
-    //while (!graphics->ShouldClose()) {
-    //    // Frame timing
-    //    double currentTime = glfwGetTime();
-    //    double deltaTime = currentTime - lastTime;
-    //    lastTime = currentTime;
-    //    double fps = 1.0 / deltaTime;
-    //    fpsAvg = ( fps + ( fpsAvg * 9.0 ) ) / 10.0;
-    //    timeAccumulator += deltaTime;
+    // Acquire GL program id and cache uniform locations once
+    const GLuint programID = static_cast<GLuint>(reinterpret_cast<uintptr_t>(shader->GetNativeHandle()));
+    glUseProgram(programID);
 
-    //    if (timeAccumulator >= 1.0) {
-    //      s_Logger.LogDebug("FPS: {} | Avg: {} ",fps, fpsAvg);
-    //      timeAccumulator = 0.0;
-    //    }
-    //    input->Update(); // Refresh input states
+    const GLint uOffset = glGetUniformLocation(programID, "u_Offset");
+    const GLint uZoom = glGetUniformLocation(programID, "u_Zoom");
+    const GLint uTex = glGetUniformLocation(programID, "u_Texture");
 
-    //    float scrollY = static_cast<float>(mouse.GetScrollOffsetY());
-    //    if (scrollY != 0.0f) {
+    if (uOffset < 0) LogInit().LogWarn("Uniform 'u_Offset' not found (optimized out or wrong program).");
+    if (uZoom < 0) LogInit().LogWarn("Uniform 'u_Zoom' not found (optimized out or wrong program).");
+    if (uTex < 0) LogInit().LogWarn("Uniform 'u_Texture' not found (optimized out or wrong program).");
 
-    //        float zoomDelta = scrollY * 0.5f;
-    //        zoom = zoomDelta;
-    //        zoom = std::clamp(zoom, 0.1f, 5000.0f);
-    //    }
+    // Bind texture sampler to texture unit 0 once
+    if (uTex >= 0) glUniform1i(uTex, 0);
 
-    //    // Keyboard movement
-    //    float moveSpeed = 0.5f * static_cast<float>(deltaTime);
-    //    if (keyboard.IsKeyDown(GLFW_KEY_LEFT))  triangleOffset.x -= moveSpeed;
-    //    if (keyboard.IsKeyDown(GLFW_KEY_RIGHT)) triangleOffset.x += moveSpeed;
-    //    if (keyboard.IsKeyDown(GLFW_KEY_UP))    triangleOffset.y += moveSpeed;
-    //    if (keyboard.IsKeyDown(GLFW_KEY_DOWN))  triangleOffset.y -= moveSpeed;
+    // --- Frame timing ---
+    double lastTime = glfwGetTime();
+    double fpsAvg = 0.0;
+    double timeAccumulator = 0.0;
 
-    //    // Mouse drag
-    //    if (mouse.IsButtonPressed(GLFW_MOUSE_BUTTON_LEFT)) {
-    //        glm::vec2 current = glm::vec2(mouse.GetX(), mouse.GetY());
+    MouseFilter smooth{ 0.5f };
+    while (!graphics->ShouldClose()) {
+        input->pump();
 
-    //        if (!dragging) {
-    //            dragging = true;
-    //            dragStart = current;
-    //        }
+        // Frame timing
+        double currentTime = glfwGetTime();
+        double deltaTime = currentTime - lastTime;
+        lastTime = currentTime;
+        double fps = 1.0 / deltaTime;
+        fpsAvg = ( fps + ( fpsAvg * 9.0 ) ) / 10.0;
+        timeAccumulator += deltaTime;
 
-    //        if (mouse.IsDragging()) {
-    //            glm::vec2 delta = (current - dragStart) / glm::vec2(windowWidth, windowHeight);
-    //            delta.y *= -1.0f; // Invert Y for OpenGL
-    //            triangleOffset += delta * 2.0f;
-    //            dragStart = current;
-    //        }
-    //    }
-    //    else {
-    //        dragging = false;
-    //    }
-    //    // Render
-    //    graphics->BeginFrame();
+        if (timeAccumulator >= 1.0) {
+            LogInit().LogDebug("FPS: {} | Avg: {} ",fps, fpsAvg);
+          timeAccumulator = 0.0;
+        }
+        input->beginFrame(deltaTime);
 
-    //    // Manually bind texture to unit 0
-    //    glActiveTexture(GL_TEXTURE0);
-    //    if (texture) {
-    //        auto native = texture->GetNativeHandle();
-    //        if (native) {
-    //            glBindTexture(GL_TEXTURE_2D, static_cast<GLuint>(reinterpret_cast<uintptr_t>(native)));
-    //        }
-    //        else {
-    //            s_Logger.LogWarn("Texture '{}' has no valid native handle!");// , texture->GetName());
-    //        }
-    //    }
-    //    else {
-    //        s_Logger.LogWarn("Texture was not created (nullptr).");
-    //    }
+        // Keyboard movement
+        float moveSpeed = 0.5f * static_cast<float>(deltaTime);
+        if (keyboard.isDown(KeyCode::ArrowLeft))  triangleOffset.x -= moveSpeed;
+        if (keyboard.isDown(KeyCode::ArrowRight)) triangleOffset.x += moveSpeed;
+        if (keyboard.isDown(KeyCode::ArrowUp))    triangleOffset.y += moveSpeed;
+        if (keyboard.isDown(KeyCode::ArrowDown))  triangleOffset.y -= moveSpeed;
 
-    //    // Send u_Offset to the shader
-    //    //auto glShader = std::static_pointer_cast<Interstellar::Graphics::OpenGL::OpenGLShader>(shader);
-    //    GLuint programID = static_cast<GLuint>(reinterpret_cast<uintptr_t>(shader->GetNativeHandle()));
-    //    glUseProgram(programID);
-    //    GLint offsetLoc = glGetUniformLocation(programID, "u_Offset");
-    //    if (offsetLoc >= 0) {
-    //        glUniform2f(offsetLoc, triangleOffset.x, triangleOffset.y);
-    //    }
-    //    GLint zoomLoc = glGetUniformLocation(programID, "u_Zoom");
-    //    if (zoomLoc >= 0) {
-    //        glUniform1f(zoomLoc, zoom);
-    //    }
+        // Zoom from wheel (requires the patches above)
+        zoom = WheelZoom(mouse, zoom, 0.15f, 0.1f, 5000.0f);
+
+        // Pan with LMB using mouse delta
+        if (mouse.isDown(MouseButton::Left)) {
+            triangleOffset += smooth.apply(mouse, windowWidth, windowHeight);
+        }
+        else {
+            smooth.reset();
+        }
+
+        // Render
+        graphics->BeginFrame();
+
+        // Send u_Offset to the shader
+        glUseProgram(programID);
+
+        if (uOffset >= 0) glUniform2f(uOffset, triangleOffset.x, triangleOffset.y);
+        if (uZoom >= 0) glUniform1f(uZoom, zoom);
+
+        // Bind texture to unit 0
+        if (texture) {
+            if (auto native = texture->GetNativeHandle()) {
+                glActiveTexture(GL_TEXTURE0);
+                glBindTexture(GL_TEXTURE_2D, static_cast<GLuint>(reinterpret_cast<uintptr_t>(native)));
+            }
+            else {
+                LogInit().LogWarn("Texture has no valid native handle!");
+            }
+        }
 
 
-    //    graphics->SubmitMesh(mesh, pipeline);
-    //    graphics->EndFrame();
-    //}
+        graphics->SubmitMesh(mesh, pipeline);
+        graphics->EndFrame();
+        input->endFrame();
+    }
 
-    //graphics->Shutdown();
-    //glfwTerminate();
+    graphics->Shutdown();
+    glfwTerminate();
     //// ==== END OF TEMPORARY TEST CODE ====
 
     //// ==== GAME INIT (NOT YET REACHED) ====
-    //const auto genericLogger = Interstellar::Core::Logger();
+    Interstellar::Game game;
 
-    //Interstellar::Game game;
+    try {
+        game.loadConfig();
+        game.buildComponents();
+        game.start();
+        game.shutdown();
+    }
+    catch (const std::exception& e) {
+        LogInit().LogCritical(std::string("Game error: ") + e.what());
+        return 99;
+    }
 
-    //try {
-    //    game.loadConfig();
-    //    game.buildComponents();
-    //    game.start();
-    //    game.shutdown();
-    //}
-    //catch (const std::exception& e) {
-    //    genericLogger.LogCritical(std::string("Game error: ") + e.what());
-    //    return 99;
-    //}
-
-    //s_Logger.LogInfo(std::string("Game closed with success."));
+    LogInit().LogInfo(std::string("Game closed with success."));
 
     return 0;
 }
