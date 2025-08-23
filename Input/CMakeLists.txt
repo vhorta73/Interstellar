@@ -29,13 +29,9 @@ file(GLOB_RECURSE INPUT_SOURCES CONFIGURE_DEPENDS
 )
 
 # Exclude backend files that are disabled (by filename hints)
-#if(NOT INPUT_BACKEND_SDL)
-#  list(FILTER INPUT_SOURCES EXCLUDE REGEX ".*/(SDL|Sdl)[^/]*\\.(c|cc|cpp|cxx)$")
-#endif()
 if(NOT INPUT_BACKEND_GLFW)
   list(FILTER INPUT_SOURCES EXCLUDE REGEX ".*/(GLFW|Glfw)[^/]*\\.(c|cc|cpp|cxx)$")
 endif()
-# Exclude Windows-only backends if disabled or on non-Windows
 if(NOT WIN32 OR NOT INPUT_BACKEND_WIN32)
   list(FILTER INPUT_SOURCES EXCLUDE REGEX ".*/(Win32|Windows|RawInput)[^/]*\\.(c|cc|cpp|cxx)$")
 endif()
@@ -63,7 +59,7 @@ target_include_directories(InterstellarInput
     $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
     $<INSTALL_INTERFACE:${INTERSTELLAR_INPUT_INSTALL_INCLUDE_DIR}>
   INTERFACE
-    $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/src>  # build-tree only
+    $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/src>  # build-tree only (for tests)
   PRIVATE
     ${CMAKE_CURRENT_SOURCE_DIR}/src
 )
@@ -79,19 +75,30 @@ endif()
 
 # GLFW backend
 if(INPUT_BACKEND_GLFW)
+  message(STATUS "[InterstellarInput] Backend requested: GLFW")
+  # Keep old macro for anyone else including your headers
   target_compile_definitions(InterstellarInput PUBLIC INTERSTELLAR_INPUT_BACKEND_GLFW=1)
 
+  # Try config package first
   find_package(glfw3 CONFIG QUIET)
+
+  set(_HAVE_GLFW FALSE)
   if(glfw3_FOUND)
-    target_link_libraries(InterstellarInput
-      PUBLIC
-        glfw
-      PRIVATE
-        Interstellar::Logging
-    )
+    # Common exported targets: glfw (static) or glfw_shared/glfw3; pick what's present
+    if(TARGET glfw)
+      set(GLFW_TARGET glfw)
+    elseif(TARGET glfw_shared)
+      set(GLFW_TARGET glfw_shared)
+    elseif(TARGET glfw3)
+      set(GLFW_TARGET glfw3)
+    endif()
+    if(GLFW_TARGET)
+      set(_HAVE_GLFW TRUE)
+    endif()
   else()
+    # Fallback: vendor with FetchContent
     include(FetchContent)
-    if(NOT TARGET glfw)
+    if(NOT TARGET glfw AND NOT TARGET glfw_shared AND NOT TARGET glfw3)
       FetchContent_Declare(glfw
         GIT_REPOSITORY https://github.com/glfw/glfw.git
         GIT_TAG        3.3.9
@@ -103,58 +110,35 @@ if(INPUT_BACKEND_GLFW)
       set(GLFW_BUILD_TESTS    OFF CACHE BOOL "" FORCE)
       FetchContent_MakeAvailable(glfw)
     endif()
+    if(TARGET glfw)
+      set(GLFW_TARGET glfw)
+      set(_HAVE_GLFW TRUE)
+    elseif(TARGET glfw_shared)
+      set(GLFW_TARGET glfw_shared)
+      set(_HAVE_GLFW TRUE)
+    elseif(TARGET glfw3)
+      set(GLFW_TARGET glfw3)
+      set(_HAVE_GLFW TRUE)
+    endif()
+  endif()
+
+  if(_HAVE_GLFW)
+    message(STATUS "[InterstellarInput] GLFW found: target=${GLFW_TARGET}")
+    # *** THIS macro is what your code checks ***
+    target_compile_definitions(InterstellarInput PRIVATE ISTELLAR_INPUT_HAVE_GLFW=1)
+
     target_link_libraries(InterstellarInput
       PUBLIC
-        glfw
+        ${GLFW_TARGET}
       PRIVATE
         Interstellar::Logging
     )
+  else()
+    message(WARNING "[InterstellarInput] GLFW NOT FOUND. Building without GLFW backend (factory will fall back to Null).")
   endif()
+else()
+  message(STATUS "[InterstellarInput] Backend requested: NULL/others-disabled")
 endif()
-
-# SDL2 backend (opt-in)
-#if(INPUT_BACKEND_SDL)
-#  target_compile_definitions(InterstellarInput PUBLIC INTERSTELLAR_INPUT_BACKEND_SDL=1)
-#
-#  if(INPUT_ENABLE_PACKAGE)
-#    find_package(SDL2 CONFIG QUIET)
-#    if(NOT SDL2_FOUND)
-#      find_package(SDL2 REQUIRED) # will use FindSDL2.cmake if provided
-#    endif()
-#  else()
-#    include(FetchContent)
-#    if(NOT TARGET SDL2::SDL2 AND NOT TARGET SDL2)
-#      FetchContent_Declare(SDL2
-#        GIT_REPOSITORY https://github.com/libsdl-org/SDL.git
-#        GIT_TAG        release-2.30.5
-#        GIT_SHALLOW    TRUE
-#        GIT_PROGRESS   TRUE
-#        CMAKE_ARGS
-#          -DCMAKE_UNITY_BUILD=OFF   # avoid unity build ODR issues inside SDL
-#          -DSDL_TEST=OFF
-#          -DSDL2_DISABLE_INSTALL=ON
-#          -DSDL_INSTALL=OFF
-#      )
-#      # Keep the build lean (older/newer toggles)
-#      set(SDL_TEST             OFF CACHE BOOL "" FORCE)
-#      set(SDL2_DISABLE_INSTALL ON  CACHE BOOL "" FORCE)
-#      set(SDL_INSTALL          OFF CACHE BOOL "" FORCE)
-#      FetchContent_MakeAvailable(SDL2)
-#    endif()
-#  endif()
-#
-#  # Link to whichever target SDL exposes
-#  if(TARGET SDL2::SDL2)
-#    target_link_libraries(InterstellarInput PUBLIC SDL2::SDL2)
-#  elseif(TARGET SDL2)
-#    target_link_libraries(InterstellarInput PUBLIC SDL2)
-#  elseif(DEFINED SDL2_LIBRARIES)
-#    target_include_directories(InterstellarInput PUBLIC ${SDL2_INCLUDE_DIRS})
-#    target_link_libraries(InterstellarInput PUBLIC ${SDL2_LIBRARIES})
-#  else()
-#    message(FATAL_ERROR "Could not locate SDL2. Set -DINPUT_BACKEND_SDL=OFF or provide SDL2.")
-#  endif()
-#endif()
 
 # Win32 Raw Input backend (Windows only)
 if(WIN32 AND INPUT_BACKEND_WIN32)
@@ -196,12 +180,8 @@ if(INPUT_ENABLE_PACKAGE)
     COMPATIBILITY SameMajorVersion
   )
 
-  # Generate InterstellarInputConfig.cmake with conditional dependencies
   set(_INPUT_CFG "${CMAKE_CURRENT_BINARY_DIR}/InterstellarInputConfig.cmake")
   file(WRITE "${_INPUT_CFG}" "include(CMakeFindDependencyMacro)\n")
-#  if(INPUT_BACKEND_SDL)
-#    file(APPEND "${_INPUT_CFG}" "find_dependency(SDL2 REQUIRED)\n")
-#  endif()
   if(INPUT_BACKEND_GLFW)
     file(APPEND "${_INPUT_CFG}" "find_dependency(glfw3 REQUIRED)\n")
   endif()
