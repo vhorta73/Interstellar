@@ -16,3 +16,10 @@
 * @brief Core input module (keyboard, mouse, backends, helpers).
 * @since 1.0
 */
+
+/**
+ * @defgroup Logging Logging
+ * @ingroup Modules
+ * @brief Public logging facilities for the Interstellar codebase.
+ * @since 1.0
+ */

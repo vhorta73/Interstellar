@@ -1,9 +1,7 @@
 /**
  * @defgroup IOExamples IO
  * @ingroup Examples
- *
- * Quick start samples for the IO module.
- *
+ * @brief Quick start samples for the IO module.
  * @since 1.0
  *
  * ### FileIO save/load with container

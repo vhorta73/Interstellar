@@ -19,6 +19,20 @@
  *
  * See @ref IO "Interstellar IO module".
  *
+ * @subsection logging_sec Logging
+ * Category-based logging facade over spdlog with fmt-safe formatting.
+ * - API surface: @ref Interstellar::Logging::Logger and @ref logging_api helpers
+ * - Severity: @ref Interstellar::Logging::LogLevel with @ref Interstellar::Logging::ToString
+ *   and parsers (@ref Interstellar::Logging::TryParseLogLevel,
+ *   @ref Interstellar::Logging::ParseLogLevelOr, @ref Interstellar::Logging::ParseLogLevel)
+ * - Category instances: logGeneric, logInit, logConfig, logGraphic
+ * - Thread-safety: logging calls are thread-safe
+ * - Flushing: errors flush promptly; destructor flushes as safeguard
+ * - Files: default `./logs`; override with `INTERSTELLAR_LOG_DIR`
+ * - Advanced: access underlying spdlog via `Logger::GetSpdLogger()`
+ *
+ * See @ref Logging "Interstellar Logging module".
+ *
  * @section examples_sec Examples
  * For quick starts and snippets, visit @ref Examples "Examples".
  */
