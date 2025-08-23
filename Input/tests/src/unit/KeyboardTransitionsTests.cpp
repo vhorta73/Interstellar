@@ -7,32 +7,43 @@ using namespace Interstellar::Input::Core;
 
 TEST(KeyboardTransitions, PressReleaseOneFrame) {
     KeyboardState kb;
-
-    // Frame 1: nothing yet
     kb.beginFrame(0.016);
     EXPECT_FALSE(kb.isDown(KeyCode::Space));
     EXPECT_FALSE(kb.wasPressed(KeyCode::Space));
     EXPECT_FALSE(kb.wasReleased(KeyCode::Space));
 
-    // Queue press during frame (simulated by backend)
     kb.setKeyDown(KeyCode::Space, true);
-
-    // Frame 2: apply press
     kb.beginFrame(0.016);
     EXPECT_TRUE(kb.isDown(KeyCode::Space));
     EXPECT_TRUE(kb.wasPressed(KeyCode::Space));
     EXPECT_FALSE(kb.wasReleased(KeyCode::Space));
 
-    // Still held in same frame: pressed flag should not persist next frame
     kb.beginFrame(0.016);
     EXPECT_TRUE(kb.isDown(KeyCode::Space));
     EXPECT_FALSE(kb.wasPressed(KeyCode::Space));
     EXPECT_FALSE(kb.wasReleased(KeyCode::Space));
 
-    // Queue release
     kb.setKeyDown(KeyCode::Space, false);
     kb.beginFrame(0.016);
     EXPECT_FALSE(kb.isDown(KeyCode::Space));
     EXPECT_FALSE(kb.wasPressed(KeyCode::Space));
     EXPECT_TRUE(kb.wasReleased(KeyCode::Space));
+}
+
+TEST(KeyboardTransitions, MultipleKeysIndependent) {
+    KeyboardState kb;
+    kb.beginFrame(0.016);
+
+    kb.setKeyDown(KeyCode::A, true);
+    kb.setKeyDown(KeyCode::D, false);
+    kb.beginFrame(0.016);
+    EXPECT_TRUE(kb.wasPressed(KeyCode::A));
+    EXPECT_FALSE(kb.wasPressed(KeyCode::D));
+    EXPECT_TRUE(kb.isDown(KeyCode::A));
+    EXPECT_FALSE(kb.isDown(KeyCode::D));
+
+    // Repeat press should not retrigger wasPressed next frame if still held
+    kb.beginFrame(0.016);
+    EXPECT_FALSE(kb.wasPressed(KeyCode::A));
+    EXPECT_TRUE(kb.isDown(KeyCode::A));
 }

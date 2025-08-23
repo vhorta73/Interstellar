@@ -4,7 +4,7 @@ namespace Interstellar::Input {
 
     BuildInfo GetBuildInfo() {
         BuildInfo info{};
-#if defined(ISTELLAR_INPUT_HAVE_GLFW)
+#if defined(INTERSTELLAR_INPUT_HAVE_GLFW)
         info.haveGLFW = true;
 #endif
         return info;

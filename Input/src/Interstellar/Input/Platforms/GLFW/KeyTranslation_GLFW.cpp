@@ -3,18 +3,19 @@
 
 namespace Interstellar::Input::Platforms::GLFW {
 
+    // Map GLFW key codes to engine KeyCode.
     KeyCode TranslateGLFWKey(int k) {
         switch (k) {
-        case GLFW_KEY_ESCAPE: return KeyCode::Escape;
-        case GLFW_KEY_ENTER:  return KeyCode::Enter;
-        case GLFW_KEY_TAB:    return KeyCode::Tab;
+        case GLFW_KEY_ESCAPE:    return KeyCode::Escape;
+        case GLFW_KEY_ENTER:     return KeyCode::Enter;
+        case GLFW_KEY_TAB:       return KeyCode::Tab;
         case GLFW_KEY_BACKSPACE: return KeyCode::Backspace;
-        case GLFW_KEY_SPACE:  return KeyCode::Space;
+        case GLFW_KEY_SPACE:     return KeyCode::Space;
 
-        case GLFW_KEY_LEFT:   return KeyCode::ArrowLeft;
-        case GLFW_KEY_RIGHT:  return KeyCode::ArrowRight;
-        case GLFW_KEY_UP:     return KeyCode::ArrowUp;
-        case GLFW_KEY_DOWN:   return KeyCode::ArrowDown;
+        case GLFW_KEY_LEFT:  return KeyCode::ArrowLeft;
+        case GLFW_KEY_RIGHT: return KeyCode::ArrowRight;
+        case GLFW_KEY_UP:    return KeyCode::ArrowUp;
+        case GLFW_KEY_DOWN:  return KeyCode::ArrowDown;
 
         case GLFW_KEY_0: return KeyCode::Num0;
         case GLFW_KEY_1: return KeyCode::Num1;
@@ -66,16 +67,20 @@ namespace Interstellar::Input::Platforms::GLFW {
         case GLFW_KEY_F10: return KeyCode::F10;
         case GLFW_KEY_F11: return KeyCode::F11;
         case GLFW_KEY_F12: return KeyCode::F12;
-        default: return KeyCode::Unknown;
+
+        default:
+            return KeyCode::Unknown; // fallback for unmapped keys
         }
     }
 
+    // Map GLFW mouse buttons to engine MouseButton.
     MouseButton TranslateGLFWMouseButton(int b) {
         switch (b) {
         case GLFW_MOUSE_BUTTON_LEFT:   return MouseButton::Left;
         case GLFW_MOUSE_BUTTON_RIGHT:  return MouseButton::Right;
         case GLFW_MOUSE_BUTTON_MIDDLE: return MouseButton::Middle;
-        default: return MouseButton::Left; // fallback; extend if needed
+        default:
+            return MouseButton::Left; // fallback; extend if more buttons needed
         }
     }
 

@@ -11,6 +11,9 @@ include(GNUInstallDirs)
 include(CMakePackageConfigHelpers)
 include(EnsureSources)   # same helper you use in IO
 
+# Always have FetchContent available (needed for GLFW fallback or GLM)
+include(FetchContent)
+
 # ---------------- Options ----------------
 option(INPUT_WARNINGS_AS_ERRORS "Treat warnings as errors for Input" OFF)
 option(INPUT_ENABLE_PACKAGE     "Install CMake package for Interstellar::Input (use system deps)" OFF)
@@ -58,10 +61,11 @@ target_include_directories(InterstellarInput
   PUBLIC
     $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
     $<INSTALL_INTERFACE:${INTERSTELLAR_INPUT_INSTALL_INCLUDE_DIR}>
-  INTERFACE
-    $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/src>  # build-tree only (for tests)
+  # Note: do not leak src to consumers. Keep it PRIVATE.
   PRIVATE
     ${CMAKE_CURRENT_SOURCE_DIR}/src
+  INTERFACE
+    $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/src>
 )
 
 # ---------------- Warnings ----------------
@@ -76,15 +80,15 @@ endif()
 # GLFW backend
 if(INPUT_BACKEND_GLFW)
   message(STATUS "[InterstellarInput] Backend requested: GLFW")
-  # Keep old macro for anyone else including your headers
   target_compile_definitions(InterstellarInput PUBLIC INTERSTELLAR_INPUT_BACKEND_GLFW=1)
 
   # Try config package first
   find_package(glfw3 CONFIG QUIET)
 
   set(_HAVE_GLFW FALSE)
+  unset(GLFW_TARGET)
+
   if(glfw3_FOUND)
-    # Common exported targets: glfw (static) or glfw_shared/glfw3; pick what's present
     if(TARGET glfw)
       set(GLFW_TARGET glfw)
     elseif(TARGET glfw_shared)
@@ -96,8 +100,6 @@ if(INPUT_BACKEND_GLFW)
       set(_HAVE_GLFW TRUE)
     endif()
   else()
-    # Fallback: vendor with FetchContent
-    include(FetchContent)
     if(NOT TARGET glfw AND NOT TARGET glfw_shared AND NOT TARGET glfw3)
       FetchContent_Declare(glfw
         GIT_REPOSITORY https://github.com/glfw/glfw.git
@@ -110,6 +112,7 @@ if(INPUT_BACKEND_GLFW)
       set(GLFW_BUILD_TESTS    OFF CACHE BOOL "" FORCE)
       FetchContent_MakeAvailable(glfw)
     endif()
+
     if(TARGET glfw)
       set(GLFW_TARGET glfw)
       set(_HAVE_GLFW TRUE)
@@ -124,8 +127,8 @@ if(INPUT_BACKEND_GLFW)
 
   if(_HAVE_GLFW)
     message(STATUS "[InterstellarInput] GLFW found: target=${GLFW_TARGET}")
-    # *** THIS macro is what your code checks ***
-    target_compile_definitions(InterstellarInput PRIVATE ISTELLAR_INPUT_HAVE_GLFW=1)
+    # Correct macro name used by your code
+    target_compile_definitions(InterstellarInput PUBLIC INTERSTELLAR_INPUT_HAVE_GLFW=1)
 
     target_link_libraries(InterstellarInput
       PUBLIC
@@ -138,6 +141,47 @@ if(INPUT_BACKEND_GLFW)
   endif()
 else()
   message(STATUS "[InterstellarInput] Backend requested: NULL/others-disabled")
+endif()
+
+# GLM (header-only). Prefer a config package; otherwise fetch.
+unset(GLM_TARGET)
+find_package(glm CONFIG QUIET)
+if(glm_FOUND)
+  if(TARGET glm::glm)
+    set(GLM_TARGET glm::glm)
+  elseif(TARGET glm)
+    # Some older glm exports only 'glm'; make a namespaced alias.
+    add_library(glm::glm INTERFACE IMPORTED)
+    set_target_properties(glm::glm PROPERTIES INTERFACE_LINK_LIBRARIES glm)
+    set(GLM_TARGET glm::glm)
+  endif()
+endif()
+
+if(NOT GLM_TARGET)
+  # Fetch header-only glm
+  if(NOT TARGET glm AND NOT TARGET glm::glm)
+    FetchContent_Declare(glm
+      GIT_REPOSITORY https://github.com/g-truc/glm.git
+      GIT_TAG        0.9.9.8
+      GIT_SHALLOW    TRUE
+      GIT_PROGRESS   TRUE
+    )
+    FetchContent_MakeAvailable(glm)
+  endif()
+
+  if(TARGET glm::glm)
+    set(GLM_TARGET glm::glm)
+  elseif(TARGET glm)
+    add_library(glm::glm INTERFACE IMPORTED)
+    set_target_properties(glm::glm PROPERTIES INTERFACE_LINK_LIBRARIES glm)
+    set(GLM_TARGET glm::glm)
+  endif()
+endif()
+
+if(GLM_TARGET)
+  target_link_libraries(InterstellarInput PUBLIC ${GLM_TARGET})
+else()
+  message(FATAL_ERROR "[InterstellarInput] glm not found and could not be fetched.")
 endif()
 
 # Win32 Raw Input backend (Windows only)
@@ -185,7 +229,7 @@ if(INPUT_ENABLE_PACKAGE)
   if(INPUT_BACKEND_GLFW)
     file(APPEND "${_INPUT_CFG}" "find_dependency(glfw3 REQUIRED)\n")
   endif()
-  file(APPEND "${_INPUT_CFG}" "include(\"\${CMAKE_CURRENT_LIST_DIR}/InterstellarInputTargets.cmake\")\n")
+  file(APPEND "${_INPUT_CFG}" "include(\"${CMAKE_CURRENT_LIST_DIR}/InterstellarInputTargets.cmake\")\n")
 
   install(FILES
     "${_INPUT_CFG}"

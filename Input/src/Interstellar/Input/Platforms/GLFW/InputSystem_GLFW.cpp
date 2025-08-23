@@ -1,13 +1,17 @@
-// InputSystem_GLFW.cpp (changes)
+// InputSystem_GLFW.cpp
 #include "InputSystem_GLFW.hpp"
-#include "KeyTranslation_GLFW.hpp"
+#include "Interstellar/Input/Platforms/GLFW/KeyTranslation_GLFW.hpp"
 #include <cassert>
 
 namespace Interstellar::Input::Platforms::GLFW {
 
+    // Global registry mapping GLFWwindow* to backend instance.
     static std::unordered_map<GLFWwindow*, InputSystem_GLFW*> g_registry;
 
-    std::unordered_map<GLFWwindow*, InputSystem_GLFW*>& InputSystem_GLFW::Reg() { return g_registry; }
+    std::unordered_map<GLFWwindow*, InputSystem_GLFW*>& InputSystem_GLFW::Reg() {
+        return g_registry;
+    }
+
     InputSystem_GLFW* InputSystem_GLFW::From(GLFWwindow* w) {
         auto it = Reg().find(w);
         return it == Reg().end() ? nullptr : it->second;
@@ -17,23 +21,24 @@ namespace Interstellar::Input::Platforms::GLFW {
         window_ = static_cast<GLFWwindow*>(cfg.nativeWindow);
         assert(window_ && "GLFW backend requires a valid GLFWwindow*");
 
-        // Register ourselves (no user-pointer reliance)
+        // Register this instance for callback lookup (avoid relying on user pointer).
         Reg()[window_] = this;
 
-        // Chain: grab existing callbacks, then install ours
+        // Chain: capture existing callbacks, then install ours.
         prevKeyCb_ = glfwSetKeyCallback(window_, &InputSystem_GLFW::KeyCallback);
         prevMouseButtonCb_ = glfwSetMouseButtonCallback(window_, &InputSystem_GLFW::MouseButtonCallback);
         prevCursorPosCb_ = glfwSetCursorPosCallback(window_, &InputSystem_GLFW::CursorPosCallback);
         prevScrollCb_ = glfwSetScrollCallback(window_, &InputSystem_GLFW::ScrollCallback);
 
-        // Initialize mouse pos
-        double x = 0, y = 0; glfwGetCursorPos(window_, &x, &y);
+        // Initialize mouse position and flush initial frame state.
+        double x = 0.0, y = 0.0;
+        glfwGetCursorPos(window_, &x, &y);
         mouse_.setPosition(static_cast<float>(x), static_cast<float>(y));
         mouse_.beginFrame(0.0);
     }
 
     InputSystem_GLFW::~InputSystem_GLFW() {
-        // Restore previous callbacks (be a good citizen)
+        // Restore previous callbacks and unregister.
         if (window_) {
             glfwSetKeyCallback(window_, prevKeyCb_);
             glfwSetMouseButtonCallback(window_, prevMouseButtonCb_);
@@ -44,7 +49,7 @@ namespace Interstellar::Input::Platforms::GLFW {
     }
 
     void InputSystem_GLFW::pump() {
-        // ok to call even if app also calls it
+        // Safe to call even if the host app also calls it.
         glfwPollEvents();
     }
 
@@ -53,18 +58,18 @@ namespace Interstellar::Input::Platforms::GLFW {
         mouse_.beginFrame(dt);
     }
 
-    /* static */ void InputSystem_GLFW::KeyCallback(GLFWwindow* w, int key, int sc, int action, int mods) {
+    /* static */ void InputSystem_GLFW::KeyCallback(GLFWwindow* w, int key, int scancode, int action, int mods) {
         if (auto* self = From(w)) {
             const auto kc = TranslateGLFWKey(key);
             if (kc != KeyCode::Unknown) {
+                // Treat PRESS and REPEAT as down; RELEASE as up.
                 const bool down = (action != GLFW_RELEASE);
                 self->keyboard_.setKeyDown(kc, down);
             }
-            if (self->prevKeyCb_) self->prevKeyCb_(w, key, sc, action, mods);
+            if (self->prevKeyCb_) self->prevKeyCb_(w, key, scancode, action, mods);
         }
         else {
-            // Not our window; just pass through if someone chained us
-            // (we have no prev here, nothing to do)
+            // Not our window; nothing to do here.
         }
     }
 
@@ -84,12 +89,11 @@ namespace Interstellar::Input::Platforms::GLFW {
         }
     }
 
-    void InputSystem_GLFW::ScrollCallback(GLFWwindow* w, double xoff, double yoff) {
+    /* static */ void InputSystem_GLFW::ScrollCallback(GLFWwindow* w, double xoff, double yoff) {
         if (auto* self = From(w)) {
             self->mouse_.addWheel(static_cast<float>(xoff), static_cast<float>(yoff));
             if (self->prevScrollCb_) self->prevScrollCb_(w, xoff, yoff);
         }
     }
-
 
 } // namespace Interstellar::Input::Platforms::GLFW

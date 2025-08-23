@@ -5,6 +5,9 @@
 
 namespace Interstellar::Input::Core {
 
+    // Internal: default implementation of InputSystem.
+    // Wires KeyboardState and MouseState into the abstract InputSystem interface.
+    // Created via InputSystem::Create(); not exposed directly to game code.
     class InputSystem_Impl : public InputSystem {
     public:
         IKeyboard& keyboard() override { return keyboard_; }

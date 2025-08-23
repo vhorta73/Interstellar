@@ -6,6 +6,8 @@
 
 namespace Interstellar::Input::Core {
 
+    // Internal: double-buffered keyboard state with per-frame edge detection.
+    // Not exposed in public API. Game code uses IKeyboard instead.
     class KeyboardState final : public IKeyboard {
     public:
         KeyboardState() {
@@ -26,13 +28,13 @@ namespace Interstellar::Input::Core {
             return released[idx(key)];
         }
 
-        // Backend-facing API
+        // Backend-facing API: update staged key state.
         void setKeyDown(KeyCode key, bool down) {
             nextDown[idx(key)] = down;
         }
 
+        // Commit staged state and compute per-frame transitions.
         void beginFrame(double /*dt*/) {
-            // compute transitions from current->next
             for (std::size_t i = 0; i < currentDown.size(); ++i) {
                 const bool c = currentDown[i];
                 const bool n = nextDown[i];
