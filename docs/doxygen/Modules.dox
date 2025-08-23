@@ -1,15 +1,18 @@
-/**
- * @defgroup Interstellar Interstellar
- * @brief Root group for the Interstellar.
- *
- * Currently only the Input subsystem is documented.
- */
+/** 
+* @defgroup Modules Modules
+* High-level module groups for the Interstellar project with examples.
+*/
 
 /**
- * @defgroup Input Input
- * @ingroup Interstellar
- * @brief Core module for user input (keyboard, mouse).
- *
- * See the Input details and guide in the Input docs (Input.dox).
- * For a quick start, see \subpage InputGuide.
- */
+* @ingroup Modules
+* @defgroup IO IO
+* @brief IO utilities: error types, expected shim, filesystem helpers, containers, and file orchestration.
+* @since 1.0 
+*/
+
+/** 
+* @defgroup Input Input
+* @ingroup Modules
+* @brief Core input module (keyboard, mouse, backends, helpers).
+* @since 1.0
+*/

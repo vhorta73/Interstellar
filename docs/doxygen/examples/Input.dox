@@ -1,0 +1,28 @@
+/**
+ * @defgroup InputExamples Input
+ * @ingroup Examples
+ *
+ * Quick start samples for the Input module.
+ *
+ * @since 1.0
+ *
+ * ### Create and use InputSystem (GLFW)
+ * @code
+ * using namespace Interstellar::Input;
+ * GLFWwindow* w = /* your window */;
+ * InputConfig cfg; cfg.backend = InputConfig::Backend::GLFW; cfg.nativeWindow = w;
+ * auto sys = InputSystem::Create(cfg);
+ * InputFrameGuard frame(*sys, 0.016);
+ * if (Pressed(sys->keyboard(), KeyCode::Space)) { /* fire */ }
+ * @endcode
+ *
+ * ### Cursor capture (RAII)
+ * @code
+ * IMouse& m = sys->mouse();
+ * {
+ *   InputCapture cap(m, true);
+ *   // relative mode active in this scope
+ * }
+ * // auto-restored
+ * @endcode
+ */

@@ -1,8 +1,24 @@
 /**
  * @mainpage Interstellar
  *
- * ## Available Interstellar Modules
- * See the \ref modules "Modules list" for all subsystems.
+ * @section modules_sec Modules
  *
- * - \ref Input "Input" - (\ref InputExamples "Quick Start")
+ * @subsection input_sec Input
+ * Core input module (keyboard, mouse, backends, helpers).
+ * - Devices: IKeyboard, IMouse
+ * - Frame lifecycle: pump, beginFrame, endFrame
+ * - Backends: GLFW (with callback chaining), Null
+ *
+ * See @ref Input "Interstellar Input module".
+ *
+ * @subsection io_sec IO
+ * IO utilities for engine code.
+ * - Error types and expected shim
+ * - Filesystem helpers
+ * - Containers and file orchestration
+ *
+ * See @ref IO "Interstellar IO module".
+ *
+ * @section examples_sec Examples
+ * For quick starts and snippets, visit @ref Examples "Examples".
  */

@@ -1,0 +1,43 @@
+/**
+ * @defgroup IOExamples IO
+ * @ingroup Examples
+ *
+ * Quick start samples for the IO module.
+ *
+ * @since 1.0
+ *
+ * ### FileIO save/load with container
+ * @code
+ * using namespace Interstellar::IO;
+ * struct U32Ser : ISerializer<uint32_t> {
+ *   expected<std::vector<std::byte>, Error>
+ *   serialize(std::span<const uint32_t> it) const override {
+ *     std::vector<std::byte> out(it.size() * sizeof(uint32_t));
+ *     std::memcpy(out.data(), it.data(), out.size());
+ *     return out;
+ *   }
+ *   expected<std::vector<uint32_t>, Error>
+ *   deserialize(std::span<const std::byte> b) const override {
+ *     if (b.size() % 4) return make_unexpected(Error::invalid_data("size not multiple of 4"));
+ *     std::vector<uint32_t> v(b.size() / 4);
+ *     std::memcpy(v.data(), b.data(), b.size());
+ *     return v;
+ *   }
+ *   uint32_t schema_version() const override { return 1u; }
+ *   uint32_t magic_u32() const override { return 0x55333231u; } // "U321"
+ * };
+ * LocalFilesystem fs; FileIO fio(fs); U32Ser ser;
+ * std::vector<uint32_t> data{1,2,3};
+ * auto sw = fio.save<uint32_t>("nums.bin", data, ser, SaveOptions{true,true});
+ * auto ld = fio.load<uint32_t>("nums.bin", ser, LoadOptions{true});
+ * @endcode
+ *
+ * ### Container pack/unpack
+ * @code
+ * const uint32_t magic = 0x41414131u; // "AAA1"
+ * const uint32_t version = 1u;
+ * std::vector<std::byte> payload{/*...*/};
+ * auto framed = pack_container(magic, version, std::span<const std::byte>(payload.data(), payload.size()));
+ * auto up = unpack_container(std::span<const std::byte>(framed.data(), framed.size()), magic, version);
+ * @endcode
+ */
