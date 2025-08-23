@@ -1,33 +1,38 @@
 #pragma once
 #include <cstdint>
+#include <cstddef>   // std::byte, size_t
 #include <cstring>
 #include <vector>
 #include <span>
 #include <array>
 #include <limits>
-#include <bit>          // for std::endian (optional hint)
-#include "Expected.hpp"
-#include "Result.hpp"    // or your header that defines Error/ErrorCode
+#include <bit>       // optional: std::endian hint
+#include "Interstellar/IO/Expected.hpp"
+#include "Interstellar/IO/Result.hpp"  // defines Error/ErrorCode
 
-/// \file Container.hpp
-/// \brief Compact LE container header to guard payloads with magic, version, size, and CRC32.
+/// \file
+/// \ingroup IO
+/// \brief Compact little-endian container to guard payloads with magic, version, size, and CRC32.
 /// \details
 /// Wire layout (little-endian, exactly 20 bytes):
 ///   [magic:4][version:4][payload_size:8][crc32:4][payload...]
-/// - The header is *not* a raw dump of a C++ struct; we encode fields explicitly in LE.
-/// - `unpack_container` validates size and CRC before returning a `span` over the payload.
-/// - CRC polynomial: 0xEDB88320 (standard CRC-32/ISO-HDLC), initial 0xFFFFFFFF, final XOR 0xFFFFFFFF.
-///
-/// ### Thread-safety
-/// - `crc32()` uses a function-local `static const` lookup table-safe in C++11+.
-///
-/// ### Exceptions
-/// - No function throws for validation failures; errors are returned via `expected`.
-/// - `pack_container` may throw `std::bad_alloc` on vector growth.
+/// Notes:
+/// - The header is not a raw dump of a C++ struct; fields are encoded explicitly in LE.
+/// - unpack_container() validates size and CRC before returning a span over the payload.
+/// - CRC polynomial: 0xEDB88320 (CRC-32/ISO-HDLC), init 0xFFFFFFFF, final XOR 0xFFFFFFFF.
+/// Thread-safety:
+/// - crc32() uses a function-local static lookup table (thread-safe since C++11).
+/// Exceptions:
+/// - Validation failures return Error via expected.
+/// - pack_container() may throw std::bad_alloc on vector growth.
 
 namespace Interstellar::IO {
 
-    /// \brief In-memory representation for convenience (not the wire layout).
+    /**
+     * @ingroup IO
+     * @brief Parsed container header (convenience view, not the wire layout).
+     * @since 1.0
+     */
     struct ContainerHeader {
         uint32_t magic{ 0 };
         uint32_t version{ 0 };
@@ -35,7 +40,10 @@ namespace Interstellar::IO {
         uint32_t crc32{ 0 };
     };
 
-    // --- Little-endian helpers (portable, no UB) ---
+    // ------------------------------------------------------------------
+    // Internal LE helpers (portable, no UB) -- hidden from public docs.
+    // ------------------------------------------------------------------
+    /// \cond INTERNAL
 
     constexpr std::size_t kHeaderSize = 4u + 4u + 8u + 4u; // 20 bytes
     static_assert(kHeaderSize == 20, "Header size must be 20 bytes");
@@ -62,14 +70,18 @@ namespace Interstellar::IO {
         return v;
     }
 
+    /// \endcond
+
     /**
-     * @brief Compute CRC32 over a byte span (CRC-32/ISO-HDLC).
+     * @ingroup IO
+     * @brief Compute CRC32 (CRC-32/ISO-HDLC) over a byte span.
      * @param data Input buffer.
      * @return 32-bit CRC.
-     * @note Uses a thread-safe, lazily-constructed static table.
+     * @complexity O(N) in data size.
+     * @thread_safety Thread-safe; uses a function-local static table.
+     * @since 1.0
      */
-    inline uint32_t crc32(std::span<const std::byte> data) noexcept {
-        // Build table once in a thread-safe way:
+    [[nodiscard]] inline uint32_t crc32(std::span<const std::byte> data) noexcept {
         static const std::array<uint32_t, 256> table = [] {
             std::array<uint32_t, 256> t{};
             for (uint32_t i = 0; i < 256; ++i) {
@@ -90,14 +102,18 @@ namespace Interstellar::IO {
     }
 
     /**
+     * @ingroup IO
      * @brief Pack a payload with a 20-byte LE header (magic, version, size, CRC).
      * @param magic   4-byte magic constant.
      * @param version Schema/format version.
      * @param payload Payload bytes (borrowed).
-     * @return Concatenated [header|payload] buffer or Error on allocation failure.
-     * @post `result.size() == 20 + payload.size()`.
+     * @return Concatenated [header|payload] buffer.
+     * @post result.size() == 20 + payload.size().
+     * @throws std::bad_alloc On vector allocation/growth.
+     * @complexity O(N) in payload size.
+     * @since 1.0
      */
-    inline std::vector<std::byte>
+    [[nodiscard]] inline std::vector<std::byte>
         pack_container(uint32_t magic, uint32_t version, std::span<const std::byte> payload) {
         const uint64_t psz = static_cast<uint64_t>(payload.size());
         const uint32_t crc = crc32(payload);
@@ -116,19 +132,22 @@ namespace Interstellar::IO {
     }
 
     /**
+     * @ingroup IO
      * @brief Unpack and validate a container, returning a view of the payload on success.
      * @param bytes          Entire [header|payload] buffer (borrowed).
      * @param expect_magic   Expected magic constant (mismatch -> VersionMismatch).
      * @param expect_version Expected schema version (mismatch -> VersionMismatch).
-     * @param out_hdr        Optional: if non-null, filled with the parsed header (by value).
-     * @return On success, a `span` over the payload bytes. On failure, an `Error`.
+     * @param out_hdr        Optional: if non-null, filled with the parsed header.
+     * @return expected<span<const byte>, Error> - payload view on success; Error otherwise.
      * @errors
-     *  - `InvalidData`: header too small.
-     *  - `VersionMismatch`: magic or version mismatch.
-     *  - `Corrupted`: truncated payload or CRC mismatch.
+     *  - InvalidData: header too small.
+     *  - VersionMismatch: magic or version mismatch.
+     *  - Corrupted: truncated payload or CRC mismatch.
+     * @complexity O(N) in payload size (for CRC).
+     * @thread_safety Reentrant; operates on caller-provided buffers only.
+     * @since 1.0
      */
-    [[nodiscard]]
-    inline expected<std::span<const std::byte>, Error>
+    [[nodiscard]] inline expected<std::span<const std::byte>, Error>
         unpack_container(std::span<const std::byte> bytes,
             uint32_t expect_magic,
             uint32_t expect_version,
@@ -151,7 +170,7 @@ namespace Interstellar::IO {
             return make_unexpected(Error{ ErrorCode::VersionMismatch, "Version mismatch" });
         }
 
-        // Bounds/overflow checks (avoid size_t wrap):
+        // Bounds/overflow checks (avoid size_t wrap).
         const std::size_t header = kHeaderSize;
         const std::size_t total = bytes.size();
         if (psz > std::numeric_limits<std::size_t>::max()) {

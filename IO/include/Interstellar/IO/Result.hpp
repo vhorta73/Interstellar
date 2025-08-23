@@ -3,28 +3,32 @@
 #include <string_view>
 #include <system_error> // std::error_code, std::errc
 
-/// \file Error.hpp
+/// \file
+/// \ingroup IO
 /// \brief Lightweight error code and message used across Interstellar IO.
 /// \details
 ///  - Use strongly-typed \ref Interstellar::IO::ErrorCode to classify failures.
 ///  - Attach a short, human-readable message for diagnostics/logging.
 ///  - Prefer converting native errors (errno/Win32) to \ref Error via
-///    \ref Error::from_system_error to preserve context.
-///  - This type is intended to be used as the `E` in `expected<T, Error>`.
+///    \ref Interstellar::IO::Error::from_system_error to preserve context.
+///  - Intended to be used as the E in expected<T, Error>.
+/// \since 1.0
 
 namespace Interstellar::IO {
 
     /**
+     * @ingroup IO
      * @brief Categorical error codes for IO and serialization failures.
      * @details
-     * - `None`: success; no error condition.
-     * - `NotFound`: path/resource does not exist.
-     * - `PermissionDenied`: lacking required privileges or locked by another process.
-     * - `InvalidArgument`: API misuse, null/empty path, out-of-range parameter.
-     * - `InvalidData`: well-formed file access but contents are semantically invalid (e.g., bad field).
-     * - `VersionMismatch`: version/feature level incompatible with current reader/writer.
-     * - `IOError`: I/O subsystem failure (disk error, short read/write, device error).
-     * - `Corrupted`: structurally damaged file/stream (truncated, bad checksum, magic mismatch).
+     * - None: success; no error condition.
+     * - NotFound: path/resource does not exist.
+     * - PermissionDenied: lacking required privileges or locked by another process.
+     * - InvalidArgument: API misuse, null/empty path, out-of-range parameter.
+     * - InvalidData: well-formed file access but contents are semantically invalid.
+     * - VersionMismatch: version or feature level incompatible with reader/writer.
+     * - IOError: I/O subsystem failure (disk error, short read/write, device error).
+     * - Corrupted: structurally damaged file/stream (truncated, bad checksum, magic mismatch).
+     * @since 1.0
      */
     enum class ErrorCode {
         None = 0,
@@ -38,8 +42,10 @@ namespace Interstellar::IO {
     };
 
     /**
+     * @ingroup IO
      * @brief Error value with code and optional human-readable message.
-     * @note Kept small and trivially movable; suitable for `expected<T, Error>`.
+     * @note Small, trivially movable; suitable for expected<T, Error>.
+     * @since 1.0
      */
     struct Error {
         /// Primary classification.
@@ -47,36 +53,84 @@ namespace Interstellar::IO {
         /// Human-readable detail (may be empty). Keep short; logs can add context.
         std::string message{};
 
-        // ---------------- Convenience: state checks ----------------
+        // ---------------- State checks ----------------
 
-        /// @brief True if no error.
+        /**
+         * @brief True if no error.
+         * @return bool
+         * @complexity O(1)
+         * @thread_safety Thread-safe; const and trivially copyable.
+         * @since 1.0
+         */
         [[nodiscard]] constexpr bool ok() const noexcept { return code == ErrorCode::None; }
-        /// @brief True if there is an error.
+
+        /**
+         * @brief True if there is an error.
+         * @return bool
+         * @complexity O(1)
+         * @thread_safety Thread-safe; const and trivially copyable.
+         * @since 1.0
+         */
         [[nodiscard]] constexpr bool failed() const noexcept { return !ok(); }
 
-        // ---------------- Factory helpers (ergonomic creation) ----------------
+        // ---------------- Factory helpers ----------------
 
-        /// @brief Create a success value.
+        /**
+         * @brief Create a success value.
+         * @return Error with code None and empty message.
+         * @complexity O(1)
+         * @since 1.0
+         */
         [[nodiscard]] static constexpr Error none() noexcept { return {}; }
 
+        /**
+         * @brief Create NotFound error.
+         * @param msg Optional message.
+         * @return Error
+         * @since 1.0
+         */
         [[nodiscard]] static Error not_found(std::string_view msg = {}) {
             return { ErrorCode::NotFound, std::string(msg) };
         }
+        /**
+         * @brief Create PermissionDenied error.
+         * @since 1.0
+         */
         [[nodiscard]] static Error permission_denied(std::string_view msg = {}) {
             return { ErrorCode::PermissionDenied, std::string(msg) };
         }
+        /**
+         * @brief Create InvalidArgument error.
+         * @since 1.0
+         */
         [[nodiscard]] static Error invalid_argument(std::string_view msg = {}) {
             return { ErrorCode::InvalidArgument, std::string(msg) };
         }
+        /**
+         * @brief Create InvalidData error.
+         * @since 1.0
+         */
         [[nodiscard]] static Error invalid_data(std::string_view msg = {}) {
             return { ErrorCode::InvalidData, std::string(msg) };
         }
+        /**
+         * @brief Create VersionMismatch error.
+         * @since 1.0
+         */
         [[nodiscard]] static Error version_mismatch(std::string_view msg = {}) {
             return { ErrorCode::VersionMismatch, std::string(msg) };
         }
+        /**
+         * @brief Create IOError error.
+         * @since 1.0
+         */
         [[nodiscard]] static Error io_error(std::string_view msg = {}) {
             return { ErrorCode::IOError, std::string(msg) };
         }
+        /**
+         * @brief Create Corrupted error.
+         * @since 1.0
+         */
         [[nodiscard]] static Error corrupted(std::string_view msg = {}) {
             return { ErrorCode::Corrupted, std::string(msg) };
         }
@@ -84,11 +138,13 @@ namespace Interstellar::IO {
         // ---------------- Interop with std::error_code ----------------
 
         /**
-         * @brief Create from a system error, mapping common `std::errc` to our categories.
-         * @param ec System error code (e.g., from filesystem ops).
-         * @param context Optional extra context to prepend.
+         * @brief Create from a system error, mapping common std::errc to our categories.
+         * @param ec System error code (for example, from filesystem ops).
+         * @param context Optional extra context to prepend to the message.
          * @return Mapped Error with combined message.
-         * @note Preserves the original code value as text inside \ref message.
+         * @note Preserves the original code category and value as text inside message.
+         * @complexity O(L) where L is the length of context and ec.message().
+         * @since 1.0
          */
         [[nodiscard]] static Error from_system_error(std::error_code ec, std::string_view context = {}) {
             const ErrorCode mapped = map_errc(ec);
@@ -109,9 +165,13 @@ namespace Interstellar::IO {
         }
 
         /**
-         * @brief Convert this Error to a generic `std::error_code` for interop/logging.
-         * @details This uses `std::errc` approximations; detailed OS codes are only
-         *          available if you captured them earlier and included them in `message`.
+         * @brief Convert an ErrorCode to a generic std::error_code.
+         * @details Uses std::errc approximations; OS-specific codes should be captured externally
+         *          and included in message when needed.
+         * @param code ErrorCode to map.
+         * @return std::error_code
+         * @complexity O(1)
+         * @since 1.0
          */
         [[nodiscard]] static std::error_code to_std_error(ErrorCode code) noexcept {
             using std::errc;
@@ -125,12 +185,18 @@ namespace Interstellar::IO {
             case ErrorCode::IOError:          return make_error_code(errc::io_error);
             case ErrorCode::Corrupted:        return make_error_code(errc::bad_message);
             }
-            return make_error_code(errc::io_error);
+            return make_error_code(std::errc::io_error);
         }
 
         // ---------------- Utilities ----------------
 
-        /// @brief Convert code to a stable string token (for logs/telemetry).
+        /**
+         * @brief Convert code to a stable string token.
+         * @param c ErrorCode
+         * @return const char* token, for example "NotFound".
+         * @complexity O(1)
+         * @since 1.0
+         */
         [[nodiscard]] static constexpr const char* to_string(ErrorCode c) noexcept {
             switch (c) {
             case ErrorCode::None:             return "None";
@@ -145,7 +211,12 @@ namespace Interstellar::IO {
             return "Unknown";
         }
 
-        /// @brief Human-readable summary (code + message).
+        /**
+         * @brief Human-readable summary combining code and message.
+         * @return string in the form "Code: message" or just "Code" if message is empty.
+         * @complexity O(N) where N is message length.
+         * @since 1.0
+         */
         [[nodiscard]] std::string summary() const {
             if (message.empty()) return std::string(to_string(code));
             std::string out{ to_string(code) };
@@ -154,17 +225,25 @@ namespace Interstellar::IO {
             return out;
         }
 
-        // ---------------- Comparisons (useful in tests) ----------------
+        // ---------------- Comparisons ----------------
 
+        /**
+         * @brief Equality compares both code and message.
+         * @since 1.0
+         */
         friend constexpr bool operator==(const Error& a, const Error& b) noexcept {
-            // Intentionally compare both fields; messages matter in tests.
             return a.code == b.code && a.message == b.message;
         }
+        /**
+         * @brief Inequality.
+         * @since 1.0
+         */
         friend constexpr bool operator!=(const Error& a, const Error& b) noexcept {
             return !(a == b);
         }
 
     private:
+        // Map common std::errc to our categories; defaults to IOError.
         [[nodiscard]] static ErrorCode map_errc(std::error_code ec) noexcept {
             using std::errc;
             switch (static_cast<errc>(ec.value())) {
@@ -175,7 +254,7 @@ namespace Interstellar::IO {
             case errc::protocol_error:             return ErrorCode::VersionMismatch;
             case errc::io_error:                   return ErrorCode::IOError;
             case errc::bad_message:                return ErrorCode::Corrupted;
-            default:                                return ErrorCode::IOError;
+            default:                               return ErrorCode::IOError;
             }
         }
     };
@@ -185,11 +264,13 @@ namespace Interstellar::IO {
 // ---------------- Optional {fmt} integration ----------------
 #if __has_include(<fmt/format.h>)
 #include <fmt/format.h>
-template <>
-struct fmt::formatter<Interstellar::IO::Error> : fmt::formatter<std::string_view> {
-    template <typename FormatContext>
-    auto format(const Interstellar::IO::Error& e, FormatContext& ctx) {
-        return fmt::formatter<std::string_view>::format(e.summary(), ctx);
-    }
-};
+namespace fmt {
+    template <>
+    struct formatter<Interstellar::IO::Error> : formatter<std::string_view> {
+        template <typename FormatContext>
+        auto format(const Interstellar::IO::Error& e, FormatContext& ctx) const {
+            return formatter<std::string_view>::format(e.summary(), ctx);
+        }
+    };
+} // namespace fmt
 #endif
