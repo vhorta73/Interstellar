@@ -4,6 +4,25 @@
  * @brief Quick examples for Logging and fmt helpers.
  * @since 1.0
  *
+ * ### Basic usage
+ * @code
+ * using namespace Interstellar::Logging;
+ * logGeneric.LogInfo("Hello {}", "world");
+ * @endcode
+ *
+ * ### Category and level
+ * @code
+ * Logger net("Network", LogLevel::Warn);
+ * net.LogWarn("Latency {} ms", ms);
+ * @endcode
+ *
+ * ### Parsing levels from config
+ * @code
+ * auto lvl = ParseLogLevelOr(cfg.logLevel, LogLevel::Info);
+ * Logger gameplay("Gameplay", lvl);
+ * gameplay.LogDebug("Spawned {}", count);
+ * @endcode
+ *
  * @code
  * #include <optional>
  * #include <fmt/format.h>
