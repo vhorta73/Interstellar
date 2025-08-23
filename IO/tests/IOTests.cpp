@@ -499,3 +499,296 @@ TEST_F(IoTempDir, JsonFastLoad_With_Container) {
         EXPECT_EQ(data.at(0).AtomicNumber, 1);
     }
 }
+
+TEST(IO, CRC32_KnownVectors) {
+    using namespace Interstellar::IO;
+    std::vector<std::byte> empty;
+    EXPECT_EQ(crc32(empty), 0x00000000u);               // std CRC-32 of empty with 0xFFFFFFFF init/xor
+
+    const char* s = "123456789";
+    std::span<const std::byte> bytes{
+        reinterpret_cast<const std::byte*>(s), std::strlen(s)
+    };
+    EXPECT_EQ(crc32(bytes), 0xCBF43926u);               // well-known check vector
+}
+
+
+TEST(IO, Container_EmptyPayload) {
+    using namespace Interstellar::IO;
+    const uint32_t magic = 0xABCD1234, ver = 7;
+    auto buf = pack_container(magic, ver, {});          // 20-byte header only
+    ASSERT_EQ(buf.size(), kHeaderSize);
+
+    ContainerHeader hdr{};
+    auto out = unpack_container(buf, magic, ver, &hdr);
+    ASSERT_TRUE(out.has_value());
+    EXPECT_EQ(out->size(), 0u);
+    EXPECT_EQ(hdr.magic, magic);
+    EXPECT_EQ(hdr.version, ver);
+    EXPECT_EQ(hdr.payload_size, 0u);
+}
+
+TEST(IO, Container_HeaderTooSmall) {
+    using namespace Interstellar::IO;
+    std::vector<std::byte> tiny(5); // < 20
+    auto r = unpack_container(tiny, 0, 0);
+    ASSERT_FALSE(r);
+    EXPECT_EQ(r.error().code, ErrorCode::InvalidData);
+}
+
+TEST(IO, Container_TruncatedPayload) {
+    using namespace Interstellar::IO;
+    const uint32_t magic = 0x11112222, ver = 1;
+    std::vector<std::byte> payload(10, std::byte{ 0xAA });
+    auto buf = pack_container(magic, ver, payload);
+    // Chop off last 3 payload bytes
+    buf.resize(kHeaderSize + 7);
+
+    auto r = unpack_container(buf, magic, ver);
+    ASSERT_FALSE(r);
+    EXPECT_EQ(r.error().code, ErrorCode::Corrupted);
+}
+
+TEST(IO, Container_MagicMismatchVsVersionMismatch) {
+    using namespace Interstellar::IO;
+    const uint32_t magic = 0xDEADBEEF, ver = 3;
+    auto buf = pack_container(magic, ver, {});
+
+    // Magic mismatch
+    auto m = unpack_container(buf, /*expect_magic*/ 0xFEEDBEEF, /*expect_version*/ ver);
+    ASSERT_FALSE(m);
+    EXPECT_EQ(m.error().code, ErrorCode::VersionMismatch);
+
+    // Version mismatch
+    auto v = unpack_container(buf, /*expect_magic*/ magic, /*expect_version*/ ver + 1);
+    ASSERT_FALSE(v);
+    EXPECT_EQ(v.error().code, ErrorCode::VersionMismatch);
+}
+
+TEST(IO, Container_OutHeaderFilled) {
+    using namespace Interstellar::IO;
+    const uint32_t magic = 0xA1B2C3D4, ver = 42;
+    std::vector<std::byte> payload = { std::byte{1}, std::byte{2}, std::byte{3} };
+    auto buf = pack_container(magic, ver, payload);
+    ContainerHeader hdr{};
+    auto r = unpack_container(buf, magic, ver, &hdr);
+    ASSERT_TRUE(r);
+    EXPECT_EQ(hdr.magic, magic);
+    EXPECT_EQ(hdr.version, ver);
+    EXPECT_EQ(hdr.payload_size, payload.size());
+    EXPECT_EQ(hdr.crc32, crc32(payload));
+}
+
+TEST_F(IoTempDir, Save_FailsWithoutEnsureDirectories) {
+    LocalFilesystem lfs; FileIO io(lfs); ElementBinSer ser;
+    std::vector<Element> elems{ {1,"H","Hydrogen",1.008} };
+    auto path = dir_ / "nested" / "elements.bin";
+
+    SaveOptions sopt{}; sopt.wrap_with_container = true; sopt.ensure_directories = false;
+    auto r = io.save<Element>(path, elems, ser, sopt);
+    ASSERT_FALSE(r);
+    EXPECT_EQ(r.error().code, ErrorCode::IOError);
+}
+
+TEST_F(IoTempDir, LocalFilesystem_OverwriteAtomic) {
+    LocalFilesystem lfs; FileIO io(lfs); ElementBinSer ser;
+    auto path = dir_ / "elements.bin";
+
+    const std::array<Element, 1> v1{ Element{1,"H","Hydrogen",1.008} };
+    ASSERT_OK(io.save<Element>(path, std::span<const Element>(v1), ser));
+
+    const std::array<Element, 1> v2{ Element{2,"He","Helium",4.0026} };
+    ASSERT_OK(io.save<Element>(path, std::span<const Element>(v2), ser));
+
+    auto out = io.load(path, ser);
+    ASSERT_OK(out);
+    ASSERT_EQ(out->size(), 1u);
+    EXPECT_EQ(out->at(0).Symbol, "He");
+}
+
+TEST_F(IoTempDir, SaveLoad_EmptyCollection) {
+    LocalFilesystem lfs; FileIO io(lfs); ElementBinSer ser;
+    auto path = dir_ / "empty.bin";
+    std::vector<Element> empty;
+
+    ASSERT_OK(io.save<Element>(path, empty, ser));  // default: with container
+    auto out = io.load(path, ser);
+    ASSERT_OK(out);
+    EXPECT_TRUE(out->empty());
+}
+
+TEST_F(IoTempDir, LocalFilesystem_ReadMissing) {
+    LocalFilesystem lfs; FileIO io(lfs); ElementBinSer ser;
+    auto out = io.load(dir_ / "nope.bin", ser);
+    ASSERT_FALSE(out);
+    EXPECT_EQ(out.error().code, ErrorCode::NotFound);
+}
+
+TEST(IO, MemoryFilesystem_ExistsAndRemoveAbsent) {
+    MemoryFilesystem mfs;
+    EXPECT_FALSE(mfs.exists("/mem/none.bin"));
+    auto r = mfs.remove_file("/mem/none.bin");
+    EXPECT_OK(r); // removing non-existent is success per contract
+}
+
+TEST(IO, MemoryFilesystem_EmptyPathErrors) {
+    MemoryFilesystem mfs;
+    std::vector<std::byte> b;
+    auto w = mfs.write_all_bytes_atomic({}, b, true);
+    ASSERT_FALSE(w);
+    EXPECT_EQ(w.error().code, ErrorCode::InvalidArgument);
+
+    auto r = mfs.read_all_bytes({});
+    ASSERT_FALSE(r);
+    EXPECT_EQ(r.error().code, ErrorCode::InvalidArgument);
+}
+
+TEST(IO, ElementBinSer_TrailingBytes) {
+    ElementBinSer ser;
+    // Encode one element, then append junk
+    const std::array<Element, 1> one{ Element{1,"H","Hydrogen",1.008} };
+    auto enc = ser.serialize(std::span<const Element>(one));
+    ASSERT_OK(enc);
+    auto buf = std::move(enc.value());
+    buf.push_back(std::byte{ 0xFF }); // trailing
+
+    auto dec = ser.deserialize(buf);
+    ASSERT_FALSE(dec);
+    EXPECT_EQ(dec.error().code, ErrorCode::InvalidData);
+}
+
+TEST(IO, ElementJsonSer_EscapesAndNonFinite) {
+    ElementJsonSer ser;
+
+    // Escaping check (quotes & backslash)
+    std::vector<Element> elems{ {1, "H\"\\", "Hydro\n\tgen", 1.25} };
+    auto enc = ser.serialize(elems);
+    ASSERT_OK(enc);
+    auto dec = ser.deserialize(enc.value());
+    ASSERT_OK(dec);
+    ASSERT_EQ(dec->size(), 1u);
+    EXPECT_EQ(dec->at(0).Symbol, "H\"\\");
+    EXPECT_EQ(dec->at(0).Name, "Hydro\n\tgen");
+
+    // Non-finite number should fail
+    std::vector<Element> bad{ {1, "X", "Bad", std::numeric_limits<double>::infinity()} };
+    auto enc_bad = ser.serialize(bad);
+    ASSERT_FALSE(enc_bad);
+    EXPECT_EQ(enc_bad.error().code, ErrorCode::InvalidData);
+}
+
+TEST(IO, ElementJsonSer_UTF8_BOM) {
+    ElementJsonSer ser;
+    const char json[] = "\xEF\xBB\xBF{\"Symbol\":\"H\",\"Name\":\"Hydrogen\",\"AtomicNumber\":1,\"AtomicMass\":1.008}";
+    std::span<const std::byte> s{ reinterpret_cast<const std::byte*>(json), sizeof(json) - 1 };
+    auto dec = ser.deserialize(s);
+    ASSERT_OK(dec);
+    ASSERT_EQ(dec->size(), 1u);
+    EXPECT_EQ(dec->at(0).Symbol, "H");
+}
+
+TEST(IO, ElementJsonSer_MissingFields) {
+    ElementJsonSer ser;
+    const char* bad = R"({"Symbol":"H","AtomicMass":1.0})"; // missing Name, AtomicNumber
+    std::span<const std::byte> s{ reinterpret_cast<const std::byte*>(bad), std::strlen(bad) };
+    auto dec = ser.deserialize(s);
+    ASSERT_FALSE(dec);
+    EXPECT_EQ(dec.error().code, ErrorCode::InvalidData);
+}
+
+TEST_F(IoTempDir, Save_WithInitializerList_Container) {
+    LocalFilesystem lfs; FileIO io(lfs); ElementBinSer ser;
+    auto path = dir_ / "initlist.bin";
+
+    ASSERT_OK(io.save<Element>(path, { {1,"H","Hydrogen",1.008}, {2,"He","Helium",4.0026} }, ser));
+    auto out = io.load(path, ser);
+    ASSERT_OK(out);
+    ASSERT_EQ(out->size(), 2u);
+    EXPECT_EQ(out->at(0).Symbol, "H");
+    EXPECT_EQ(out->at(1).Symbol, "He");
+}
+
+TEST_F(IoTempDir, Save_WithInitializerList_Raw) {
+    LocalFilesystem lfs; FileIO io(lfs); ElementBinSer ser;
+    auto path = dir_ / "initlist_raw.bin";
+
+    SaveOptions sopt{}; sopt.wrap_with_container = false;
+    ASSERT_OK(io.save<Element>(path, { {3,"Li","Lithium",6.94} }, ser, sopt));
+
+    LoadOptions lopt{}; lopt.expect_container = false;
+    auto out = io.load(path, ser, lopt);
+    ASSERT_OK(out);
+    ASSERT_EQ(out->size(), 1u);
+    EXPECT_EQ(out->at(0).Symbol, "Li");
+}
+
+TEST_F(IoTempDir, Save_WithInitializerList_Empty) {
+    LocalFilesystem lfs; FileIO io(lfs); ElementBinSer ser;
+    auto path = dir_ / "empty_initlist.bin";
+
+    ASSERT_OK(io.save<Element>(path, {}, ser)); // container on (default)
+
+    auto bytes = lfs.read_all_bytes(path);
+    ASSERT_OK(bytes);
+
+    // Compute expected payload size from the serializer itself
+    const std::array<Element, 0> none{};
+    auto enc = ser.serialize(std::span<const Element>(none));
+    ASSERT_OK(enc);
+
+    EXPECT_EQ(bytes->size(), Interstellar::IO::kHeaderSize + enc->size()); // 20 + 4 for ElementBinSer
+
+    auto out = io.load(path, ser);
+    ASSERT_OK(out);
+    EXPECT_TRUE(out->empty());
+}
+
+TEST_F(IoTempDir, Save_WithInitializerList_JSON_NonFiniteFails) {
+    LocalFilesystem lfs; FileIO io(lfs); ElementJsonSer jser;
+    auto path = dir_ / "bad.jsonc";
+
+    std::vector<Element> ok{ {1,"H","Hydrogen",1.008} };
+    ASSERT_OK(io.save<Element>(path, ok, jser)); // sanity
+
+    // Now try to save bad data through the init-list overload
+    auto r = io.save<Element>(path, { Element{2,"X","Bad", std::numeric_limits<double>::infinity()} }, jser);
+    ASSERT_FALSE(r);
+    EXPECT_EQ(r.error().code, ErrorCode::InvalidData);
+}
+
+TEST(IO, MemoryFilesystem_InitList) {
+    MemoryFilesystem mfs; FileIO io(mfs); ElementBinSer ser;
+    ASSERT_OK(io.save<Element>("/mem/elms.bin", { {10,"Ne","Neon",20.1797} }, ser));
+
+    auto out = io.load("/mem/elms.bin", ser);
+    ASSERT_OK(out);
+    ASSERT_EQ(out->size(), 1u);
+    EXPECT_EQ(out->at(0).Symbol, "Ne");
+}
+
+TEST_F(IoTempDir, LocalFilesystem_OverwriteAtomic_InitList) {
+    LocalFilesystem lfs; FileIO io(lfs); ElementBinSer ser;
+    auto path = dir_ / "elements.bin";
+
+    const std::array<Element, 1> v1{ Element{1,"H","Hydrogen",1.008} };
+    ASSERT_OK(io.save<Element>(path, std::span<const Element>(v1), ser));
+
+    // exercise the init-list overload on the second write
+    ASSERT_OK(io.save<Element>(path, { {2,"He","Helium",4.0026} }, ser));
+
+    auto out = io.load(path, ser);
+    ASSERT_OK(out);
+    ASSERT_EQ(out->size(), 1u);
+    EXPECT_EQ(out->at(0).Symbol, "He");
+}
+
+TEST(IO, Container_HeaderOnly_EmptyPayload) {
+    using namespace Interstellar::IO;
+    const uint32_t magic = 0xABCD1234, ver = 1;
+    auto buf = pack_container(magic, ver, {}); // empty payload
+    EXPECT_EQ(buf.size(), kHeaderSize);
+
+    auto up = unpack_container(buf, magic, ver);
+    ASSERT_TRUE(up.has_value());
+    EXPECT_EQ(up->size(), 0u);
+}

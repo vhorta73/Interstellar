@@ -212,6 +212,17 @@ namespace Interstellar::IO {
             return serializer.deserialize(bytes);
         }
 
+        template <class T>
+        expected<void, Error>
+            save(const std::filesystem::path& path,
+                std::initializer_list<T> items,
+                const ISerializer<T>& serializer,
+                const SaveOptions& opt = {}) const
+        {
+            return save(path, std::span<const T>(items.begin(), items.size()), serializer, opt);
+        }
+
+
     private:
         const IFilesystem& fs_;
     };
