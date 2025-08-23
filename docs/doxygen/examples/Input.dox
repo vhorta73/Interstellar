@@ -1,9 +1,7 @@
 /**
  * @defgroup InputExamples Input
  * @ingroup Examples
- *
- * Quick start samples for the Input module.
- *
+ * @brief Quick start samples for the Input module.
  * @since 1.0
  *
  * ### Create and use InputSystem (GLFW)

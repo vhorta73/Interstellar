@@ -1,16 +1,17 @@
 #pragma once
 /**
  * @file
+ * @ingroup Logging
  * @brief Interstellar logging facade built on top of spdlog.
  *
  * @details
  * Public, category-based logging API used across the Interstellar codebase.
  * This header documents the public contract:
- * - **Thread-safety:** logging calls are thread-safe (multithreaded sinks).
- * - **Flush semantics:** errors (and above) flush promptly; a periodic background
+ * - Thread-safety: logging calls are thread-safe (multithreaded sinks).
+ * - Flush semantics: errors (and above) flush promptly; a periodic background
  *   flush is enabled; destructors flush as a last safeguard.
- * - **Log files:** by default, files go under `./logs` (relative to the process
- *   working directory). Set `INTERSTELLAR_LOG_DIR` to override the directory.
+ * - Log files: by default, files go under "./logs" (relative to the process
+ *   working directory). Set INTERSTELLAR_LOG_DIR to override the directory.
  *
  * @since 1.0
  */
@@ -26,15 +27,9 @@
 
 namespace Interstellar::Logging {
 
-    /**
-     * @defgroup logging_api Logging API
-     * @brief Public logging facilities for the Interstellar codebase.
-     * @since 1.0
-     * @{
-     */
-
      /**
       * @name Well-known logger names
+      * @ingroup Logging
       * @brief Category names used by the global logger instances.
       * @since 1.0
       * @{
@@ -47,7 +42,7 @@ namespace Interstellar::Logging {
 
     /**
      * @class Logger
-     * @ingroup logging_api
+     * @ingroup Logging
      * @brief Thin facade over spdlog providing a consistent, category-based API.
      *
      * @par Flush semantics
@@ -55,33 +50,33 @@ namespace Interstellar::Logging {
      * - A periodic background flush is enabled to keep buffers moving.
      * - The destructor flushes the underlying logger as a final safeguard.
      *
-     * @par Files & environment
-     * - Log files are written under `./logs` by default.
-     * - Set `INTERSTELLAR_LOG_DIR` (absolute or relative) to change the directory.
+     * @par Files and environment
+     * - Log files are written under "./logs" by default.
+     * - Set INTERSTELLAR_LOG_DIR (absolute or relative) to change the directory.
      *
      * @par Example
      * @code
-     *   using namespace Interstellar::Logging;
-     *   logConfig.LogInfo("Loaded {} entries", count);
-     *   Logger custom("AI", LogLevel::Warn);
-     *   custom.LogWarn("Pathfinding took {} ms", dt_ms);
+     * using namespace Interstellar::Logging;
+     * logConfig.LogInfo("Loaded {} entries", count);
+     * Logger custom("AI", LogLevel::Warn);
+     * custom.LogWarn("Pathfinding took {} ms", dt_ms);
      * @endcode
      *
      * @since 1.0
      */
     class Logger {
     public:
-        /// Create a logger bound to @ref LOG_GENERIC with its default level. @since 1.0
+        /// Create a logger bound to LOG_GENERIC with its default level. @since 1.0
         Logger();
 
         /// Destructor flushes any pending data (no-throw). @since 1.0
         ~Logger() noexcept;
 
-        /// Construct a logger for a specific @p loggerName and @p level. @since 1.0
+        /// Construct a logger for a specific loggerName and level. @since 1.0
         explicit Logger(std::string_view loggerName, LogLevel level);
-        /// Construct a logger for @p loggerName using that category's default level. @since 1.0
+        /// Construct a logger for loggerName using that category's default level. @since 1.0
         explicit Logger(std::string_view loggerName);
-        /// Construct a logger with @p level bound to @ref LOG_GENERIC. @since 1.0
+        /// Construct a logger with level bound to LOG_GENERIC. @since 1.0
         explicit Logger(LogLevel level);
 
         // -------- Unformatted (basic) logging --------
@@ -109,29 +104,27 @@ namespace Interstellar::Logging {
 
     /**
      * @name Global category loggers
-     * @ingroup logging_api
+     * @ingroup Logging
      * @brief One process-wide instance per well-known category.
      * @since 1.0
      * @{
      */
-    extern const Logger logGeneric;  ///< Logger bound to @ref LOG_GENERIC. @since 1.0
-    extern const Logger logInit;     ///< Logger bound to @ref LOG_INIT.    @since 1.0
-    extern const Logger logConfig;   ///< Logger bound to @ref LOG_CONFIG.  @since 1.0
-    extern const Logger logGraphic;  ///< Logger bound to @ref LOG_GRAPHIC. @since 1.0
+    extern const Logger logGeneric;  ///< Logger bound to LOG_GENERIC. @since 1.0
+    extern const Logger logInit;     ///< Logger bound to LOG_INIT.    @since 1.0
+    extern const Logger logConfig;   ///< Logger bound to LOG_CONFIG.  @since 1.0
+    extern const Logger logGraphic;  ///< Logger bound to LOG_GRAPHIC. @since 1.0
     /** @} */
 
     /**
      * @name Convenience accessors
-     * @ingroup logging_api
+     * @ingroup Logging
      * @since 1.0
      * @{
      */
     inline const Logger& LogGeneric() { return logGeneric; } ///< @since 1.0
-    inline const Logger& LogInit() { return logInit; }    ///< @since 1.0
-    inline const Logger& LogConfig() { return logConfig; }  ///< @since 1.0
+    inline const Logger& LogInit() { return logInit; } ///< @since 1.0
+    inline const Logger& LogConfig() { return logConfig; } ///< @since 1.0
     inline const Logger& LogGraphic() { return logGraphic; } ///< @since 1.0
     /** @} */
-
-    /** @} */ // end of group logging_api
 
 } // namespace Interstellar::Logging

@@ -1,6 +1,7 @@
 #pragma once
 /**
  * @file
+ * @ingroup Logging
  * @brief Severity levels and helpers for the Interstellar logging API.
  * @since 1.0
  */
@@ -12,16 +13,18 @@
 
 namespace Interstellar::Logging {
 
-    /**
-     * @enum LogLevel
-     * @ingroup logging_api
-     * @brief Logging severity in ascending order of importance.
-     *
-     * Lower levels (Trace/Debug) are noisy and often disabled in production;
-     * higher levels (Error/Critical) should be rare and demand attention.
-     *
-     * @since 1.0
+    /** 
+     *  \ingroup Logging
+     *  \brief Public logging facilities for the Interstellar codebase.
+     *  \since 1.0
      */
+
+     /**
+      * @enum LogLevel
+      * @ingroup Logging
+      * @brief Logging severity in ascending order of importance.
+      * @since 1.0
+      */
     enum class LogLevel {
         Trace,    ///< Finest-grain diagnostics; very verbose. @since 1.0
         Debug,    ///< Developer-oriented details useful while debugging. @since 1.0
@@ -34,7 +37,7 @@ namespace Interstellar::Logging {
     /**
      * @brief Convert a LogLevel to a human-readable uppercase name.
      * @return One of: TRACE, DEBUG, INFO, WARN, ERROR, CRITICAL.
-     * @ingroup logging_api
+     * @ingroup Logging
      * @since 1.0
      */
     [[nodiscard]] constexpr std::string_view ToString(LogLevel lvl) noexcept {
@@ -46,13 +49,11 @@ namespace Interstellar::Logging {
         case LogLevel::Error:    return "ERROR";
         case LogLevel::Critical: return "CRITICAL";
         }
-        // Defensive fallback (should be unreachable with a closed enum).
         return "INFO";
     }
 
-    // --- internal: ASCII case-insensitive compare (no locale) ----------------
+    // internal ASCII helpers
     namespace detail {
-        // Keep these constexpr; they're fine on MSVC. The public parsers below are inline (non-constexpr).
         constexpr char ascii_tolower(char c) noexcept {
             return (c >= 'A' && c <= 'Z') ? static_cast<char>(c | 0x20) : c;
         }
@@ -67,13 +68,9 @@ namespace Interstellar::Logging {
 
     /**
      * @brief ASCII case-insensitive parse to LogLevel.
-     * @details
-     * Accepted values:
-     * - long names: "trace","debug","info","warn","warning","error","critical","fatal"
-     * - short aliases: **"err"** -> Error, **"crit"** -> Critical
-     *
+     * @details Accepts: "trace","debug","info","warn"/"warning","error"/"err","critical"/"fatal"/"crit".
      * @return parsed level or std::nullopt if not recognized.
-     * @ingroup logging_api
+     * @ingroup Logging
      * @since 1.0
      */
     constexpr std::optional<LogLevel> TryParseLogLevel(std::string_view s) noexcept {
@@ -89,22 +86,20 @@ namespace Interstellar::Logging {
     }
 
     /**
-    * @brief Back-compat: parse a level name into a LogLevel.
-    * @return The parsed level, or std::nullopt if not recognized.
-    * @note ASCII-only, does not trim whitespace.
-    * @ingroup logging_api
-    * 
-    * @since 1.0
-    */
+     * @brief Back-compat: alias to TryParseLogLevel.
+     * @return parsed level or std::nullopt if not recognized.
+     * @ingroup Logging
+     * @since 1.0
+     */
     constexpr std::optional<LogLevel> FromString(std::string_view s) noexcept {
         return TryParseLogLevel(s);
     }
 
     /**
-    * @brief Parse to LogLevel or return a fallback if unrecognized.
-    * @ingroup logging_api
-    * @since 1.0
-    */
+     * @brief Parse to LogLevel or return a fallback if unrecognized.
+     * @ingroup Logging
+     * @since 1.0
+     */
     constexpr LogLevel ParseLogLevelOr(std::string_view s, LogLevel fallback) noexcept {
         if (auto v = TryParseLogLevel(s)) return *v;
         return fallback;
@@ -112,7 +107,7 @@ namespace Interstellar::Logging {
 
     /**
      * @brief Parse to LogLevel or throw std::invalid_argument if unrecognized.
-     * @ingroup logging_api
+     * @ingroup Logging
      * @since 1.0
      */
     inline LogLevel ParseLogLevel(std::string_view s) {

@@ -1,0 +1,16 @@
+/**
+ * @defgroup LoggingExamples Logging
+ * @ingroup Examples
+ * @brief Quick examples for Logging and fmt helpers.
+ * @since 1.0
+ *
+ * @code
+ * #include <optional>
+ * #include <fmt/format.h>
+ * #include <Interstellar/Logging/OptionalFormatter.hpp>
+ *
+ * std::optional<int> v1 = 42;
+ * std::optional<int> v2 = std::nullopt;
+ * fmt::print("v1={} v2={}\n", v1, v2); // v1=42 v2=null
+ * @endcode
+ */
