@@ -1,0 +1,8 @@
+/**
+ * @defgroup RenderersExamples Renderers
+ * @ingroup Examples
+ * @brief Rendering interfaces and backend implementations.
+ *
+ * 
+ * @ref OpenGLExamples "OpenGL Examples"
+ */
