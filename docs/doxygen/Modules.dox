@@ -37,6 +37,20 @@
  * @brief Rendering interfaces and backend implementations.
  * @since 1.0
  */
+ 
+ /**
+ * @defgroup ECS ECS
+ * @ingroup Modules
+ * @brief Minimal entity-component slice (Transform, Velocity, World).
+ * @since 1.0
+ */
+ 
+ /**
+ * @defgroup Simulation Simulation
+ * @ingroup Modules
+ * @brief Rendering interfaces and backend implementations.
+ * @since 1.0
+ */
 
  /**
  * @defgroup Logging Logging

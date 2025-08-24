@@ -59,6 +59,34 @@
  *
  * See @ref Input "Interstellar Input module".
  *
+ * @subsection ecs_sec ECS
+ *
+ * Minimal entity-component slice: Transform, Velocity, and a World that simulates v-integration.
+ *
+ * The ECS module in this repository is a compact, index-based example intended for tests,
+ * samples, and early gameplay spikes. It avoids indirection and deletion for clarity.
+ *
+ * Key ideas:
+ * - Entity is an index into parallel arrays (structure-of-arrays layout).
+ * - Components: Transform (x,y) and Velocity (vx,vy).
+ * - World::simulate(dt) performs simple Euler integration: p += v * dt.
+ *
+ * Thread-safety:
+ * - Not thread-safe. Coordinate external synchronization if used across threads.
+ *
+ * Public API surface:
+ * - Types: Interstellar::ECS::Entity, Transform, Velocity
+ * - System: Interstellar::ECS::World (create, simulate, getTransforms)
+ *
+ * See @ref ECS "Interstellar ECS module".
+ *
+ * @subsection simulation_sec Simulation
+ * 
+ * Provided systems:
+ * - MovementSystem: integrates Transform by Velocity (Euler p += v * dt).
+ * 
+ * See @ref Simulation "Interstellar Simulation module".
+ *
  * @subsection io_sec IO
  * IO utilities for engine code.
  * - Error types and expected shim

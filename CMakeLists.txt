@@ -206,6 +206,7 @@ include(EnsureSources)        # shared empty-TU helper
 set(UNITS_BUILD_TESTS        ${BUILD_TESTING} CACHE BOOL "" FORCE)
 set(UTILS_BUILD_TESTS        ${BUILD_TESTING} CACHE BOOL "" FORCE)
 set(ENGINE_BUILD_TESTS       ${BUILD_TESTING} CACHE BOOL "" FORCE)
+set(ECS_BUILD_TESTS          ${BUILD_TESTING} CACHE BOOL "" FORCE)
 set(IO_BUILD_TESTS           ${BUILD_TESTING} CACHE BOOL "" FORCE)
 set(DATA_BUILD_TESTS         ${BUILD_TESTING} CACHE BOOL "" FORCE)
 set(INTERSTELLAR_BUILD_TESTS ${BUILD_TESTING} CACHE BOOL "" FORCE)
@@ -216,6 +217,8 @@ add_subdirectory(Logging)
 add_subdirectory(Units)
 add_subdirectory(Utils)
 add_subdirectory(Engine)
+add_subdirectory(ECS)
+add_subdirectory(Simulation)
 add_subdirectory(Interstellar)
 add_subdirectory(IO)
 add_subdirectory(Input)
@@ -254,6 +257,8 @@ endfunction()
 
 foreach(_pair
   "Engine;Engine"
+  "ECS;ECS"
+  "Simulation;Simulation"
   "Interstellar;Interstellar"
   "InterstellarUtils;Utils"
   "InterstellarIO;IO"
@@ -296,6 +301,5 @@ if(INSTALL_TESTS)
       )
     endfunction()
     _add_installed_test("EngineTests")
-    # _add_installed_test("AppTests")
   ]])
 endif()

@@ -1,0 +1,59 @@
+/**
+ * @defgroup ECSExamples ECS
+ * @ingroup Examples
+ * @brief Quick-start snippets for Interstellar::ECS.
+ * @since 1.0
+ *
+ * @section ecs_ex_hello Hello, World
+ * Create a world, spawn one entity, step the simulation, and read back positions.
+ *
+ * @code{.cpp}
+ * #include <Interstellar/ECS/ECS.hpp> // or the header where World/Transform live
+ *
+ * using namespace Interstellar::ECS;
+ *
+ * int main() {
+ *     World world;
+ *
+ *     // Create an entity at (0,0) with velocity (1, 0.5) units per second.
+ *     Entity e = world.create(/* x = */ 0.0f, /* y = */ 0.0f,
+ *                             /* vx = */ 1.0f, /* vy = */ 0.5f);
+ *     (void)e; // index of the row; not used further in this example
+ *
+ *     // Simulate one frame at 60 FPS
+ *     world.simulate(1.0 / 60.0);
+ *
+ *     // Inspect positions (structure-of-arrays: single pass over transforms)
+ *     for (const Transform& t : world.getTransforms()) {
+ *         // t.x ~= 0.0167, t.y ~= 0.0083
+ *     }
+ *
+ *     return 0;
+ * }
+ * @endcode
+ *
+ * @section ecs_ex_batch Spawning a batch and stepping several frames
+ * @code{.cpp}
+ * World world;
+ *
+ * for (int i = 0; i < 1000; ++i) {
+ *     float x = 0.0f, y = 0.0f;
+ *     float vx = 0.1f * i, vy = 0.0f;
+ *     world.create(x, y, vx, vy);
+ * }
+ *
+ * // Advance 2 seconds total in 120 small steps (fixed-step style)
+ * for (int step = 0; step < 120; ++step) {
+ *     world.simulate(1.0 / 60.0);
+ * }
+ *
+ * // Read back positions for rendering or assertions
+ * const auto& ts = world.getTransforms();
+ * // ts.size() == 1000
+ * @endcode
+ *
+ * @section ecs_limits Design limits and tips
+ * - No deletion or compaction; entity IDs are never recycled.
+ * - No sparse component sets; every entity has both Transform and Velocity.
+ * - Use this as a teaching sample or for unit tests; extend or replace for production.
+ */

@@ -26,6 +26,8 @@ target_include_directories(Interstellar PRIVATE
 target_link_libraries(Interstellar
   PRIVATE
     Interstellar::Engine
+    Interstellar::ECS
+    Interstellar::Simulation
     Interstellar::Utils
     Interstellar::IO
     Interstellar::Renderers
