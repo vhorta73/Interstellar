@@ -1,7 +1,10 @@
 #include <algorithm>
 #include <iostream>
 #include <sstream>
+#include <vector>
 
+#include "Interstellar/Engine/Camera2DExtras.hpp"
+#include "Interstellar/Universe/FieldGenerator.hpp"
 #include "Interstellar/Core/fmt_optional.hpp"
 #include "Interstellar/ECS/World.hpp"
 #include "Interstellar/Engine/Engine.hpp"
@@ -35,9 +38,9 @@ namespace {
 
     // Vertex layout: position (x, y, z), UV (u, v)
     constexpr float vertices[] = {
-        -0.5f, -0.5f, 0.0f,   0.0f, 0.0f,
-        0.5f, -0.5f, 0.0f,   1.0f, 0.0f,
-        0.0f,  0.5f, 0.0f,   0.5f, 1.0f,
+        -0.05f, -0.05f, 0.0f,   0.0f, 0.0f,
+        0.05f, -0.05f, 0.0f,   1.0f, 0.0f,
+        0.0f,  0.05f, 0.0f,   0.5f, 1.0f,
     };
 
     unsigned int indices[] = { 0, 1, 2 };
@@ -271,7 +274,6 @@ int main() {
     // ------------------------------------------------------------
     glm::vec2 offset = glm::vec2(0.0f);   // matches u_Offset
     float     zoom = 1.0f;              // matches u_Zoom
-    MouseFilter smooth{ 0.5f };             // for smooth drag
 
 
     // Multi-triangle demo state
@@ -305,6 +307,15 @@ int main() {
     World  world;
     world.create(0.0f, 0.0f, 0.1f, 0.0f); // one entity moving right
 
+    // ==== CAMERA ====
+    Interstellar::Engine::Camera2D camera;
+    MouseFilter smooth{ 0.5f };
+
+    // ==== SEEDED FIELD ====
+    Interstellar::Universe::FieldGenerator field(/*masterSeed=*/0xDEADBEEFCAFEBABEULL, /*grid=*/0.12f, /*jitter=*/0.45f);
+
+    // temp buffers reused each frame
+    std::vector<float> instanceOffsets; // flattened x,y pairs
 
     // ------------------------------------------------------------
     // Game loop (fixed simulation + render)
@@ -315,44 +326,21 @@ int main() {
             input->pump();
             input->beginFrame(dt);
 
-            // Toggle multi-triangle mode (edge-trigger)
-            bool iDown = keyboard.isDown(KeyCode::I);
-            if (iDown && !prevI) manyMode = !manyMode;
-            prevI = iDown;
+            const float moveSpeed = 0.5f * static_cast<float>(dt);
+            if (keyboard.isDown(KeyCode::ArrowLeft))  camera.center.x += moveSpeed;
+            if (keyboard.isDown(KeyCode::ArrowRight)) camera.center.x -= moveSpeed;
+            if (keyboard.isDown(KeyCode::ArrowUp))    camera.center.y -= moveSpeed;
+            if (keyboard.isDown(KeyCode::ArrowDown))  camera.center.y += moveSpeed;
 
-            // Adjust grid size with +/- (when manyMode is on)
-            if (manyMode) {
-                if (keyboard.isDown(KeyCode::Equal)) { // '+' on many keyboards
-                    grid = std::min(grid + 1, 200);    // clamp
-                }
-                if (keyboard.isDown(KeyCode::Minus)) {
-                    grid = std::max(grid - 1, 1);
-                }
-                if (grid != prevGrid) rebuildGrid();
-            }
-
-            // Keyboard pans the camera
-            float moveSpeed = 0.5f * static_cast<float>(dt);
-            if (keyboard.isDown(KeyCode::ArrowLeft))  offset.x += moveSpeed;
-            if (keyboard.isDown(KeyCode::ArrowRight)) offset.x -= moveSpeed;
-            if (keyboard.isDown(KeyCode::ArrowUp))    offset.y -= moveSpeed;
-            if (keyboard.isDown(KeyCode::ArrowDown))  offset.y += moveSpeed;
-
-            // Zoom via wheel
-            zoom = WheelZoom(mouse, zoom, 0.15f, 0.1f, 5000.0f);
-            if (mouse.isDown(MouseButton::Left)) offset += smooth.apply(mouse, windowWidth, windowHeight);
-            else                                  smooth.reset();
-
-            // Pan via LMB drag (dragging the world -> move camera opposite)
+            camera.zoom = WheelZoom(mouse, camera.zoom, 0.15f, 0.1f, 5000.0f);
             if (mouse.isDown(MouseButton::Left)) {
-                offset += smooth.apply(mouse, windowWidth, windowHeight);
-            } else {
+                camera.center -= smooth.apply(mouse, windowWidth, windowHeight);
+            }
+            else {
                 smooth.reset();
             }
 
-            // Run your demo system (optional)
             MovementSystem(world, dt);
-
             input->endFrame();
         },
 
@@ -361,26 +349,22 @@ int main() {
 
             graphics->BeginFrame();
 
-            // Push uniforms via material
-            material->Set("u_Zoom", &zoom, sizeof(zoom));
+            // Push camera + texture
+            camera.apply(*material);
             material->Set("u_Texture", texture);
 
-            if (!manyMode) {
-                // Single triangle
-                material->Set("u_Offset", &offset, sizeof(offset));
-                graphics->SubmitMesh(mesh, pipeline, material);
-            }
-            else {
-                // Many triangles (CPU-loop multi-draw). Great for a quick visual check.
-                // For real scaling, we'll switch to GPU instancing in the next step.
-                for (const auto& rel : gridOffsets) {
-                    glm::vec2 o = offset + rel; // camera + instance offset
-                    material->Set("u_Offset", &o, sizeof(o));
-                    graphics->SubmitMesh(mesh, pipeline, material);
-                }
-            }
+            // Build visible set on the fly (deterministic from seed)
+            const auto vis = Interstellar::Engine::VisibleAABB(camera, windowWidth, windowHeight);
+
+            // Fill instanceOffsets with XY pairs inside the visible world rect
+            field.generate({ vis.min, vis.max }, instanceOffsets);
+
+            // Draw all visible points as instanced triangles
+            Interstellar::Renderers::OpenGL::GLInstancedSubmit::draw(*graphics, mesh, pipeline, material, instanceOffsets.data(),
+                static_cast<int>(instanceOffsets.size() / 2));
 
             graphics->EndFrame();
+
         },
 
         // --- EXIT CONDITION ---
