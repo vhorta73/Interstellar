@@ -1,0 +1,82 @@
+/**
+ *  @defgroup GraphicsExamples Graphics
+ *  @ingroup Examples
+ *
+ *  @brief Quick start and usage snippets.
+ *
+ *  @brief Minimal frame loop using an existing IGraphics instance.
+ *  @code
+ *  using namespace Interstellar::Graphics;
+ *
+ *  std::unique_ptr<IGraphics> gfx = MakeGraphicsBackend(...); // your factory
+ *  if (!gfx->Initialise(1280, 720, true)) { /* handle error */ }
+ *
+ *  while (!gfx->ShouldClose()) {
+ *      gfx->BeginFrame();
+ *      // ... submit meshes here ...
+ *      gfx->EndFrame();
+ *  }
+ *  gfx->Shutdown();
+ *  @endcode
+ *
+ *  @brief Create a simple triangle mesh, shader, pipeline, and draw once per frame.
+ *  @code
+ *  using namespace Interstellar::Graphics;
+ *
+ *  struct V { float x,y,z; float r,g,b; };
+ *  const V verts[] = {
+ *      {  0.0f,  0.5f, 0.0f, 1,0,0 },
+ *      { -0.5f, -0.5f, 0.0f, 0,1,0 },
+ *      {  0.5f, -0.5f, 0.0f, 0,0,1 },
+ *  };
+ *  const uint32_t idx[] = { 0, 1, 2 };
+ *
+ *  auto mesh    = gfx->CreateMesh(verts, sizeof(verts), idx, sizeof(idx));
+ *  auto shader  = gfx->CreateShader("shaders/basic");     // backend decides exact files
+ *  auto pipe    = gfx->CreatePipeline(shader);
+ *
+ *  // Optional: tag resources for debugging
+ *  mesh->SetDebugName("Triangle");
+ *
+ *  while (!gfx->ShouldClose()) {
+ *      gfx->BeginFrame();
+ *      gfx->SubmitMesh(mesh, pipe);
+ *      gfx->EndFrame();
+ *  }
+ *  @endcode
+ *
+ *  @brief Handle window resize and query renderer identity.
+ *  @code
+ *  void OnResize(Interstellar::Graphics::IGraphics& gfx, uint32_t w, uint32_t h) {
+ *      gfx.Resize(w, h);
+ *  }
+ *
+ *  void PrintRendererInfo(const Interstellar::Graphics::IGraphics& gfx) {
+ *      auto api = gfx.GetAPI();
+ *      auto name = gfx.GetRendererName();
+ *      // Log or display: name and API. Switch on api if needed.
+ *  }
+ *  @endcode
+ *
+ *  @brief Query a dynamic pipeline option safely.
+ *  @code
+ *  using Interstellar::Graphics::PipelineOptionValue;
+ *  using std::get_if;
+ *
+ *  PipelineOptionValue v = pipe->GetOption("depthTest");
+ *  if (auto b = get_if<bool>(&v)) {
+ *      // depth test currently enabled/disabled in *b
+ *  }
+ *  @endcode
+ *
+ *  @brief Load a texture and use its metadata.
+ *  @code
+ *  auto tex = gfx->CreateTexture("assets/brick_albedo.png");
+ *  if (tex) {
+ *      uint32_t w = tex->GetWidth();
+ *      uint32_t h = tex->GetHeight();
+ *      std::string fmt = tex->GetFormat();
+ *      const std::string& name = tex->GetName(); // may be empty
+ *  }
+ *  @endcode
+ */

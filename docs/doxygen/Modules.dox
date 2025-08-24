@@ -17,16 +17,24 @@
 * @since 1.0
 */
 
-/**
- * @defgroup Logging Logging
- * @ingroup Modules
- * @brief Public logging facilities for the Interstellar codebase.
- * @since 1.0
- */
-
  /**
  * @defgroup Units Units
  * @ingroup Modules
  * @brief Strongly-typed SI quantities and physical constants (mp-units).
  * @since 1.0
  */
+
+ /**
+ *  @defgroup Graphics Graphics
+ *  @ingroup Modules
+ *  @brief Interstellar Graphics module (backend-agnostic rendering facade).
+ *  @since 1.0
+ */
+
+ /**
+ * @defgroup Logging Logging
+ * @ingroup Modules
+ * @brief Public logging facilities for the Interstellar codebase.
+ * @since 1.0
+ */
+

@@ -1,6 +1,6 @@
 #pragma once
-
 #include <cstdint>
+#include <cstddef>   // size_t
 #include <memory>
 #include <string>
 
@@ -12,218 +12,211 @@ namespace Interstellar::Graphics {
     class IRenderPipeline;
 
     /**
-    * @brief Supported graphics APIs for backend rendering.
-    * 
-    * @since 1.0
-    */
+     * @file
+     * @ingroup Graphics
+     * @brief Public graphics abstraction interfaces (backend-agnostic).
+     * @details
+     *   Defines the platform-agnostic rendering facade used by the engine.
+     *   Concrete backends (OpenGL, Vulkan, DirectX12, Metal) implement this API.
+     */
+
+     /**
+      * @brief Supported graphics APIs for backend rendering.
+      * @ingroup Graphics
+      * @since 1.0
+      */
     enum class GraphicsAPI {
-        DirectX12,  ///< DirectX 12-based renderer
-        Metal,      ///< Metal-based renderer (for Apple platforms)
-        OpenGL,     ///< OpenGL-based renderer
-        Vulkan,     ///< Vulkan-based renderer
-        Unknown     ///< Fallback or uninitialised API state
+        DirectX12,  ///< DirectX 12-based renderer. @ingroup Graphics
+        Metal,      ///< Metal-based renderer (Apple platforms). @ingroup Graphics
+        OpenGL,     ///< OpenGL-based renderer. @ingroup Graphics
+        Vulkan,     ///< Vulkan-based renderer. @ingroup Graphics
+        Unknown     ///< Fallback or uninitialised API state. @ingroup Graphics
     };
 
     /**
-    * @brief Interface for platform-agnostic graphics API abstraction.
-    *
-    * This interface provides methods to initialise the renderer, create graphics
-    * resources, submit them for rendering, and manage the render loop.
-    * Concrete implementations may use @a OpenGL, Vulkan, DirectX, etc.
-    * 
-    * @since 1.0
-    */
+     * @brief Interface for platform-agnostic graphics API abstraction.
+     * @ingroup Graphics
+     * @details
+     *   This interface provides methods to initialise the renderer, create graphics
+     *   resources, submit them for rendering, and manage the frame loop.
+     * @thread_safety Unless otherwise stated, all methods must be called on the render/main thread.
+     *                Implementations are not required to be thread-safe.
+     * @since 1.0
+     */
     class IGraphics {
     public:
         virtual ~IGraphics() = default;
 
         /**
-        * @brief Initialises the graphics subsystem with a window of the given size.
-        *
-        * @param width Width of the window in pixels.
-        * @param height Height of the window in pixels.
-        * @param vsync Whether to enable vertical sync.
-        * 
-        * @return true if initialisation succeeded.
-        *
-        * @since 1.0
-        * @see Shutdown()
-        * @see Resize()
-        */
+         * @brief Initialise the graphics subsystem with a window of the given size.
+         * @ingroup Graphics
+         * @param width  Window width in pixels.
+         * @param height Window height in pixels.
+         * @param vsync  Enable vertical sync if true.
+         * @return true on success; false otherwise.
+         * @pre Not already initialised.
+         * @post On success, a native window/context exists and GetAPI() is valid.
+         * @warning Implementations may allocate GPU/CPU resources and create OS handles.
+         * @see Shutdown()
+         * @see Resize()
+         * @since 1.0
+         */
         virtual bool Initialise(uint32_t width, uint32_t height, bool vsync) = 0;
 
         /**
-        * @brief Shuts down the graphics subsystem and cleans up resources.
-        * 
-        * This method is typically called in the application shutdown sequence.
-        * It is important to call this method to avoid memory leaks and
-        * ensure that all graphics resources are properly released.
-        * Releasing GPU resources, destroying the graphics context,
-        * and closing the rendering window.
-        * 
-        * @since 1.0
-        * @see Initialise()
-        * @see EndFrame()
-        */
+         * @brief Shut down the graphics subsystem and release resources.
+         * @ingroup Graphics
+         * @details Releases GPU resources, destroys the graphics context, and closes the window.
+         * @pre Previously initialised.
+         * @post Subsequent rendering calls are invalid until Initialise() is called again.
+         * @see Initialise()
+         * @see EndFrame()
+         * @since 1.0
+         */
         virtual void Shutdown() = 0;
 
         /**
-        * @brief Prepares the graphics context for a new frame.
-        * 
-        * Clears the screen, resets GPU state, and sets up the viewport.
-        * Should be called once per frame before rendering any content.
-        * 
-        * @since 1.0
-        * @see EndFrame()
-        * @see SubmitMesh()
-        */
+         * @brief Prepare the graphics context for a new frame.
+         * @ingroup Graphics
+         * @details Clears the frame targets and sets up state for rendering.
+         * @pre Initialise() succeeded and the window has not been closed.
+         * @post SubmitMesh() may be called for this frame.
+         * @see EndFrame()
+         * @see SubmitMesh()
+         * @since 1.0
+         */
         virtual void BeginFrame() = 0;
 
         /**
-        * @brief Ends the current frame and submits it for display.
-        * 
-        * Called at the end of each frame to finalize the rendering operations.
-        * Implementations should ensure that all rendering commands
-        * are completed before this call, as it may block until the frame is fully rendered.
-        * 
-        * @since 1.0
-        * @see BeginFrame()
-        * @see SubmitMesh()
-        */
+         * @brief Finalise the current frame and present it.
+         * @ingroup Graphics
+         * @details Flushes pending commands and presents to the display. May block
+         *          if vsync is enabled or the GPU queue is full.
+         * @pre BeginFrame() has been called for this frame.
+         * @post Rendering commands for the frame are complete.
+         * @see BeginFrame()
+         * @see SubmitMesh()
+         * @since 1.0
+         */
         virtual void EndFrame() = 0;
 
         /**
-        * @brief Resizes the rendering window.
-        * 
-        * Called when the window is resized to update the graphics context accordingly.
-        * Implementations should ensure that the graphics context
-        * is properly updated to reflect the new window size
-        * and that rendering operations can continue without issues
-        * after the resize.
-        * 
-        * This method is typically called in response to window resize events,
-        * such as when the user resizes the application window
-        * or when the display resolution changes.
-        *
-        * @param width New width of the window in pixels.
-        * @param height New height of the window in pixels.
-        * 
-        * @since 1.0
-        * @see Initialise()
-        */
+         * @brief Handle a window resize.
+         * @ingroup Graphics
+         * @param width  New width in pixels.
+         * @param height New height in pixels.
+         * @details Recreates or resizes swapchain/framebuffer targets as needed.
+         * @pre Initialise() succeeded.
+         * @post Subsequent frames render at the new size.
+         * @see Initialise()
+         * @since 1.0
+         */
         virtual void Resize(uint32_t width, uint32_t height) = 0;
 
         /**
-        * @brief Creates a mesh from vertex and index data.
-        * 
-        * @param vertexData Pointer to the vertex data.
-        * @param vertexSize Size of the vertex data in bytes.
-        * @param indexData Pointer to the index data.
-        * @param indexSize Size of the index data in bytes.
-        * 
-        * @return A shared pointer to an @c IMesh instance.
-        *
-        * @since 1.0
-        * @see SubmitMesh()
-        * @see @c IMesh
-        */
-        [[nodiscard]] virtual std::shared_ptr<IMesh> CreateMesh(const void* vertexData, size_t vertexSize,
-            const void* indexData, size_t indexSize) = 0;
+         * @brief Create a mesh from vertex and index data.
+         * @ingroup Graphics
+         * @param vertexData Pointer to contiguous vertex bytes (must remain valid until call returns).
+         * @param vertexSize Size of vertexData in bytes.
+         * @param indexData  Pointer to contiguous index bytes (must remain valid until call returns).
+         * @param indexSize  Size of indexData in bytes.
+         * @return Shared pointer to IMesh on success; otherwise may return nullptr.
+         * @pre vertexData != nullptr when vertexSize > 0; indexData != nullptr when indexSize > 0.
+         * @post Returned IMesh retains any necessary GPU copies; input buffers need not outlive the mesh.
+         * @warning Exact vertex/index layout is backend/material dependent.
+         * @see SubmitMesh()
+         * @since 1.0
+         */
+        [[nodiscard]] virtual std::shared_ptr<IMesh>
+            CreateMesh(const void* vertexData, size_t vertexSize,
+                const void* indexData, size_t indexSize) = 0;
 
         /**
-        * @brief Creates a texture from a file path.
-        * 
-        * @param path Path to the texture file.
-        * 
-        * @return A shared pointer to an @c ITexture instance.
-        *
-        * @since 1.0
-        * @see @c ITexture
-        */
-        [[nodiscard]] virtual std::shared_ptr<ITexture> CreateTexture(const std::string& path) = 0;
+         * @brief Create a texture from a file path.
+         * @ingroup Graphics
+         * @param path Filesystem path to the texture asset.
+         * @return Shared pointer to ITexture on success; otherwise may return nullptr.
+         * @warning Supported formats are backend/toolchain specific.
+         * @since 1.0
+         */
+        [[nodiscard]] virtual std::shared_ptr<ITexture>
+            CreateTexture(const std::string& path) = 0;
 
         /**
-        * @brief Creates a shader from a file path.
-        * 
-        * @param path Base name or identifier used to locate vertex/fragment shader source files.
-        * 
-        * @return A shared pointer to an @c IShader instance.
-        *
-        * @since 1.0
-        * @see @c IShader
-        * @see CreatePipeline()
-        */
-        [[nodiscard]] virtual std::shared_ptr<IShader> CreateShader(const std::string& path) = 0;
+         * @brief Create a shader from a file or identifier.
+         * @ingroup Graphics
+         * @param path Base name or identifier used to locate shader sources/binaries.
+         * @return Shared pointer to IShader on success; otherwise may return nullptr.
+         * @note Implementations may expect multiple stage files derived from the base name.
+         * @see CreatePipeline()
+         * @since 1.0
+         */
+        [[nodiscard]] virtual std::shared_ptr<IShader>
+            CreateShader(const std::string& path) = 0;
 
         /**
-        * @brief Creates a render pipeline using the provided shader.
-        * 
-        * @param shader A shared pointer to an @c IShader to be used by the render pipeline.
-        * 
-        * @return A shared pointer to an @IRenderPipeline instance.
-        *
-        * @since 1.0
-        * @see @c IRenderPipeline
-        * @see CreateShader()
-        * @see SubmitMesh()
-        */
-        [[nodiscard]] virtual std::shared_ptr<IRenderPipeline> CreatePipeline(std::shared_ptr<IShader> shader) = 0;
+         * @brief Create a render pipeline using the provided shader.
+         * @ingroup Graphics
+         * @param shader Shader to attach to the pipeline (must be non-null).
+         * @return Shared pointer to IRenderPipeline on success; otherwise may return nullptr.
+         * @pre shader != nullptr.
+         * @see IRenderPipeline
+         * @see CreateShader()
+         * @see SubmitMesh()
+         * @since 1.0
+         */
+        [[nodiscard]] virtual std::shared_ptr<IRenderPipeline>
+            CreatePipeline(std::shared_ptr<IShader> shader) = 0;
 
         /**
-        * @brief Submits a mesh for rendering using the specified pipeline.
-        * 
-        * @param mesh The @c IMesh to render. Must be created with CreateMesh().
-        * @param pipeline The @c IRenderPipeline to use for rendering the @c IMesh (includes shader and bindings).
-        * 
-        * @since 1.0
-        * @see CreateMesh()
-        * @see CreatePipeline()
-        * @see BeginFrame()
-        * @see EndFrame()
-        */
-        virtual void SubmitMesh(std::shared_ptr<IMesh> mesh, std::shared_ptr<IRenderPipeline> pipeline) = 0;
+         * @brief Submit a mesh for rendering with a pipeline.
+         * @ingroup Graphics
+         * @param mesh     Mesh to draw (created by CreateMesh()).
+         * @param pipeline Pipeline/shader state to use (created by CreatePipeline()).
+         * @pre BeginFrame() has been called for the current frame.
+         * @pre mesh != nullptr and pipeline != nullptr.
+         * @since 1.0
+         */
+        virtual void SubmitMesh(std::shared_ptr<IMesh> mesh,
+            std::shared_ptr<IRenderPipeline> pipeline) = 0;
 
         /**
-        * @brief Gets the name of the graphics renderer.
-        * 
-        * @return The name of the graphics renderer as a string.
-        * 
-        * @since 1.0
-        * @see GetAPI()
-        */
+         * @brief Get the name of the graphics renderer.
+         * @ingroup Graphics
+         * @return Human-readable renderer name (for diagnostics).
+         * @see GetAPI()
+         * @since 1.0
+         */
         [[nodiscard]] virtual std::string GetRendererName() const = 0;
 
         /**
-        * @brief Gets the version of the graphics API being used.
-        * 
-        * @return The graphics API in use (e.g., @a Vulkan, @a OpenGL, @a DirectX, etc.).
-        *
-        * @since 1.0
-        * @see @c GraphicsAPI
-        * @see GetRendererName()
-        */
+         * @brief Get the active graphics API.
+         * @ingroup Graphics
+         * @return GraphicsAPI value (for feature checks and telemetry).
+         * @see GraphicsAPI
+         * @see GetRendererName()
+         * @since 1.0
+         */
         [[nodiscard]] virtual GraphicsAPI GetAPI() const = 0;
 
         /**
-        * @brief Checks if the graphics window should close.
-        * 
-        * @return True if the window should close, false otherwise.
-        *
-        * @since 1.0
-        * @see Initialise()
-        * @see Shutdown()
-        */
+         * @brief Check if the window should close.
+         * @ingroup Graphics
+         * @return true if the window/app should terminate; false otherwise.
+         * @see Initialise()
+         * @see Shutdown()
+         * @since 1.0
+         */
         [[nodiscard]] virtual bool ShouldClose() const = 0;
 
         /**
-        * @brief Returns a pointer to the native window handle (e.g., GLFWwindow*).
-        * 
-        * @return Pointer to native window (opaque void* to allow cross-platform use).
-        * 
-        * @since 1.0
-        */
+         * @brief Get a pointer to the native window handle (opaque).
+         * @ingroup Graphics
+         * @return Opaque pointer to the platform window (for example, GLFWwindow*).
+         * @note Type and lifetime are backend-specific; treat as read-only.
+         * @since 1.0
+         */
         [[nodiscard]] virtual void* GetNativeWindow() const = 0;
-
     };
 
-}
+} // namespace Interstellar::Graphics

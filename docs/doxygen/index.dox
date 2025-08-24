@@ -3,6 +3,42 @@
  *
  * @section modules_sec Modules
  *
+ * @subsection graphics_sec Graphics
+ * The Graphics module exposes a minimal, cross-API facade for rendering:
+ * - Device setup and frame lifecycle: @ref Interstellar::Graphics::IGraphics
+ * - GPU resources: @ref Interstellar::Graphics::IMesh, @ref Interstellar::Graphics::ITexture
+ * - Shaders and pipelines: @ref Interstellar::Graphics::IShader, @ref Interstellar::Graphics::IRenderPipeline
+ *
+ * Concrete backends (OpenGL, Vulkan, DirectX12, Metal) implement these interfaces.
+ *
+ * #### Lifecycle
+ * Typical order of operations per frame:
+ * 1. Initialise() once at startup.
+ * 2. BeginFrame()
+ * 3. SubmitMesh(...) zero or more times
+ * 4. EndFrame()
+ * 5. Repeat until ShouldClose() is true, then Shutdown().
+ *
+ * `Resize()` can be called any time the window size changes.
+ *
+ * #### Threading
+ * Unless stated otherwise by an implementation, all methods should be called on
+ * the main/render thread. Resource creation may be expensive; prefer creating
+ * and reusing resources outside of the hot path.
+ *
+ * #### Best practices
+ * - Create meshes/textures once and reuse them across frames.
+ * - Record debug names to improve GPU debugging (SetDebugName where supported).
+ * - Avoid per-frame shader/pipeline creation; treat them as long-lived.
+ * - Prefer indexed meshes; keep index type consistent within a backend.
+ * - Gate optional features off GetAPI() when behavior must diverge per backend.
+ *
+ * #### API notes
+ * Backends may not expose the same native handle types. Treat `GetNativeHandle()`
+ * as opaque unless you are writing backend-specific code.
+ *
+ * See @ref Graphics "Interstellar Graphics module".
+ * 
  * @subsection input_sec Input
  * Core input module (keyboard, mouse, backends, helpers).
  * - Devices: IKeyboard, IMouse

@@ -73,7 +73,7 @@ namespace Interstellar::Renderers::OpenGL {
      * @param name New debug name.
      * @return Always true for OpenGLMesh.
      */
-    bool OpenGLMesh::SetDebugName(std::string name) {
+    bool OpenGLMesh::SetDebugName(std::string_view name) {
         m_DebugName = std::move(name);
         return true;
     }
