@@ -98,4 +98,12 @@ option(GRAPHICS_BUILD_TESTS "Build Graphics tests" ${BUILD_TESTING})
 if(GRAPHICS_BUILD_TESTS AND BUILD_TESTING)
   include(SubprojectTesting)
   add_subproject_tests(TARGET InterstellarGraphics NAME Graphics)
+  # Add test-only include path
+  add_library(GraphicsTestSupport INTERFACE)
+  target_include_directories(GraphicsTestSupport INTERFACE
+    $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/tests>
+  )
+  target_link_libraries(GraphicsTests PRIVATE GraphicsTestSupport)
 endif()
+
+
