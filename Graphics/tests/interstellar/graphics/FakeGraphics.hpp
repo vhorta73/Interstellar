@@ -23,7 +23,7 @@ namespace interstellar::graphics {
     struct FakeMesh final : ig::IMesh {
         std::string name;
         std::vector<std::byte> vbuf, ibuf;
-        void* native{ reinterpret_cast<void*>(0xDEADBEEF) };
+        void* native{ reinterpret_cast<void*>(static_cast<uintptr_t>(0xDEADBEEF)) };
 
         std::string_view GetDebugName() const override { return name; }
         virtual bool SetDebugName(std::string_view n) { name.assign(n.begin(), n.end()); return true; }
@@ -36,7 +36,7 @@ namespace interstellar::graphics {
         std::string name;
         std::vector<std::string> stages;
         bool valid{ true };
-        void* native{ reinterpret_cast<void*>(0xABCD1234) };
+        void* native{ reinterpret_cast<void*>(static_cast<uintptr_t>(0xABCD1234)) };
 
         const std::string& GetName() const override { return name; }
         std::vector<std::string> GetAvailableStages() const override { return stages; }
@@ -47,7 +47,7 @@ namespace interstellar::graphics {
     struct FakePipeline final : ig::IRenderPipeline {
         std::shared_ptr<ig::IShader> shader;
         std::unordered_map<std::string, ig::PipelineOptionValue> opts;
-        void* native{ reinterpret_cast<void*>(0xFACEB00C) };
+        void* native{ reinterpret_cast<void*>(static_cast<uintptr_t>(0xFACEB00C)) };
 
         std::shared_ptr<ig::IShader> GetShader() const override { return shader; }
         ig::PipelineOptionValue GetOption(const std::string& name) const override {
@@ -74,7 +74,7 @@ namespace interstellar::graphics {
         bool Initialise(uint32_t width, uint32_t height, bool vs) override {
             if (initialised) return false;
             initialised = true; w = width; h = height; vsync = vs;
-            window = reinterpret_cast<void*>(0xCAFEBABE);
+            window = reinterpret_cast<void*>(static_cast<uintptr_t>(0xCAFEBABE));
             return true;
         }
         void Shutdown() override {

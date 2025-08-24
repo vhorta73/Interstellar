@@ -3,10 +3,12 @@
 #include <memory>
 #include <string>
 #include <variant>
+#include "Interstellar/Graphics/IMaterial.hpp"
 
 namespace Interstellar::Graphics {
 
     class IShader;
+    class IMaterial;
 
     /**
      * @file
@@ -94,6 +96,12 @@ namespace Interstellar::Graphics {
          * @since 1.0
          */
         virtual void* GetNativeHandle() const = 0;
+
+        // NEW: non-pure, default implementation returns a generic fallback.
+        // Backends can override later to return a native material.
+        virtual std::shared_ptr<IMaterial> CreateMaterial() {
+            return std::make_shared<FallbackMaterial>();
+        }
     };
 
 } // namespace Interstellar::Graphics

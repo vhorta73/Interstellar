@@ -3,7 +3,12 @@
 #include "Interstellar/Renderers/OpenGL/OpenGLShader.hpp"
 #include "Interstellar/Renderers/OpenGL/OpenGLPipeline.hpp"
 #include "Interstellar/Renderers/OpenGL/OpenGLTexture.hpp"
+#include "Interstellar/Graphics/IMaterial.hpp"
 #include "Interstellar/Logging/Logging.hpp"
+#include "Interstellar/Graphics/IMesh.hpp"
+#include "Interstellar/Graphics/IRenderPipeline.hpp"
+#include "Interstellar/Graphics/IShader.hpp"
+
 
 #include <cstdint>
 #include <glad/glad.h>
@@ -16,6 +21,12 @@ static constexpr const char* ShaderBasePath = "assets/shaders/";
 namespace Interstellar::Renderers::OpenGL {
 
     using namespace Interstellar::Logging;
+    using namespace Interstellar::Graphics;
+
+    // small helper
+    static inline GLuint as_gl_uint(void* h) {
+        return static_cast<GLuint>(reinterpret_cast<uintptr_t>(h));
+    }
 
     /**
      * @brief Constructs the OpenGLGraphics system.
@@ -216,6 +227,48 @@ namespace Interstellar::Renderers::OpenGL {
 
         glMesh->Bind();
         glDrawElements(GL_TRIANGLES, static_cast<GLsizei>(glMesh->GetIndexCount()), GL_UNSIGNED_INT, 0);
+    }
+
+    void OpenGLGraphics::SubmitMesh(std::shared_ptr<IMesh> mesh,
+        std::shared_ptr<IRenderPipeline> pipeline,
+        std::shared_ptr<IMaterial> material)
+    {
+        auto shader = pipeline ? pipeline->GetShader() : nullptr;
+        GLuint prog = static_cast<GLuint>(reinterpret_cast<uintptr_t>(shader ? shader->GetNativeHandle() : nullptr));
+        glUseProgram(prog);
+
+        // NOTE: qualify the type with the correct namespace:
+        if (auto fb = std::dynamic_pointer_cast<Interstellar::Graphics::FallbackMaterial>(material)) {
+            // constants -> uniforms
+            for (const auto& [name, bytes] : fb->GetConstants()) {
+                GLint loc = glGetUniformLocation(prog, name.c_str());
+                if (loc < 0) continue;
+                switch (bytes.size()) {
+                case 4:  glUniform1fv(loc, 1, reinterpret_cast<const float*>(bytes.data())); break;  // float
+                case 8:  glUniform2fv(loc, 1, reinterpret_cast<const float*>(bytes.data())); break;  // vec2
+                case 12: glUniform3fv(loc, 1, reinterpret_cast<const float*>(bytes.data())); break; // vec3
+                case 16: glUniform4fv(loc, 1, reinterpret_cast<const float*>(bytes.data())); break; // vec4
+                case 64: glUniformMatrix4fv(loc, 1, GL_FALSE, reinterpret_cast<const float*>(bytes.data())); break; // mat4
+                default: break;
+                }
+            }
+
+            // textures -> GL units 0..N
+            GLint texUnit = 0;
+            for (const auto& [name, tex] : fb->GetTextures()) {
+                GLuint gltex = static_cast<GLuint>(reinterpret_cast<uintptr_t>(tex ? tex->GetNativeHandle() : nullptr));
+                if (!gltex) continue;
+                glActiveTexture(GL_TEXTURE0 + texUnit);
+                glBindTexture(GL_TEXTURE_2D, gltex);
+                if (GLint samplerLoc = glGetUniformLocation(prog, name.c_str()); samplerLoc >= 0) {
+                    glUniform1i(samplerLoc, texUnit);
+                }
+                ++texUnit;
+            }
+        }
+
+        // Draw (bind VAO + issue glDraw*)
+        SubmitMesh(std::move(mesh), std::move(pipeline)); // reuse legacy VAO/draw path
     }
 
     /**
