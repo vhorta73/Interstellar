@@ -130,100 +130,100 @@ namespace Interstellar::Units {
          */
         template <class FluxQ>
         [[nodiscard]] constexpr auto equilibrium_temp(const FluxQ& S, double albedo)
-            noexcept(noexcept(::mp_units::sqrt(::mp_units::sqrt(((1.0 - albedo)* S) / (4.0 * kStefanBoltzmann))))))
+            noexcept(noexcept(::mp_units::sqrt(::mp_units::sqrt(((1.0 - albedo)* S) / (4.0 * kStefanBoltzmann)))))
             requires requires { ((1.0 - albedo)* S) / (4.0 * kStefanBoltzmann); }
-            {
-                assert(albedo >= 0.0 && albedo <= 1.0 && "equilibrium_temp: albedo must be in [0,1]");
-                const auto x = ((1.0 - albedo) * S) / (4.0 * kStefanBoltzmann);
-                // mp-units: prefer sqrt(sqrt(x)) to model the fourth root without pow
-                return ::mp_units::sqrt(::mp_units::sqrt(x));
+        {
+            assert(albedo >= 0.0 && albedo <= 1.0 && "equilibrium_temp: albedo must be in [0,1]");
+            const auto x = ((1.0 - albedo) * S) / (4.0 * kStefanBoltzmann);
+            // mp-units: prefer sqrt(sqrt(x)) to model the fourth root without pow
+            return ::mp_units::sqrt(::mp_units::sqrt(x));
+        }
+        
+        /**
+        * @brief Absolute (Kelvin) equilibrium temperature as a quantity point.
+        * @details Uses the same expression as equilibrium_temp and returns K as a quantity_point.
+        * @tparam FluxQ      irradiance quantity (W/m^2).
+        * @tparam KelvinPoint a constructible temperature point type from your backend.
+        * @param S           Stellar flux (W/m^2).
+        * @param albedo      Bond albedo in [0, 1].
+        * @return Temperature point (K).
+        * @ingroup Units
+        * @since 1.0
+        */
+        template <class FluxQ, class KelvinPoint = TemperaturePointK>
+        [[nodiscard]] constexpr auto equilibrium_temp_point(const FluxQ& S, double albedo)
+            noexcept(noexcept(detail::si::absolute_zero + equilibrium_temp(S, albedo)))
+        {
+            return detail::si::absolute_zero + equilibrium_temp(S, albedo);
         }
 
-            /**
-             * @brief Absolute (Kelvin) equilibrium temperature as a quantity point.
-             * @details Uses the same expression as equilibrium_temp and returns K as a quantity_point.
-             * @tparam FluxQ      irradiance quantity (W/m^2).
-             * @tparam KelvinPoint a constructible temperature point type from your backend.
-             * @param S           Stellar flux (W/m^2).
-             * @param albedo      Bond albedo in [0, 1].
-             * @return Temperature point (K).
-             * @ingroup Units
-             * @since 1.0
-             */
-            template <class FluxQ, class KelvinPoint = decltype(0.0 * U::K + 0.0 * U::K)>
-            [[nodiscard]] constexpr auto equilibrium_temp_point(const FluxQ& S, double albedo)
-                noexcept(noexcept(KelvinPoint{ equilibrium_temp(S, albedo) }))
-            {
-                return KelvinPoint{ equilibrium_temp(S, albedo) };
-            }
+        //--------------------------------------------------------------------------
+        // Tetens saturation vapor pressure
+        // e_s = C0 * exp( A * Tc / (Tc + B) ), with Tc in C (delta-K numerically)
+        //--------------------------------------------------------------------------
+        
+        /**
+        * @brief Tetens saturation vapor pressure (Pa).
+        * @details e_s = C0 * exp( A * Tc / (Tc + B) ). Tc is in Celsius; implemented via
+        *          delta-K with the usual numeric equivalence.
+        * @tparam TempQ   absolute K (quantity_point) or delta-K (quantity).
+        * @param tempK_any Absolute or delta Kelvin.
+        * @return Saturation vapor pressure (Pa).
+        * @pre (Tc + B) != 0.
+        * @ingroup Units
+        * @since 1.0
+        */
+        template<class TempQ>
+        [[nodiscard]] inline auto saturation_vapor_pressure_tetens(const TempQ& tempK_any)
+            noexcept(noexcept(thermo::as_deltaK(tempK_any)))
+            requires requires { thermo::as_deltaK(tempK_any); }
+        {
+            const auto dT = thermo::as_deltaK(tempK_any);   // delta-K
+            const auto Tc = dT - thermo::K_delta(273.15);   // "C" as delta-K
+            const auto tetens_B = thermo::K_delta(237.3);   // delta-K
 
-            //--------------------------------------------------------------------------
-            // Tetens saturation vapor pressure
-            // e_s = C0 * exp( A * Tc / (Tc + B) ), with Tc in C (delta-K numerically)
-            //--------------------------------------------------------------------------
+            constexpr double tetens_A = 17.27;              // dimensionless
+            constexpr double tetens_C0 = 610.78;            // Pa (scalar)
 
-            /**
-             * @brief Tetens saturation vapor pressure (Pa).
-             * @details e_s = C0 * exp( A * Tc / (Tc + B) ). Tc is in Celsius; implemented via
-             *          delta-K with the usual numeric equivalence.
-             * @tparam TempQ   absolute K (quantity_point) or delta-K (quantity).
-             * @param tempK_any Absolute or delta Kelvin.
-             * @return Saturation vapor pressure (Pa).
-             * @pre (Tc + B) != 0.
-             * @ingroup Units
-             * @since 1.0
-             */
-            template<class TempQ>
-            [[nodiscard]] inline auto saturation_vapor_pressure_tetens(const TempQ& tempK_any)
-                noexcept(noexcept(thermo::as_deltaK(tempK_any)))
-                requires requires { thermo::as_deltaK(tempK_any); }
-            {
-                const auto dT = thermo::as_deltaK(tempK_any);   // delta-K
-                const auto Tc = dT - thermo::K_delta(273.15);   // "C" as delta-K
-                const auto tetens_B = thermo::K_delta(237.3);   // delta-K
+            const double frac = static_cast<double>(Tc / (Tc + tetens_B)); // dimensionless
+            const double expo = tetens_A * frac;
 
-                constexpr double tetens_A = 17.27;              // dimensionless
-                constexpr double tetens_C0 = 610.78;            // Pa (scalar)
+            return (tetens_C0 * std::exp(expo)) * U::Pa;    // Pa
+        }
 
-                const double frac = static_cast<double>(Tc / (Tc + tetens_B)); // dimensionless
-                const double expo = tetens_A * frac;
+        /**
+        * @brief Convenience: numeric Kelvin to Tetens pressure (Pa).
+        * @param T_numK Numeric Kelvin (interpreted as delta-K for the empirical formula).
+        * @return Saturation vapor pressure (Pa).
+        * @ingroup Units
+        * @since 1.0
+        */
+        [[nodiscard]] inline auto saturation_vapor_pressure_tetens_K(double T_numK)
+        {
+            return saturation_vapor_pressure_tetens(thermo::K_delta(T_numK));
+        }
 
-                return (tetens_C0 * std::exp(expo)) * U::Pa;    // Pa
-            }
-
-            /**
-             * @brief Convenience: numeric Kelvin to Tetens pressure (Pa).
-             * @param T_numK Numeric Kelvin (interpreted as delta-K for the empirical formula).
-             * @return Saturation vapor pressure (Pa).
-             * @ingroup Units
-             * @since 1.0
-             */
-            [[nodiscard]] inline auto saturation_vapor_pressure_tetens_K(double T_numK)
-            {
-                return saturation_vapor_pressure_tetens(thermo::K_delta(T_numK));
-            }
-
-            //--------------------------------------------------------------------------
-            // Relative humidity -> vapor partial pressure
-            //--------------------------------------------------------------------------
-
-            /**
-             * @brief Convert relative humidity to vapor partial pressure: e = RH * e_s.
-             * @tparam PressureQ pressure quantity (Pa).
-             * @param RH   Relative humidity in [0, 1].
-             * @param e_s  Saturation vapor pressure (Pa).
-             * @return Vapor partial pressure (Pa).
-             * @pre 0.0 <= RH <= 1.0.
-             * @ingroup Units
-             * @since 1.0
-             */
-            template <class PressureQ>
-            [[nodiscard]] constexpr auto vapor_partial_pressure(double RH, const PressureQ& e_s)
-                noexcept(noexcept(RH* e_s))
-            {
-                assert(RH >= 0.0 && RH <= 1.0 && "vapor_partial_pressure: RH must be in [0,1]");
-                return RH * e_s; // Pa
-            }
+        //--------------------------------------------------------------------------
+        // Relative humidity -> vapor partial pressure
+        //--------------------------------------------------------------------------
+        
+        /**
+        * @brief Convert relative humidity to vapor partial pressure: e = RH * e_s.
+        * @tparam PressureQ pressure quantity (Pa).
+        * @param RH   Relative humidity in [0, 1].
+        * @param e_s  Saturation vapor pressure (Pa).
+        * @return Vapor partial pressure (Pa).
+        * @pre 0.0 <= RH <= 1.0.
+        * @ingroup Units
+        * @since 1.0
+        */
+        template <class PressureQ>
+        [[nodiscard]] constexpr auto vapor_partial_pressure(double RH, const PressureQ& e_s)
+            noexcept(noexcept(RH* e_s))
+        {
+            assert(RH >= 0.0 && RH <= 1.0 && "vapor_partial_pressure: RH must be in [0,1]");
+            return RH * e_s; // Pa
+        }
        } // inline namespace v1
 } // namespace Interstellar::Units
 
