@@ -6,6 +6,8 @@
 #include "Interstellar/ECS/World.hpp"
 #include "Interstellar/Engine/Engine.hpp"
 #include "Interstellar/Engine/FrameTimer.hpp"
+#include "Interstellar/Renderers/OpenGL/GLInstancedSubmit.hpp"
+
 #include "Interstellar/Engine/ScopedZone.hpp"
 #include "Interstellar/Engine/Camera2D.hpp"
 #include "Interstellar/Graphics/IMaterial.hpp"
@@ -18,6 +20,8 @@
 #include "Interstellar/Renderers/OpenGL/OpenGLShader.hpp"
 #include "Interstellar/Simulation/Systems/MovementSystem.hpp"
 #include <Interstellar/Input/Input.hpp>
+#include "Interstellar/Universe/SectorStreamer.hpp"
+
 //#include "Interstellar/Config/JsonImpl/ElementConfig.hpp"
 //#include "Interstellar/Config/JsonImpl/ElementDatabase.hpp"
 //#include "Interstellar/Data/ElementData.hpp"
@@ -46,9 +50,8 @@ int main() {
     using Interstellar::Logging::LogInit;
     using namespace Interstellar::Input;
 
-    glm::vec2 triangleOffset = glm::vec2(0.0f);
-    glm::vec2 dragStart = glm::vec2(0.0f);
-    // float zoom = 1.0f; // Default zoom level
+    //glm::vec2 triangleOffset = glm::vec2(0.0f);
+    //glm::vec2 dragStart = glm::vec2(0.0f);
 
     //Interstellar::Config::JsonImpl::ElementDatabase elementDb;
     //if (!elementDb.loadFromFile("assets/data/elements_all.json")) {
@@ -240,6 +243,14 @@ int main() {
     auto& keyboard = input->keyboard();
     auto& mouse = input->mouse();
 
+    // ------------------------------------------------------------
+    // GPU resources
+    // NOTE: OpenGLGraphics::CreateShader loads assets/shaders/triangle.vert/frag
+    //     Make sure those shaders declare:
+    //       uniform vec2  u_Offset;  
+    //       uniform float u_Zoom;
+    //       uniform sampler2D u_Texture;
+    // ------------------------------------------------------------
     // ==== GPU RESOURCES ====
     auto shader = graphics->CreateShader("TriangleShader");
     auto mesh = graphics->CreateMesh(vertices, sizeof(vertices), indices, sizeof(indices));
@@ -255,60 +266,120 @@ int main() {
         return -2;
     }
 
+    // ------------------------------------------------------------
+    // Camera-ish controls: offset + zoom (draggable + wheel)
+    // ------------------------------------------------------------
+    glm::vec2 offset = glm::vec2(0.0f);   // matches u_Offset
+    float     zoom = 1.0f;              // matches u_Zoom
+    MouseFilter smooth{ 0.5f };             // for smooth drag
 
-    // ==== CAMERA (replaces manual u_Offset/u_Zoom) ====
-    Interstellar::Engine::Camera2D camera; // center=(0,0), zoom=1.0
-    MouseFilter smooth{0.5f};
 
+    // Multi-triangle demo state
+    bool manyMode = false;         // toggle with 'I'
+    bool prevI = false;
+    int  grid = 20;            // NxN triangles when manyMode=true (tweak with +/-)
+    int  prevGrid = grid;
+    std::vector<glm::vec2> gridOffsets; // relative offsets for each triangle
+
+    auto rebuildGrid = [&] {
+        gridOffsets.clear();
+        gridOffsets.reserve(grid * grid);
+        const float spacing = 0.12f;       // world spacing between instances
+        const float half = (grid - 1) * 0.5f;
+        for (int y = 0; y < grid; ++y) {
+            for (int x = 0; x < grid; ++x) {
+                gridOffsets.emplace_back(
+                    (x - half) * spacing,
+                    (y - half) * spacing
+                );
+            }
+        }
+        prevGrid = grid;
+        };
+    rebuildGrid();
+
+    // ------------------------------------------------------------
+    // ECS demo world (still here if you want to drive something later)
+    // ------------------------------------------------------------
     Engine engine;
-    World world;
+    World  world;
     world.create(0.0f, 0.0f, 0.1f, 0.0f); // one entity moving right
 
 
+    // ------------------------------------------------------------
+    // Game loop (fixed simulation + render)
+    // ------------------------------------------------------------
     engine.run(
         // --- SIMULATION ---
         [&](double dt) {
-            Interstellar::Engine::ScopedZone zSim("Sim");
-
             input->pump();
             input->beginFrame(dt);
 
+            // Toggle multi-triangle mode (edge-trigger)
+            bool iDown = keyboard.isDown(KeyCode::I);
+            if (iDown && !prevI) manyMode = !manyMode;
+            prevI = iDown;
+
+            // Adjust grid size with +/- (when manyMode is on)
+            if (manyMode) {
+                if (keyboard.isDown(KeyCode::Equal)) { // '+' on many keyboards
+                    grid = std::min(grid + 1, 200);    // clamp
+                }
+                if (keyboard.isDown(KeyCode::Minus)) {
+                    grid = std::max(grid - 1, 1);
+                }
+                if (grid != prevGrid) rebuildGrid();
+            }
+
             // Keyboard pans the camera
             float moveSpeed = 0.5f * static_cast<float>(dt);
-            if (keyboard.isDown(KeyCode::ArrowLeft))  camera.center.x += moveSpeed;
-            if (keyboard.isDown(KeyCode::ArrowRight)) camera.center.x -= moveSpeed;
-            if (keyboard.isDown(KeyCode::ArrowUp))    camera.center.y -= moveSpeed;
-            if (keyboard.isDown(KeyCode::ArrowDown))  camera.center.y += moveSpeed;
+            if (keyboard.isDown(KeyCode::ArrowLeft))  offset.x += moveSpeed;
+            if (keyboard.isDown(KeyCode::ArrowRight)) offset.x -= moveSpeed;
+            if (keyboard.isDown(KeyCode::ArrowUp))    offset.y -= moveSpeed;
+            if (keyboard.isDown(KeyCode::ArrowDown))  offset.y += moveSpeed;
 
             // Zoom via wheel
-            camera.zoom = WheelZoom(mouse, camera.zoom, 0.15f, 0.1f, 5000.0f);
+            zoom = WheelZoom(mouse, zoom, 0.15f, 0.1f, 5000.0f);
+            if (mouse.isDown(MouseButton::Left)) offset += smooth.apply(mouse, windowWidth, windowHeight);
+            else                                  smooth.reset();
 
             // Pan via LMB drag (dragging the world -> move camera opposite)
             if (mouse.isDown(MouseButton::Left)) {
-                glm::vec2 d = smooth.apply(mouse, windowWidth, windowHeight);
-                camera.center -= d;
+                offset += smooth.apply(mouse, windowWidth, windowHeight);
             } else {
                 smooth.reset();
             }
 
-            // Optional: floating origin recentre (for huge worlds)
-            // glm::vec2 recenterDelta = camera.recenterIfNeeded();
-
+            // Run your demo system (optional)
             MovementSystem(world, dt);
+
             input->endFrame();
         },
 
         // --- RENDER ---
         [&](double /*frameTime*/) {
-            Interstellar::Engine::ScopedZone zRender("Render");
 
             graphics->BeginFrame();
 
-            // Push camera & texture to material; no raw GL calls here
-            camera.apply(*material);
+            // Push uniforms via material
+            material->Set("u_Zoom", &zoom, sizeof(zoom));
             material->Set("u_Texture", texture);
 
-            graphics->SubmitMesh(mesh, pipeline, material);
+            if (!manyMode) {
+                // Single triangle
+                material->Set("u_Offset", &offset, sizeof(offset));
+                graphics->SubmitMesh(mesh, pipeline, material);
+            }
+            else {
+                // Many triangles (CPU-loop multi-draw). Great for a quick visual check.
+                // For real scaling, we'll switch to GPU instancing in the next step.
+                for (const auto& rel : gridOffsets) {
+                    glm::vec2 o = offset + rel; // camera + instance offset
+                    material->Set("u_Offset", &o, sizeof(o));
+                    graphics->SubmitMesh(mesh, pipeline, material);
+                }
+            }
+
             graphics->EndFrame();
         },
 
