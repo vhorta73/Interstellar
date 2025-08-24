@@ -74,7 +74,7 @@ namespace Interstellar::Renderers::OpenGL {
          * @return true on success.
          * @since 1.0
          */
-        virtual bool SetDebugName(std::string_view& name) override;
+        virtual bool SetDebugName(std::string_view name) override;
 
         /**
          * @brief Number of vertices.
