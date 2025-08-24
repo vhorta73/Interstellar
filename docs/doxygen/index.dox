@@ -33,6 +33,14 @@
  *
  * See @ref Logging "Interstellar Logging module".
  *
+ * @subsection units_sec Units
+ * Strongly-typed SI quantities and physical constants (mp-units).
+ * - Base constants: gravity, pressure, gas constant, Stefan-Boltzmann
+ * - Earth refs: radius, mass, GM
+ * - Solar constant
+ *
+ * See @ref Units "Interstellar Units module".
+ *
  * @section examples_sec Examples
  * For quick starts and snippets, visit @ref Examples "Examples".
  */

@@ -1,0 +1,197 @@
+/**
+ * @defgroup UnitsExamples Units
+ * @ingroup Examples
+ * @brief Quick, practical snippets for Interstellar Units.
+ * @since 1.0
+ *
+ * @brief The examples below are grouped by header. They assume you have included the corresponding header(s) and, where noted, are using:
+ * @code
+ * using namespace Interstellar::Units;
+ * @endcode
+ *
+ * @section units_examples_quick Quick Start
+ * @code
+ * #include <Interstellar/Units/Units.hpp>
+ *
+ * using namespace Interstellar::Units;
+ *
+ * int main() {
+ *     // Build quantities via factories
+ *     auto d  = length::kilometers(3.5);    // Length
+ *     auto t  = time::minutes(12);          // Time
+ *     auto v  = mech::meters_per_second(25);// Speed
+ *
+ *     // Compose with the unit catalog U::
+ *     auto a  = 2.0 * U::m_per_s2;          // Acceleration
+ *     auto F  = 10.0 * U::N;                // Force
+ *     auto P  = 101325.0 * U::Pa;           // Pressure
+ *
+ *     // Convert to scalars in desired units
+ *     double d_m  = in(d, U::m);            // meters
+ *     double t_s  = in(t, U::s);            // seconds
+ *     double v_ms = in(v, U::m_per_s);      // m/s
+ *     (void)d_m; (void)t_s; (void)v_ms;     // silence "unused" in this snippet
+ * }
+ * @endcode
+ *
+ * @section units_examples_literals User-defined Literals
+ * @code
+ * #include <Interstellar/Units/Units.hpp>
+ *
+ * using namespace Interstellar::Units;
+ * using namespace Interstellar::Units::literals;
+ *
+ * int main() {
+ *     auto L = 42.0_m;      // Length
+ *     auto A = 3.0_m2;      // Area
+ *     auto V = 1.5_m3;      // Volume
+ *     auto T = 5.0_s;       // Time
+ *     auto p = 12.0_Pa;     // Pressure
+ *     (void)L; (void)A; (void)V; (void)T; (void)p;
+ * }
+ * @endcode
+ *
+ * @section units_examples_thermo Thermodynamics Helpers
+ * @code
+ * #include <Interstellar/Units/Units.hpp>
+ *
+ * using namespace Interstellar::Units;
+ *
+ * int main() {
+ *     // Construct absolute Kelvin (quantity_point) and delta-K (difference)
+ *     auto T_abs = thermo::K_absolute(288.15); // 15 C
+ *     auto dT    = thermo::K_delta(10.0);      // +10 K
+ *
+ *     // Convert to delta-K for arithmetic
+ *     auto dT1 = thermo::as_deltaK(T_abs);     // delta relative to absolute zero
+ *     auto dT2 = thermo::as_deltaK(dT);        // unchanged
+ *
+ *     // Numeric extraction (in K)
+ *     double k1 = thermo::in_K(dT1);
+ *     double k2 = thermo::in_K(T_abs);         // converts to delta-K first
+ *     (void)k1; (void)k2;
+ * }
+ * @endcode
+ *
+ * @section units_examples_physis Physics constants and planetary references.
+ *
+ * @code
+ * #include <Interstellar/Units/Units.hpp>
+ * #include <Interstellar/Units/Constants.hpp>
+ *
+ * using namespace Interstellar::Units;
+ *
+ * int main() {
+ *     // Standard gravity and pressure
+ *     auto g  = kStandardGravity;  // m/s^2
+ *     auto p0 = kStandardPressure; // Pa
+ *
+ *     // Solar constant (mean TOA) and Stefan-Boltzmann
+ *     auto S  = kSolarConstant;    // W/m^2
+ *     auto sb = kStefanBoltzmann;  // W/(m^2*K^4)
+ *
+ *     // Earth parameters
+ *     auto Re = kEarthRadius;      // m
+ *     auto mu = kEarthMu;          // m^3/s^2
+ *
+ *     // Convert to numbers for logging, etc.
+ *     double g_ms2 = in(g,  U::m_per_s2);
+ *     double p_Pa  = in(p0, U::Pa);
+ *     double R_m   = in(Re, U::m);
+ *     (void)g_ms2; (void)p_Pa; (void)R_m;
+ * }
+ * @endcode
+ *
+ * @brief Using the quantity aliases and U catalog.
+ *
+ * @code
+ * #include <Interstellar/Units/Types.hpp>
+ *
+ * using namespace Interstellar::Units;
+ *
+ * int main() {
+ *     // Quantity aliases
+ *     Length L   = 2.5 * U::m;
+ *     Area A     = 12.0 * U::m2;
+ *     Volume V   = 0.03 * U::m3;
+ *     Speed  v   = 15.0 * U::m_per_s;
+ *     Pressure p = 101325.0 * U::Pa;
+ *
+ *     // Scalar extraction in chosen units
+ *     double Lm = in(L, U::m);
+ *     double vm = in(v, U::m_per_s);
+ *     (void)Lm; (void)vm;
+ * }
+ * @endcode
+ *
+ * @section units_examples_types_in Utility in()
+ * @code
+ * #include <Interstellar/Units/Types.hpp>
+ *
+ * using namespace Interstellar::Units;
+ *
+ * double kinetic_energy(double mass_kg, double speed_ms) {
+ *     Mass  m = mass_kg * U::kg;
+ *     Speed v = speed_ms * U::m_per_s;
+ *     Energy E = 0.5 * m * v * v;
+ *     return in(E, U::J); // Joules as double
+ * }
+ * @endcode
+ *
+ * @brief Gameplay-oriented, unit-safe helpers (ideal gas, hydrostatic, escape velocity, radiative equilibrium, humidity).
+ *
+ * @code
+ * #include <Interstellar/Units/Units.hpp>
+ * #include <Interstellar/Units/Constants.hpp>
+ * #include <Interstellar/Units/Math.hpp>
+ *
+ * using namespace Interstellar::Units;
+ *
+ * int main() {
+ *     // Ideal gas: P = n R T / V
+ *     auto n    = 1.0 * U::mol;
+ *     auto Tabs = thermo::K_absolute(300.0);     // absolute K (quantity_point)
+ *     auto V    = 0.024 * U::m3;                 // ~24 liters
+ *     auto P    = ideal_gas_pressure(n, Tabs, V);
+ *     double P_Pa = in(P, U::Pa);
+ *
+ *     // Hydrostatic: dp = rho g h
+ *     Density rho = 1000.0 * U::kg / U::m3;      // water
+ *     auto dp = hydrostatic_pressure(rho, kStandardGravity, 2.0 * U::m);
+ *     double dp_Pa = in(dp, U::Pa);
+ *
+ *     // Escape velocity at Earth mean radius
+ *     auto v_e = escape_velocity(kEarthMu, kEarthRadius);
+ *     double v_ms = in(v_e, U::m_per_s);
+ *
+ *     // No-greenhouse radiative equilibrium
+ *     auto T_eq = equilibrium_temp(kSolarConstant, 0.3); // delta-K
+ *     double Teq_K = thermo::in_K(T_eq);
+ *
+ *     // Tetens saturation vapor pressure at 293.15 K (~20 C)
+ *     auto e_s = saturation_vapor_pressure_tetens(thermo::K_absolute(293.15));
+ *     double e_s_Pa = in(e_s, U::Pa);
+ *
+ *     // Relative humidity to vapor partial pressure
+ *     auto e = vapor_partial_pressure(0.6, e_s);
+ *     double e_Pa = in(e, U::Pa);
+ *
+ *     (void)P_Pa; (void)dp_Pa; (void)v_ms; (void)Teq_K; (void)e_s_Pa; (void)e_Pa;
+ * }
+ * @endcode
+ *
+ * @code
+ * #include <Interstellar/Units/Units.hpp>
+ * #include <Interstellar/Units/Math.hpp>
+ *
+ * using namespace Interstellar::Units;
+ *
+ * int main() {
+ *     // If you need an absolute temperature "point":
+ *     using KPoint = TemperaturePointK;
+ *     KPoint T0 = equilibrium_temp_point(1361.0 * U::W_per_m2, 0.3);
+ *     double T0_K = thermo::in_K(T0); // numeric K
+ *     (void)T0_K;
+ * }
+ * @endcode
+ */
