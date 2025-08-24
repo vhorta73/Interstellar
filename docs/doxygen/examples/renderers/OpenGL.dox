@@ -1,0 +1,143 @@
+/**
+ * @defgroup OpenGLExamples OpenGL Examples
+ * @ingroup RenderersExamples
+ *
+ * @brief Rendering interfaces and backend implementations.
+ *
+ * @since 1.0
+ *
+ * 
+ * @section opengl_example Minimal OpenGL usage (pseudocode)
+ * @code
+ * using namespace Interstellar::Renderers::OpenGL;
+ *
+ * OpenGLGraphics gfx;
+ * gfx.Initialise(1280, 720, true);
+ *
+ * auto shader   = gfx.CreateShader("basic");       // backend decides lookup
+ * auto pipeline = gfx.CreatePipeline(shader);
+ * auto mesh     = gfx.CreateMesh(...);             // create VBO/IBO/VAO
+ *
+ * while (!gfx.ShouldClose()) {
+ *     gfx.BeginFrame();
+ *     gfx.SubmitMesh(mesh, pipeline);
+ *     gfx.EndFrame();
+ * }
+ *
+ * gfx.Shutdown();
+ * @endcode
+ *
+ * @section renderers_quick_start Quick Start: Create a window and draw a mesh
+ *
+ * @brief Minimal flow using the OpenGL backend:
+ *
+ * @code
+ * #include <memory>
+ * #include "Interstellar/Graphics/IGraphics.hpp"
+ * #include "Interstellar/Renderers/OpenGL/OpenGLGraphics.hpp"
+ *
+ * using Interstellar::Graphics::IGraphics;
+ * using Interstellar::Renderers::OpenGL::OpenGLGraphics;
+ *
+ * int main() {
+ *     std::unique_ptr<IGraphics> gfx = std::make_unique<OpenGLGraphics>();
+ *     if (!gfx->Initialise(1280, 720, true)) return 1;
+ *
+ *     // Example vertex/index data (tri)
+ *     struct V { float x,y; float r,g,b; };
+ *     V verts[] = {
+ *         { -0.5f, -0.5f, 1,0,0 },
+ *         {  0.5f, -0.5f, 0,1,0 },
+ *         {  0.0f,  0.5f, 0,0,1 },
+ *     };
+ *     unsigned int idx[] = { 0, 1, 2 };
+ *
+ *     auto mesh = gfx->CreateMesh(verts, sizeof(verts), idx, sizeof(idx));
+ *
+ *     // Shader name/path contract is backend-defined. See your OpenGLShader impl.
+ *     auto shader   = gfx->CreateShader("basic");
+ *     auto pipeline = gfx->CreatePipeline(shader);
+ *
+ *     while (!gfx->ShouldClose()) {
+ *         gfx->BeginFrame();
+ *         gfx->SubmitMesh(mesh, pipeline);
+ *         gfx->EndFrame();
+ *     }
+ *
+ *     gfx->Shutdown();
+ *     return 0;
+ * }
+ * @endcode
+ *
+ * @section gfx_iface_example IGraphics loop and resize
+ * @code
+ * std::unique_ptr<IGraphics> gfx = CreateYourBackend(); // factory or direct
+ * if (!gfx->Initialise(800, 600, true)) { /* handle error */ }
+ *
+ * // Resize if your windowing layer notifies a size change:
+ * gfx->Resize(newW, newH);
+ *
+ * while (!gfx->ShouldClose()) {
+ *     gfx->BeginFrame();
+ *     // submit meshes, UI, etc.
+ *     gfx->EndFrame();
+ * }
+ *
+ * gfx->Shutdown();
+ * @endcode
+ *
+ * @section mesh_iface_example Create and submit a mesh
+ * @code
+ * struct PosOnly { float x, y, z; };
+ * PosOnly tri[] = { {0,0,0}, {1,0,0}, {0,1,0} };
+ * unsigned int idx[] = { 0, 1, 2 };
+ *
+ * auto mesh = gfx->CreateMesh(tri, sizeof(tri), idx, sizeof(idx));
+ * auto shader = gfx->CreateShader("unlit");
+ * auto pipe = gfx->CreatePipeline(shader);
+ *
+ * gfx->BeginFrame();
+ * gfx->SubmitMesh(mesh, pipe);
+ * gfx->EndFrame();
+ * @endcode
+ *
+ *
+ * @section texture_iface_example Loading a texture
+ * @code
+ * auto tex = gfx->CreateTexture("assets/brick_diffuse.png");
+ * // IMesh/IRenderPipeline binding is backend specific.
+ * // In OpenGL, the pipeline/shader would bind the texture using a uniform or sampler.
+ * @endcode
+ *
+ * @section native_handle_notes Native handles (void*) notes
+ *
+ * - All interfaces return native handles as void*. Treat them as opaque tokens.
+ * - Backends may encode integer API objects in the pointer. Do not dereference.
+ * - Only backend code that knows the underlying API should cast.
+ *
+ * Example (OpenGL only, in backend code):
+ * @code
+ * void* token = texture->GetNativeHandle();
+ * unsigned int glName = static_cast<unsigned int>(reinterpret_cast<uintptr_t>(token));
+ * // glBindTexture(GL_TEXTURE_2D, glName);
+ * @endcode
+ *
+ * @section opengl_notes OpenGL notes
+ *
+ * Context and threading:
+ * - The OpenGL backend creates and owns a GLFW window and GL context.
+ * - All calls should occur on the thread that owns the context.
+ *
+ * Shaders:
+ * - Interstellar::Renderers::OpenGL::OpenGLShader compiles and links an
+ *   OpenGL program. GetAvailableStages typically reports {"vertex","fragment"}.
+ *
+ * Pipelines:
+ * - Interstellar::Renderers::OpenGL::OpenGLPipeline holds a shader and a
+ *   set of name/value options (bool, int, float, string).
+ *
+ * Textures:
+ * - Interstellar::Renderers::OpenGL::OpenGLTexture loads an image and
+ *   creates a GL texture object. Format string is implementation defined.
+ *
+ */

@@ -38,6 +38,18 @@
  * as opaque unless you are writing backend-specific code.
  *
  * See @ref Graphics "Interstellar Graphics module".
+ *
+ * @subsection rendererers_sec Renderers
+ * 
+ * The Renderers module provides an API-agnostic rendering facade and
+ * concrete backends. Start with the interfaces in @ref RenderersCore,
+ * then use a backend such as @ref RenderersOpenGL.
+ *
+ * Contents:
+ * - @ref Renderers "Renderer Interfaces"
+ * - @ref RenderersOpenGL "OpenGL Backend"
+ *
+ * See @ref Renderers "Interstellar Renderers module".
  * 
  * @subsection input_sec Input
  * Core input module (keyboard, mouse, backends, helpers).

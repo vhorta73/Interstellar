@@ -30,6 +30,13 @@
  *  @brief Interstellar Graphics module (backend-agnostic rendering facade).
  *  @since 1.0
  */
+ 
+ /**
+ * @defgroup Renderers Renderers
+ * @ingroup Modules
+ * @brief Rendering interfaces and backend implementations.
+ * @since 1.0
+ */
 
  /**
  * @defgroup Logging Logging
