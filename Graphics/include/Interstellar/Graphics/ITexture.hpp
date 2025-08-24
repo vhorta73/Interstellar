@@ -6,75 +6,78 @@
 namespace Interstellar::Graphics {
 
     /**
-     * @brief Interface for a platform-agnostic GPU texture resource.
-     *
-     * Represents a 2D texture loaded from disk or created dynamically at runtime.
-     * This interface provides access to essential metadata, such as dimensions and format,
-     * as well as integration with underlying graphics API handles.
-     *
-     * Textures may be used for rendering, sampling in shaders, or as attachments in framebuffers.
-     *
-     * @since 1.0
+     * @file
+     * @ingroup Graphics
+     * @brief Backend-agnostic GPU texture interface.
+     * @details
+     *   Represents a 2D texture resource owned by a graphics backend. Implementations
+     *   provide dimensions, format information, an optional debug name, and an
+     *   opaque native handle for low-level integration.
      */
+
+     /**
+      * @brief Platform-agnostic GPU texture resource.
+      * @ingroup Graphics
+      * @details
+      *   Textures may be used as shader-readable resources, render targets, or
+      *   attachments, depending on backend capabilities. Unless stated otherwise,
+      *   all methods are expected to be called on the render/main thread.
+      * @since 1.0
+      */
     class ITexture {
     public:
         virtual ~ITexture() = default;
 
         /**
-         * @brief Gets the width of the texture in pixels.
-         *
-         * @return Width in pixels.
-         *
+         * @brief Get the width of the texture in pixels.
+         * @ingroup Graphics
+         * @return Unsigned width in pixels.
          * @since 1.0
          */
         virtual uint32_t GetWidth() const = 0;
 
         /**
-         * @brief Gets the height of the texture in pixels.
-         *
-         * @return Height in pixels.
-         *
+         * @brief Get the height of the texture in pixels.
+         * @ingroup Graphics
+         * @return Unsigned height in pixels.
          * @since 1.0
          */
         virtual uint32_t GetHeight() const = 0;
 
         /**
-         * @brief Returns the internal format of the texture.
-         *
-         * The format is returned as a string for flexibility (e.g., `"RGBA8"`, `"BC7"`, `"R16F"`).
-         * This allows custom formats or platform-specific representations to be surfaced without strict enums.
-         *
-         * @return A string describing the pixel format.
-         *
+         * @brief Get the internal pixel format as a string.
+         * @ingroup Graphics
+         * @details
+         *   Returns a backend-defined token such as "RGBA8", "BC7", or "R16F".
+         *   Using a string keeps the API flexible without locking into a fixed enum.
+         * @return Format identifier string.
          * @since 1.0
          */
         virtual std::string GetFormat() const = 0;
 
         /**
-         * @brief Retrieves the debug or symbolic name assigned to this texture.
-         *
-         * Useful for logging, UI overlays, asset inspection, or GPU debugging.
-         *
-         * @return A constant reference to the name string.
-         *
+         * @brief Get the debug or symbolic name of the texture.
+         * @ingroup Graphics
+         * @details Useful for logging, UI inspection, and GPU debugging. May be empty
+         *          if unset or unsupported by the backend.
+         * @return Constant reference to the texture name.
          * @since 1.0
          */
         virtual const std::string& GetName() const = 0;
 
         /**
-         * @brief Returns the backend-specific texture handle for low-level API access.
-         *
-         * The returned handle may represent:
-         * - OpenGL: GLuint (texture ID)
-         * - Vulkan: VkImage or descriptor view
-         * - DirectX: ID3D12Resource or ID3D11ShaderResourceView
-         *
-         * Treat this handle as opaque unless you are interfacing directly with the native API.
-         *
-         * @return A void pointer to the native texture handle.
-         *
+         * @brief Get a backend-native texture handle (opaque).
+         * @ingroup Graphics
+         * @details
+         *   The concrete type depends on the backend and should be treated as opaque:
+         *   - OpenGL: texture id (cast to void*)
+         *   - Vulkan: VkImage or view handle
+         *   - DirectX: ID3D12Resource* or ID3D11ShaderResourceView*
+         *   May return nullptr if not applicable.
+         * @return Opaque pointer to the native texture object.
          * @since 1.0
          */
         virtual void* GetNativeHandle() const = 0;
     };
-}
+
+} // namespace Interstellar::Graphics
