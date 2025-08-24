@@ -1,0 +1,36 @@
+/**
+ * @defgroup SimulationExamples Simulation
+ * @ingroup Examples
+ * @brief High-level simulation systems operating over ECS data.
+ * @since 1.0
+ *
+ * @section sim_move Basic movement step
+ *
+ * @code{.cpp}
+ * #include <Interstellar/ECS/World.hpp>
+ * #include <Interstellar/Simulation/MovementSystem.hpp>
+ *
+ * using namespace Interstellar;
+ *
+ * int main() {
+ *     ECS::World world;
+ *     world.create(/* x */ 0.0f, /* y */ 0.0f,
+ *                  /* vx */ 1.0f, /* vy */ 0.5f);
+ *
+ *     // Advance one frame at ~60 FPS
+ *     Simulation::MovementSystem(world, 1.0 / 60.0);
+ *
+ *     // Inspect results
+ *     for (const auto& t : world.getTransforms()) {
+ *         // t.x ~= 0.0167, t.y ~= 0.0083
+ *     }
+ * }
+ * @endcode
+ *
+ * @section sim_steps Multiple fixed steps
+ * @code{.cpp}
+ * for (int i = 0; i < 120; ++i) {
+ *     Simulation::MovementSystem(world, 1.0 / 60.0);
+ * }
+ * @endcode
+ */

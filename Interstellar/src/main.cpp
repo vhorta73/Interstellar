@@ -2,6 +2,9 @@
 #include <sstream>
 #include <algorithm>
 
+#include "Interstellar/Engine/Engine.hpp"
+#include "Interstellar/ECS/World.hpp"
+#include "Interstellar/Simulation/Systems/MovementSystem.hpp"
 #include "Interstellar/Interstellar.hpp"
 #include "Interstellar/Graphics/ITexture.hpp"
 #include "Interstellar/Logging/Logging.hpp"
@@ -34,8 +37,12 @@ namespace {
 //#include "Interstellar/Data/ElementData.hpp"
 int main() {
 
+    using Interstellar::Engine::Engine;
+    using Interstellar::ECS::World;
+    using Interstellar::Simulation::MovementSystem;
     using Interstellar::Logging::LogInit;
     using namespace Interstellar::Input;
+
     glm::vec2 triangleOffset = glm::vec2(0.0f);
     glm::vec2 dragStart = glm::vec2(0.0f);
     bool dragging = false;
@@ -218,7 +225,8 @@ int main() {
 
 
     ////Interstellar::Core::Logger s_Logger(LOG_CATEGORY);
-    //// ==== TEMPORARY TEST CODE ====
+
+    // ==== TEMPORARY TEST CODE ====
     constexpr int windowWidth = 1200;
     constexpr int windowHeight = 860;
 
@@ -275,67 +283,64 @@ int main() {
     double timeAccumulator = 0.0;
 
     MouseFilter smooth{ 0.5f };
-    while (!graphics->ShouldClose()) {
-        input->pump();
 
-        // Frame timing
-        double currentTime = glfwGetTime();
-        double deltaTime = currentTime - lastTime;
-        lastTime = currentTime;
-        double fps = 1.0 / deltaTime;
-        fpsAvg = ( fps + ( fpsAvg * 9.0 ) ) / 10.0;
-        timeAccumulator += deltaTime;
+    Engine engine;
+    World world;
+    world.create(0.0f, 0.0f, 0.1f, 0.0f); // one entity moving right
 
-        if (timeAccumulator >= 1.0) {
-            LogInit().LogDebug("FPS: {} | Avg: {} ",fps, fpsAvg);
-          timeAccumulator = 0.0;
-        }
-        input->beginFrame(deltaTime);
+    engine.run(
+        // --- SIMULATION ---
+        [&](double dt) {
+            input->pump();
+            input->beginFrame(dt);
 
-        // Keyboard movement
-        float moveSpeed = 0.5f * static_cast<float>(deltaTime);
-        if (keyboard.isDown(KeyCode::ArrowLeft))  triangleOffset.x -= moveSpeed;
-        if (keyboard.isDown(KeyCode::ArrowRight)) triangleOffset.x += moveSpeed;
-        if (keyboard.isDown(KeyCode::ArrowUp))    triangleOffset.y += moveSpeed;
-        if (keyboard.isDown(KeyCode::ArrowDown))  triangleOffset.y -= moveSpeed;
+            // Keyboard movement (same as before)
+            float moveSpeed = 0.5f * static_cast<float>(dt);
+            if (keyboard.isDown(KeyCode::ArrowLeft))  triangleOffset.x -= moveSpeed;
+            if (keyboard.isDown(KeyCode::ArrowRight)) triangleOffset.x += moveSpeed;
+            if (keyboard.isDown(KeyCode::ArrowUp))    triangleOffset.y += moveSpeed;
+            if (keyboard.isDown(KeyCode::ArrowDown))  triangleOffset.y -= moveSpeed;
 
-        // Zoom from wheel (requires the patches above)
-        zoom = WheelZoom(mouse, zoom, 0.15f, 0.1f, 5000.0f);
-
-        // Pan with LMB using mouse delta
-        if (mouse.isDown(MouseButton::Left)) {
-            triangleOffset += smooth.apply(mouse, windowWidth, windowHeight);
-        }
-        else {
-            smooth.reset();
-        }
-
-        // Render
-        graphics->BeginFrame();
-
-        // Send u_Offset to the shader
-        glUseProgram(programID);
-
-        if (uOffset >= 0) glUniform2f(uOffset, triangleOffset.x, triangleOffset.y);
-        if (uZoom >= 0) glUniform1f(uZoom, zoom);
-
-        // Bind texture to unit 0
-        if (texture) {
-            if (auto native = texture->GetNativeHandle()) {
-                glActiveTexture(GL_TEXTURE0);
-                glBindTexture(GL_TEXTURE_2D, static_cast<GLuint>(reinterpret_cast<uintptr_t>(native)));
+            // Wheel zoom + drag (same as before)
+            zoom = WheelZoom(mouse, zoom, 0.15f, 0.1f, 5000.0f);
+            if (mouse.isDown(MouseButton::Left)) {
+                triangleOffset += smooth.apply(mouse, windowWidth, windowHeight);
             }
             else {
-                LogInit().LogWarn("Texture has no valid native handle!");
+                smooth.reset();
             }
-        }
 
+            MovementSystem(world, dt);
+            input->endFrame();
+        },
 
-        graphics->SubmitMesh(mesh, pipeline);
-        graphics->EndFrame();
-        input->endFrame();
-    }
+        // --- RENDER ---
+        [&](double /*frameTime*/) {
+            graphics->BeginFrame();
 
+            // Bind program every frame
+            glUseProgram(programID);
+
+            // Update uniforms every frame (offset & zoom)
+            if (uOffset >= 0) glUniform2f(uOffset, triangleOffset.x, triangleOffset.y);
+            if (uZoom >= 0) glUniform1f(uZoom, zoom);
+
+            // Bind texture to unit 0 every frame
+            if (texture) {
+                if (auto native = texture->GetNativeHandle()) {
+                    glActiveTexture(GL_TEXTURE0);
+                    glBindTexture(GL_TEXTURE_2D,
+                        static_cast<GLuint>(reinterpret_cast<uintptr_t>(native)));
+                }
+            }
+
+            graphics->SubmitMesh(mesh, pipeline);
+            graphics->EndFrame();
+        },
+
+        // --- EXIT CONDITION ---
+        [&] { return graphics->ShouldClose(); }
+    );
     graphics->Shutdown();
     glfwTerminate();
     //// ==== END OF TEMPORARY TEST CODE ====
