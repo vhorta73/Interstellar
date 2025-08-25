@@ -25,6 +25,7 @@
 #include "Interstellar/Simulation/Systems/MovementSystem.hpp"
 #include <Interstellar/Input/Input.hpp>
 #include "Interstellar/Universe/SectorStreamer.hpp"
+#include "Interstellar/Renderers/OpenGL/GLPointSubmit.hpp"
 
 #include <GLFW/glfw3.h>
 #include <glm/glm.hpp>
@@ -82,8 +83,8 @@ int main() {
     using namespace Interstellar::Input;
 
     // ==== WINDOW ====
-    constexpr int windowWidth = 4680;
-    constexpr int windowHeight = 2400;
+    constexpr int windowWidth = 5080;
+    constexpr int windowHeight = 5080;
 
     auto graphics = std::make_unique<Interstellar::Renderers::OpenGL::OpenGLGraphics>();
     if (!graphics->Initialise(windowWidth, windowHeight, false)) {
@@ -104,19 +105,19 @@ int main() {
     auto& mouse = input->mouse();
 
     // ==== GPU RESOURCES ====
-    auto shader = graphics->CreateShader("TriangleShader");
-    auto mesh = graphics->CreateMesh(vertices, sizeof(vertices), indices, sizeof(indices));
-    auto pipeline = graphics->CreatePipeline(shader);
-    auto texture = graphics->CreateTexture(TEXTURE_PATH);
-    auto material = pipeline->CreateMaterial();
+    //auto shader = graphics->CreateShader("TriangleShader");
+    //auto mesh = graphics->CreateMesh(vertices, sizeof(vertices), indices, sizeof(indices));
+    //auto pipeline = graphics->CreatePipeline(shader);
+    //auto texture = graphics->CreateTexture(TEXTURE_PATH);
+    //auto material = pipeline->CreateMaterial();
 
-    if (!shader || !mesh || !pipeline || !texture) {
-        if (!shader)   LogInit().LogError("Shader failed to compile or load.");
-        if (!mesh)     LogInit().LogError("Mesh failed to initialize.");
-        if (!pipeline) LogInit().LogError("Pipeline creation failed.");
-        if (!texture)  LogInit().LogError("Texture loading failed.");
-        return -2;
-    }
+    //if (!shader || !mesh || /!pipeline || !texture) {
+        //if (!shader)   LogIni/t().LogError("Shader failed to compile or load.");
+        //if (!mesh)     LogInit().LogError("Mesh failed to initialize.");
+        //if (!pipeline) LogInit().LogError("Pipeline creation failed.");
+        //if (!texture)  LogInit().LogError("Texture loading failed.");
+        //return -2;
+    //}
 
     // ==== CAMERA RIG (smooth) ====
     Interstellar::Engine::Camera2D camera;    // current camera actually used for rendering
@@ -148,6 +149,11 @@ int main() {
     Engine engine;
     World  world;
     world.create(0.0f, 0.0f, 0.1f, 0.0f);
+
+    // Keep your triangle resources if you still want them, but for stars:
+    auto starShader = graphics->CreateShader("Stars");
+    auto starPipeline = graphics->CreatePipeline(starShader);
+    auto starMaterial = starPipeline->CreateMaterial();
 
     engine.run(
         // --- SIMULATION ---
@@ -193,20 +199,22 @@ int main() {
         [&](double /*frameTime*/) {
             graphics->BeginFrame();
 
-            // Push camera + texture
-            camera.apply(*material);
-            material->Set("u_Texture", texture);
+            // Drive the same uniforms names as triangle (u_Offset/u_Zoom) via your helper
+            camera.apply(*starMaterial);
 
-            // Compute visible world AABB for streaming
+            // Build the visible points (your existing code)
             const auto vis = Interstellar::Engine::VisibleAABB(camera, windowWidth, windowHeight);
-
-            // Generate instance positions within the visible rect
+            instanceOffsets.clear();
             field.generate({ vis.min, vis.max }, instanceOffsets);
 
-            // Draw all visible points as instanced triangles
-            GLInstancedSubmit::draw(*graphics, mesh, pipeline, material,
+            // Draw as points: pass stars pipeline & material
+            Interstellar::Renderers::OpenGL::GLPointSubmit::draw(
+                *graphics,
+                starPipeline,
+                starMaterial,
                 instanceOffsets.data(),
-                static_cast<int>(instanceOffsets.size() / 2));
+                static_cast<int>(instanceOffsets.size() / 2)
+            );
 
             graphics->EndFrame();
         },

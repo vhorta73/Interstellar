@@ -23,11 +23,6 @@ namespace Interstellar::Renderers::OpenGL {
     using namespace Interstellar::Logging;
     using namespace Interstellar::Graphics;
 
-    // small helper
-    static inline GLuint as_gl_uint(void* h) {
-        return static_cast<GLuint>(reinterpret_cast<uintptr_t>(h));
-    }
-
     /**
      * @brief Constructs the OpenGLGraphics system.
      */
@@ -78,6 +73,8 @@ namespace Interstellar::Renderers::OpenGL {
         glfwSwapInterval(vsync ? 1 : 0); // Enable or disable vsync
 
         glEnable(GL_DEPTH_TEST); // Enable depth testing
+        glDisable(GL_CULL_FACE);           // optional for points
+        glEnable(GL_PROGRAM_POINT_SIZE); // needed for gl_PointSize in stars.vert
 
         logGraphic.LogInfo("Renderer: {}", reinterpret_cast<const char*>(glGetString(GL_RENDERER)));
         logGraphic.LogInfo("Version: {}", reinterpret_cast<const char*>(glGetString(GL_VERSION)));
@@ -101,7 +98,7 @@ namespace Interstellar::Renderers::OpenGL {
      * @brief Begins a new frame by clearing the color and depth buffers.
      */
     void OpenGLGraphics::BeginFrame() {
-        glClearColor(0.1f, 0.1f, 0.2f, 1.0f);
+        glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     }
 
@@ -172,10 +169,19 @@ namespace Interstellar::Renderers::OpenGL {
      * @todo Refactor to support dynamic shader loading paths.
      */
     std::shared_ptr<Interstellar::Graphics::IShader> OpenGLGraphics::CreateShader(const std::string& name) {
+        const std::string base = ShaderBasePath;
+        if (name == "Stars" || name == "stars") {
+            return std::make_shared<OpenGLShader>(
+                name,
+                base + "stars.vert",
+                base + "stars.frag"
+            );
+        }
+        // default: triangle
         return std::make_shared<OpenGLShader>(
             name,
-            std::string(ShaderBasePath) + "triangle.vert",
-            std::string(ShaderBasePath) + "triangle.frag"
+            base + "triangle.vert",
+            base + "triangle.frag"
         );
     }
 
