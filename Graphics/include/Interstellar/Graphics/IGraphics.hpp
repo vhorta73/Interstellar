@@ -10,6 +10,7 @@ namespace Interstellar::Graphics {
     class ITexture;
     class IShader;
     class IRenderPipeline;
+    class IMaterial;
 
     /**
      * @file
@@ -179,6 +180,15 @@ namespace Interstellar::Graphics {
          */
         virtual void SubmitMesh(std::shared_ptr<IMesh> mesh,
             std::shared_ptr<IRenderPipeline> pipeline) = 0;
+
+        // NEW overload with a safe default that falls back to the old one.
+        // This makes current backends & tests compile without implementing it.
+        virtual void SubmitMesh(std::shared_ptr<IMesh> mesh,
+            std::shared_ptr<IRenderPipeline> pipeline,
+            std::shared_ptr<IMaterial> /*material*/) {
+            // Default: ignore material until backend supports it.
+            SubmitMesh(std::move(mesh), std::move(pipeline));
+        }
 
         /**
          * @brief Get the name of the graphics renderer.

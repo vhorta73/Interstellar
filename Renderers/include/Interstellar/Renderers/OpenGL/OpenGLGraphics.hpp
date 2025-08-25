@@ -178,6 +178,10 @@ namespace Interstellar::Renderers::OpenGL {
             std::shared_ptr<Interstellar::Graphics::IRenderPipeline> pipeline
         ) override;
 
+        void SubmitMesh(std::shared_ptr<Interstellar::Graphics::IMesh> mesh,
+            std::shared_ptr<Interstellar::Graphics::IRenderPipeline> pipeline,
+            std::shared_ptr<Interstellar::Graphics::IMaterial> material) override;
+
         /**
          * @brief Query a human-readable renderer name.
          * @return For example: "OpenGL".
