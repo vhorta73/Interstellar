@@ -5,7 +5,7 @@
 #include <cstdint>
 #include <Interstellar/Input/Input.hpp>
 
-namespace Interstellar::Engine {
+namespace Interstellar::Engine::Cameras {
 
     struct CameraRigParams {
         // limits

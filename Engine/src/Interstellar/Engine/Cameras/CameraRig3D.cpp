@@ -1,6 +1,6 @@
 #include "Interstellar/Engine/Cameras/CameraRig3D.hpp"
 
-namespace Interstellar::Engine {
+namespace Interstellar::Engine::Cameras {
     using namespace Interstellar::Input;
 
     static inline float exp_smooth(float current, float target, float halflife, double dt) {

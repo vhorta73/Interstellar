@@ -70,6 +70,7 @@ target_link_libraries(InterstellarGraphics
   PRIVATE
     Interstellar::Renderers
     Interstellar::Universe
+    Interstellar::Engine
 )
 
 # ---------------- Warnings ----------------

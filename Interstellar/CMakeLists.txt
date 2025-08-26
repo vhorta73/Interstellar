@@ -22,10 +22,11 @@ target_include_directories(Interstellar PRIVATE
 )
 
 # ---------------- Linkage ----------------
-# Engine should carry glfw/glad privately; the app shouldn’t need to link them directly.
+# Engine should carry glfw/glad privately; the app shouldn't need to link them directly.
 target_link_libraries(Interstellar
   PRIVATE
     Interstellar::Engine
+    Interstellar::Scenes
     Interstellar::ECS
     Interstellar::Simulation
     Interstellar::Universe
