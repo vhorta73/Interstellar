@@ -5,49 +5,49 @@ if(NOT DEFINED Interstellar_VERSION)
   set(Interstellar_VERSION 0.0.0)
 endif()
 
-project(EngineProj VERSION ${Interstellar_VERSION} LANGUAGES CXX)
+project(ProceduralProj VERSION ${Interstellar_VERSION} LANGUAGES CXX)
 
 include(GNUInstallDirs)
 include(CMakePackageConfigHelpers)
-include(EnsureSources)  # <- DRY helper
+include(EnsureSources)  # shared empty-TU helper
 
 # ---------------- Sources ----------------
-file(GLOB_RECURSE ENGINE_SOURCES CONFIGURE_DEPENDS
+file(GLOB_RECURSE PROCEDURAL_SOURCES CONFIGURE_DEPENDS
   "${CMAKE_CURRENT_SOURCE_DIR}/src/*.cpp"
 )
-# If empty, inject an empty TU (no C4505; /wd4505 applied to that file only on MSVC)
-interstellar_ensure_sources(ENGINE_SOURCES engine)
+# If empty, inject an empty TU so the target shows up in IDEs
+interstellar_ensure_sources(PROCEDURAL_SOURCES procedural)
 
 # ---------------- Library ----------------
-add_library(Engine STATIC ${ENGINE_SOURCES})
-add_library(Interstellar::Engine ALIAS Engine)
-target_compile_features(Engine PUBLIC cxx_std_20)
+add_library(Procedural STATIC ${PROCEDURAL_SOURCES})
+add_library(Interstellar::Procedural ALIAS Procedural)
+target_compile_features(Procedural PUBLIC cxx_std_20)
 
 # Allow linking this static lib into shared libs on UNIX
 if(UNIX)
-  set_target_properties(Engine PROPERTIES POSITION_INDEPENDENT_CODE ON)
+  set_target_properties(Procedural PROPERTIES POSITION_INDEPENDENT_CODE ON)
 endif()
 
 # Compiled spdlog (consumer must see this)
-target_compile_definitions(Engine PUBLIC SPDLOG_COMPILED_LIB)
+target_compile_definitions(Procedural PUBLIC SPDLOG_COMPILED_LIB)
 
 # Public/Private includes
-set(INTERSTELLAR_ENGINE_INSTALL_INCLUDE_DIR "${CMAKE_INSTALL_INCLUDEDIR}/Interstellar")
-target_include_directories(Engine
+# Put headers under: Procedural/include/Interstellar/Procedural/...
+set(INTERSTELLAR_PROCEDURAL_INSTALL_INCLUDE_DIR "${CMAKE_INSTALL_INCLUDEDIR}/Interstellar")
+target_include_directories(Procedural
   PUBLIC
     $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
-    $<INSTALL_INTERFACE:${INTERSTELLAR_ENGINE_INSTALL_INCLUDE_DIR}>
+    $<INSTALL_INTERFACE:${INTERSTELLAR_PROCEDURAL_INSTALL_INCLUDE_DIR}>
   PRIVATE
     ${CMAKE_CURRENT_SOURCE_DIR}/src
-    ${CMAKE_CURRENT_SOURCE_DIR}/src/Interstellar/Graphics/OpenGL/stb
 )
 
 # ---------------- Warnings ----------------
-option(ENGINE_WARNINGS_AS_ERRORS "Treat warnings as errors for Engine" OFF)
+option(PROCEDURAL_WARNINGS_AS_ERRORS "Treat warnings as errors for Procedural" OFF)
 if(MSVC)
-  target_compile_options(Engine PRIVATE /permissive- /W4 $<$<BOOL:${ENGINE_WARNINGS_AS_ERRORS}>:/WX>)
+  target_compile_options(Procedural PRIVATE /permissive- /W4 $<$<BOOL:${PROCEDURAL_WARNINGS_AS_ERRORS}>:/WX>)
 else()
-  target_compile_options(Engine PRIVATE -Wall -Wextra -Wpedantic $<$<BOOL:${ENGINE_WARNINGS_AS_ERRORS}>:-Werror>)
+  target_compile_options(Procedural PRIVATE -Wall -Wextra -Wpedantic $<$<BOOL:${PROCEDURAL_WARNINGS_AS_ERRORS}>:-Werror>)
 endif()
 
 # ---------------- Dependencies ----------------
@@ -145,9 +145,6 @@ endif()
 # Make available any not already present
 FetchContent_MakeAvailable(fmt spdlog mp_units nlohmann_json glad glm glfw CLI11)
 
-# Vulkan SDK (required)
-find_package(Vulkan REQUIRED)
-
 # Linkage (prefer canonical mp-units name)
 set(_mpu_target "")
 foreach(_cand mp-units::mp-units mp-units::units)
@@ -160,28 +157,26 @@ if(NOT _mpu_target)
   message(FATAL_ERROR "mp-units target not found (expected mp-units::mp-units or mp-units::units)")
 endif()
 
-target_link_libraries(Engine
+target_link_libraries(Procedural
   PUBLIC
+    Interstellar::Logging
     ${_mpu_target}
     fmt::fmt
     spdlog::spdlog
     nlohmann_json::nlohmann_json
     glm::glm
-    Vulkan::Vulkan
     CLI11::CLI11
-    Interstellar::Utils
-    Interstellar::Logging
-    Interstellar::Universe
   PRIVATE
     glfw
     glad
-    Interstellar::Input
 )
+# If Procedural’s public headers include ECS or Simulation, also:
+# target_link_libraries(Procedural PUBLIC Interstellar::ECS Interstellar::Simulation)
 
 # ---------------- Install ----------------
-option(ENGINE_ENABLE_PACKAGE "Install CMake package for Interstellar::Engine (requires system packages for deps)" OFF)
+option(PROCEDURAL_ENABLE_PACKAGE "Install CMake package for Interstellar::Procedural (requires system packages for deps)" OFF)
 
-install(TARGETS Engine
+install(TARGETS Procedural
   RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
   LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
   ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR}
@@ -189,44 +184,43 @@ install(TARGETS Engine
 
 # Install public headers under include/Interstellar
 install(DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}/include/"
-        DESTINATION "${INTERSTELLAR_ENGINE_INSTALL_INCLUDE_DIR}"
+        DESTINATION "${INTERSTELLAR_PROCEDURAL_INSTALL_INCLUDE_DIR}"
         FILES_MATCHING PATTERN "*.h" PATTERN "*.hpp" PATTERN "*.hh" PATTERN "*.hxx")
 
-if(ENGINE_ENABLE_PACKAGE)
-  install(EXPORT EngineTargets
+if(PROCEDURAL_ENABLE_PACKAGE)
+  install(EXPORT ProceduralTargets
     NAMESPACE Interstellar::
-    FILE EngineTargets.cmake
-    DESTINATION "${CMAKE_INSTALL_LIBDIR}/cmake/InterstellarEngine"
+    FILE ProceduralTargets.cmake
+    DESTINATION "${CMAKE_INSTALL_LIBDIR}/cmake/InterstellarProcedural"
   )
 
   write_basic_package_version_file(
-    "${CMAKE_CURRENT_BINARY_DIR}/InterstellarEngineConfigVersion.cmake"
+    "${CMAKE_CURRENT_BINARY_DIR}/InterstellarProceduralConfigVersion.cmake"
     VERSION "${PROJECT_VERSION}"
     COMPATIBILITY SameMajorVersion
   )
 
-  file(WRITE "${CMAKE_CURRENT_BINARY_DIR}/InterstellarEngineConfig.cmake" [=[
+  file(WRITE "${CMAKE_CURRENT_BINARY_DIR}/InterstellarProceduralConfig.cmake" [=[
 include(CMakeFindDependencyMacro)
 find_dependency(fmt)
 find_dependency(spdlog)
 find_dependency(nlohmann_json)
 find_dependency(glm)
-find_dependency(Vulkan)
 find_dependency(CLI11)
 find_package(mp-units CONFIG REQUIRED)
-include("${CMAKE_CURRENT_LIST_DIR}/EngineTargets.cmake")
+include("${CMAKE_CURRENT_LIST_DIR}/ProceduralTargets.cmake")
 ]=])
 
   install(FILES
-    "${CMAKE_CURRENT_BINARY_DIR}/InterstellarEngineConfig.cmake"
-    "${CMAKE_CURRENT_BINARY_DIR}/InterstellarEngineConfigVersion.cmake"
-    DESTINATION "${CMAKE_INSTALL_LIBDIR}/cmake/InterstellarEngine"
+    "${CMAKE_CURRENT_BINARY_DIR}/InterstellarProceduralConfig.cmake"
+    "${CMAKE_CURRENT_BINARY_DIR}/InterstellarProceduralConfigVersion.cmake"
+    DESTINATION "${CMAKE_INSTALL_LIBDIR}/cmake/InterstellarProcedural"
   )
 endif()
 
 # ---------------- Tests ----------------
-option(ENGINE_BUILD_TESTS "Build Engine tests" ${BUILD_TESTING})
-if(ENGINE_BUILD_TESTS AND BUILD_TESTING)
+option(PROCEDURAL_BUILD_TESTS "Build Procedural tests" ${BUILD_TESTING})
+if(PROCEDURAL_BUILD_TESTS AND BUILD_TESTING)
   include(SubprojectTesting)
-  add_subproject_tests(TARGET Engine NAME Engine)
+  add_subproject_tests(TARGET Procedural NAME Procedural)
 endif()

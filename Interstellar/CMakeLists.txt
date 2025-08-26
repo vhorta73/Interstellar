@@ -28,6 +28,8 @@ target_link_libraries(Interstellar
     Interstellar::Engine
     Interstellar::ECS
     Interstellar::Simulation
+    Interstellar::Universe
+    Interstellar::Procedural
     Interstellar::Utils
     Interstellar::IO
     Interstellar::Renderers

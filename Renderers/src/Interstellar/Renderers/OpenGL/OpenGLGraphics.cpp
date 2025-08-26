@@ -79,6 +79,9 @@ namespace Interstellar::Renderers::OpenGL {
         logGraphic.LogInfo("Renderer: {}", reinterpret_cast<const char*>(glGetString(GL_RENDERER)));
         logGraphic.LogInfo("Version: {}", reinterpret_cast<const char*>(glGetString(GL_VERSION)));
 
+        glEnable(GL_BLEND);
+        glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+
         glViewport(0, 0, width, height);
         return true;
     }
@@ -169,19 +172,27 @@ namespace Interstellar::Renderers::OpenGL {
      * @todo Refactor to support dynamic shader loading paths.
      */
     std::shared_ptr<Interstellar::Graphics::IShader> OpenGLGraphics::CreateShader(const std::string& name) {
-        const std::string base = ShaderBasePath;
-        if (name == "Stars" || name == "stars") {
+        if (name == "Stars3D") {
             return std::make_shared<OpenGLShader>(
                 name,
-                base + "stars.vert",
-                base + "stars.frag"
+                "assets/shaders/stars_points3d.vert",
+                "assets/shaders/stars_points3d.frag"
             );
         }
-        // default: triangle
+        // Choose shader pair by logical name
+        if (name == "Stars") {
+            return std::make_shared<OpenGLShader>(
+                name,
+                std::string(ShaderBasePath) + "stars.vert",
+                std::string(ShaderBasePath) + "stars.frag"
+            );
+        }
+
+        // Fallback: triangle demo
         return std::make_shared<OpenGLShader>(
             name,
-            base + "triangle.vert",
-            base + "triangle.frag"
+            std::string(ShaderBasePath) + "triangle.vert",
+            std::string(ShaderBasePath) + "triangle.frag"
         );
     }
 

@@ -1,5 +1,7 @@
 #pragma once
 #include <memory>
+#include "Interstellar/Graphics/IRenderPipeline.hpp"
+#include "Interstellar/Graphics/IMaterial.hpp"
 
 namespace Interstellar::Graphics {
     class IGraphics;
@@ -9,18 +11,35 @@ namespace Interstellar::Graphics {
 
 namespace Interstellar::Renderers::OpenGL {
 
-    /**
-     * Draws a cloud of points (stars) from packed XY pairs using the given pipeline/material.
-     * Expects shader to have:
-     *   - layout(location=0) in vec2 a_StarPos;
-     *   - uniforms set via IMaterial (e.g., u_VP, u_Zoom, u_StarSize, u_Brightness)
-     */
+    class OpenGLGraphics;
+
     struct GLPointSubmit {
+        // 3D points from packed XYZ floats (OpenGL concrete backend)
+        static void draw3D(OpenGLGraphics& gfx,
+            std::shared_ptr<Interstellar::Graphics::IRenderPipeline> pipeline,
+            std::shared_ptr<Interstellar::Graphics::IMaterial> material,
+            const float* positionsXYZ,
+            int count);
+
+        // 3D points from packed XYZ floats (generic graphics; forwards to OpenGL if available)
+        static void draw3D(Interstellar::Graphics::IGraphics& gfx,
+            const std::shared_ptr<Interstellar::Graphics::IRenderPipeline>& pipeline,
+            const std::shared_ptr<Interstellar::Graphics::IMaterial>& material,
+            const float* positionsXYZ,
+            int count);
+
+        static void draw2D(Interstellar::Graphics::IGraphics& gfx,
+            const std::shared_ptr<Interstellar::Graphics::IRenderPipeline>& pipeline,
+            const std::shared_ptr<Interstellar::Graphics::IMaterial>& material,
+            const float* xyPacked,
+            int count);
+
+        // 2D points from packed XY floats (existing helper)
         static void draw(Interstellar::Graphics::IGraphics& gfx,
             const std::shared_ptr<Interstellar::Graphics::IRenderPipeline>& pipeline,
             const std::shared_ptr<Interstellar::Graphics::IMaterial>& material,
-            const float* xyPacked, // pointer to [x0,y0, x1,y1, ...]
-            int count);            // number of points (pairs)
+            const float* xyPacked,
+            int count);
     };
 
 } // namespace Interstellar::Renderers::OpenGL
