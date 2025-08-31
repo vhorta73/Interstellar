@@ -21,7 +21,7 @@ static const std::unordered_map<unsigned char, std::string> kFixupMap = {
     {0x97, "-"},   // em dash
     {0x85, "..."}, // ellipsis
     {0xA0, " "},   // non-breaking space -> regular space
-    {0XB1, "+/-"}, // plus-minus
+    {0xB1, "+/-"}, // plus-minus
     {0xB5, "u"},   // micro sign -> 'u'
     {0xB7, "*"},   // middle dot
     {0xF7, "/"},   // division sign
@@ -100,22 +100,20 @@ static bool should_skip(const fs::path& p, const fs::path& build_root) {
 }
 
 // Attempt to fix buffer using kFixupMap.
-// Rules:
-//  - If BOM is present, do not fix (preserve current behavior).
-//  - Valid ASCII/UTF-8 passes through.
-//  - On invalid byte: if single byte has a map entry, substitute mapped string.
-//    Otherwise, abort and report the first bad offset.
+// Changes: now auto-strips a leading UTF-8 BOM instead of failing.
 static bool try_fix_with_map(const std::vector<unsigned char>& in,
     std::vector<unsigned char>& out,
     size_t& first_bad_off)
 {
     out.clear();
+
+    // Start index: skip BOM if present (EF BB BF)
+    size_t i = 0;
     if (in.size() >= 3 && in[0] == 0xEF && in[1] == 0xBB && in[2] == 0xBF) {
-        first_bad_off = 0;
-        return false;
+        i = 3; // drop BOM
     }
 
-    for (size_t i = 0; i < in.size();) {
+    for (; i < in.size();) {
         unsigned char c = in[i];
         if (c <= 0x7F) {
             out.push_back(c);
