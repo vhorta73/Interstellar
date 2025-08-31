@@ -37,6 +37,7 @@ static const std::unordered_map<unsigned char, std::string> kFixupMap = {
     {0xD6, "O"},   // O diaeresis -> O
     {0xDC, "U"},   // U diaeresis -> U
     {0xDF, "ss"},  // sharp s -> ss
+    {0xB0, "o"},   // Centigrates
     // Add more as needed. Example: {0x80, "EUR"} for euro sign.
 };
 
