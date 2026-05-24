@@ -20,6 +20,7 @@ namespace Interstellar::Scenes {
 
     UniverseScene::UniverseScene(IKeyboard& kb,
         IMouse& mouse,
+        Interstellar::Graphics::IGraphics& gfx,
         Seed64 masterSeed)
         : kb_(kb)
         , mouse_(mouse)
@@ -62,6 +63,10 @@ namespace Interstellar::Scenes {
         recipe_.galaxy.verticalScale = 3.0e15f;  // ~300 ly
         recipe_.galaxy.coreRadius = 3.0e16f;  // ~1 kpc
         recipe_.galaxy.coreBoost = 6.0f;
+
+        stars_ = std::make_unique<Interstellar::Graphics::Renderers::StarsRenderer>(gfx);
+        stars_->setMinQueryRadius(1.0e10f);
+        stars_->setBackground(true, 3.0e11f, 6000);
     }
 
 
@@ -102,16 +107,6 @@ namespace Interstellar::Scenes {
 
     void UniverseScene::render(IGraphics& gfx, int viewportW, int viewportH)
     {
-        if (!stars_) {
-            stars_ = std::make_unique<Interstellar::Graphics::Renderers::StarsRenderer>(gfx);
-
-            // Local bubble: big enough for Pluto-scale sectors
-            stars_->setMinQueryRadius(1.0e10f); // 10 billion km
-
-            // ENABLE world-anchored background so the sky never vanishes
-            stars_->setBackground(true, 3.0e11f, 6000);
-        }
-
         stars_->render(gfx, cam_, recipe_, masterSeed_, viewportW, viewportH);
     }
 

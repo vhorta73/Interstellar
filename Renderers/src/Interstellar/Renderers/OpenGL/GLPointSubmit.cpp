@@ -1,4 +1,5 @@
 #include "Interstellar/Renderers/OpenGL/GLPointSubmit.hpp"
+#include "Interstellar/Renderers/OpenGL/OpenGLGraphics.hpp"
 
 #include <glad/glad.h>
 #include <cstdint>
@@ -132,6 +133,17 @@ namespace Interstellar::Renderers::OpenGL {
     }
 
     // ================= 3D points: [x0,y0,z0, x1,y1,z1, ...] =================
+    void GLPointSubmit::draw3D(IGraphics& gfx,
+        const std::shared_ptr<IRenderPipeline>& pipeline,
+        const std::shared_ptr<IMaterial>& material,
+        const float* positionsXYZ,
+        int count)
+    {
+        if (auto* ogl = dynamic_cast<OpenGLGraphics*>(&gfx)) {
+            draw3D(*ogl, pipeline, material, positionsXYZ, count);
+        }
+    }
+
     void GLPointSubmit::draw3D(OpenGLGraphics&,
         std::shared_ptr<IRenderPipeline> pipeline,
         std::shared_ptr<IMaterial> material,

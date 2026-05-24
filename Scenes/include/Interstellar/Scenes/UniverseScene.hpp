@@ -16,6 +16,7 @@ namespace Interstellar::Scenes {
     public:
         UniverseScene(Interstellar::Input::IKeyboard& kb,
             Interstellar::Input::IMouse& mouse,
+            Interstellar::Graphics::IGraphics& gfx,
             Interstellar::Universe::Seed64 masterSeed);
 
         // Engine supplies viewport size each frame

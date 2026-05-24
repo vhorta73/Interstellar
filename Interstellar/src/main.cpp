@@ -9,7 +9,6 @@
 #include "Interstellar/Renderers/OpenGL/OpenGLGraphics.hpp"
 #include "Interstellar/Scenes/UniverseScene.hpp"
 #include "Interstellar/Universe/Seed.hpp"
-#include "Interstellar/Universe/Universe3DRecipe.hpp"
 
 using namespace Interstellar;
 using namespace Interstellar::Input;
@@ -39,9 +38,7 @@ int main() {
     // seed
     const Interstellar::Universe::Seed64 masterSeed =
         Interstellar::Universe::seedFromString("Interstellar-Alpha-001");
-    Universe::Universe3DRecipe recipe;
-    // construct the scene with *references*
-    Interstellar::Scenes::UniverseScene scene(keyboard, mouse, masterSeed);
+    Interstellar::Scenes::UniverseScene scene(keyboard, mouse, *gfx, masterSeed);
 
     // engine loop
     Interstellar::Engine::Engine engine;

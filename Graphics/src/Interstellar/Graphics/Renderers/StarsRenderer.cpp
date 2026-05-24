@@ -5,14 +5,12 @@
 #include <limits>
 #include <cmath>
 
-#include "Interstellar/Renderers/OpenGL/OpenGLGraphics.hpp"
 #include "Interstellar/Renderers/OpenGL/GLPointSubmit.hpp"
 
 using namespace Interstellar::Graphics;
 using namespace Interstellar::Graphics::Renderers;
 using namespace Interstellar::Engine::Cameras;
 using namespace Interstellar::Universe;
-using Interstellar::Renderers::OpenGL::OpenGLGraphics;
 
 StarsRenderer::StarsRenderer(IGraphics& gfx)
 {
@@ -115,11 +113,9 @@ void StarsRenderer::render(IGraphics& gfx,
         starXYZ_.push_back(s.pos.z);
     }
     if (!starXYZ_.empty()) {
-        if (auto* ogl = dynamic_cast<OpenGLGraphics*>(&gfx)) {
-            Interstellar::Renderers::OpenGL::GLPointSubmit::draw3D(
-                *ogl, pipeline_, material_, starXYZ_.data(),
-                static_cast<int>(starXYZ_.size() / 3));
-        }
+        Interstellar::Renderers::OpenGL::GLPointSubmit::draw3D(
+            gfx, pipeline_, material_, starXYZ_.data(),
+            static_cast<int>(starXYZ_.size() / 3));
     }
 
     // ---------- Far-shell background from actual stars (camera-anchored) ----------
@@ -188,11 +184,9 @@ void StarsRenderer::render(IGraphics& gfx,
         int bgFlag = 1; material_->Set("u_Background", &bgFlag, sizeof(bgFlag));
         float bgSz = 2.0f; material_->Set("u_BGFixedSizePx", &bgSz, sizeof(bgSz));
         if (!starXYZ_.empty()) {
-            if (auto* ogl = dynamic_cast<OpenGLGraphics*>(&gfx)) {
-                Interstellar::Renderers::OpenGL::GLPointSubmit::draw3D(
-                    *ogl, pipeline_, material_, starXYZ_.data(),
-                    static_cast<int>(starXYZ_.size() / 3));
-            }
+            Interstellar::Renderers::OpenGL::GLPointSubmit::draw3D(
+                gfx, pipeline_, material_, starXYZ_.data(),
+                static_cast<int>(starXYZ_.size() / 3));
         }
         bgFlag = 0; material_->Set("u_Background", &bgFlag, sizeof(bgFlag));
     }

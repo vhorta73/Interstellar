@@ -49,48 +49,6 @@ namespace Interstellar::Engine::Cameras {
         return target + (cur - target) * k;
     }
 
-    // Normalize whatever wheel type to float (supports enums too)
-    template <typename T>
-    static inline float normalizeWheel(T v) {
-        if constexpr (std::is_enum_v<T>) {
-            using U = std::underlying_type_t<T>;
-            return static_cast<float>(static_cast<U>(v));
-        }
-        else if constexpr (std::is_arithmetic_v<T>) {
-            return static_cast<float>(v);
-        }
-        else {
-            // Unknown type, best effort
-            return 0.0f;
-        }
-    }
-
-    // Detect whatever "wheel delta" API your IMouse has (or return 0.0f).
-    // Tries, in order: consumeWheelDelta(), wheelDelta(), scrollDelta(),
-    // deltaWheel(), wheel(), wheelNotches(), GetWheelDelta(), getWheelDelta()
-    template <typename M>
-    auto tryWheel(M& m, int) -> decltype(m.consumeWheelDelta(), 0.0f) { return normalizeWheel(m.consumeWheelDelta()); }
-    template <typename M>
-    auto tryWheel(M& m, long) -> decltype(m.wheelDelta(), 0.0f) { return normalizeWheel(m.wheelDelta()); }
-    template <typename M>
-    auto tryWheel(M& m, double) -> decltype(m.scrollDelta(), 0.0f) { return normalizeWheel(m.scrollDelta()); }
-    template <typename M>
-    auto tryWheel(M& m, char) -> decltype(m.deltaWheel(), 0.0f) { return normalizeWheel(m.deltaWheel()); }
-    template <typename M>
-    auto tryWheel(M& m, short) -> decltype(m.wheel(), 0.0f) { return normalizeWheel(m.wheel()); } 
-    template <typename M>
-    auto tryWheel(M& m, unsigned) -> decltype(m.wheelNotches(), 0.0f) { return normalizeWheel(m.wheelNotches()); }
-    template <typename M>
-    auto tryWheel(M& m, bool) -> decltype(m.GetWheelDelta(), 0.0f) { return normalizeWheel(m.GetWheelDelta()); }
-    template <typename M>
-    auto tryWheel(M& m, float) -> decltype(m.getWheelDelta(), 0.0f) { return normalizeWheel(m.getWheelDelta()); }
-    inline float tryWheel(...) { return 0.0f; }
-
-    inline float readWheelDelta(Interstellar::Input::IMouse& mouse) {
-        // priority is the first overload (int), then falls back each time SFINAE fails
-        return tryWheel(mouse, 0);
-    }
-
     void CameraRig3D::handleInput(const Interstellar::Input::IKeyboard& kb,
         Interstellar::Input::IMouse& mouse,
         int viewportW, int viewportH,
@@ -98,8 +56,6 @@ namespace Interstellar::Engine::Cameras {
     {
         if (!drag_) drag_.reset(new DragImpl{});
 
-        // Map your engine’s key codes here if different:
-        // Assume kb.isDown("Space") and kb.isDown("Z") exist in your implementation.
         const bool spaceHeld = kb.isDown(KeyCode::Space);
         const bool zHeld = kb.isDown(KeyCode::Z);
 
@@ -115,7 +71,7 @@ namespace Interstellar::Engine::Cameras {
         float mx = mpos.x, my = mpos.y;
 
         // Mouse wheel: dolly or FOV zoom (if 'Z' held)
-        const float wheel = readWheelDelta(mouse);
+        const float wheel = mouse.wheel().y;
         if (wheel != 0.0f) {
             if (zHeld) {
                 // FOV zoom — clamp
@@ -176,10 +132,8 @@ namespace Interstellar::Engine::Cameras {
         }
         drag_->lmbPrev = lmb;
 
-        // WASD pan (optional; adjust to your input system)
         float speed = params_.panBase;
         if (kb.isDown(KeyCode::LeftShift)) speed *= 4.0f;
-        //if (kb.isDown(KeyCode::Ctrl"))  speed *= 0.25f;
         glm::vec3 move(0);
         if (kb.isDown(KeyCode::W)) move += forward();
         if (kb.isDown(KeyCode::S)) move -= forward();
@@ -191,13 +145,11 @@ namespace Interstellar::Engine::Cameras {
             targetPos += glm::normalize(move) * (speed * (float)dt);
         }
 
-        // Smooth to targets
-        pos = glm::mix(targetPos, pos, std::pow(0.5f, (float)dt / std::max(1e-6f, params_.posHL)));
-        fovDeg = smoothTo(fovDeg, targetFovDeg, params_.fovHL, (float)dt);
     }
 
-    void CameraRig3D::update(double /*dt*/) {
-        // left empty; smoothing handled in handleInput()
+    void CameraRig3D::update(double dt) {
+        pos = glm::mix(targetPos, pos, std::pow(0.5f, static_cast<float>(dt) / std::max(1e-6f, params_.posHL)));
+        fovDeg = smoothTo(fovDeg, targetFovDeg, params_.fovHL, static_cast<float>(dt));
     }
 
 } // namespace Interstellar::Engine::Cameras

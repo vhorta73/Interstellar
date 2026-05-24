@@ -88,3 +88,6 @@ docs/html/
 
 Interstellar/assets/temp/*
 Interstellar/logs
+
+# CMake build output
+out/
