@@ -60,6 +60,7 @@ int main() {
             int w, h; glfwGetFramebufferSize(window, &w, &h);
             gfx->BeginFrame();
             scene.render(*gfx, w, h);
+            glfwSetWindowTitle(window, scene.hudTitle().c_str());
             gfx->EndFrame();
         },
         [&] { return gfx->ShouldClose(); }

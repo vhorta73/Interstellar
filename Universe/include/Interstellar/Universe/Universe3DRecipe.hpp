@@ -1,15 +1,18 @@
 #pragma once
 #include <cstdint>
+#include "Interstellar/Universe/Galaxy.hpp"
 
 namespace Interstellar::Universe {
 
-    // Tunables for 3D universe (volumetric).
-    // Units: sectorSize in world units; starDensity in stars per (world unit)^3.
     struct Universe3DRecipe {
-        std::uint32_t rulesVersion = 1;
-        float sectorSize = 256.0f;  // cubic sector edge length
-        float starDensity = 1.5e-5f; // stars per cubic world unit (tweak to taste)
-        float jitter = 0.35f;   // reserved for clustering later
+        // Sectoring / density
+        float sectorSize = 256.0f;   // world units (cube side)
+        float starDensity = 4.0e-10f;  // stars per world^3 unit
+        float jitter = 0.35f;    // reserved for clustering later
+
+        // Galaxy shaping (enable to bias density into a disk + bulge)
+        bool      useGalaxy = true;
+        GalaxyDisk galaxy;            // defaults are set in Galaxy.hpp ctor values
     };
 
 } // namespace Interstellar::Universe

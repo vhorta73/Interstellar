@@ -1,0 +1,407 @@
+#include <algorithm>
+#include <iostream>
+#include <sstream>
+#include <vector>
+
+#include "Interstellar/Engine/Camera2DExtras.hpp"
+#include "Interstellar/Universe/FieldGenerator.hpp"
+#include "Interstellar/Core/fmt_optional.hpp"
+#include "Interstellar/ECS/World.hpp"
+#include "Interstellar/Engine/Engine.hpp"
+#include "Interstellar/Engine/FrameTimer.hpp"
+#include "Interstellar/Renderers/OpenGL/GLInstancedSubmit.hpp"
+
+#include "Interstellar/Engine/ScopedZone.hpp"
+#include "Interstellar/Engine/Camera2D.hpp"
+#include "Interstellar/Graphics/IMaterial.hpp"
+#include "Interstellar/Graphics/IRenderPipeline.hpp"
+#include "Interstellar/Graphics/IShader.hpp"
+#include "Interstellar/Graphics/ITexture.hpp"
+#include "Interstellar/Interstellar.hpp"
+#include "Interstellar/Logging/Logging.hpp"
+#include "Interstellar/Renderers/OpenGL/OpenGLGraphics.hpp"
+#include "Interstellar/Renderers/OpenGL/OpenGLShader.hpp"
+#include "Interstellar/Simulation/Systems/MovementSystem.hpp"
+#include <Interstellar/Input/Input.hpp>
+#include "Interstellar/Universe/SectorStreamer.hpp"
+
+//#include "Interstellar/Config/JsonImpl/ElementConfig.hpp"
+//#include "Interstellar/Config/JsonImpl/ElementDatabase.hpp"
+//#include "Interstellar/Data/ElementData.hpp"
+//#include "Interstellar/Input/KeyCodeTranslator/GlfwKeyMap.hpp"
+
+#include <GLFW/glfw3.h>
+#include <glm/glm.hpp>
+
+namespace {
+    constexpr const char* TEXTURE_PATH = "assets/textures/texture_01.png";
+
+    // Vertex layout: position (x, y, z), UV (u, v)
+    constexpr float vertices[] = {
+        -0.05f, -0.05f, 0.0f,   0.0f, 0.0f,
+        0.05f, -0.05f, 0.0f,   1.0f, 0.0f,
+        0.0f,  0.05f, 0.0f,   0.5f, 1.0f,
+    };
+
+    unsigned int indices[] = { 0, 1, 2 };
+}
+int main() {
+
+    using Interstellar::Engine::Engine;
+    using Interstellar::ECS::World;
+    using Interstellar::Simulation::MovementSystem;
+    using Interstellar::Logging::LogInit;
+    using namespace Interstellar::Input;
+
+    //glm::vec2 triangleOffset = glm::vec2(0.0f);
+    //glm::vec2 dragStart = glm::vec2(0.0f);
+
+    //Interstellar::Config::JsonImpl::ElementDatabase elementDb;
+    //if (!elementDb.loadFromFile("assets/data/elements_all.json")) {
+    //    s_Logger.LogError("Failed to load element database from 'assets/data/elements_all.json'.");
+    //}
+    //else {
+    //    s_Logger.LogInfo("Success loading elements from 'assets/data/elements_all.json'.");
+    //    auto all = elementDb.all();
+    //    for (const auto& [symbol, e] : all) {
+    //        if (e.atomicNumber == 3) {
+    //            s_Logger.LogInfo("Symbol - {}", e.symbol);
+    //            s_Logger.LogInfo("Name - {}", e.name);
+    //            s_Logger.LogInfo("AtomicNumber - {}", e.atomicNumber);
+    //            s_Logger.LogInfo("AtomicMass - {}", e.atomicMass);
+    //            s_Logger.LogInfo("Group - {}", e.group);
+    //            s_Logger.LogInfo("Period - {}", e.period);
+    //            s_Logger.LogInfo("Block - {}", e.block);
+    //            s_Logger.LogInfo("StandardState - {}", e.standardState);
+    //            s_Logger.LogInfo("Colour - ({}, {}, {})", e.colour.x, e.colour.y, e.colour.z);
+    //            s_Logger.LogInfo("Cosmic Abundance - ({}, {})", e.cosmicAbundance.value, e.cosmicAbundance.unit);
+    //            s_Logger.LogInfo("Electron Configuration - {}, {}", e.electronConfiguration.display, e.electronConfiguration.nobleGas);
+    //            for (const auto orb : e.electronConfiguration.orbitals) {
+    //                s_Logger.LogInfo("   Electrons: {}, Orbital {}", orb.electrons, orb.orbital);
+    //            }
+    //            for (const auto shells: e.electronShells ) {
+    //                s_Logger.LogInfo("  Electron Shells: {}", shells);
+    //            }
+    //            s_Logger.LogInfo("Valence Electrons - {}", e.valenceElectrons);
+    //            for (const auto isotope : e.isotopes) {
+    //                s_Logger.LogInfo("  Isotope: {}, {}, {}, {}, {}, {}",
+    //                    isotope.name,
+    //                    isotope.massNumber,
+    //                    isotope.isStable ? "true" : "false",
+    //                    isotope.naturalAbundance,
+    //                    isotope.halfLife.has_value() ? std::to_string(isotope.halfLife.value()) : "N/A",
+    //                    isotope.radiationType.has_value() ? isotope.radiationType.value() : "N/A"
+    //               );
+    //            }
+    //            auto density = e.physicalProperties.density;
+    //            s_Logger.LogInfo("PhysicalProperties: Density {}, {} ",
+    //                density.value.has_value() ? std::to_string(density.value.value()) : "null",
+    //                density.unit
+    //            );
+    //            auto meltingpoint = e.physicalProperties.meltingPoint;
+    //            s_Logger.LogInfo("PhysicalProperties: MeltingPoint {}, {} ",
+    //                meltingpoint.value.has_value() ? std::to_string(meltingpoint.value.value()) : "null",
+    //                meltingpoint.unit
+    //            );
+    //            auto boilingpoint = e.physicalProperties.boilingPoint;
+    //            s_Logger.LogInfo("PhysicalProperties: BoilingPoint {}, {} ",
+    //                boilingpoint.value.has_value() ? std::to_string(boilingpoint.value.value()) : "null",
+    //                boilingpoint.unit
+    //            );
+    //            auto tripePoint = e.physicalProperties.triplePoint;
+    //            s_Logger.LogInfo("PhysicalProperties: Triple Point Temperature {}, {} ",
+    //                tripePoint.temperature.value.has_value() ? std::to_string(tripePoint.temperature.value.value()) : "null",
+    //                tripePoint.temperature.unit
+    //            );
+    //            s_Logger.LogInfo("PhysicalProperties: Triple Point Pressure {}, {} ",
+    //                tripePoint.pressure.value.has_value() ? std::to_string(tripePoint.pressure.value.value()) : "null",
+    //                tripePoint.pressure.unit
+    //            );
+    //            auto heatcapacity = e.physicalProperties.heatCapacity;
+    //            s_Logger.LogInfo("PhysicalProperties: HeatCapacity {}, {} ",
+    //                heatcapacity.value.has_value() ? std::to_string(heatcapacity.value.value()) : "null",
+    //                heatcapacity.unit
+    //            );
+    //            auto thermalConductivity = e.physicalProperties.thermalConductivity;
+    //            s_Logger.LogInfo("PhysicalProperties: ThermalConductivity {}, {} ",
+    //                thermalConductivity.value.has_value() ? std::to_string(thermalConductivity.value.value()) : "null",
+    //                thermalConductivity.unit
+    //            );
+    //            auto enthalpyOgFusion = e.physicalProperties.enthalpyOfFusion;
+    //            s_Logger.LogInfo("PhysicalProperties: enthalpyOfFusion {}, {} ",
+    //                enthalpyOgFusion.value.has_value() ? std::to_string(enthalpyOgFusion.value.value()) : "null",
+    //                enthalpyOgFusion.unit
+    //            );
+    //            auto enthalpyOfVaporization = e.physicalProperties.enthalpyOfVaporization;
+    //            s_Logger.LogInfo("PhysicalProperties: enthalpyOfVaporization {}, {} ",
+    //                enthalpyOfVaporization.value.has_value() ? std::to_string(enthalpyOfVaporization.value.value()) : "null",
+    //                enthalpyOfVaporization.unit
+    //            );
+    //            auto entropy = e.physicalProperties.entropy;
+    //            s_Logger.LogInfo("PhysicalProperties: ThermalConductivity {}, {} ",
+    //                entropy.value.has_value() ? std::to_string(entropy.value.value()) : "null",
+    //                entropy.unit
+    //            );
+    //            for (auto stateRanges : e.stateRanges) {
+    //                s_Logger.LogInfo("StateRanges: State {} - Tm {}/{} TM {}/{} Pm {}/{} PM {}/{} ",
+    //                    stateRanges.state,
+    //                    stateRanges.temperature.min.value,
+    //                    stateRanges.temperature.min.unit,
+    //                    stateRanges.temperature.max.value,
+    //                    stateRanges.temperature.max.unit,
+    //                    stateRanges.pressure.min.value,
+    //                    stateRanges.pressure.min.unit,
+    //                    stateRanges.pressure.max.value,
+    //                    stateRanges.pressure.max.unit
+    //                );
+    //            }
+    //            s_Logger.LogInfo("ChemicalProperties: Electronegativity - {}/{}",
+    //                e.chemical.electronegativity.value.has_value() ? std::to_string(e.chemical.electronegativity.value.value()) : "null",
+    //                e.chemical.electronegativity.unit
+    //            );
+    //            s_Logger.LogInfo("ChemicalProperties: IonizationEnergy - {}/{}",
+    //                e.chemical.ionizationEnergy.first.value.has_value() ? std::to_string(e.chemical.ionizationEnergy.first.value.value()) : "null",
+    //                e.chemical.ionizationEnergy.first.unit
+    //            );
+    //            s_Logger.LogInfo("ChemicalProperties: ElectroAfinity - {}/{}",
+    //                e.chemical.electronAffinity.value.has_value() ? std::to_string(e.chemical.electronAffinity.value.value()) : "null",
+    //                e.chemical.electronAffinity.unit
+    //            );
+    //            s_Logger.LogInfo("ChemicalProperties: Reactivity - {}/{}",
+    //                e.chemical.reactivity.value,
+    //                e.chemical.reactivity.scale
+    //            );
+    //            for (auto oxy: e.chemical.oxidationStates) {
+    //                s_Logger.LogInfo("ChemicalProperties: OxydationState - {} common: {}", oxy.state, oxy.common ? "Y" : "N");
+    //            }
+    //            for (auto bond : e.chemical.bonding) {
+    //                s_Logger.LogInfo("ChemicalProperties: Bonding - {}", bond);
+    //            }
+    //            for (auto cc : e.chemical.bonding) {
+    //                s_Logger.LogInfo("ChemicalProperties: CommonCompounds- {}", cc);
+    //            }
+    //            for (auto hyb : e.chemical.hybridizationExamples) {
+    //                s_Logger.LogInfo("ChemicalProperties: HybridisationExamples - {} {} ",hyb.first, hyb.second);
+    //            }
+    //            auto quantum = e.quantum;
+    //            s_Logger.LogInfo("Quantum - AtomicRadius {} / {} ",
+    //                quantum.atomicRadius.value.has_value() ? std::to_string(quantum.atomicRadius.value.value()) : "null",
+    //                quantum.atomicRadius.unit.has_value() ? quantum.atomicRadius.unit.value() : "null"
+    //            );
+    //            s_Logger.LogInfo("Quantum - covalentRadius {} / {} ",
+    //                quantum.covalentRadius.value.has_value() ? std::to_string(quantum.covalentRadius.value.value()) : "null",
+    //                quantum.covalentRadius.unit.has_value() ? quantum.covalentRadius.unit.value() : "null"
+    //            );
+    //            s_Logger.LogInfo("Quantum - vanDerWaalsRadius {} / {} ",
+    //                quantum.vanDerWaalsRadius.value.has_value() ? std::to_string(quantum.vanDerWaalsRadius.value.value()) : "null",
+    //                quantum.vanDerWaalsRadius.unit.has_value() ? quantum.vanDerWaalsRadius.unit.value() : "null"
+    //            );
+    //            for(auto spin : quantum.spinStates )
+    //                s_Logger.LogInfo("Quantum - SpinStates {} ", std::to_string(spin));
+    //            s_Logger.LogInfo("Quantum - magneticOrdering {} ", quantum.magneticOrdering);
+    //            s_Logger.LogInfo("Quantum - isParamagnetic {} ", quantum.isParamagnetic ? "True" : "False");
+    //            s_Logger.LogInfo("Quantum - nuclearSpin {} ", std::to_string(quantum.nuclearSpin));
+    //            auto envProp = e.environmentalProp;
+    //            s_Logger.LogInfo("Environmental Properties - Solubility In Water : {} / {} ",
+    //                envProp.solubilityInWater.value.has_value() ? std::to_string(envProp.solubilityInWater.value.value()) : "null",
+    //                envProp.solubilityInWater.unit.value()
+    //            );
+    //            s_Logger.LogInfo("Environmental Properties - Tendency In Water : Tendency: {} Spontaneous: {} RequiresSpark: {} ",
+    //                envProp.oxidationInAir.tendency,
+    //                envProp.oxidationInAir.spontaneous ? "True" : "False",
+    //                envProp.oxidationInAir.requiresSpark ? "True" : "False"
+    //            );
+    //            s_Logger.LogInfo("Environmental Properties - Toxidity {} ", envProp.toxicity);
+    //            s_Logger.LogInfo("Environmental Properties - Biological Role {} ", envProp.biologicalRole);
+    //            for(const auto h : envProp.hazards)
+    //                s_Logger.LogInfo("Environmental Properties - Hazards {} ", h);
+    //            //s_Logger.LogInfo("{}", e.group);
+    //        }
+    //    }
+    //}
+
+
+    ////Interstellar::Core::Logger s_Logger(LOG_CATEGORY);
+
+    // ==== TEMPORARY TEST CODE ====
+    constexpr int windowWidth = 1200;
+    constexpr int windowHeight = 860;
+
+    auto graphics = std::make_unique<Interstellar::Renderers::OpenGL::OpenGLGraphics>();
+    if (!graphics->Initialise(windowWidth, windowHeight, false)) {
+        std::cerr << "[Error] Failed to initialise OpenGL graphics backend.\n";
+        return -1;
+    }
+
+    auto window = static_cast<GLFWwindow*>(graphics->GetNativeWindow());
+    InputConfig cfg;
+    cfg.nativeWindow = window;
+    cfg.backend = InputConfig::Backend::GLFW;
+
+    auto input = InputSystem::Create(cfg);
+    auto build = GetBuildInfo();
+    std::cout << "[Input] Active backend=" << BackendName(input->backend())
+        << " | GLFW compiled: " << (build.haveGLFW ? "yes" : "no")
+        << "\n";
+    auto& keyboard = input->keyboard();
+    auto& mouse = input->mouse();
+
+    // ------------------------------------------------------------
+    // GPU resources
+    // NOTE: OpenGLGraphics::CreateShader loads assets/shaders/triangle.vert/frag
+    //     Make sure those shaders declare:
+    //       uniform vec2  u_Offset;  
+    //       uniform float u_Zoom;
+    //       uniform sampler2D u_Texture;
+    // ------------------------------------------------------------
+    // ==== GPU RESOURCES ====
+    auto shader = graphics->CreateShader("TriangleShader");
+    auto mesh = graphics->CreateMesh(vertices, sizeof(vertices), indices, sizeof(indices));
+    auto pipeline = graphics->CreatePipeline(shader);
+    auto texture = graphics->CreateTexture(TEXTURE_PATH);
+    auto material = pipeline->CreateMaterial();
+
+    if (!shader || !mesh || !pipeline || !texture) {
+        if (!shader)   LogInit().LogError("Shader failed to compile or load.");
+        if (!mesh)     LogInit().LogError("Mesh failed to initialize.");
+        if (!pipeline) LogInit().LogError("Pipeline creation failed.");
+        if (!texture)  LogInit().LogError("Texture loading failed.");
+        return -2;
+    }
+
+    // ------------------------------------------------------------
+    // Camera-ish controls: offset + zoom (draggable + wheel)
+    // ------------------------------------------------------------
+    glm::vec2 offset = glm::vec2(0.0f);   // matches u_Offset
+    float     zoom = 1.0f;              // matches u_Zoom
+
+
+    // Multi-triangle demo state
+    bool manyMode = false;         // toggle with 'I'
+    bool prevI = false;
+    int  grid = 20;            // NxN triangles when manyMode=true (tweak with +/-)
+    int  prevGrid = grid;
+    std::vector<glm::vec2> gridOffsets; // relative offsets for each triangle
+
+    auto rebuildGrid = [&] {
+        gridOffsets.clear();
+        gridOffsets.reserve(grid * grid);
+        const float spacing = 0.12f;       // world spacing between instances
+        const float half = (grid - 1) * 0.5f;
+        for (int y = 0; y < grid; ++y) {
+            for (int x = 0; x < grid; ++x) {
+                gridOffsets.emplace_back(
+                    (x - half) * spacing,
+                    (y - half) * spacing
+                );
+            }
+        }
+        prevGrid = grid;
+        };
+    rebuildGrid();
+
+    // ------------------------------------------------------------
+    // ECS demo world (still here if you want to drive something later)
+    // ------------------------------------------------------------
+    Engine engine;
+    World  world;
+    world.create(0.0f, 0.0f, 0.1f, 0.0f); // one entity moving right
+
+    // ==== CAMERA ====
+    Interstellar::Engine::Camera2D camera;
+    camera.zoom = 0.25f;
+    MouseFilter smooth{ 0.5f };
+
+    // ==== SEEDED FIELD ====
+    Interstellar::Universe::FieldGenerator field(/*masterSeed=*/0xDEADBEEFCAFEBABEULL, /*grid=*/0.12f, /*jitter=*/0.45f);
+
+    // temp buffers reused each frame
+    std::vector<float> instanceOffsets; // flattened x,y pairs
+
+    // ------------------------------------------------------------
+    // Game loop (fixed simulation + render)
+    // ------------------------------------------------------------
+    engine.run(
+        // --- SIMULATION ---
+        [&](double dt) {
+            input->pump();
+            input->beginFrame(dt);
+
+            const float moveSpeed = 0.5f * static_cast<float>(dt);
+            if (keyboard.isDown(KeyCode::ArrowLeft))  camera.center.x += moveSpeed;
+            if (keyboard.isDown(KeyCode::ArrowRight)) camera.center.x -= moveSpeed;
+            if (keyboard.isDown(KeyCode::ArrowUp))    camera.center.y -= moveSpeed;
+            if (keyboard.isDown(KeyCode::ArrowDown))  camera.center.y += moveSpeed;
+
+            camera.zoom = WheelZoom(mouse, camera.zoom, 0.15f, 0.1f, 5000.0f);
+            if (mouse.isDown(MouseButton::Left)) {
+                camera.center -= smooth.apply(mouse, windowWidth, windowHeight);
+            }
+            else {
+                smooth.reset();
+            }
+
+            MovementSystem(world, dt);
+            input->endFrame();
+        },
+
+        // --- RENDER ---
+        [&](double /*frameTime*/) {
+            graphics->BeginFrame();
+
+            // Push camera + texture
+            camera.apply(*material);
+            material->Set("u_Texture", texture);
+
+            // Compute a padded visible rect to avoid early cull/popping
+            const auto vis = Interstellar::Engine::VisibleAABB(camera, windowWidth, windowHeight);
+
+            // Base triangle roughly spans +/-0.5 units from center (from your +/-0.5 vertices).
+            // Circumradius of an equal-sided triangle with half-extent +/- 0.5 is +/-0.6 * 0.5.
+            constexpr float TRI_HALF_EXTENT = 0.5f;
+            constexpr float TRI_RADIUS_BASE = 0.6f * TRI_HALF_EXTENT;
+
+            // Triangles are scaled by camera.zoom in the shader, so expand by that
+            glm::vec2 guard = glm::vec2(TRI_RADIUS_BASE * camera.zoom);
+
+            // Pad the visible AABB so we include instances that are partially on-screen
+            decltype(vis) padded{ vis.min - guard, vis.max + guard };
+
+            // Refill the instance offsets using the padded rect
+            field.generate({ padded.min, padded.max }, instanceOffsets);
+
+            // Draw all visible points as instanced triangles
+            Interstellar::Renderers::OpenGL::GLInstancedSubmit::draw(*graphics, mesh, pipeline, material,
+                instanceOffsets.data(),
+                static_cast<int>(instanceOffsets.size() / 2));
+
+            graphics->EndFrame();
+
+        },
+
+        // --- EXIT CONDITION ---
+        [&] { return graphics->ShouldClose(); }
+    );
+
+    graphics->Shutdown();
+    glfwTerminate();
+    //// ==== END OF TEMPORARY TEST CODE ====
+
+    //// ==== GAME INIT (NOT YET REACHED) ====
+    Interstellar::Game game;
+
+    try {
+        game.loadConfig();
+        game.buildComponents();
+        game.start();
+        game.shutdown();
+    }
+    catch (const std::exception& e) {
+        LogInit().LogCritical(std::string("Game error: ") + e.what());
+        return 99;
+    }
+
+    LogInit().LogInfo(std::string("Game closed with success."));
+
+    return 0;
+}

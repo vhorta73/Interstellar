@@ -71,6 +71,7 @@ target_link_libraries(InterstellarGraphics
     Interstellar::Renderers
     Interstellar::Universe
     Interstellar::Engine
+    Interstellar::Logging
 )
 
 # ---------------- Warnings ----------------

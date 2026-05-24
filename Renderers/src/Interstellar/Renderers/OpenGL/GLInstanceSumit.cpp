@@ -55,13 +55,7 @@ namespace {
 
 namespace Interstellar::Renderers::OpenGL {
 
-
     static GLuint gVAO = 0, gVBO = 0;
-
-    static void ensureBuffers() {
-        if (!gVAO) glGenVertexArrays(1, &gVAO);
-        if (!gVBO) glGenBuffers(1, &gVBO);
-    }
 
     void GLInstancedSubmit::draw(Interstellar::Graphics::IGraphics& /*gfx*/,
         const std::shared_ptr<Interstellar::Graphics::IMesh>& mesh,

@@ -163,5 +163,6 @@ namespace Interstellar::Logging {
     const Logger logInit{ LOG_INIT,    GetDefaultLevelForLogger(LOG_INIT) };
     const Logger logConfig{ LOG_CONFIG,  GetDefaultLevelForLogger(LOG_CONFIG) };
     const Logger logGraphic{ LOG_GRAPHIC, GetDefaultLevelForLogger(LOG_GRAPHIC) };
+    const Logger logRenderer{ LOG_RENDERER, GetDefaultLevelForLogger(LOG_RENDERER) };
 
 } // namespace Interstellar::Logging
