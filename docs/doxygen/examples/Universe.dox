@@ -1,0 +1,44 @@
+/**
+ * @defgroup UniverseExamples Universe
+ * @ingroup Examples
+ * @brief Quick start samples for the Universe procedural generation module.
+ * @since 1.0
+ *
+ * ### Build a Universe3DRecipe and query stars in an AABB
+ * @code
+ * using namespace Interstellar::Universe;
+ *
+ * Seed64 seed = seedFromString("MyUniverse-001");
+ *
+ * Universe3DRecipe recipe;
+ * recipe.sectorSize  = 5.91e9f;  // km (Pluto-scale sectors)
+ * recipe.starDensity = 5.0f / std::pow(recipe.sectorSize, 3.0f);
+ * recipe.jitter      = 0.035f;
+ * recipe.useGalaxy   = false;
+ *
+ * glm::vec3 eye { 0, 0, 0 };
+ * float     radius = 1.0e10f;   // 10 billion km query radius
+ * AABB3     aabb   { eye - glm::vec3(radius), eye + glm::vec3(radius) };
+ *
+ * UniverseQueryFilters filters;
+ * UniverseQueryResult  result;
+ * QueryUniverseAABB3(seed, recipe, aabb, filters, result);
+ *
+ * for (const auto& star : result.stars) {
+ *     // star.pos  — world position (km)
+ *     // star.id   — deterministic Seed64 identifier
+ * }
+ * @endcode
+ *
+ * ### Seed a string to a Seed64
+ * @code
+ * Seed64 s = seedFromString("Interstellar-Alpha-001");
+ * @endcode
+ *
+ * ### Convert a world position to its sector coordinates
+ * @code
+ * float    sectorSize = recipe.sectorSize;
+ * Sector3Id sid = worldToSector(starPos, sectorSize);
+ * // sid.x, sid.y, sid.z — integer sector coordinates
+ * @endcode
+ */

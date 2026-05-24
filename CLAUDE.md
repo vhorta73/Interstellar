@@ -82,6 +82,49 @@ OpenGL 4.6 (GLAD loader), GLFW window. `IGraphics` interface supports future swa
 - Existing coverage: `Config/`, `Data/` subsystems
 - Run: `ctest --preset dev-debug` or open Test Explorer in VS
 
+## Doxygen
+Documentation is generated from `docs/Doxyfile` (output to `docs/html/`, already in `.gitignore`).
+
+**Every public API change must be accompanied by matching Doxygen docs.**
+
+### Comment style (match existing headers exactly)
+```cpp
+/**
+ * @ingroup <GroupName>          ← required; see docs/doxygen/Modules.dox for valid names
+ * @brief One-line description.
+ * @details Optional multi-line explanation.
+ * @param [in]  name - description
+ * @param [out] name - description
+ * @return type - description
+ * @throws None                  ← or list exception types
+ * @complexity O(?)
+ * @thread_safety Not thread-safe. / Yes (read-only).
+ * @reentrancy Yes / No
+ * @since 1.0
+ */
+```
+- Use `///< inline comment` for struct/class fields.
+- Keep `@brief` to one line; use `@details` for anything longer.
+- Do **not** document private members (Doxygen is configured to ignore them).
+
+### Module groups (`@ingroup`)
+Defined in `docs/doxygen/Modules.dox`. Current groups:
+`IO`, `Input`, `Units`, `Graphics`, `Renderers`, `ECS`, `Simulation`, `Logging`, `Engine`, `Scenes`, `Universe`
+
+Adding a new module → add a `@defgroup` entry to `Modules.dox`.
+
+### Example snippets
+Live in `docs/doxygen/examples/<Module>.dox` (one file per module).  
+Each file defines `@defgroup <Module>Examples` → `@ingroup Examples`.  
+Add a new `.dox` file when a module has no example coverage yet.
+
+### Running Doxygen
+```powershell
+# From repo root
+doxygen docs/Doxyfile
+# Output: docs/html/index.html
+```
+
 ## Coding conventions
 - C++20 throughout (concepts, ranges, `std::expected` pattern via `IO/Expected`)
 - Interface classes prefixed with `I` (`IGraphics`, `IKeyboard`, `IMesh`)

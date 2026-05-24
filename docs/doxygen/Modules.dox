@@ -59,3 +59,24 @@
  * @since 1.0
  */
 
+ /**
+ * @defgroup Engine Engine
+ * @ingroup Modules
+ * @brief Core game engine: fixed-timestep loop, frame timing, cameras, and config.
+ * @since 1.0
+ */
+
+ /**
+ * @defgroup Scenes Scenes
+ * @ingroup Modules
+ * @brief High-level scene management combining camera, universe rendering, and input.
+ * @since 1.0
+ */
+
+ /**
+ * @defgroup Universe Universe
+ * @ingroup Modules
+ * @brief Seed-based procedural universe generation, sector streaming, and spatial queries.
+ * @since 1.0
+ */
+
