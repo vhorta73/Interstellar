@@ -1,3 +1,7 @@
+# CLAUDE.md
+
+This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
+
 # Interstellar — CLAUDE.md
 
 ## Project Overview
@@ -54,13 +58,23 @@ Each subsystem lives in its own directory with the pattern:
 | `Procedural/` | `SeededRng` (PCG32) |
 
 ### Key entry points
-- **Game loop**: `Interstellar/src/main.cpp` → `Game` class in `Interstellar.hpp`
-- **Engine loop**: `Engine/include/Interstellar/Engine/Engine.hpp` — template-based run loop
+- **Game loop**: `Interstellar/src/main.cpp` — directly wires `OpenGLGraphics`, `InputSystem`, `UniverseScene`, and `Engine::run`. The `Game` class in `Interstellar.hpp` is a stub placeholder and is not used by `main.cpp`.
+- **Engine loop**: `Engine/include/Interstellar/Engine/Engine.hpp` — template-based fixed-timestep loop (60 Hz sim, variable render)
 - **Universe scene**: `Scenes/` — `UniverseScene::update()` / `UniverseScene::render()`
-- **Shaders**: `Interstellar/assets/shaders/` — `stars.vert/.frag`, `stars_points3d.vert/.frag`
+- **Shaders**: `Interstellar/assets/shaders/` — `stars.vert/.frag` (star field), `triangle.vert/.frag/.glsl` (debug triangle)
 
 ### Graphics backend
-OpenGL 4.6 (GLAD loader), GLFW window. `IGraphics` interface supports future swap to Vulkan/DX12/Metal without changing game code. Renderers: `StarsRenderer`, `SkyStarsRenderer`.
+OpenGL 4.6 (GLAD loader), GLFW window. `IGraphics` interface supports future swap to Vulkan/DX12/Metal without changing game code. Renderers: `StarsRenderer`, `SkyStarsRenderer`. Vulkan infrastructure exists in `Renderers/Vulkan/` but is not yet active.
+
+`compile_commands.json` is exported to `out/build/<preset>/compile_commands.json` — symlink or configure clangd to pick this up.
+
+### Camera controls (runtime)
+`CameraRig3D` uses exponential smoothing; target is updated immediately, smoothed value follows each frame:
+- **WASD + Q/E**: translate (forward/back/strafe/up/down)
+- **Space + LMB drag**: mouse look (yaw/pitch)
+- **LMB drag** (no Space): 2D pan
+- **Scroll wheel**: dolly toward `focusWorld` if set, else forward
+- **Z + scroll**: adjust FOV
 
 ## Third-party dependencies (FetchContent)
 | Library | Version | Use |
@@ -80,7 +94,9 @@ OpenGL 4.6 (GLAD loader), GLFW window. `IGraphics` interface supports future swa
 - Framework: Google Test
 - Location: `tests/EngineTests/` and `tests/AppTests/`
 - Existing coverage: `Config/`, `Data/` subsystems
-- Run: `ctest --preset dev-debug` or open Test Explorer in VS
+- Run all: `ctest --preset dev-debug`
+- Run by name filter: `ctest --preset dev-debug -R <TestName>`
+- Run single test binary directly: `.\out\build\dev-debug\tests\bin\EngineTests.exe --gtest_filter=Suite.TestName`
 
 ## Doxygen
 Documentation is generated from `docs/Doxyfile` (output to `docs/html/`, already in `.gitignore`).
@@ -130,7 +146,7 @@ doxygen docs/Doxyfile
 - Interface classes prefixed with `I` (`IGraphics`, `IKeyboard`, `IMesh`)
 - Public headers under `include/Interstellar/<Module>/`, never expose implementation headers
 - Error handling via `Expected<T>` / `Result<T>` monads (no raw exceptions for I/O)
-- PCG32 (`RngPCG32`) for all procedural randomness — keep seeding deterministic
+- PCG32 for all procedural randomness — keep seeding deterministic. `RngPCG32` lives in `Universe/`; `Procedural/SeededRng.hpp` is the higher-level wrapper in the `Procedural` module.
 - Avoid raw owning pointers; prefer `std::unique_ptr` / `std::shared_ptr`
 - No comments unless the WHY is non-obvious
 
