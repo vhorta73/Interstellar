@@ -172,6 +172,7 @@ target_link_libraries(Engine
     Interstellar::Utils
     Interstellar::Logging
     Interstellar::Universe
+    Interstellar::Input
   PRIVATE
     glfw
     glad

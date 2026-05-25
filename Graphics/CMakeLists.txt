@@ -47,9 +47,32 @@ target_include_directories(InterstellarGraphics
     ${CMAKE_CURRENT_SOURCE_DIR}/src
 )
 
-# If your public interfaces expose types from other projects, link them here as PUBLIC.
-# Example (uncomment as needed):
-# target_link_libraries(InterstellarGraphics PUBLIC Interstellar::Utils gsl::gsl-lite mp-units)
+# ---------------- Dependencies ----------------
+include(FetchContent)
+
+# glm (header-only) — match Engine's style/version
+if(NOT TARGET glm::glm)
+  FetchContent_Declare(glm
+    GIT_REPOSITORY https://github.com/g-truc/glm.git
+    GIT_TAG        0.9.9.8
+    GIT_SHALLOW    TRUE
+    GIT_PROGRESS   TRUE
+  )
+endif()
+
+# Make available any not already present
+FetchContent_MakeAvailable(glm)
+
+# Link public deps that appear in your public headers
+target_link_libraries(InterstellarGraphics
+  PUBLIC
+    glm::glm
+  PRIVATE
+    Interstellar::Renderers
+    Interstellar::Universe
+    Interstellar::Engine
+    Interstellar::Logging
+)
 
 # ---------------- Warnings ----------------
 if(MSVC)
@@ -82,9 +105,13 @@ if(GRAPHICS_ENABLE_PACKAGE)
     COMPATIBILITY SameMajorVersion
   )
 
-  # Minimal config – add find_dependency(...) here if Graphics exposes public deps.
+  # Config with public deps (glm) exposed to consumers
   set(_GRAPHICS_CFG "${CMAKE_CURRENT_BINARY_DIR}/InterstellarGraphicsConfig.cmake")
-  file(WRITE "${_GRAPHICS_CFG}" "include(\"\${CMAKE_CURRENT_LIST_DIR}/InterstellarGraphicsTargets.cmake\")\n")
+  file(WRITE "${_GRAPHICS_CFG}" [=[
+include(CMakeFindDependencyMacro)
+find_dependency(glm)
+include("${CMAKE_CURRENT_LIST_DIR}/InterstellarGraphicsTargets.cmake")
+]=])
 
   install(FILES
     "${_GRAPHICS_CFG}"
@@ -105,5 +132,3 @@ if(GRAPHICS_BUILD_TESTS AND BUILD_TESTING)
   )
   target_link_libraries(GraphicsTests PRIVATE GraphicsTestSupport)
 endif()
-
-

@@ -1,5 +1,6 @@
 #pragma once
 #include <cstdint>
+#include <cstddef> // for std::size_t
 
 namespace Interstellar::Input {
 
@@ -25,7 +26,7 @@ namespace Interstellar::Input {
         // Top number row (main keyboard)
         Num0, Num1, Num2, Num3, Num4, Num5, Num6, Num7, Num8, Num9,
 
-        // Punctuation on main rowit status
+        // Punctuation on main row
         Minus, Equal,                // '-' and '='  (use Shift+'=' for '+')
         LeftBracket, RightBracket,   // '[' and ']'
         Semicolon, Apostrophe,       // ';' and '\''
@@ -48,15 +49,7 @@ namespace Interstellar::Input {
         _Count
     };
 
-    /**
-     * @ingroup Input
-     * @brief Get the number of defined key codes.
-     * @return std::size_t - Count of KeyCode values.
-     * @throws None
-     * @complexity O(1)
-     * @since 1.0
-     */
-    constexpr inline std::size_t KeyCodeCount() {
+    [[nodiscard]] constexpr inline std::size_t KeyCodeCount() noexcept {
         return static_cast<std::size_t>(KeyCode::_Count);
     }
 

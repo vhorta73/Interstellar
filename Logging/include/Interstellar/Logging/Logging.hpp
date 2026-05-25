@@ -38,6 +38,7 @@ namespace Interstellar::Logging {
     inline constexpr std::string_view LOG_INIT = "Initialisation"; ///< @since 1.0
     inline constexpr std::string_view LOG_CONFIG = "Config";         ///< @since 1.0
     inline constexpr std::string_view LOG_GRAPHIC = "Graphic";        ///< @since 1.0
+    inline constexpr std::string_view LOG_RENDERER = "Renderer";        ///< @since 1.0
     /** @} */
 
     /**
@@ -109,10 +110,11 @@ namespace Interstellar::Logging {
      * @since 1.0
      * @{
      */
-    extern const Logger logGeneric;  ///< Logger bound to LOG_GENERIC. @since 1.0
-    extern const Logger logInit;     ///< Logger bound to LOG_INIT.    @since 1.0
-    extern const Logger logConfig;   ///< Logger bound to LOG_CONFIG.  @since 1.0
-    extern const Logger logGraphic;  ///< Logger bound to LOG_GRAPHIC. @since 1.0
+    extern const Logger logGeneric;  ///< Logger bound to LOG_GENERIC.   @since 1.0
+    extern const Logger logInit;     ///< Logger bound to LOG_INIT.      @since 1.0
+    extern const Logger logConfig;   ///< Logger bound to LOG_CONFIG.    @since 1.0
+    extern const Logger logGraphic;  ///< Logger bound to LOG_GRAPHIC.   @since 1.0
+    extern const Logger logRenderer; ///< Logger bound to LOG_RENDERER.  @since 1.0
     /** @} */
 
     /**
@@ -125,6 +127,7 @@ namespace Interstellar::Logging {
     inline const Logger& LogInit() { return logInit; } ///< @since 1.0
     inline const Logger& LogConfig() { return logConfig; } ///< @since 1.0
     inline const Logger& LogGraphic() { return logGraphic; } ///< @since 1.0
+    inline const Logger& LogRenderer() { return logRenderer; } ///< @since 1.0
     /** @} */
 
 } // namespace Interstellar::Logging

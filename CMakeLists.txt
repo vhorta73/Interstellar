@@ -218,6 +218,8 @@ add_subdirectory(Logging)
 add_subdirectory(Units)
 add_subdirectory(Utils)
 add_subdirectory(Universe)
+add_subdirectory(Procedural)
+add_subdirectory(Scenes)
 add_subdirectory(Engine)
 add_subdirectory(ECS)
 add_subdirectory(Simulation)
@@ -260,6 +262,8 @@ endfunction()
 foreach(_pair
   "Engine;Engine"
   "ECS;ECS"
+  "Scenes;Scenes"
+  "Procedural;Procedural"
   "Simulation;Simulation"
   "Interstellar;Interstellar"
   "InterstellarUtils;Utils"

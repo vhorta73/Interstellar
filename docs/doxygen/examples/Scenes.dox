@@ -1,0 +1,32 @@
+/**
+ * @defgroup ScenesExamples Scenes
+ * @ingroup Examples
+ * @brief Quick start samples for the Scenes module.
+ * @since 1.0
+ *
+ * ### Create and run UniverseScene
+ * @code
+ * using namespace Interstellar;
+ * using Interstellar::Universe::seedFromString;
+ *
+ * // Construct once — GPU resources are created here.
+ * Scenes::UniverseScene scene(keyboard, mouse, *gfx,
+ *                             seedFromString("MyUniverse-001"));
+ *
+ * // Inside the engine sim callback:
+ * scene.update(viewportW, viewportH, dt);
+ *
+ * // Inside the engine render callback:
+ * gfx->BeginFrame();
+ * scene.render(*gfx, viewportW, viewportH);
+ * gfx->EndFrame();
+ * @endcode
+ *
+ * ### Display HUD info in the window title
+ * @code
+ * // After render, update the window title each frame:
+ * glfwSetWindowTitle(window, scene.hudTitle().c_str());
+ * // For a detailed overlay line (pos + sector):
+ * std::string overlay = scene.hudLine();
+ * @endcode
+ */

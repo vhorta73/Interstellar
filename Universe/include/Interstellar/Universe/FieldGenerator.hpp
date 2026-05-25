@@ -1,42 +1,37 @@
 #pragma once
 #include <cstdint>
 #include <vector>
-#include <glm/vec2.hpp>
+#include <glm/glm.hpp>
+
+#include "Interstellar/Universe/AABB.hpp"  // AABB2
+#include "Interstellar/Universe/Seed.hpp"  // Seed64
 
 namespace Interstellar::Universe {
 
-    struct AABB2 { glm::vec2 min, max; };
-
-    /// Very small, deterministic point field for prototyping.
-    /// Generates one pseudo-random point per grid cell inside a world-space AABB.
     class FieldGenerator {
     public:
-        explicit FieldGenerator(uint64_t masterSeed, float grid = 0.12f, float jitter = 0.45f)
-            : m_seed(masterSeed), m_grid(grid), m_jitter(jitter) {
+        // grid: lattice spacing (world units)
+        // jitter: 0..1 range (fraction of grid) for per-cell random offset
+        FieldGenerator(Seed64 seed, float grid, float jitter)
+            : m_seed(seed), m_grid(grid), m_jitter(jitter) {
         }
 
-        /// Fills 'out' with XY pairs (flattened floats) in world-space.
-        /// Each visible grid cell contributes exactly one point, jittered deterministically.
-        void generate(const AABB2& rect, std::vector<float>& out) const;
+        void   reseed(Seed64 s) { m_seed = s; }
+        Seed64 seed()     const { return m_seed; }
 
-        float gridSize() const { return m_grid; }
+        void   setGrid(float g) { m_grid = g; }
+        float  grid()       const { return m_grid; }
+
+        void   setJitter(float j) { m_jitter = j; }
+        float  jitter()     const { return m_jitter; }
+
+        // Fills outXY with x,y pairs (flattened) of points inside rect
+        void generate(const AABB2& rect, std::vector<float>& outXY) const;
 
     private:
-        static inline uint64_t mix64(uint64_t x) {
-            x ^= x >> 30; x *= 0xbf58476d1ce4e5b9ULL;
-            x ^= x >> 27; x *= 0x94d049bb133111ebULL;
-            x ^= x >> 31; return x;
-        }
-        static inline uint64_t hash2(int32_t x, int32_t y, uint64_t seed) {
-            uint64_t h = seed ^ 0x9e3779b97f4a7c15ULL;
-            h ^= mix64(static_cast<uint64_t>(x) + 0x632BE59BD9B4E019ULL) + (h << 6) + (h >> 2);
-            h ^= mix64(static_cast<uint64_t>(y) + 0xAE985BF2CB60B88DULL) + (h << 6) + (h >> 2);
-            return mix64(h);
-        }
-
-        uint64_t m_seed;
-        float    m_grid;
-        float    m_jitter; // 0..0.5-ish of cell size
+        Seed64 m_seed;  // master seed for determinism
+        float  m_grid;  // lattice step
+        float  m_jitter;// 0..1 fraction of grid (how far points can deviate inside a cell)
     };
 
 } // namespace Interstellar::Universe

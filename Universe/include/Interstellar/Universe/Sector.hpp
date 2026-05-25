@@ -1,24 +1,28 @@
 #pragma once
 #include <cstdint>
+#include <cmath>
+#include <glm/glm.hpp>
+#include "Interstellar/Universe/Seed.hpp"
 
 namespace Interstellar::Universe {
 
-    // integer sector coords (e.g., 1024x1024 world units per sector)
-    struct SectorCoord {
-        int64_t x{};
-        int64_t y{};
+    struct SectorId {
+        std::int64_t x = 0;
+        std::int64_t y = 0;
+        bool operator==(const SectorId& o) const { return x == o.x && y == o.y; }
     };
 
-    // simple 64-bit mix for per-sector seed derivation
-    inline uint64_t mix64(uint64_t x) {
-        x ^= x >> 33; x *= 0xff51afd7ed558ccdULL;
-        x ^= x >> 33; x *= 0xc4ceb9fe1a85ec53ULL;
-        x ^= x >> 33; return x;
+    inline SectorId worldToSector(const glm::vec2& p, float sectorSize) {
+        return { static_cast<std::int64_t>(std::floor(p.x / sectorSize)),
+                 static_cast<std::int64_t>(std::floor(p.y / sectorSize)) };
     }
 
-    inline uint64_t deriveSectorSeed(uint64_t masterSeed, SectorCoord s) {
-        uint64_t h = masterSeed ^ mix64(static_cast<uint64_t>(s.x)) ^ mix64(static_cast<uint64_t>(s.y) + 0x9e3779b97f4a7c15ULL);
-        return mix64(h);
+    inline glm::vec2 sectorOrigin(const SectorId& s, float sectorSize) {
+        return { static_cast<float>(s.x) * sectorSize, static_cast<float>(s.y) * sectorSize };
     }
 
-} // namespace
+    inline Seed64 sectorSeed(Seed64 masterSeed, const SectorId& s) {
+        return hashCombine(masterSeed, hashInts(s.x, s.y));
+    }
+
+} // namespace Interstellar::Universe

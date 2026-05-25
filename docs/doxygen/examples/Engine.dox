@@ -1,0 +1,51 @@
+/**
+ * @defgroup EngineExamples Engine
+ * @ingroup Examples
+ * @brief Quick start samples for the Engine module.
+ * @since 1.0
+ *
+ * ### Run the fixed-timestep engine loop
+ * @code
+ * using Interstellar::Engine::Engine;
+ * Engine engine;
+ * engine.run(
+ *     [&](double dt)       { // simulation tick — update game state },
+ *     [&](double frameTime){ // render tick   — draw current frame  },
+ *     [&]() -> bool        { return shouldQuit; }
+ * );
+ * @endcode
+ *
+ * ### Create and drive a CameraRig3D
+ * @code
+ * using namespace Interstellar::Engine::Cameras;
+ * CameraRig3D cam;
+ * cam.pos      = { 0, 0, 0 };
+ * cam.fovDeg   = 60.0f;
+ * auto& p = cam.params();
+ * p.panBase            = 5.0e7f;   // km/s
+ * p.dollyKmPerNotch    = 1.0e11f;
+ * p.yawSensDegPerPx    = 0.15f;
+ * p.pitchSensDegPerPx  = 0.15f;
+ * cam.targetPos    = cam.pos;
+ * cam.targetFovDeg = cam.fovDeg;
+ *
+ * // Each simulation tick:
+ * cam.handleInput(keyboard, mouse, viewportW, viewportH, dt);
+ * cam.update(dt);
+ *
+ * // Each render tick:
+ * float aspect = float(viewportW) / float(viewportH);
+ * glm::mat4 VP = cam.VP(aspect); // pass to shader as u_VP
+ * @endcode
+ *
+ * ### Focus-point dolly (zoom toward a star)
+ * @code
+ * // After picking a star at world position hitPos:
+ * cam.setFocusWorld(hitPos);
+ * cam.setDragFocusDepth(glm::distance(cam.eye(), hitPos));
+ * // Wheel now dollies toward hitPos instead of along forward.
+ * // Clear when done:
+ * cam.clearFocusWorld();
+ * cam.clearDragFocusDepth();
+ * @endcode
+ */

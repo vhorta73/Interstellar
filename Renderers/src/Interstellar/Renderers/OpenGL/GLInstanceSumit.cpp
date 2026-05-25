@@ -4,6 +4,9 @@
 #include "Interstellar/Graphics/ITexture.hpp"
 #include "Interstellar/Graphics/IRenderPipeline.hpp"
 #include "Interstellar/Graphics/IShader.hpp"
+#include "Interstellar/Renderers/OpenGL/GLPointSubmit.hpp"
+#include "Interstellar/Renderers/OpenGL/OpenGLGraphics.hpp"
+#include "Interstellar/Renderers/OpenGL/OpenGLShader.hpp"
 
 #include <glad/glad.h>
 #include <cstdint>
@@ -51,6 +54,8 @@ namespace {
 }
 
 namespace Interstellar::Renderers::OpenGL {
+
+    static GLuint gVAO = 0, gVBO = 0;
 
     void GLInstancedSubmit::draw(Interstellar::Graphics::IGraphics& /*gfx*/,
         const std::shared_ptr<Interstellar::Graphics::IMesh>& mesh,
