@@ -1,12 +1,14 @@
 #pragma once
 #include <memory>
 #include <vector>
+#include <limits>
 #include <glm/glm.hpp>
 
 #include "Interstellar/Graphics/IGraphics.hpp"
 #include "Interstellar/Graphics/IRenderPipeline.hpp"
 #include "Interstellar/Graphics/IMaterial.hpp"
 #include "Interstellar/Graphics/IShader.hpp"
+#include "Interstellar/Graphics/Renderers/GalaxyGlowRenderer.hpp"
 #include "Interstellar/Engine/Cameras/CameraRig3D.hpp"
 #include "Interstellar/Universe/Universe3DRecipe.hpp"
 #include "Interstellar/Universe/UniverseQuery.hpp"
@@ -17,8 +19,11 @@ namespace Interstellar::Graphics::Renderers {
 
     /**
      * @ingroup Graphics
-     * @brief Renders a procedurally-generated star field using two passes:
-     *        a near-field deterministic AABB query and a far-shell background impostor.
+     * @brief Renders a procedurally-generated star field.
+     *
+     * Each star is drawn with a physically-based angular diameter: apparent pixel size
+     * equals @c 2 * radiusKm / distance * focalLengthPx.  Stars shrinking below one
+     * pixel fade out smoothly via @c vBright.  No camera-anchored background is used.
      *
      * Construct once per graphics context; GPU resources (shader, pipeline, material)
      * are allocated in the constructor.  Call @ref render every frame.  The internal
@@ -53,30 +58,24 @@ namespace Interstellar::Graphics::Renderers {
 
         /**
          * @ingroup Graphics
-         * @brief Configure the far-shell background pass.
-         * @details When enabled, stars beyond the near-field radius are projected onto a
-         *          camera-anchored shell so the sky is never empty.  If the far query
-         *          yields no stars, a Fibonacci sphere fallback is used automatically.
-         * @param enabled  [in] bool  - Enable or disable the background pass.
-         * @param radiusKm [in] float - Visual shell radius in km (clamped to ≥1).
-         * @param count    [in] int   - Maximum number of background points to render.
+         * @brief Set the hard visibility cutoff distance in km.
+         * @details Stars beyond this distance are discarded in the vertex shader before
+         *          any fragment work.  Smaller values improve GPU performance when flying
+         *          through dense regions.  Does not affect the AABB query radius; pair with
+         *          @ref setMinQueryRadius to keep them consistent.
+         * @param km [in] float - Maximum visible distance in km (clamped to ≥1).
          * @throws None
          * @complexity O(1)
          * @since 1.0
          */
-        void setBackground(bool enabled, float radiusKm, int count) {
-            bgEnabled_  = enabled;
-            bgRadiusKm_ = std::max(1.0f, radiusKm);
-            bgCount_    = std::max(0, count);
-            bgUnitDirs_.clear();
-        }
+        void setMaxVisibleDistanceKm(float km) { maxVisDistKm_ = std::max(1.0f, km); }
 
         /**
          * @ingroup Graphics
-         * @brief Execute the full two-pass star render for the current frame.
-         * @details Pass 1 — near-field AABB query → deterministic point cloud drawn with
-         *          depth-based brightness.  Pass 2 (if background enabled) — far-shell
-         *          camera-anchored points drawn at a fixed pixel size.
+         * @brief Execute the star render for the current frame.
+         * @details Near-field AABB query → deterministic point cloud.  Each star's apparent
+         *          pixel size is derived from its physical radius and distance to the camera:
+         *          @c sizePx = 2 * radiusKm / dist * focalLengthPx.
          *          The internal @c lastStars_ cache is refreshed and available to
          *          @ref pickNearestScreen after this call.
          * @param gfx        [in] IGraphics          - Active graphics context.
@@ -94,7 +93,8 @@ namespace Interstellar::Graphics::Renderers {
             const Interstellar::Engine::Cameras::CameraRig3D& cam,
             const Interstellar::Universe::Universe3DRecipe& recipe,
             Interstellar::Universe::Seed64 masterSeed,
-            int viewportW, int viewportH);
+            int viewportW, int viewportH,
+            float nearKm = 1.0f);
 
         /**
          * @ingroup Graphics
@@ -103,10 +103,45 @@ namespace Interstellar::Graphics::Renderers {
          */
         struct PickResult {
             std::size_t      index{};    ///< Index into the last near-field star cache.
-            glm::vec3        pos{};      ///< World position of the picked star (km).
+            glm::dvec3       pos{};      ///< World position of the picked star (km), double precision.
             float            distance{}; ///< Distance from the camera eye to the star (km).
             Universe::Seed64 id{};       ///< Deterministic identifier of the picked star.
         };
+
+        /**
+         * @ingroup Graphics
+         * @brief Nearest-star query result from the last render cache.
+         * @since 1.0
+         */
+        struct NearestStar {
+            double distKm   = std::numeric_limits<double>::max(); ///< Distance to star centre (km).
+            float  radiusKm = 0.f;                                ///< Physical radius of the star (km).
+            bool   valid    = false;                              ///< True if the cache is non-empty.
+        };
+
+        /**
+         * @ingroup Graphics
+         * @brief Find the nearest star and return its centre distance and radius.
+         * @details Operates on the @c lastStars_ cache populated by the most recent @ref render call.
+         *          Use @c distKm - @c radiusKm to obtain altitude above the star surface.
+         * @param eye [in] glm::dvec3 - Camera world position (km), double precision.
+         * @return NearestStar - Populated result, or default (valid=false) if cache is empty.
+         * @throws None
+         * @complexity O(N)
+         * @since 1.0
+         */
+        NearestStar nearestStar(const glm::dvec3& eye) const;
+
+        /**
+         * @ingroup Graphics
+         * @brief Distance in km to the nearest star centre in the last render cache.
+         * @param eye [in] glm::dvec3 - Camera world position (km), double precision.
+         * @return float - Distance to nearest star centre, or FLT_MAX if cache is empty.
+         * @throws None
+         * @complexity O(N)
+         * @since 1.0
+         */
+        float nearestDistKm(const glm::dvec3& eye) const;
 
         /**
          * @ingroup Graphics
@@ -134,34 +169,24 @@ namespace Interstellar::Graphics::Renderers {
             PickResult& out) const;
 
     private:
-        void ensureBackgroundDirs(Interstellar::Universe::Seed64) {}
-
         std::shared_ptr<IShader>         shader_;
         std::shared_ptr<IRenderPipeline> pipeline_;
         std::shared_ptr<IMaterial>       material_;
+
+        std::unique_ptr<GalaxyGlowRenderer> galaxyGlow_;
 
         glm::vec3 tint_          = glm::vec3(1.0f);
         float     minBrightness_ = 0.0030f;
         float     maxBrightness_ = 2.25f;
         float     minPx_         = 1.0f;
-        float     maxPx_         = 96.0f;
+        float     maxPx_         = 16384.0f; // large enough to fill the viewport at stellar surface
 
-        float     brightNear_    = 5.0e9f;
-        float     brightFar_     = 5.0e12f;
-        float     baseSizeAtUnit_= 1.0f;
-
-        float queryRadiusKm_     = 1.0e10f;
+        float queryRadiusKm_  = 1.0e10f;
+        float maxVisDistKm_   = 5.0e11f;
         static constexpr float kMaxQueryKm = 1.0e12f;
 
-        bool  bgEnabled_  = true;
-        float bgRadiusKm_ = 3.0e11f;
-        int   bgCount_    = 6000;
-        std::vector<glm::vec3> bgUnitDirs_;
-
-        std::vector<float>           starXYZ_;
-        std::vector<glm::vec3>       starsWorld_;
+        std::vector<float>           starXYZRI_; // 5 floats per star: x,y,z,radius,intensity
         std::vector<Universe::Star3> lastStars_;
-        std::vector<glm::vec3>       farShellDirs_;
     };
 
 } // namespace Interstellar::Graphics::Renderers

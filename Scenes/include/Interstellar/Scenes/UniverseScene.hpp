@@ -106,8 +106,9 @@ namespace Interstellar::Scenes {
         Interstellar::Universe::Universe3DRecipe recipe_;
         Interstellar::Universe::Seed64           masterSeed_;
 
-        bool   lmbPrev_      = false;
-        double hudLogAccum_  = 0.0;
+        bool   lmbPrev_     = false;
+        double hudLogAccum_ = 0.0;
+        float  nearKm_      = 1.0f; ///< Dynamic near-plane distance (km), updated each frame from altitude.
     };
 
 } // namespace Interstellar::Scenes

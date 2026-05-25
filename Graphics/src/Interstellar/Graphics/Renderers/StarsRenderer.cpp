@@ -14,182 +14,116 @@ using namespace Interstellar::Universe;
 
 StarsRenderer::StarsRenderer(IGraphics& gfx)
 {
-    shader_ = gfx.CreateShader("Stars");
+    shader_   = gfx.CreateShader("Stars");
     pipeline_ = gfx.CreatePipeline(shader_);
     material_ = pipeline_->CreateMaterial();
 
-    material_->Set("u_Tint", &tint_, sizeof(tint_));
     material_->Set("u_MinBrightness", &minBrightness_, sizeof(minBrightness_));
     material_->Set("u_MaxBrightness", &maxBrightness_, sizeof(maxBrightness_));
-    material_->Set("u_MinPx", &minPx_, sizeof(minPx_));
-    material_->Set("u_MaxPx", &maxPx_, sizeof(maxPx_));
-    material_->Set("u_BrightNear", &brightNear_, sizeof(brightNear_));
-    material_->Set("u_BrightFar", &brightFar_, sizeof(brightFar_));
+    material_->Set("u_MinPx",         &minPx_,         sizeof(minPx_));
+    material_->Set("u_MaxPx",         &maxPx_,         sizeof(maxPx_));
+    material_->Set("u_MaxDistKm",     &maxVisDistKm_,  sizeof(maxVisDistKm_));
 
-    int bgFlag = 0;  material_->Set("u_Background", &bgFlag, sizeof(bgFlag));
-    float bgSz = 2.0f; material_->Set("u_BGFixedSizePx", &bgSz, sizeof(bgSz));
-}
-
-// Deterministically sub-sample by star id so counts cap without flicker.
-static inline bool keepStarDeterministically(Seed64 id, double keepProb) {
-    if (keepProb >= 1.0) return true;
-    if (keepProb <= 0.0) return false;
-    constexpr Seed64 PHI = 0x9E3779B97F4A7C15ull;
-    Seed64 h = id * PHI ^ (id >> 33);
-    uint32_t top = static_cast<uint32_t>(h >> 32);
-    double u = static_cast<double>(top) / 4294967296.0;
-    return u < keepProb;
-}
-
-// Fibonacci sphere fallback for times when the far-shell query yields nothing.
-static void buildFibonacciUnitSphere(int n, std::vector<glm::vec3>& out) {
-    out.clear(); out.reserve(std::max(0, n));
-    if (n <= 0) return;
-    const float ga = 2.39996323f; // golden angle
-    const float invN = 1.0f / float(n);
-    for (int i = 0; i < n; ++i) {
-        float y = 1.0f - (2.0f * (i + 0.5f) * invN);
-        float r = std::sqrt(std::max(0.0f, 1.0f - y * y));
-        float phi = ga * i;
-        out.emplace_back(glm::normalize(glm::vec3(std::cos(phi) * r, y, std::sin(phi) * r)));
-    }
+    galaxyGlow_ = std::make_unique<GalaxyGlowRenderer>(gfx);
 }
 
 void StarsRenderer::render(IGraphics& gfx,
     const CameraRig3D& cam,
     const Universe3DRecipe& recipe,
     Seed64 masterSeed,
-    int viewportW, int viewportH)
+    int viewportW, int viewportH,
+    float nearKm)
 {
     if (!pipeline_ || !material_) return;
 
+    // Galaxy background glow must be drawn first so star sprites layer on top additively
+    if (galaxyGlow_)
+        galaxyGlow_->render(gfx, cam, recipe, viewportW, viewportH);
+
     const float aspect = (viewportH > 0) ? float(viewportW) / float(viewportH) : 1.0f;
-    const glm::mat4 P = cam.proj(aspect);
-    const glm::mat4 V = cam.view();
-    const glm::mat4 VP = P * V;
-    const glm::vec3 eye = cam.eye();
 
-    // Keep brightness windows fixed (don’t tie to FOV)
-    material_->Set("u_VP", &VP, sizeof(VP));
-    material_->Set("u_CamPos", &eye, sizeof(eye));
+    // Camera-relative VP: no translation term, star positions are uploaded relative to eye.
+    // This eliminates floating-point cancellation when the camera is far from world origin.
+    const glm::mat4  VP      = cam.VPcr(aspect, nearKm);
+    const glm::dvec3 eyeD    = cam.eyeD();
+    const glm::vec3  camRelO = glm::vec3(0.0f); // camera is always at origin in render space
 
-    float uPointScale = (float)viewportH * 0.5f
-        / std::tan(glm::radians(cam.fovDeg * 0.5f))
-        * baseSizeAtUnit_;
-    material_->Set("u_PointScale", &uPointScale, sizeof(uPointScale));
+    // Focal length in pixels: converts angular radius (rad) to pixel radius.
+    const float focalLengthPx = (viewportH > 0)
+        ? float(viewportH) * 0.5f / std::tan(glm::radians(cam.fovDeg * 0.5f))
+        : 1.0f;
 
-    // ---------- Near-field deterministic stars ----------
+    material_->Set("u_VP",            &VP,             sizeof(VP));
+    material_->Set("u_CamPos",        &camRelO,        sizeof(camRelO));
+    material_->Set("u_FocalLengthPx", &focalLengthPx,  sizeof(focalLengthPx));
+    material_->Set("u_MaxDistKm",     &maxVisDistKm_,  sizeof(maxVisDistKm_));
+
+    // Clamp query radius so sector count doesn't overflow (one shrink pass).
     float r = std::max(256.0f, std::min(queryRadiusKm_, kMaxQueryKm));
-    glm::vec3 r3(r);
-    AABB3 aabb{ eye - r3, eye + r3 };
-
-    const float S = std::max(1e-3f, recipe.sectorSize);
-    auto cells = [&](float span) { return std::max(1, int(std::ceil(span / S))); };
-    int nx = cells(aabb.max.x - aabb.min.x);
-    int ny = cells(aabb.max.y - aabb.min.y);
-    int nz = cells(aabb.max.z - aabb.min.z);
-    long long nsectors = 1ll * nx * ny * nz;
-
-    constexpr long long kMaxSectors = 20000;
-    if (nsectors > kMaxSectors) {
-        const float shrink = static_cast<float>(
-            std::cbrt(static_cast<double>(kMaxSectors) / static_cast<double>(nsectors)));
-        r *= std::max(0.40f, shrink);           // don’t collapse to zero
-        r3 = glm::vec3(r);
-        aabb = { eye - r3, eye + r3 };
+    {
+        const float S  = std::max(1e-3f, recipe.sectorSize);
+        auto cellsClamped = [&](float span) -> long long {
+            double c = std::ceil(static_cast<double>(span) / static_cast<double>(S));
+            return static_cast<long long>(std::min(c, 1e8));
+        };
+        long long nx = cellsClamped(2.0f * r);
+        long long nsectors = nx * nx * nx;
+        constexpr long long kMaxSectors = 20000;
+        if (nsectors > kMaxSectors) {
+            r *= std::max(0.40f, static_cast<float>(
+                std::cbrt(static_cast<double>(kMaxSectors) / static_cast<double>(nsectors))));
+        }
     }
 
+    // Build AABB from the float-cast eye position — sufficient for sector selection.
+    const glm::vec3 eyeF = glm::vec3(eyeD);
+    const glm::vec3 r3(r);
+    const AABB3 aabb{ eyeF - r3, eyeF + r3 };
+
     UniverseQueryFilters filters;
-    UniverseQueryResult  result; result.clear();
+    UniverseQueryResult  result;
+    result.clear();
     QueryUniverseAABB3(masterSeed, recipe, aabb, filters, result);
     lastStars_ = result.stars;
 
-    // Submit near stars
-    starXYZ_.clear();
-    starXYZ_.reserve(result.stars.size() * 3);
+    // Pack as XYZRI (5 floats per star).
+    // Positions are camera-relative (subtract eyeD in double, then cast to float) so the
+    // GPU receives full-precision local coordinates regardless of world-space magnitude.
+    starXYZRI_.clear();
+    starXYZRI_.reserve(result.stars.size() * 5);
     for (const auto& s : result.stars) {
-        starXYZ_.push_back(s.pos.x);
-        starXYZ_.push_back(s.pos.y);
-        starXYZ_.push_back(s.pos.z);
-    }
-    if (!starXYZ_.empty()) {
-        Interstellar::Renderers::OpenGL::GLPointSubmit::draw3D(
-            gfx, pipeline_, material_, starXYZ_.data(),
-            static_cast<int>(starXYZ_.size() / 3));
+        starXYZRI_.push_back(float(s.pos.x - eyeD.x));
+        starXYZRI_.push_back(float(s.pos.y - eyeD.y));
+        starXYZRI_.push_back(float(s.pos.z - eyeD.z));
+        starXYZRI_.push_back(s.radiusKm);
+        starXYZRI_.push_back(s.intensity);
     }
 
-    // ---------- Far-shell background from actual stars (camera-anchored) ----------
-    if (bgEnabled_ && bgCount_ > 0) {
-        const float farLimit = kMaxQueryKm;
-        const float rFarVisual = std::min(bgRadiusKm_, farLimit);
-        float       rFarQuery = std::min(std::max(rFarVisual * 1.5f, r * 1.25f), kMaxQueryKm);
-
-        farShellDirs_.clear();
-
-        if (rFarQuery > r + 1e-3f) {
-            glm::vec3 RQ(rFarQuery);
-            AABB3 aabbFar{ eye - RQ, eye + RQ };
-
-            int fnx = cells(aabbFar.max.x - aabbFar.min.x);
-            int fny = cells(aabbFar.max.y - aabbFar.min.y);
-            int fnz = cells(aabbFar.max.z - aabbFar.min.z);
-            long long fsectors = 1ll * fnx * fny * fnz;
-
-            constexpr long long kMaxFarSectors = 30000;
-            if (fsectors > kMaxFarSectors) {
-                const float shrink = static_cast<float>(
-                    std::cbrt(static_cast<double>(kMaxFarSectors) / static_cast<double>(fsectors)));
-                rFarQuery *= std::max(0.50f, shrink);
-                RQ = glm::vec3(rFarQuery);
-                aabbFar = { eye - RQ, eye + RQ };
-            }
-
-            UniverseQueryResult farRes; farRes.clear();
-            QueryUniverseAABB3(masterSeed, recipe, aabbFar, filters, farRes);
-
-            const int total = static_cast<int>(farRes.stars.size());
-            const double keepProb = (total > 0 && total > bgCount_)
-                ? double(bgCount_) / double(total)
-                : 1.0;
-
-            farShellDirs_.reserve(std::min(bgCount_, total));
-            for (const auto& s : farRes.stars) {
-                float d = glm::distance(eye, s.pos);
-                if (d <= r + 1e-3f) continue;
-                if (d > rFarQuery)  continue;
-                if (!keepStarDeterministically(s.id, keepProb)) continue;
-                glm::vec3 dir = glm::normalize(s.pos - eye);
-                if (!glm::any(glm::isnan(dir))) {
-                    farShellDirs_.push_back(dir);
-                    if ((int)farShellDirs_.size() >= bgCount_) break;
-                }
-            }
-        }
-
-        // Fallback if shell query produced nothing (ensures you never see a blank sky)
-        if (farShellDirs_.empty()) {
-            buildFibonacciUnitSphere(bgCount_, farShellDirs_);
-        }
-
-        // Camera-anchored positions on the visual shell
-        starXYZ_.clear();
-        starXYZ_.reserve(farShellDirs_.size() * 3);
-        for (const auto& d : farShellDirs_) {
-            const glm::vec3 p = eye + d * rFarVisual;
-            starXYZ_.push_back(p.x);
-            starXYZ_.push_back(p.y);
-            starXYZ_.push_back(p.z);
-        }
-
-        int bgFlag = 1; material_->Set("u_Background", &bgFlag, sizeof(bgFlag));
-        float bgSz = 2.0f; material_->Set("u_BGFixedSizePx", &bgSz, sizeof(bgSz));
-        if (!starXYZ_.empty()) {
-            Interstellar::Renderers::OpenGL::GLPointSubmit::draw3D(
-                gfx, pipeline_, material_, starXYZ_.data(),
-                static_cast<int>(starXYZ_.size() / 3));
-        }
-        bgFlag = 0; material_->Set("u_Background", &bgFlag, sizeof(bgFlag));
+    if (!starXYZRI_.empty()) {
+        Interstellar::Renderers::OpenGL::GLPointSubmit::draw3D_xyzri(
+            gfx, pipeline_, material_, starXYZRI_.data(),
+            static_cast<int>(starXYZRI_.size() / 5));
     }
+}
+
+StarsRenderer::NearestStar StarsRenderer::nearestStar(const glm::dvec3& eye) const
+{
+    NearestStar best;
+    for (const auto& s : lastStars_) {
+        double d = glm::length(s.pos - eye);
+        if (d < best.distKm) {
+            best.distKm   = d;
+            best.radiusKm = s.radiusKm;
+            best.valid    = true;
+        }
+    }
+    return best;
+}
+
+float StarsRenderer::nearestDistKm(const glm::dvec3& eye) const
+{
+    auto ns = nearestStar(eye);
+    return ns.valid ? float(ns.distKm) : std::numeric_limits<float>::max();
 }
 
 bool StarsRenderer::pickNearestScreen(const CameraRig3D& cam,
@@ -200,28 +134,31 @@ bool StarsRenderer::pickNearestScreen(const CameraRig3D& cam,
 {
     if (lastStars_.empty() || viewportW <= 0 || viewportH <= 0) return false;
 
-    const float aspect = float(viewportW) / float(viewportH);
-    const glm::mat4 VP = cam.VP(aspect);
-    const glm::vec3 eye = cam.eye();
+    const float      aspect  = float(viewportW) / float(viewportH);
+    const glm::dvec3 eyeD    = cam.eyeD();
+    const glm::mat4  VP      = cam.VPcr(aspect);  // camera-relative VP
 
     const float radius2 = radiusPx * radiusPx;
     float bestD2 = std::numeric_limits<float>::max();
     std::size_t bestIdx = static_cast<std::size_t>(-1);
 
-    const float pointScale = (viewportH * 0.5f)
-        / std::tan(glm::radians(cam.fovDeg * 0.5f))
-        * baseSizeAtUnit_;
+    const float focalLengthPx = float(viewportH) * 0.5f
+        / std::tan(glm::radians(cam.fovDeg * 0.5f));
 
     for (std::size_t i = 0; i < lastStars_.size(); ++i) {
-        const glm::vec3& p = lastStars_[i].pos;
-        glm::vec4 clip = VP * glm::vec4(p, 1.0f);
+        // Camera-relative position for correct projection
+        glm::vec3 relPos = glm::vec3(lastStars_[i].pos - eyeD);
+        glm::vec4 clip = VP * glm::vec4(relPos, 1.0f);
         if (clip.w <= 1e-6f) continue;
 
-        glm::vec3 ndc = glm::vec3(clip) / clip.w; // [-1..1]
+        glm::vec3 ndc = glm::vec3(clip) / clip.w;
         float sx = (ndc.x * 0.5f + 0.5f) * viewportW;
         float sy = (1.0f - (ndc.y * 0.5f + 0.5f)) * viewportH;
 
-        float spritePx = glm::clamp(pointScale / clip.w, minPx_, maxPx_);
+        const float dist = float(glm::length(lastStars_[i].pos - eyeD));
+        float spritePx = glm::clamp(
+            2.0f * lastStars_[i].radiusKm / std::max(dist, 1e-4f) * focalLengthPx,
+            minPx_, maxPx_);
         float rpick = radiusPx + 0.5f * spritePx;
 
         float dx = sx - mouseX, dy = sy - mouseY;
@@ -232,9 +169,9 @@ bool StarsRenderer::pickNearestScreen(const CameraRig3D& cam,
     if (bestIdx == static_cast<std::size_t>(-1) || bestD2 > radius2) return false;
 
     const auto& s = lastStars_[bestIdx];
-    out.index = bestIdx;
-    out.pos = s.pos;
-    out.distance = glm::distance(eye, s.pos);
-    out.id = s.id;
+    out.index    = bestIdx;
+    out.pos      = s.pos;
+    out.distance = float(glm::length(s.pos - eyeD));
+    out.id       = s.id;
     return true;
 }

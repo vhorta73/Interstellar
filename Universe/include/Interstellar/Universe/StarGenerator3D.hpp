@@ -9,9 +9,10 @@
 namespace Interstellar::Universe {
 
     struct Star3 {
-        glm::vec3 pos{};     // world position
-        float     intensity; // arbitrary [0..1] brightness seed
-        Seed64    id;        // stable unique id
+        glm::dvec3 pos{};          ///< World position (km), double precision.
+        float      radiusKm = 1.f; ///< Physical radius (km).
+        float      intensity = 0.f;///< Brightness seed [0..1].
+        Seed64     id        = 0;  ///< Stable unique identifier.
     };
 
     // Generate deterministic stars for a given 3D sector; culled to optional AABB.

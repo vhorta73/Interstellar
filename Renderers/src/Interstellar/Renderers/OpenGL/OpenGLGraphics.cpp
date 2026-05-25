@@ -188,6 +188,14 @@ namespace Interstellar::Renderers::OpenGL {
             );
         }
 
+        if (name == "GalaxyBg") {
+            return std::make_shared<OpenGLShader>(
+                name,
+                std::string(ShaderBasePath) + "galaxy_bg.vert",
+                std::string(ShaderBasePath) + "galaxy_bg.frag"
+            );
+        }
+
         // Fallback: triangle demo
         return std::make_shared<OpenGLShader>(
             name,

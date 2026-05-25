@@ -14,9 +14,9 @@ namespace Interstellar::Scenes {
     using Interstellar::Engine::Cameras::CameraRig3D;
 
     // Astronomical scale
-    static constexpr float AU_KM = 149'597'870.7f;
-    static constexpr float PLUTO_AU = 39.5f;                     // mean orbital radius
-    static constexpr float SECTOR_KM = AU_KM * PLUTO_AU;          // ≈ 5.91e9 km per sector
+    static constexpr float AU_KM    = 149'597'870.7f;
+    static constexpr float PLUTO_AU = 39.5f;
+    static constexpr float SECTOR_KM = AU_KM * PLUTO_AU;   // ≈ 5.91e9 km per sector
 
     UniverseScene::UniverseScene(IKeyboard& kb,
         IMouse& mouse,
@@ -26,47 +26,44 @@ namespace Interstellar::Scenes {
         , mouse_(mouse)
         , masterSeed_(masterSeed)
     {
-        // Camera
-        cam_.pos = { 0.0f, 0.0f, 0.0f };
-        cam_.yawDeg = 0.0f;
+        cam_.pos      = { 0.0, 0.0, 0.0 };
+        cam_.yawDeg   = 0.0f;
         cam_.pitchDeg = 0.0f;
-        cam_.fovDeg = 60.0f;
+        cam_.fovDeg   = 60.0f;
 
         auto& p = cam_.params();
-        p.minFov = 25.0f;  p.maxFov = 90.0f;
-        p.panBase = 5.0e7f;            // km/s for WASD
-        p.dollyKmPerNotch = 100.0e9f;    // wheel base step (scales with focus)
-        p.yawSensDegPerPx = 0.12f;
-        p.pitchSensDegPerPx = 0.12f;
-        p.dragMult = 1.0f;
+        p.minFov            = 25.0f;  p.maxFov = 90.0f;
+        // panBase and dollyKmPerNotch are overwritten each frame by the altitude-based
+        // dynamic speed system; these values only govern the very first frame.
+        p.panBase           = 5.0e7f;
+        p.dollyKmPerNotch   = 1.0e5f;
+        p.yawSensDegPerPx   = 0.1f;
+        p.pitchSensDegPerPx = 0.1f;
+        p.dragMult          = 0.01f;
 
-        cam_.targetPos = cam_.pos;
+        cam_.targetPos    = cam_.pos;
         cam_.targetFovDeg = cam_.fovDeg;
 
-        // Universe recipe
         recipe_.sectorSize = SECTOR_KM;
 
-        // Mean stars / sector
         {
-            const long double S = (long double)recipe_.sectorSize;
+            const long double S  = (long double)recipe_.sectorSize;
             const long double S3 = S * S * S;
-            const long double lambdaTarget = 5.0L; // ~5 per sector
+            const long double lambdaTarget = 5000.0L;
             recipe_.starDensity = static_cast<float>(lambdaTarget / S3);
         }
-        recipe_.jitter = 0.035f;
+        recipe_.jitter    = 0.035f;
         recipe_.useGalaxy = true;
 
-        // Very rough galaxy falloff (feel-based)
-        recipe_.galaxy.center = glm::vec3(0.0f);
-        recipe_.galaxy.orientation = glm::mat3(1.0f);
-        recipe_.galaxy.radialScale = 3.0e17f;  // ~10 kpc
-        recipe_.galaxy.verticalScale = 3.0e15f;  // ~300 ly
-        recipe_.galaxy.coreRadius = 3.0e16f;  // ~1 kpc
-        recipe_.galaxy.coreBoost = 6.0f;
+        recipe_.galaxy.center        = glm::vec3(0.0f);
+        recipe_.galaxy.orientation   = glm::mat3(1.0f);
+        recipe_.galaxy.radialScale   = 3.0e17f;
+        recipe_.galaxy.verticalScale = 3.0e15f;
+        recipe_.galaxy.coreRadius    = 3.0e16f;
+        recipe_.galaxy.coreBoost     = 6.0f;
 
         stars_ = std::make_unique<Interstellar::Graphics::Renderers::StarsRenderer>(gfx);
         stars_->setMinQueryRadius(1.0e10f);
-        stars_->setBackground(true, 3.0e11f, 6000);
     }
 
 
@@ -75,7 +72,7 @@ namespace Interstellar::Scenes {
         cam_.handleInput(kb_, mouse_, viewportW, viewportH, dt);
         cam_.update(dt);
 
-        // Pick focus star on click (when not rotating)
+        // Pick focus star on click
         const bool lmb = mouse_.isDown(MouseButton::Left);
         if (lmb && !lmbPrev_) {
             if (stars_) {
@@ -92,28 +89,34 @@ namespace Interstellar::Scenes {
                 }
             }
         }
+        lmbPrev_ = lmb;
 
-        // Keep 2D pan scaling coherent while dragging after a focus pick
-        if (lmb) {
-            if (auto f = cam_.focusWorld()) {
-                cam_.setDragFocusDepth(glm::distance(cam_.eye(), *f));
+        // Dynamic speed and near plane — scale with altitude above the nearest star surface.
+        // panBase = 0.5 × altitude: you halve the gap per second at full WASD (Shift = 2s).
+        // nearKm  = 0.001 × altitude: near plane is 0.1% of altitude, avoiding z-fighting
+        //           while allowing sub-metre approach distances.
+        if (stars_) {
+            auto ns = stars_->nearestStar(cam_.eyeD());
+            if (ns.valid) {
+                const double altKm = std::max(1e-6, ns.distKm - double(ns.radiusKm));
+                cam_.params().panBase         = float(altKm * 0.5);
+                cam_.params().dollyKmPerNotch = float(altKm * 0.01);
+                nearKm_ = float(std::max(1e-9, altKm * 1e-3));
+                cam_.setDragFocusDepth(float(altKm));
             }
         }
-        if (!lmb && lmbPrev_) {
-            cam_.clearDragFocusDepth();
-        }
-        lmbPrev_ = lmb;
     }
 
     void UniverseScene::render(IGraphics& gfx, int viewportW, int viewportH)
     {
-        stars_->render(gfx, cam_, recipe_, masterSeed_, viewportW, viewportH);
+        stars_->render(gfx, cam_, recipe_, masterSeed_, viewportW, viewportH, nearKm_);
     }
 
     std::string UniverseScene::hudLine() const {
-        const auto  p = cam_.eye();
-        const float  S = recipe_.sectorSize;
-        const auto  sid = Interstellar::Universe::worldToSector(p, S);
+        const auto  p  = cam_.eyeD();
+        const auto  pF = glm::vec3(p);
+        const float S  = recipe_.sectorSize;
+        const auto  sid = Interstellar::Universe::worldToSector(pF, S);
         std::ostringstream os;
         os.setf(std::ios::fixed); os.precision(1);
         os << "pos[km]=(" << p.x << "," << p.y << "," << p.z << ") "
@@ -123,9 +126,10 @@ namespace Interstellar::Scenes {
     }
 
     std::string UniverseScene::hudTitle() const {
-        const glm::vec3 p = cam_.eye();
-        const float S = recipe_.sectorSize;
-        const auto sec = Interstellar::Universe::worldToSector(p, S);
+        const auto  p  = cam_.eyeD();
+        const auto  pF = glm::vec3(p);
+        const float S  = recipe_.sectorSize;
+        const auto  sec = Interstellar::Universe::worldToSector(pF, S);
         std::ostringstream os;
         os << "x:" << static_cast<long long>(std::llround(p.x))
             << "  y:" << static_cast<long long>(std::llround(p.y))

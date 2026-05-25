@@ -12,7 +12,12 @@ A 3D space exploration game written in C++20, built with CMake + Ninja on Window
 - **Compiler**: MSVC (C++20)
 - **Presets**: `dev-debug` (debug + tests) and `dev-release` (optimized + LTO)
 
+**Important**: CMake must be run inside an MSVC developer environment. Always initialise it first:
+
 ```powershell
+# Initialise MSVC environment (required before any cmake/build command)
+& "C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Auxiliary\Build\vcvarsall.bat" x64
+
 # Configure
 cmake --preset dev-debug
 
@@ -44,8 +49,8 @@ Each subsystem lives in its own directory with the pattern:
 |---|---|
 | `Engine/` | Fixed-timestep game loop (60 Hz sim, variable render), frame timing, config, cameras |
 | `ECS/` | Minimal ECS: contiguous arrays, `Entity = uint32_t`, no deletion, `Transform`/`Velocity` components |
-| `Graphics/` | `IGraphics` abstract interface — `BeginFrame/EndFrame`, mesh/shader/texture/pipeline factories |
-| `Renderers/` | OpenGL + GLFW backend; Vulkan infrastructure in place but not yet active |
+| `Graphics/` | `IGraphics` abstract interface — `BeginFrame/EndFrame`, mesh/shader/texture/pipeline factories; `StarsRenderer` (point cloud), `GalaxyGlowRenderer` (fullscreen quad, ray-marched Milky Way band) |
+| `Renderers/` | OpenGL + GLFW backend (`GLPointSubmit`, `OpenGLGraphics`); Vulkan infrastructure in place but not yet active |
 | `Universe/` | Seed-based 3D procedural generation — `StarGenerator3D`, `SectorStreamer`, `QueryUniverseAABB3` |
 | `Scenes/` | `UniverseScene` — camera rig, star renderer, input delegation, HUD state |
 | `Input/` | `InputSystem` factory; `IKeyboard`/`IMouse` abstractions; GLFW concrete backend |
@@ -61,19 +66,39 @@ Each subsystem lives in its own directory with the pattern:
 - **Game loop**: `Interstellar/src/main.cpp` — directly wires `OpenGLGraphics`, `InputSystem`, `UniverseScene`, and `Engine::run`. The `Game` class in `Interstellar.hpp` is a stub placeholder and is not used by `main.cpp`.
 - **Engine loop**: `Engine/include/Interstellar/Engine/Engine.hpp` — template-based fixed-timestep loop (60 Hz sim, variable render)
 - **Universe scene**: `Scenes/` — `UniverseScene::update()` / `UniverseScene::render()`
-- **Shaders**: `Interstellar/assets/shaders/` — `stars.vert/.frag` (star field), `triangle.vert/.frag/.glsl` (debug triangle)
+- **Shaders**: `Interstellar/assets/shaders/` — see render pass order section below
 
 ### Graphics backend
-OpenGL 4.6 (GLAD loader), GLFW window. `IGraphics` interface supports future swap to Vulkan/DX12/Metal without changing game code. Renderers: `StarsRenderer`, `SkyStarsRenderer`. Vulkan infrastructure exists in `Renderers/Vulkan/` but is not yet active.
+OpenGL 4.6 (GLAD loader), GLFW window. `IGraphics` interface supports future swap to Vulkan/DX12/Metal without changing game code. Vulkan infrastructure exists in `Renderers/Vulkan/` but is not yet active.
+
+#### Render pass order (per frame)
+1. `GalaxyGlowRenderer::render()` — fullscreen quad, normal alpha blend (`GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA`). Ray-marches 64 steps through the galaxy density field to simulate unresolved distant starlight.
+2. `StarsRenderer::render()` — point cloud (5 floats/point: XYZRI), additive blend (`GL_SRC_ALPHA, GL_ONE`). Stars accumulate light over the glow.
+
+**Shaders**: `Interstellar/assets/shaders/`
+- `stars.vert/.frag` — per-star point sprites with spectral color, PSF halo, and diffraction spikes
+- `galaxy_bg.vert/.frag` — galaxy glow fullscreen quad (ray-marched disk + bulge)
+- `triangle.vert/.frag/.glsl` — debug triangle
+
+#### GLPointSubmit VBO layouts
+`GLPointSubmit` is a stateless helper; VAO/VBO are allocated lazily and persist for the process lifetime.
+
+| Method | Floats/point | Attributes bound |
+|---|---|---|
+| `draw3D` | 3 | `a_Pos` (loc 0, vec3) |
+| `draw3D_xyzr` | 4 | `a_Pos` (loc 0, vec3), `a_Radius` (loc 1, float) |
+| `draw3D_xyzri` | 5 | `a_Pos` (loc 0, vec3), `a_Radius` (loc 1, float), `a_Intensity` (loc 2, float) |
+| `drawFullscreenQuad` | — | NDC [-1,1]² quad; used by `GalaxyGlowRenderer` |
 
 `compile_commands.json` is exported to `out/build/<preset>/compile_commands.json` — symlink or configure clangd to pick this up.
 
 ### Camera controls (runtime)
 `CameraRig3D` uses exponential smoothing; target is updated immediately, smoothed value follows each frame:
 - **WASD + Q/E**: translate (forward/back/strafe/up/down)
-- **Space + LMB drag**: mouse look (yaw/pitch)
-- **LMB drag** (no Space): 2D pan
-- **Scroll wheel**: dolly toward `focusWorld` if set, else forward
+- **Shift + WASD**: 4× speed
+- **LMB drag**: mouse look (yaw/pitch); position also updates toward `targetPos`
+- **RMB drag**: mouse look (yaw/pitch); observer position is never moved (safe for stationary look-around)
+- **Scroll wheel**: dolly toward `focusWorld` if set, else along forward vector; suppressed while RMB is held
 - **Z + scroll**: adjust FOV
 
 ## Third-party dependencies (FetchContent)

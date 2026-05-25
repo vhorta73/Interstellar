@@ -86,6 +86,9 @@ namespace Interstellar::Universe {
                         const double rx = rng.nextFloat01();
                         const double ry = rng.nextFloat01();
                         const double rz = rng.nextFloat01();
+                        // Always consume intensity rng step for determinism,
+                        // even for stars culled below.
+                        const float intensity = rng.nextFloat01();
 
                         const double x = sx + rx * S;
                         const double y = sy + ry * S;
@@ -96,11 +99,19 @@ namespace Interstellar::Universe {
                         if (y < aabb.min.y || y > aabb.max.y) continue;
                         if (z < aabb.min.z || z > aabb.max.z) continue;
 
+                        // Cubic mapping biases most stars toward small radii;
+                        // rare high-intensity stars become genuinely massive.
+                        const float radiusKm = 5.0e4f + intensity * intensity * intensity * 1.0e6f;
+
+                        // Stable per-star id from sector coords + index (no rng advance).
+                        const Seed64 starId = sector_seed(
+                            masterSeed, ix, iy, iz,
+                            static_cast<Seed64>(n) ^ 0x7A4B3C2D1E0F9E8FULL);
+
                         out.stars.push_back(Star3{
-                            glm::vec3{ static_cast<float>(x),
-                                       static_cast<float>(y),
-                                       static_cast<float>(z) }
-                            });
+                            glm::dvec3{ x, y, z },
+                            radiusKm, intensity, starId
+                        });
                     }
                 }
             }

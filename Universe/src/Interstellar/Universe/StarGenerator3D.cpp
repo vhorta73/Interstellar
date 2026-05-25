@@ -48,9 +48,10 @@ namespace Interstellar::Universe {
             if (aabbOpt && !contains(*aabbOpt, p)) continue;
             if (rng.nextFloat01() > galaxyAcceptance(recipe, p)) continue;
 
-            Seed64 sid = hashCombine(secSeed, static_cast<Seed64>(i));
+            Seed64 sid       = hashCombine(secSeed, static_cast<Seed64>(i));
             float  intensity = rng.nextFloat01();
-            outStars.push_back(Star3{ p, intensity, sid });
+            float  radiusKm  = 5.0e4f + intensity * intensity * intensity * 1.0e6f;
+            outStars.push_back(Star3{ glm::dvec3(p), radiusKm, intensity, sid });
         }
     }
 

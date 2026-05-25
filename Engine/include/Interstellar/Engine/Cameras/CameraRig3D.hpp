@@ -64,22 +64,23 @@ namespace Interstellar::Engine::Cameras {
         ~CameraRig3D();
 
         // ---- Pose (current smoothed values) ----
-        glm::vec3 pos{ 0.0f };         ///< Smoothed world position (km).
-        float     yawDeg   = 0.0f;     ///< Yaw angle in degrees (applied before pitch).
-        float     pitchDeg = 0.0f;     ///< Pitch angle in degrees, clamped to ±89.9°.
-        float     fovDeg   = 60.0f;    ///< Smoothed vertical field of view in degrees.
-        glm::quat orient{ 1,0,0,0 };   ///< Orientation quaternion derived from yaw/pitch (zero roll).
+        glm::dvec3 pos{ 0.0 };          ///< Smoothed world position (km), double precision for sub-metre accuracy at stellar scale.
+        float      yawDeg   = 0.0f;     ///< Yaw angle in degrees (applied before pitch).
+        float      pitchDeg = 0.0f;     ///< Pitch angle in degrees, clamped to ±89.9°.
+        float      fovDeg   = 60.0f;    ///< Smoothed vertical field of view in degrees.
+        glm::quat  orient{ 1,0,0,0 };   ///< Orientation quaternion derived from yaw/pitch (zero roll).
 
         // ---- Smoothing targets (set by handleInput) ----
-        glm::vec3 targetPos    = pos;       ///< Position target; smoothed toward by @ref update.
-        float     targetFovDeg = fovDeg;    ///< FOV target; smoothed toward by @ref update.
+        glm::dvec3 targetPos    = pos;       ///< Position target; smoothed toward by @ref update.
+        float      targetFovDeg = fovDeg;    ///< FOV target; smoothed toward by @ref update.
 
         /**
          * @ingroup Engine
          * @brief Read keyboard and mouse state, update orientation and motion targets.
-         * @details Controls: WASD+Q/E translate; Space+LMB drag looks; LMB drag pans;
-         *          scroll wheel dollies (toward @ref focusWorld if set); Z+wheel adjusts FOV.
-         *          Smoothing is deferred to @ref update.
+         * @details Controls: WASD+Q/E translate; LMB drag and RMB drag both look (yaw/pitch);
+         *          scroll wheel dollies (toward @ref focusWorld if set) — suppressed while RMB
+         *          is held so the observer position never changes during a RMB look-drag;
+         *          Z+wheel adjusts FOV.  Smoothing is deferred to @ref update.
          * @param kb        [in] IKeyboard - Keyboard state for the current frame.
          * @param mouse     [in] IMouse    - Mouse state for the current frame.
          * @param viewportW [in] int       - Viewport width in pixels.
@@ -123,19 +124,22 @@ namespace Interstellar::Engine::Cameras {
         /**
          * @ingroup Engine
          * @brief Compute the perspective projection matrix.
-         * @param aspect [in] float - Viewport aspect ratio (width / height).
-         * @return glm::mat4 - Projection matrix with near=1 km, far=1e12 km.
+         * @param aspect  [in] float - Viewport aspect ratio (width / height).
+         * @param nearKm  [in] float - Near-plane distance in km (default 1 km). Scale down to
+         *                             sub-kilometre values when close to a surface to avoid
+         *                             depth fighting; @ref UniverseScene sets this dynamically.
+         * @return glm::mat4 - Projection matrix with far=1e12 km.
          * @throws None
          * @complexity O(1)
          * @thread_safety Yes (read-only).
          * @reentrancy Yes
          * @since 1.0
          */
-        glm::mat4 proj(float aspect) const;
+        glm::mat4 proj(float aspect, float nearKm = 1.0f) const;
 
         /**
          * @ingroup Engine
-         * @brief Compute the combined view-projection matrix.
+         * @brief Compute the combined view-projection matrix (world-space geometry).
          * @param aspect [in] float - Viewport aspect ratio (width / height).
          * @return glm::mat4 - Combined VP matrix (proj * view).
          * @throws None
@@ -148,13 +152,54 @@ namespace Interstellar::Engine::Cameras {
 
         /**
          * @ingroup Engine
-         * @brief Get the camera eye position in world space.
-         * @return glm::vec3 - Current smoothed position (km).
+         * @brief Rotation-only view matrix (no translation).
+         * @details Use with camera-relative geometry: subtract @ref eyeD from every world
+         *          position before uploading to the GPU, then transform with this matrix.
+         *          Eliminates floating-point cancellation that occurs when the camera is far
+         *          from the world origin.
+         * @return glm::mat4 - Rotation-only view matrix (camera at origin).
          * @throws None
          * @complexity O(1)
          * @since 1.0
          */
-        glm::vec3 eye() const { return pos; }
+        glm::mat4 viewRotation() const;
+
+        /**
+         * @ingroup Engine
+         * @brief View-projection matrix for camera-relative geometry.
+         * @details Combines @ref proj with @ref viewRotation.  Geometry must be expressed
+         *          relative to the camera (i.e. @c worldPos - @ref eyeD cast to float).
+         * @param aspect [in] float - Viewport aspect ratio (width / height).
+         * @param nearKm [in] float - Near-plane distance in km (default 1 km).
+         * @return glm::mat4 - VP matrix for camera-relative geometry.
+         * @throws None
+         * @complexity O(1)
+         * @thread_safety Yes (read-only).
+         * @since 1.0
+         */
+        glm::mat4 VPcr(float aspect, float nearKm = 1.0f) const;
+
+        /**
+         * @ingroup Engine
+         * @brief Get the camera eye position in world space (float, for coarse uses).
+         * @return glm::vec3 - Current smoothed position cast to float (km).
+         * @throws None
+         * @complexity O(1)
+         * @since 1.0
+         */
+        glm::vec3 eye() const { return glm::vec3(pos); }
+
+        /**
+         * @ingroup Engine
+         * @brief Get the camera eye position in world space, double precision.
+         * @details Use this for any calculation that must remain accurate at sub-kilometre
+         *          scale (e.g. star distance queries, near-plane computation, HUD readout).
+         * @return glm::dvec3 - Current smoothed position (km).
+         * @throws None
+         * @complexity O(1)
+         * @since 1.0
+         */
+        glm::dvec3 eyeD() const { return pos; }
 
         /**
          * @ingroup Engine
@@ -248,12 +293,12 @@ namespace Interstellar::Engine::Cameras {
         /**
          * @ingroup Engine
          * @brief Set a world-space focus point used by the wheel dolly to approach a specific target.
-         * @param p [in] glm::vec3 - Target world position in km.
+         * @param p [in] glm::dvec3 - Target world position in km.
          * @throws None
          * @complexity O(1)
          * @since 1.0
          */
-        void setFocusWorld(const glm::vec3& p) { focusWorld_ = p; }
+        void setFocusWorld(const glm::dvec3& p) { focusWorld_ = p; }
 
         /**
          * @ingroup Engine
@@ -267,12 +312,12 @@ namespace Interstellar::Engine::Cameras {
         /**
          * @ingroup Engine
          * @brief Query the current world-space focus point.
-         * @return std::optional<glm::vec3> - Focus position in km, or std::nullopt if unset.
+         * @return std::optional<glm::dvec3> - Focus position in km, or std::nullopt if unset.
          * @throws None
          * @complexity O(1)
          * @since 1.0
          */
-        std::optional<glm::vec3> focusWorld() const { return focusWorld_; }
+        std::optional<glm::dvec3> focusWorld() const { return focusWorld_; }
 
     private:
         CameraRigParams params_;
@@ -286,8 +331,8 @@ namespace Interstellar::Engine::Cameras {
 
         bool rotateActive_ = false;
 
-        std::optional<float>     dragDepthKm_;
-        std::optional<glm::vec3> focusWorld_;
+        std::optional<float>      dragDepthKm_;
+        std::optional<glm::dvec3> focusWorld_;
     };
 
 } // namespace Interstellar::Engine::Cameras
